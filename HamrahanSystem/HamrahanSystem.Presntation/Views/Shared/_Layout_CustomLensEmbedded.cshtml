@@ -1,0 +1,74 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+<head>
+    <title>پورتال عادل لنز</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="عادل لنز" />
+    <meta name="keywords" content="عادل لنز" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        html { zoom: 0.8; }
+        @@supports not (zoom: 1) {
+            html { transform: scale(0.8); transform-origin: top left; width: 125%; }
+        }
+    </style>
+    <link rel="shortcut icon" href="~/assets/media/adellens/favicon.ico" />
+    <link href="~/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/select2-fix.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <link href="~/assets/plugins/custom/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/custom/bootstrap-duallistbox-master/dist/bootstrap-duallistbox.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/dark-theme-text.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <script>var hostUrl = "~/assets/";</script>
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    <script src="~/js/select2-fix.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-full-width",
+            "preventDuplicates": false,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+    </script>
+</head>
+<body class="bg-light">
+    <div class="container-fluid py-4">
+        @RenderBody()
+    </div>
+
+    <div class="modal fade" role="dialog" id="modal-Tree" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content rounded">
+                <div class="modal-header justify-content-end border-0 pb-0">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body pt-0 pb-15 px-5 px-xl-20" id="modal-loader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\assets\plugins\custom\bootstrap-duallistbox-master\demo\**" />
+    <Content Remove="wwwroot\assets\plugins\custom\bootstrap-duallistbox-master\demo\**" />
+    <EmbeddedResource Remove="wwwroot\assets\plugins\custom\bootstrap-duallistbox-master\demo\**" />
+    <None Remove="wwwroot\assets\plugins\custom\bootstrap-duallistbox-master\demo\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="FastReport.Core.Skia.Demo" Version="2025.2.10" />
+    <PackageReference Include="FastReport.Web.Skia.Demo" Version="2025.2.10" />
+    <PackageReference Include="FluentMigrator" Version="7.1.0" />
+    <PackageReference Include="FluentMigrator.Runner" Version="7.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HamrahanSystem.Infrastructure\HamrahanSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\menutitle.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>menutitle.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ResourceAlert.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResourceAlert.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ResourcePages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResourcePages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\menutitle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>menutitle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HamrahanSystem.Presntation.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ResourceAlert.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceAlert.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HamrahanSystem.Presntation.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ResourcePages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcePages.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HamrahanSystem.Presntation.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+</Project>

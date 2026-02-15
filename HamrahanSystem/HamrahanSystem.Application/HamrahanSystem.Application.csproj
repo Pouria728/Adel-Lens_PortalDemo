@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="UseCaseImplementation\MigratorService.cs" />
+    <Compile Remove="UsecaseInterface\IMigratorService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HamrahanSystem.Domain\HamrahanSystem.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

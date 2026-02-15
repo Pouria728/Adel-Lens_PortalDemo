@@ -1,0 +1,79 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsBrandLensTypeRDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    HamrahanSystem.Application.DTOs.TblLnsBrandDto brand = ViewBag.ListBrand;
+    Model.BrandId = brand.BrandId;
+}
+
+
+
+@using (Html.BeginForm("Create", "BrandLensTypeRs", FormMethod.Post, new { @id = "form-LnsBrandLensTypeRs" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-light-primary"><h3 class="card-title align-items-start flex-column">@($"{ResourcePages.Add} {ResourcePages.Brands}")</h3> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.BrandId, Model.BrandId)
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_Brand, ResourcePages.Base_Brand, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("BrandName",brand.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_LensType, ResourcePages.Base_LensType, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LensTypeRId, new MultiSelectList(ViewBag.ListLensTypeR, "LensTypeRId", "Name"), new { @class = "form-select form-select-solid form-select-lg fw-semibold ", aria_label = "Select a Country", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="@($"{ResourcePages.Save} {ResourcePages.Brands}")" class="btn btn-success" />
+
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(function () {
+        KTComponents.init();
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+                 $form = $("#form-LnsBrandLensTypeRs");
+
+                 $.post('@Url.Action("Create", "BrandLensTypeRs")',
+                     $form.serialize()
+
+                 )
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+    });
+
+
+</script>

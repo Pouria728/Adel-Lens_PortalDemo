@@ -1,0 +1,1536 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FastReport.Web</name>
+    </assembly>
+    <members>
+        <member name="P:FastReport.Web.Cache.CacheOptions.UseLegacyWebReportCache">
+            <summary>
+            Use legacy WebReport cache instead of <see cref="T:Microsoft.Extensions.Caching.Memory.MemoryCache"/>.
+            Default value: true
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Cache.CacheOptions.UseCircuitScope">
+            <summary>
+            Enables WebReport cache management based on the user's <see cref="T:Microsoft.AspNetCore.Components.Server.Circuits.Circuit"/> in Blazor Server mode.
+            
+            When enabled, the WebReport lifetime follows the user's session and settings such as 
+            <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.CacheDuration"/>, <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpirationDuration"/>
+            and <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpiration"/>.
+            </summary>
+            <remarks>
+            If a user selects a different WebReport during the same session, the previous report is immediately removed from the cache.
+            Similarly, when the user closes the browser tab or disconnects, the associated WebReport is promptly removed.
+            </remarks>
+        </member>
+        <member name="T:FastReport.Web.Cache.IWebReportCache">
+            <summary>
+            Represents the cache where all webReports will be stored
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Cache.WebReportCache">
+            <summary>
+            For backward compatibility
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Cache.WebReportCacheOptions.CacheDuration">
+            <summary>
+            Reports' lifetime in cache.
+            If report is not used the specified time and there is no references to the object, it will be deleted from cache.
+            Default value: 15 minutes.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpirationDuration">
+            <summary>
+            The absolute lifetime of a report in the cache.
+            Unlike <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.CacheDuration"/>, which specifies a sliding expiration policy, this property defines
+            the maximum amount of time a report can exist in the cache, regardless of activity or references.
+            If not specified, the cache entry will rely solely on the sliding expiration defined by <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.CacheDuration"/>.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpiration">
+            <summary>
+            Specifies the exact expiration date and time for the report in the cache.
+            When both <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpiration"/> and <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpirationDuration"/> are specified, 
+            the earlier of the two values determines when the cache entry expires.
+            If not set, the cache entry will rely on either the sliding expiration defined by <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.CacheDuration"/>
+            or the absolute lifetime defined by <see cref="P:FastReport.Web.Cache.WebReportCacheOptions.AbsoluteExpirationDuration"/>.
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Cache.WebReportLegacyCache">
+            <summary>
+            Legacy WebReportCache implementation
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Dialog.DatePickerFormat">
+            <summary>
+            Gets or sets date format in html input type="date"
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Dialog.TimePickerFormat">
+            <summary>
+            Gets or sets time format in html input type="time"
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.LocalizationFile">
+            <summary>
+            Gets or sets the WebReport's locale
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.CacheOptions">
+            <summary>
+            Specifies individual cache settings for the current WebReport. 
+            These settings have the highest priority over other cache configurations.
+            Default value: null.
+            /// </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.RemoveFromCache">
+            <summary>
+            Force report to be removed from internal cache
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ID">
+            <summary>
+            Unique ID of this instance.
+            Automatically generates on creation.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Inline">
+            <summary>
+            Adds "display: inline-*" to html container.
+            Default value: true.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.PageBorderVisible">
+            <summary>
+            Disable or enable the box-shadow style for the report page.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Report">
+            <summary>
+            Current report
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.CurrentPageIndex">
+            <summary>
+            Page index of current report
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ReportPrepared">
+            <summary>
+            Is current report prepared(.fpx) or not(.frx)
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.TotalPages">
+            <summary>
+            Total prepared pages of current report
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Mode">
+            <summary>
+            Switches between Preview and Designer modes
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.UserData">
+            <summary>
+            Property to store user data
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Toolbar">
+            <summary>
+            Toolbar settings
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ToolbarHeight">
+            <summary>
+            Toolbar height in pixels
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Outline">
+            <summary>
+            Shows sidebar with outline.
+            Default value: true.
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.SetLocalization(System.IO.Stream)">
+            <summary>
+            Sets WebReport localization using <see cref="T:System.IO.Stream"/>
+            </summary>
+            <param name="stream">Stream with localization in `*.frl` format</param>
+        </member>
+        <member name="M:FastReport.Web.WebReport.NextPage">
+            <summary>
+            Force go to next report page
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.PrevPage">
+            <summary>
+            Force go to previous report page
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.FirstPage">
+            <summary>
+            Force go to first report page
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.LastPage">
+            <summary>
+            Force go to last report page
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.GotoPage(System.Int32)">
+            <summary>
+            Force go to "value" report page
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.ReportSearch(System.String,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Forced transition to the report page containing the required text.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowPreparedReport">
+            <summary>
+            Switch a visibility of prepared report export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowPdfExport">
+            <summary>
+            Switches a visibility of PDF (Adobe Acrobat) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowExcel2007Export">
+            <summary>
+            Switches a visibility of Excel 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowWord2007Export">
+            <summary>
+            Switches a visibility of Word 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowPowerPoint2007Export">
+            <summary>
+            Switches a visibility of PowerPoint 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowTextExport">
+            <summary>
+            Switch a visibility of text (plain text) export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowRtfExport">
+            <summary>
+            Switches a visibility of RTF export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowXpsExport">
+            <summary>
+            Switches a visibility of XPS export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowOdsExport">
+            <summary>
+            Switches a visibility of Open Office Spreadsheet (ODS) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowOdtExport">
+            <summary>
+            Switches a visibility of Open Office Text (ODT) export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowXmlExcelExport">
+            <summary>
+            Switches a visibility of XML (Excel) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowDbfExport">
+            <summary>
+            Switches a visibility of DBF export in toolbar.
+            </summary> 
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowCsvExport">
+            <summary>
+            Switches visibility the CSV (comma separated values) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowMhtExport">
+            <summary>
+            Switches visibility the MHT export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.CurrentTab">
+            <summary>
+            Active report tab
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.CurrentTabIndex">
+            <summary>
+            Active tab index
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.SplitReportPagesInTabs">
+            <summary>
+            Shows different ReportPage in tabs.
+            Default value: false.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ShowReportNameInTab">
+            <summary>
+            Gets or sets a value indicating whether the report name is displayed in the tab.
+            If set to <c>true</c>, the tab will display the report name. If <c>false</c>, it will display report parameters.
+            Default value: false.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Tabs">
+            <summary>
+            List of report tabs
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.SplitReportPagesByTabs">
+            <summary>
+            Add report pages in tabs after load report
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.Designer">
+            <summary>
+            Designer settings
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignScriptCode">
+            <summary>
+            Enable code editor in the Report Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerPath">
+            <summary>
+            Gets or sets path to the Report Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerSavePath">
+            <summary>
+            Gets or sets path to a folder for save designed reports
+            If value is empty then designer posts saved report in variable ReportFile on call the DesignerSaveCallBack // TODO
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerSaveCallBack">
+            <summary>
+            Gets or sets path to callback page after Save from Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerSaveMethod">
+            <summary>
+            Callback method for saving an edited report by Online Designer
+            Params: reportID, report file name, report, out - message
+            </summary>
+            <example>
+            webReport.DesignerSaveMethod = (string reportID, string filename, string report) =>
+            {
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                string pathToSave = Path.Combine(webRootPath, filename);
+                System.IO.File.WriteAllTextAsync(pathToSave, report);
+                
+                return "OK";
+            };
+            </example>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ReportName">
+            <summary>
+            Report name without extension
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.ReportFileName">
+            <summary>
+            Report file name with extension (*.frx)
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerLocale">
+            <summary>
+            Gets or sets the locale of Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.DesignerConfig">
+            <summary>
+            Gets or sets the text of configuration of Online Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReport.RequestHeaders">
+            <summary>
+            Gets or sets the request headers
+            </summary>
+        </member>
+        <member name="E:FastReport.Web.WebReport.SaveDesignedReport">
+            <summary>
+            Occurs when designed report save is started.
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.OnSaveDesignedReport">
+            <summary>
+            Runs on designed report save
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.WebReport.SetScriptSecurity(FastReport.Web.IScriptChecker)">
+            <summary>
+            Sets custom class for checking the report script.
+            </summary>
+            <param name="scriptChecker"></param>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Components.ExportComponent.BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder)">
+            Main function
+        </member>
+        <member name="M:FastReport.Web.Blazor.Components.ReportContainer.OnUpdate(System.Boolean)">
+            <summary>
+            Update ReportContainer
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.ExportBand(FastReport.BandBase)">
+            <inheritdoc/>
+        </member>
+        <member name="F:FastReport.Web.Blazor.Export.BlazorExport.OnClick">
+            <summary>
+            Sets an onclick event handler
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.EmbeddedImages">
+            <summary>
+            Gets or sets images, embedded in html (hash:base64Image)
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.StylePrefix">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.WebImagePrefix">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.PreparedPages">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.PageBreaks">
+            <summary>
+            Enable or disable the breaks between pages in print preview when single page mode is enabled
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.Pictures">
+            <summary>
+            Enable or disable the pictures in HTML export
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.EmbedPictures">
+            <summary>
+            Enable or disable embedding pictures in HTML export
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.SinglePage">
+            <summary>
+            Enable or disable the single HTML page creation
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.ImageFormat">
+            <summary>
+            Gets or sets the image format.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorExport.EnableMargins">
+            <summary>
+            Enable or disable margins for pages.
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.ExportPageBegin(FastReport.ReportPage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.ExportPageEnd(FastReport.ReportPage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.ProcessPageBegin(System.Int32,FastReport.ReportPage)">
+            <summary>
+            Process Page with number p and real page ReportPage
+            </summary>
+            <param name="p"></param>
+            <param name="page"></param>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.ProcessPageEnd">
+            <summary>
+            Process Page with number p and real page ReportPage
+            </summary>
+            <param name="p"></param>
+            <param name="ReportPage"></param>
+        </member>
+        <member name="M:FastReport.Web.Blazor.Export.BlazorExport.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FastReport.Web.Blazor.Export.BlazorExport"/> class.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Blazor.Export.BlazorPageData.Guids">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="F:FastReport.Web.Blazor.Export.ClickType.Empty">
+            <summary>
+            Default value of <see cref="T:FastReport.Web.Blazor.Export.ClickType"/>. 
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerOptions.AllowCustomSqlQueries">
+            <summary>
+            Gets or sets a value indicating whether custom SQL queries can be executed.
+            When set to true, users will be able to specify custom table names and SQL expressions
+            during the database structure loading process.
+            <para>
+            WARNING: Enabling this option may pose security risks. 
+            </para>
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerOptions.EnableIntelliSense">
+            <summary>
+            Gets or sets a value indicating whether Intellisense is enabled.
+            When set to true, Intellisense feature will be enabled in the application.
+            </summary>
+            <remarks>
+            WARNING: Enabling Intellisense requires returning class information from the assembly.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.DesignerOptions.IntelliSenseAssemblies">
+            <summary>
+            Gets or sets the list of assemblies needed for IntelliSense highlighting.
+            </summary>
+            <remarks>
+            The assemblies listed here will be used to provide class information for IntelliSense highlighting.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.DesignerOptions.OnWebReportCreated">
+            <summary>
+            Callback that is invoked after a new <see cref="T:FastReport.Web.WebReport"/> is created from the Online Designer.
+            Allows customizing or configuring the report before it is rendered or processed further.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerOptions.OnWebReportCreatedAsync">
+            <summary>
+            Asynchronous callback that is invoked after a new <see cref="T:FastReport.Web.WebReport"/> is created from the Online Designer.
+            Allows customizing or configuring the report before it is rendered or processed further.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.Locale">
+            <summary>
+            Gets or sets the locale of Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.ScriptCode">
+            <summary>
+            Enable code editor in the Report Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.Config">
+            <summary>
+            Gets or sets the json of configuration of Online Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.Path">
+            <summary>
+            Gets or sets path to the Report Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.SaveMethod">
+            <summary>
+            Callback method for saving an edited report by Online Designer
+            Params: reportID, report file name, report, out - message
+            </summary>
+            <example>
+            <code>
+            webReport.Designer.SaveMethod = (string reportID, string filename, string report) =>
+            {
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                string pathToSave = Path.Combine(webRootPath, filename);
+                System.IO.File.WriteAllText(pathToSave, report);
+                
+                return "OK";
+            };
+            </code>
+            </example>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.SaveMethodAsync">
+             <summary>
+             Async callback method for saving an edited report by Online Designer
+             <example>
+             <code>
+            webReport.Designer.SaveMethodAsync = async (reportID, filename, report, token) =>
+            {
+                string webRootPath = _hostingEnvironment.WebRootPath;
+            
+                string pathToSave = Path.Combine(webRootPath, "DesignedReports", "AsyncReports", filename);
+                if (!Directory.Exists(pathToSave))
+                    Directory.CreateDirectory(Path.GetDirectoryName(pathToSave));
+                    
+                await System.IO.File.WriteAllTextAsync(pathToSave, report, token);
+                return "OK";
+            };
+             </code>
+             </example>
+             </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.SavePath">
+            <summary>
+            Gets or sets path to a folder for save designed reports
+            If value is empty then designer posts saved report in variable ReportFile on call the DesignerSaveCallBack // TODO
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.DesignerSettings.SaveCallBack">
+            <summary>
+            Gets or sets path to callback page after Save from Designer
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.Show">
+            <summary>
+            Show Exports menu
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ExportTypes">
+            <summary>
+            Used to set exports in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.FontSettings">
+            <summary>
+            Used to change font family, style in export settings.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.FontColor">
+            <summary>
+            Used to change font color in export settings.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.Color">
+            <summary>
+            Used to change window, buttons color in export settings.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.EnableSettings">
+            <summary>
+            Used to on/off export settings.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.PinnedSettingsPosition">
+            <summary>
+            If enabled, the container with the settings will be fixed on the screen and will be in the foreground.
+            </summary>
+            <remarks>
+            Default value: false
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.Default">
+            <summary>
+            Get an instance of ExportMenuSettings with default exports 
+            <para>Default : Prepared, Pdf, Excel2007, Word2007, Text, Rtf, Xps, Ods, Odt, XmlExcel, Csv</para>
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.All">
+            <summary>
+            Get an instance of ExportMenuSettings with all exports 
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowPreparedReport">
+            <summary>
+            Switch a visibility of prepared report export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowPdfExport">
+            <summary>
+            Switches a visibility of PDF (Adobe Acrobat) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowExcel2007Export">
+            <summary>
+            Switches a visibility of Excel 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowWord2007Export">
+            <summary>
+            Switches a visibility of Word 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowPowerPoint2007Export">
+            <summary>
+            Switches a visibility of PowerPoint 2007 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowTextExport">
+            <summary>
+            Switch a visibility of text (plain text) export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowRtfExport">
+            <summary>
+            Switches a visibility of RTF export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowXpsExport">
+            <summary>
+            Switches a visibility of XPS export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowOdsExport">
+            <summary>
+            Switches a visibility of Open Office Spreadsheet (ODS) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowOdtExport">
+            <summary>
+            Switches a visibility of Open Office Text (ODT) export in toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowXmlExcelExport">
+            <summary>
+            Switches a visibility of XML (Excel) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowDbfExport">
+            <summary>
+            Switches a visibility of DBF export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowCsvExport">
+            <summary>
+            Switches visibility the CSV (comma separated values) export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowMhtExport">
+            <summary>
+            Switches visibility the MHT export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowHTMLExport">
+            <summary>
+            Switches visibility the HTML export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowHpglExport">
+            <summary>
+            Switches visibility the HPGL export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowEmailExport">
+            <summary>
+            Switches visibility the Email export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowDxfExport">
+            <summary>
+            Switches visibility the DXF export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowJsonExport">
+            <summary>
+            Switches visibility the Json export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowLaTeXExport">
+            <summary>
+            Switches visibility the LaTeX export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowImageExport">
+            <summary>
+            Switches a visibility of Image export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowPpmlExport">
+            <summary>
+            Switches visibility the PPML export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowPSExport">
+            <summary>
+            Switches visibility the PS export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowXamlExport">
+            <summary>
+            Switches visibility the XAML export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowZplExport">
+            <summary>
+            Switches visibility the ZPL export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowExcel97Export">
+            <summary>
+            Switches visibility the Excel-97 export in toolbar.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ExportMenuSettings.ShowSvgExport">
+            <summary>
+            Switches visibility the SVG export in toolbar.
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Exports">
+            <summary>
+            Used to select exports 
+             </summary>
+        </member>
+        <member name="P:FastReport.Web.FastReportOptions.RoutePathBaseRoot">
+            <summary>
+            Request.PathBase url for API.
+            Default value: "".
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.FastReportOptions.RouteBasePath">
+            <summary>
+            Request.Path part of url for API.
+            Default value: "/_fr".
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.FastReportOptions.Authorize">
+            <summary>
+            A function that determines who can access API.
+            It should return true when the request client has access, false for a 401 to be returned.
+            HttpRequest parameter is the current request.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.FastReportOptions.CacheDuration">
+            <summary>
+            Reports' lifetime in minutes.
+            If report is not used the specified time and there is no references to the object, it will be deleted from cache.
+            Default value: "15".
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.ToolbarLocalization.#ctor">
+            <summary>
+            Default toolbar localization
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.ToolbarLocalization.#ctor(FastReport.Web.Application.IWebRes)">
+            <summary>
+            Localized toolbar items
+            </summary>
+            <param name="Res">WebResources for localization</param>
+            <example>
+               new ToolbarLocalization(webReport.Res);
+            </example>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.Exports">
+            <summary>
+            ExportMenu settings
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.ShowPrint">
+            <summary>
+            Show Print menu
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.Sticky">
+            <summary>
+            If enabled, the toolbar will follow the scrolling of the report.
+            </summary>
+            <remarks>
+            Default value: false
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.Color">
+            <summary>
+            Use to change ToolbarColor,
+            Default value Color.WhiteSmoke
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.DropDownMenuColor">
+            <summary>
+            Use to change Toolbar DropDownMenuColor,
+            Default value Color.White
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.DropDownMenuTextColor">
+            <summary>
+            Use to change Toolbar DropDownMenuText Color,
+            Default value Color.Black
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.Position">
+            <summary>
+            Use to change Toolbar Position in report,
+            Default value Position.Top
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.Roundness">
+            <summary>
+            Use to add Roundness to Toolbar,
+            Default value RoundnessEnum.High
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.ContentPosition">
+            <summary>
+            Use to change content position in Toolbar,
+            Default value ContentPositions.Center
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.IconColor">
+            <summary>
+            Use to change Icons color in Toolbar,
+            Default value IconColors.Black
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.IconTransperency">
+            <summary>
+            Use to add Transparency in icon Toolbar,
+            Default value IconTransparencyEnum.None
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.FontSettings">
+            <summary>
+            Use to change Font in Toolbar,
+            Default value null
+            <para>Example syntax : new Font("Arial", 14 , FontStyle.Bold)</para>
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.ToolbarSettings.SearchHighlight">
+            <summary>
+            Use to change search highlight,
+            Default value Color.Yellow
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.ToolbarSettings.InsertToolbarElement(FastReport.Web.Toolbar.ToolbarElement)">
+            <summary>
+            Adds an item to the toolbar
+            </summary>
+            <param name="element">Any inheritor of ToolbarElement. Can be a TolbarButton, ToolbarSelect, or ToolbarInput</param>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ToolbarButton">
+            <summary>
+            Button for the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarButton.Image">
+            <summary>
+            The image of the button that appears in the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarButton.OnClickAction">
+            <summary>
+            Action that is triggered when the button is clicked
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.Name">
+            <summary>
+            Name of button required to interact with the element list
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.Enabled">
+            <summary>
+            Defines the visibility of the button on the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.ElementCustomStyle">
+            <summary>
+            Element styles to be specified in the style tag
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.ElementClasses">
+            <summary>
+            Classes to be specified in the class tag for the element
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.Title">
+            <summary>
+            Text to be displayed when the element is hovered over
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElement.Position">
+            <summary>
+            Property by which the buttons in the toolbar will be sorted
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.IClickAction">
+            <summary>
+            Action that is triggered when the element is clicked
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.IChangeAction">
+            <summary>
+            Action that is triggered when the element is changed
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ElementScript">
+            <summary>
+            A script that is called when you click on element
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ElementScript.Script">
+            <summary>
+            A script that is called when you click on element
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ElementClickAction">
+            <summary>
+            Action that is called when you click on an item
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ElementClickAction.OnClickAction">
+            <summary>
+            Action that is called when you click on an item. WebReport - WebReport for which the button is made
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ElementChangeAction">
+            <summary>
+            Action that is called when item changed
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ElementChangeAction.OnChangeAction">
+            <summary>
+            Action that is called when item changed. WebReport - WebReport for which the button is mad
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ToolbarElementImage">
+            <summary>
+            The image that will be displayed in the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElementImage.Base64">
+            <summary>
+            Toolbar element image in Base64 format
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarElementImage.Url">
+            <summary>
+            Link to the image of the toolbar element
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ToolbarInput">
+            <summary>
+            Input field for the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarInput.InputType">
+            <summary>
+            Type of input, which is specified in the type tag
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarInput.InputCustomStyle">
+            <summary>
+            Styles that are specified in the style tag for input
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarInput.InputDefaultValue">
+            <summary>
+            Standard value for input
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarInput.OnChangeAction">
+            <summary>
+            Action to be triggered when user changes input value
+            
+            Can be either ElementScript or ElementChangeAction
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ToolbarSelect">
+            <summary>
+            Element that opens a drop-down list when you hover over it
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelect.Image">
+            <summary>
+            The image of the button that appears in the toolbar
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelect.Items">
+            <summary>
+            Contains items that will be displayed in the drop-down list
+            
+            List of ToolbarSelectItems
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Toolbar.ToolbarSelectItem">
+            <summary>
+            The element that appears in the drop-down list
+            </summary> 
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelectItem.Name">
+            <summary>
+            Name of toolbar item required to interact with the items list
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelectItem.Title">
+            <summary>
+            The inscription displayed in the drop-down list
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelectItem.Enabled">
+            <summary>
+            Defines the visibility of the item in the drop-down list
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.Toolbar.ToolbarSelectItem.OnClickAction">
+            <summary>
+            Action that is triggered when the item is clicked
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.CacheOptions">
+            <summary>
+            Contains settings that define how reports are cached, including storage duration and caching strategy.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.EmailExportOptions">
+            <summary>
+            SMTP server settings for sending the report by e-mail
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.Designer">
+            <summary>
+            Provides options related to the Online Report Designer configuration and behavior.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.AllowCustomSqlQueries">
+            <summary>
+            Gets or sets a value indicating whether custom SQL queries can be executed.
+            When set to true, users will be able to specify custom table names and SQL expressions
+            during the database structure loading process.
+            <para>
+            WARNING: Enabling this option may pose security risks. 
+            </para>
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.EnableOnlineDesignerIntelliSense">
+            <summary>
+            Gets or sets a value indicating whether Intellisense is enabled.
+            When set to true, Intellisense feature will be enabled in the application.
+            </summary>
+            <remarks>
+            WARNING: Enabling Intellisense requires returning class information from the assembly.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.WebReportOptions.IntelliSenseAssemblies">
+            <summary>
+            Gets or sets the list of assemblies needed for IntelliSense highlighting.
+            </summary>
+            <remarks>
+            The assemblies listed here will be used to provide class information for IntelliSense highlighting.
+            </remarks>
+        </member>
+        <member name="T:FastReport.Web.SaveDesignedReportEventArgs">
+            <summary>
+            Event arguments for Save report from Designer
+            </summary>
+        </member>
+        <member name="F:FastReport.Web.SaveDesignedReportEventArgs.Stream">
+            <summary>
+            Contain the stream with designed report
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.Services.IConnectionsService">
+            <summary>
+            Interface for working with connections. Allows to get connection string properties, connected tables, connection types and create a connection string.
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetConnectionStringPropertiesJSON(System.String,System.String,System.Boolean@)">
+            <summary>
+            Returns JSON string of connection string properties.
+            </summary>
+            <param name="isError">Out variable, which helps to determine if an error is returned</param>
+            <returns>Returns JSON string with connection string properties. If an error is detected, it returns the error text.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.CreateConnectionStringJSON(System.String,Microsoft.AspNetCore.Http.IFormCollection,System.Boolean@)">
+            <summary>
+            Create connection string and returns json with this connection string
+            </summary>
+            <param name="isError">Out variable, which helps to determine if an error is returned</param>
+            <returns>Returns JSON with сonnection string. If an error is detected, it returns the error text.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetConnectionTables(System.String,System.String,System.Collections.Generic.List{FastReport.Web.Services.CustomViewModel})">
+            <summary>
+            Returns the list of connected tables by connection type and connection string
+            </summary>
+            <param name="isError">Returns a bool variable which means whether the error is returned or not</param>
+            <returns>Returns JSON with connected tables</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetConnectionTables(FastReport.Web.WebReport,System.String,System.String,System.Collections.Generic.List{FastReport.Web.Services.CustomViewModel})">
+            <summary>
+            Returns the list of connected tables by connection type and connection string
+            </summary>
+            <returns>Returns JSON with connected tables</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetUpdatedTableByReportId(FastReport.Web.WebReport,FastReport.Web.Services.UpdateTableParams)">
+            <summary>
+            Updates a table within a web report based on the provided parameters.
+            </summary>
+            <param name="webReport">The WebReport object containing the table to be updated.</param>
+            <param name="parameters">The parameters specifying the table name, SQL query, and update parameters.</param>
+            <returns>A string representation of the updated table.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetUpdatedTableByConnectionString(FastReport.Web.WebReport,System.String,System.String,FastReport.Web.Services.UpdateTableParams)">
+            <summary>
+            Updates a table within a database using the provided connection string and parameters.
+            </summary>
+            <param name="webReport">The WebReport object containing the table to be updated.</param>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="connectionType">The type of connection.</param>
+            <param name="parameters">The parameters specifying the table name, SQL query, and update parameters.</param>
+            <returns>A string representation of the updated table.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetConnectionTypes(System.Boolean)">
+            <summary>
+            Returns the list of connection types
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.Services.IConnectionsService.GetParameterTypes(System.String,System.String@)">
+            <summary>
+            Returns the list of parameter types by connection type.
+            </summary>
+            <param name="connectionType">The type of connection.</param>
+            <param name="errorMsg">Error message.</param>
+            <returns></returns>
+        </member>
+        <member name="T:FastReport.Web.Services.IDesignerUtilsService">
+            <summary>
+            The interface that provides utilities for the Online Designer. Allows to get MsChart Template, component properties and report functions
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetMSChartTemplateXML(System.String)">
+            <summary>
+            Searches for a template by name and returns an XML string with that template
+            </summary>
+            <param name="templateName">Name of the template. Like Blue, Black, etc.</param>
+            <returns>Returns the XML string with the MsChart template. If the template is not found, it returns null</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetPropertiesJSON(System.String)">
+            <summary>
+            Returns JSON string of connection string properties.
+            </summary>
+            <param name="componentName">The FastReport component whose properties you want to get. Like TextObject, PictureObject etc.</param>
+            <returns>Returns JSON string with FastReport component properties. If the component is not found - returns null</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetFunctions(FastReport.Report)">
+            <summary>
+            Retrieves the report functions and returns them to string
+            </summary>
+            <param name="report">Report, the functions of which are to be obtained</param>
+            <returns>Returns a string with the report functions</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetConfig(FastReport.Web.WebReport)">
+            <summary>
+            Returns the Online Designer configuration
+            </summary>
+            <param name="webReport">WebReport configuration of which is to be returned</param>
+            <returns>String in JSON format with configuration for Online Designer</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.DesignerObjectPreview(FastReport.Web.WebReport,System.String)">
+            <summary>
+            Retrieves a designer object preview.
+            </summary>
+            <param name="webReport">The WebReport object.</param>
+            <param name="reportObj">The report object.</param>
+            <returns>Returns a string representing the designer object preview.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetClassDetailsJson(System.String)">
+            <summary>
+            Gets class details in JSON format.
+            </summary>
+            <param name="className">The name of the class.</param>
+            <returns>Returns class details in JSON format.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IDesignerUtilsService.GetNamespacesInfoJson(System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <summary>
+            Gets namespaces information in JSON format.
+            </summary>
+            <param name="namespaces">The collection of namespaces.</param>
+            <returns>Returns namespaces information in JSON format.</returns>
+        </member>
+        <member name="T:FastReport.Web.Services.IExportsService">
+            <summary>
+            Interface for using the export service. Allows you to export a report and get the export settings window.
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IExportsService.ExportReport(FastReport.Web.WebReport,System.Collections.Generic.KeyValuePair{System.String,System.String}[],System.String,System.String@)">
+            <summary>
+            Exports the report in a specified format with specified parameters and returns an array of bytes - the exported report file
+            </summary>
+            <param name="webReport">The FastReport component whose properties you want to get. Like TextObject, PictureObject etc.</param>
+            <returns>Returns an array of bytes - the exported report. Returns null if there is an error.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IExportsService.GetExportSettings(FastReport.Web.WebReport,System.String)">
+            <summary>
+            Searches the settings window by format name and returns an HTML string with a modal settings container. 
+            </summary>
+            <param name="webReport">Report, for which the export settings are using</param>
+            <param name="format">Export format. Like "pdf", "html", "image", etc.</param>
+            <returns>Returns an HTML string with the export settings container of the selected format. If the format is not found, it returns an empty string.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IExportsService.ExportEmail(FastReport.Web.WebReport,FastReport.Web.EmailExportParams)">
+            <summary>
+            Creates an email export, assigns parameters to it and sends the email
+            </summary>
+            <param name="webReport">WebReport to be sent</param>
+            <param name="emailExportParameters">Email export settings</param>
+        </member>
+        <member name="T:FastReport.Web.Services.IPrintService">
+            <summary>
+            Interface for printing the report.
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IPrintService.PrintReport(FastReport.Web.WebReport,System.String)">
+            <summary>
+            Prints report
+            </summary>
+            <param name="webReport">WebReport to be printed</param>
+            <param name="printMode">The print mode is "pdf" or "html".</param>
+            <returns>Returns an array of bytes depending on the print mode. File to print from browser if print mode is "html" and pdf file if print mode is "pdf"</returns>
+        </member>
+        <member name="T:FastReport.Web.Services.IReportDesignerService">
+            <summary>
+            Interface for interacting with reports. Allows you to design and save WebReport
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportDesignerService.DesignerMakePreviewAsync(FastReport.Web.WebReport,System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously returns a report preview string for Online Designer
+            </summary>
+            <param name="webReport">WebReport preview of which you want to return</param>
+            /// <param name="requestBody">Request body with report</param>
+            <param name="cancellationToken">Cancellation Token</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportDesignerService.SaveReportAsync(FastReport.Web.WebReport,FastReport.Web.Services.SaveReportServiceParams,System.Threading.CancellationToken)">
+            <summary>
+            A method for saving the report
+            </summary>
+            <param name="webReport">Report to be saved</param>
+            <param name="params">Parameters for saving the report</param>
+            <param name="cancellationToken">Cancellation Token</param>
+            <returns>Returns the object with the response</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportDesignerService.GetDesignerReport(FastReport.Web.WebReport)">
+            <summary>
+            Returns the report for Online Designer
+            </summary>
+            <param name="webReport">WebReport to be displayed in the designer</param>
+            <returns>Returns the report string for Online Designer</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportDesignerService.GetPOSTReportStringAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously returns a string with the report
+            </summary>
+            <param name="requestBody">Request body with report</param>
+            <param name="cancellationToken">Cancellation Token</param>
+            <returns>String with the report</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportDesignerService.CreateReport(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously creates a report with provided report stream
+            </summary>
+            <param name="requestBody">Request body with report</param>
+            <param name="cancellationToken">Cancellation Token</param>
+            <returns>WebReport Id</returns>
+        </member>
+        <member name="T:FastReport.Web.Services.IReportService">
+            <summary>
+            Interface for interacting with reports. Allows you to preview and search WebReport
+            </summary>
+            <remarks>
+            The interface may change over time
+            </remarks>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportService.GetReportAsync(FastReport.Web.WebReport,FastReport.Web.Services.GetReportServiceParams,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously returns a report for Preview on the Web
+            </summary>
+            <param name="webReport">Report a preview of which you want to create</param>
+            <param name="params">Report preview creation options</param>
+            <returns>Returns the HTML string of the report preview</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportService.TryFindWebReport(System.String,FastReport.Web.WebReport@)">
+            <summary>
+            Finds the report by ID
+            </summary>
+            <param name="reportId">The ID of the report you want to find</param>
+            <param name="webReport">Found report</param>
+            <returns>WebReport</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportService.SearchText(FastReport.Web.WebReport,FastReport.Web.Services.ReportSearchParams)">
+            <summary>
+            Forced transition to the report page containing the required text
+            </summary>
+            <param name="webReport">The report that is being searched for</param>
+            <param name="params">Search зarameters</param>
+            <returns>Returns a flag that determines whether the text you are looking for has been found</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportService.Touch(System.String)">
+            <summary>
+            Touches the report to reset its sliding expiration in the cache.
+            </summary>
+            <param name="reportId">The unique identifier of the report.</param>
+            <returns><c>true</c> if a report with the provided ID was found; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IReportService.InvokeCustomElementAction(FastReport.Web.WebReport,System.String,System.String)">
+            <summary>
+            Returns the report after clicking on an element with id = elementId
+            </summary>
+            <param name="webReport">Report to which the action applies</param>
+            <param name="elementId">ID of the clicked item</param>
+            <returns>Updated WebReport</returns>
+        </member>
+        <member name="T:FastReport.Web.Services.IResourceLoader">
+            <summary>
+            Loads necessary WebReport resources such as toolbar images, scripts and other
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.Services.IResourceLoader.GetContent(System.String)">
+            <summary>
+            Returns the requested UTF8 string representation resource.
+            </summary>
+            <param name="name">Requested resource name</param>
+            <returns>A UTF8 string representation resource. If the resource is not found - returns null</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IResourceLoader.GetContentAsync(System.String)">
+            <summary>
+            Asynchronously returns the requested UTF8 string representation resource.
+            </summary>
+            <param name="name">Requested resource name</param>
+            <returns>A UTF8 string representation resource. If the resource is not found - returns null</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IResourceLoader.GetBytes(System.String)">
+            <summary>
+            Returns the requested resource as byte array.
+            </summary>
+            <param name="name">Requested resource name</param>
+            <returns>Byte array of requested resource. If the resource is not found - returns null</returns>
+        </member>
+        <member name="M:FastReport.Web.Services.IResourceLoader.GetBytesAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously returns the requested resource as byte array.
+            </summary>
+            <param name="name">Requested resource name</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>Byte array of requested resource. If the resource is not found - returns null</returns>
+        </member>
+        <member name="T:FastReport.Web.Services.ITextEditService">
+            <summary>
+            The interface may change over time
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.Services.ITextEditService.GetTemplateTextEditForm(System.String,FastReport.Web.WebReport)">
+            <summary>
+            Returns a string with template text edit form
+            </summary>
+            <param name="click">Click options - page, coordinates</param>
+            <param name="webReport">WebReport clicked on</param>
+            <returns></returns>
+        </member>
+        <member name="T:FastReport.Web.Services.InternalResourceLoader">
+            <summary>
+            Internal implementation of <see cref="T:FastReport.Web.Services.IResourceLoader"/>.
+            Loads requested resources from embedded resources of the current assembly
+            </summary>
+        </member>
+        <member name="T:FastReport.Web.EmailExportOptions">
+            <summary>
+            SMTP server options for sending the report by mail
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.EnableSSL">
+            <summary>
+            Determines whether to enable the SSL protocol.
+            </summary>
+            <remarks>
+            The default value for this property is <b>false</b>.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Username">
+            <summary>
+            SMTP account username.
+            </summary>
+            <remarks>
+            Specify the <see cref="P:FastReport.Web.EmailExportOptions.Username"/> and <see cref="P:FastReport.Web.EmailExportOptions.Password"/> properties if your host requires authentication.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.MessageTemplate">
+            <summary>
+            Template that will be used to create a new message.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Name">
+            <summary>
+            The name that will appear next to the address from which the e-mail is sent.
+            </summary>
+            <remarks>
+            This property contains your name (for example, "John Smith").
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Host">
+            <summary>
+            SMTP host name or IP address.
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Address">
+            <summary>
+            The address from which the e-mail will be sent
+            </summary>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Password">
+            <summary>
+            SMTP server password.
+            </summary>
+            <remarks>
+            Specify the <see cref="P:FastReport.Web.EmailExportOptions.Username"/> and <see cref="P:FastReport.Web.EmailExportOptions.Password"/> properties if your host requires
+            authentication.
+            </remarks>
+        </member>
+        <member name="P:FastReport.Web.EmailExportOptions.Port">
+            <summary>
+            SMTP port.
+            </summary>
+            <remarks>
+            The default value for this property is <b>25</b>.
+            </remarks>
+        </member>
+        <member name="T:FastReport.Web.IScriptChecker">
+            <summary>
+            Interface for overriding the standard check of the report script
+            <see cref="M:FastReport.Web.IScriptChecker.IsValid(FastReport.Language,System.String,System.String[],FastReport.Report)"/>
+            </summary>
+        </member>
+        <member name="M:FastReport.Web.IScriptChecker.IsValid(FastReport.Language,System.String,System.String[],FastReport.Report)">
+            <summary>
+            Method for checking the report script
+            </summary>
+            <param name="lang">Report script language</param>
+            <param name="reportScript">Report script</param>
+            <param name="references">Referenced assemblies</param>
+            <param name="report">Report</param>
+            <returns>Returns true if the report passed the validation check</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.FastReportServiceCollectionExtensions.AddFastReport(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds FastReport services to the specified Microsoft.Extensions.DependencyInjection.IServiceCollection
+            </summary>
+            <param name="services"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.FastReportServiceCollectionExtensions.AddFastReport(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{FastReport.Web.WebReportOptions})">
+            <summary>
+            Adds FastReport services to the specified Microsoft.Extensions.DependencyInjection.IServiceCollection
+            </summary>
+            <param name="services"></param>
+            <param name="setupAction"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+    </members>
+</doc>

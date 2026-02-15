@@ -1,0 +1,2054 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\showorderreq.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\showorderreq.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\resources\\resourcepages.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\resources\\resourcepages.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\orderstockgranty.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\orderstockgranty.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\print.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\print.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\showorder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\showorder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\wwwroot\\assets\\css\\style.bundle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\wwwroot\\assets\\css\\style.bundle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\shared\\_layout_m_rtl.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\shared\\_layout_m_rtl.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\creategranty.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\creategranty.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\orderstock.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\orderstock.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tblwfworderprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tblwfworderprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tbllnsorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tbllnsorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\middleware\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\middleware\\helper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lenstypers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lenstypers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211213_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211213_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211211_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211211_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211212_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211212_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\steps\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\steps\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211208_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211208_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\stepscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\stepscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211209_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211209_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\entityframeworkrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\entityframeworkrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\process\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\process\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lensindexs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lensindexs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tblwfwprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tblwfwprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lensindexscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lensindexscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\steps\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\steps\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\tblwfworderprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\tblwfworderprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\sphcylrescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\sphcylrescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\resources\\resourcealert.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\resources\\resourcealert.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\mappingimplementation\\tbllnsorderitemconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\mappingimplementation\\tbllnsorderitemconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\mappingimplementation\\tblclrdefineobjectconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\mappingimplementation\\tblclrdefineobjectconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\dtos\\tbllnsorderitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\dtos\\tbllnsorderitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\dtos\\tblclrdefineobjectdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\dtos\\tblclrdefineobjectdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\mapping\\tblclrdefineobject.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\mapping\\tblclrdefineobject.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\tblclrdefineobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\tblclrdefineobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\tbllnsorderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\tbllnsorderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\mapping\\tbllnsorderitem.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\mapping\\tbllnsorderitem.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\dbcontext\\adelmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\dbcontext\\adelmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\entityframeworkunitofworkfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\entityframeworkunitofworkfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\entityframeworkunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\entityframeworkunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\tbllnsorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\tbllnsorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\enums\\statusrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\enums\\statusrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\enums\\statusorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\enums\\statusorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\listreqorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\listreqorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\itblwfworderprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\itblwfworderprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\itblwfworderprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\itblwfworderprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\tblwfwprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\tblwfwprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseinterface\\itblwfworderprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseinterface\\itblwfworderprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\mappingimplementation\\tblwfworderprocessstepconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\mappingimplementation\\tblwfworderprocessstepconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\orders\\listorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\orders\\listorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tbllnssphcylservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tbllnssphcylservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\steps\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\steps\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\processcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\processcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\enums\\procedure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\enums\\procedure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\process\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\process\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\process\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\process\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\dtos\\tblwfwprocessstepdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\dtos\\tblwfwprocessstepdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\mappingimplementation\\tblwfwprocessstepconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\mappingimplementation\\tblwfwprocessstepconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\mapping\\tblwfwprocessstep.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\mapping\\tblwfwprocessstep.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211207_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211207_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\tblwfwprocessstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\tblwfwprocessstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lenstyperlensindexrs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lenstyperlensindexrs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lensindexrsphs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lensindexrsphs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\sphcylres\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\sphcylres\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lensindexrsphscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lensindexrsphscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\brands\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\brands\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\brandlenstypers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\brandlenstypers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lenstyperlensindexrscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lenstyperlensindexrscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\brandlenstyperscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\brandlenstyperscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\designtypelensindexs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\designtypelensindexs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\brandlenstypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\brandlenstypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lensindexmaterialtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lensindexmaterialtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\designtypelensindexscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\designtypelensindexscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lenstypedesigntypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lenstypedesigntypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lenstypedesigntypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lenstypedesigntypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lensindexmaterialtypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lensindexmaterialtypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\brandlenstypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\brandlenstypes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\rolerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\rolerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\materialtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\materialtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\lenstypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\lenstypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\controllers\\coatingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\controllers\\coatingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\users\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\users\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\sphs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\sphs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lensindexmaterialtypes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lensindexmaterialtypes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lenstypedesigntypes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lenstypedesigntypes\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\migrations\\_202508211203_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\migrations\\_202508211203_createtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\sphcylres\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\sphcylres\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseinterface\\itbllnsorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseinterface\\itbllnsorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\lensindexmaterialtypes\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\lensindexmaterialtypes\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tbllnslensindexmaterialtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tbllnslensindexmaterialtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.presntation\\views\\sphcylres\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DD87CD45-A608-4372-85F4-7E952209C56B}|HamrahanSystem.Presntation\\HamrahanSystem.Presntation.csproj|solutionrelative:hamrahansystem.presntation\\views\\sphcylres\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\mapping\\tbldefineservice.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\mapping\\tbldefineservice.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseinterface\\itblclrdefineobjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseinterface\\itblclrdefineobjectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\itbllnsorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\itbllnsorderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\itblwfwprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\itblwfwprocessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\dependencyinjection\\servicecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\dependencyinjection\\servicecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\dependencyinjection\\servicecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\dependencyinjection\\servicecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E6B791D-39AC-4CE8-91EE-F14AA15CFADB}|HamrahanSystem.Extention\\HamrahanSystem.Extention.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.extention\\extensions\\datetimeextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E6B791D-39AC-4CE8-91EE-F14AA15CFADB}|HamrahanSystem.Extention\\HamrahanSystem.Extention.csproj|solutionrelative:hamrahansystem.extention\\extensions\\datetimeextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E6B791D-39AC-4CE8-91EE-F14AA15CFADB}|HamrahanSystem.Extention\\HamrahanSystem.Extention.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.extention\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E6B791D-39AC-4CE8-91EE-F14AA15CFADB}|HamrahanSystem.Extention\\HamrahanSystem.Extention.csproj|solutionrelative:hamrahansystem.extention\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\dtos\\other\\roledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\dtos\\other\\roledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\mappingimplementation\\userconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\mappingimplementation\\userconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\tbllnsorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\tbllnsorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\viewsallistcustomerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\viewsallistcustomerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseimplementation\\tbllnsbrandservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseimplementation\\tbllnsbrandservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.infrastructure\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39FED43-1107-4A49-8D11-E728E11BFFC8}|HamrahanSystem.Infrastructure\\HamrahanSystem.Infrastructure.csproj|solutionrelative:hamrahansystem.infrastructure\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseinterface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseinterface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\mapping\\tblwfwrolestep.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\mapping\\tblwfwrolestep.configuration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\tblwfwrolestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\tblwfwrolestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\efmodel\\model\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\efmodel\\model\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.application\\usecaseinterface\\itblwfwprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6625F48-4CF3-4B28-B724-076361A948C2}|HamrahanSystem.Application\\HamrahanSystem.Application.csproj|solutionrelative:hamrahansystem.application\\usecaseinterface\\itblwfwprocessstepservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|d:\\d\\project\\hamrahansystemgohar\\adellens web\\hamrahansystem\\hamrahansystem.domain\\repositoryinterface\\itblwfwprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD636C1B-C624-4C8B-9AE6-C8DD083D43FD}|HamrahanSystem.Domain\\HamrahanSystem.Domain.csproj|solutionrelative:hamrahansystem.domain\\repositoryinterface\\itblwfwprocesssteprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 17,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Print.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\Print.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\Print.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\Print.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\Print.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T22:05:25.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ResourcePages.resx",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Resources\\ResourcePages.resx",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Resources\\ResourcePages.resx",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Resources\\ResourcePages.resx",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Resources\\ResourcePages.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-11-02T19:42:12.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderStockGranty.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\OrderStockGranty.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\OrderStockGranty.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\OrderStockGranty.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\OrderStockGranty.cshtml",
+              "ViewState": "AgIAACsBAAAAAAAAAAAAAMAAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-09T07:31:49.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Program.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Program.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Program.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Program.cs",
+              "ViewState": "AgIAAIQAAAAAAAAAAADgv5UAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T20:59:31.95Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_Layout_M_Rtl.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Shared\\_Layout_M_Rtl.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Shared\\_Layout_M_Rtl.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Shared\\_Layout_M_Rtl.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Shared\\_Layout_M_Rtl.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAB8AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:53:53.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\OrdersController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\OrdersController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\OrdersController.cs",
+              "ViewState": "AgIAANkAAACAmZmZmRkwwIYAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T19:08:07.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TblLnsOrderService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsOrderService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsOrderService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsOrderService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsOrderService.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAiwHcAAAB+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T08:57:48.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ShowOrderReq.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ShowOrderReq.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\ShowOrderReq.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ShowOrderReq.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\ShowOrderReq.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAArwCsAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T18:53:04.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "style.bundle.css",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.css",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.css",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.css",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-30T07:32:57.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ShowOrder.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ShowOrder.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\ShowOrder.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ShowOrder.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\ShowOrder.cshtml",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T10:36:56.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "style.bundle.rtl.css",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\wwwroot\\assets\\css\\style.bundle.rtl.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-30T07:33:00.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "OrderStock.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\OrderStock.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\OrderStock.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\OrderStock.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\OrderStock.cshtml",
+              "ViewState": "AgIAANsAAAAAAAAAAAAAAPAAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-09T08:07:43.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "createGranty.js",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\createGranty.js",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\createGranty.js",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\createGranty.js",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\wwwroot\\assets\\js\\custom\\apps\\invoices\\createGranty.js",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAB4AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-14T09:17:20.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "_202508211211_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211211_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211211_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211211_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211211_CreateTables.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T19:10:25.633Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TblWfwOrderProcessStepService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblWfwOrderProcessStepService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblWfwOrderProcessStepService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblWfwOrderProcessStepService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblWfwOrderProcessStepService.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAA2wEYAAACCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:20:03.169Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\appsettings.json",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\appsettings.json",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\appsettings.json",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-31T12:37:15.998Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "_202508211212_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211212_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211212_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211212_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211212_CreateTables.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACUAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T19:10:36.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Helper.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Middleware\\Helper.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Middleware\\Helper.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Middleware\\Helper.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Middleware\\Helper.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T09:11:58.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeRs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensTypeRs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeRs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensTypeRs\\Index.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAC0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-15T19:36:26.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Steps\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Steps\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T13:39:17.869Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "_202508211213_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211213_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211213_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211213_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211213_CreateTables.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-03T07:55:36.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "_202508211208_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211208_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211208_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211208_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211208_CreateTables.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAA2wBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T12:38:42.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "StepsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\StepsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\StepsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\StepsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\StepsController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAiwBUAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:28.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "_202508211209_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211209_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211209_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211209_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211209_CreateTables.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAA2wBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:30:37.127Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "EntityFrameworkRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkRepository.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAADgvy4AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T11:39:36.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "TblWfwProcessStepService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblWfwProcessStepService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblWfwProcessStepService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblWfwProcessStepService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblWfwProcessStepService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAWwBwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T11:47:39.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "TblWfwOrderProcessStepRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblWfwOrderProcessStepRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\TblWfwOrderProcessStepRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblWfwOrderProcessStepRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\TblWfwOrderProcessStepRepository.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAASwEwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T06:25:04.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Process\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Process\\Index.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-02T19:50:04.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensIndexs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensIndexs\\Index.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAGsAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-02T19:51:05.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "LensIndexsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensIndexsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensIndexsController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAA0wDwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T19:52:35.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Steps\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Steps\\Index.cshtml",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAHIAAACsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T07:56:19.754Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "SphCylResController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\SphCylResController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\SphCylResController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\SphCylResController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\SphCylResController.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAApwGkAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T21:41:35.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAiwEkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T09:47:22.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA3wB0AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:03:36.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Users\\Edit.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Users\\Edit.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Users\\Edit.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Users\\Edit.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACcAAABXAQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-03T10:01:39.879Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-09T12:14:00.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "TblLnsOrderItem.Configuration.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblLnsOrderItem.Configuration.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblLnsOrderItem.Configuration.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblLnsOrderItem.Configuration.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblLnsOrderItem.Configuration.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAA2wEUAAABvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T11:56:21.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "TblLnsOrderItem.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrderItem.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrderItem.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrderItem.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrderItem.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAxwCcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T11:52:37.279Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "TblClrDefineObject.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblClrDefineObject.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\TblClrDefineObject.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblClrDefineObject.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\TblClrDefineObject.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAJYAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T11:54:18.272Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "TblClrDefineObjectDto.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblClrDefineObjectDto.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\DTOs\\TblClrDefineObjectDto.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblClrDefineObjectDto.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\DTOs\\TblClrDefineObjectDto.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAiwDoAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T12:03:01.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "ResourceAlert.resx",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Resources\\ResourceAlert.resx",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Resources\\ResourceAlert.resx",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Resources\\ResourceAlert.resx",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Resources\\ResourceAlert.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-08-31T10:00:24.702Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "TblLnsOrderItemDto.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblLnsOrderItemDto.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\DTOs\\TblLnsOrderItemDto.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblLnsOrderItemDto.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\DTOs\\TblLnsOrderItemDto.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAiwDsAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T12:06:44.143Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "TblClrDefineObjectConverter.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblClrDefineObjectConverter.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\MappingImplementation\\TblClrDefineObjectConverter.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblClrDefineObjectConverter.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\MappingImplementation\\TblClrDefineObjectConverter.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAxwEYAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T12:10:08.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "TblLnsOrderItemConverter.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblLnsOrderItemConverter.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\MappingImplementation\\TblLnsOrderItemConverter.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblLnsOrderItemConverter.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\MappingImplementation\\TblLnsOrderItemConverter.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAiwEgAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T12:11:01.683Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "EntityFrameworkUnitOfWork.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWork.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWork.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWork.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T11:39:21.079Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "TblClrDefineObject.Configuration.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblClrDefineObject.Configuration.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblClrDefineObject.Configuration.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblClrDefineObject.Configuration.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblClrDefineObject.Configuration.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAA2wEQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:13:41.928Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "AdelModel.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\DbContext\\AdelModel.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\DbContext\\AdelModel.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\DbContext\\AdelModel.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\DbContext\\AdelModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T11:37:59.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "EntityFrameworkUnitOfWorkFactory.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWorkFactory.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWorkFactory.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWorkFactory.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\EntityFrameworkUnitOfWorkFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T11:39:15.902Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "TblLnsOrderRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblLnsOrderRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\TblLnsOrderRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblLnsOrderRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\TblLnsOrderRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T09:55:43.179Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "ITblWfwOrderProcessStepService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblWfwOrderProcessStepService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UsecaseInterface\\ITblWfwOrderProcessStepService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblWfwOrderProcessStepService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UsecaseInterface\\ITblWfwOrderProcessStepService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:24:28.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "StatusOrder.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\StatusOrder.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Enums\\StatusOrder.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\StatusOrder.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Enums\\StatusOrder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T07:09:45.974Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "ListReqOrders.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ListReqOrders.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\ListReqOrders.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ListReqOrders.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\ListReqOrders.cshtml",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAEIAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T18:59:36.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "StatusRequest.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\StatusRequest.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Enums\\StatusRequest.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\StatusRequest.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Enums\\StatusRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T07:10:13.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "ITblWfwOrderProcessRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T07:00:08.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "TblWfwProcessRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblWfwProcessRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\TblWfwProcessRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\TblWfwProcessRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\TblWfwProcessRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T09:07:02.879Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "TblWfwOrderProcessStepConverter.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblWfwOrderProcessStepConverter.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\MappingImplementation\\TblWfwOrderProcessStepConverter.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblWfwOrderProcessStepConverter.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\MappingImplementation\\TblWfwOrderProcessStepConverter.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAIA0wBsAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T09:45:47.45Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "ITblWfwOrderProcessStepRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessStepRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessStepRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessStepRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwOrderProcessStepRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:23:49.468Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "ListOrders.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ListOrders.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Orders\\ListOrders.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Orders\\ListOrders.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Orders\\ListOrders.cshtml",
+              "ViewState": "AgIAAHoAAAAAAAAAAAA0wDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T08:43:29.082Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "ProcessController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\ProcessController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\ProcessController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\ProcessController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\ProcessController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:28.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "TblLnsSphCylService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsSphCylService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsSphCylService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsSphCylService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsSphCylService.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAawCkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:27.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "TblWfwProcessStepDto.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblWfwProcessStepDto.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\DTOs\\TblWfwProcessStepDto.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\TblWfwProcessStepDto.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\DTOs\\TblWfwProcessStepDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:37:15.137Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "TblWfwProcessStepConverter.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblWfwProcessStepConverter.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\MappingImplementation\\TblWfwProcessStepConverter.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\TblWfwProcessStepConverter.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\MappingImplementation\\TblWfwProcessStepConverter.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAUwE8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:42:35.741Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Process\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Process\\Create.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T19:47:40.172Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Edit.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Process\\Edit.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Process\\Edit.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Process\\Edit.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T19:49:52.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Edit.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Steps\\Edit.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Steps\\Edit.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Steps\\Edit.cshtml",
+              "ViewState": "AgIAABwAAAAAAAAAAAAuwD4AAABxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T19:50:23.186Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "Procedure.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\Procedure.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Enums\\Procedure.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Enums\\Procedure.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Enums\\Procedure.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:53:00.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "TblWfwProcessStep.Configuration.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwProcessStep.Configuration.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwProcessStep.Configuration.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwProcessStep.Configuration.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwProcessStep.Configuration.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACkAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:27:39.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "TblWfwProcessStep.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblWfwProcessStep.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\TblWfwProcessStep.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblWfwProcessStep.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\TblWfwProcessStep.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAcwDEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T19:25:36.741Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "_202508211207_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211207_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211207_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211207_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211207_CreateTables.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T07:41:53.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 76,
+              "Title": "BrandLensTypeRsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\BrandLensTypeRsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\BrandLensTypeRsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\BrandLensTypeRsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\BrandLensTypeRsController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T06:49:56.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-30T21:41:20.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 77,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\DesignTypeLensIndexs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\DesignTypeLensIndexs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\DesignTypeLensIndexs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\DesignTypeLensIndexs\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:03:41.861Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "LensTypeRLensIndexRsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypeRLensIndexRsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensTypeRLensIndexRsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypeRLensIndexRsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensTypeRLensIndexRsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:30:50.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeRLensIndexRs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensTypeRLensIndexRs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeRLensIndexRs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensTypeRLensIndexRs\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:31:47.8Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Brands\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Brands\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Brands\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Brands\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:32:55.3Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexRSphs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensIndexRSphs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexRSphs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensIndexRSphs\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:34:09.81Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "LensIndexRSphsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexRSphsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensIndexRSphsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexRSphsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensIndexRSphsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:34:57.186Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\BrandLensTypeRs\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\BrandLensTypeRs\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\BrandLensTypeRs\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\BrandLensTypeRs\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T08:01:55.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 86,
+              "Title": "RoleRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\RoleRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\RoleRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\RoleRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\RoleRepository.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAlwC4AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:28.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 78,
+              "Title": "BrandLensTypesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\BrandLensTypesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\BrandLensTypesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\BrandLensTypesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\BrandLensTypesController.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAlwEMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:32:43.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 79,
+              "Title": "LensIndexMaterialTypesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexMaterialTypesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensIndexMaterialTypesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensIndexMaterialTypesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensIndexMaterialTypesController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAkwBQAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:31:44.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 85,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\RolesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAlwDEAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:27.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 80,
+              "Title": "DesignTypeLensIndexsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\DesignTypeLensIndexsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\DesignTypeLensIndexsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\DesignTypeLensIndexsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\DesignTypeLensIndexsController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:27.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 82,
+              "Title": "LensTypeDesignTypesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypeDesignTypesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensTypeDesignTypesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypeDesignTypesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensTypeDesignTypesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-01T19:59:27.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 84,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\BrandLensTypes\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\BrandLensTypes\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\BrandLensTypes\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\BrandLensTypes\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T08:02:27.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 81,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-02T09:21:52.098Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 83,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Index.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Index.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Index.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-30T22:28:34.971Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 93,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensTypeDesignTypes\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T10:02:52.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 89,
+              "Title": "CoatingsController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\CoatingsController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\CoatingsController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\CoatingsController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\CoatingsController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAewDgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T06:56:30.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 88,
+              "Title": "LensTypesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\LensTypesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\LensTypesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\LensTypesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T07:06:44.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 87,
+              "Title": "MaterialTypesController.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\MaterialTypesController.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Controllers\\MaterialTypesController.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Controllers\\MaterialTypesController.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Controllers\\MaterialTypesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T07:07:01.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 91,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Sphs\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Sphs\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Sphs\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Sphs\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T08:46:28.406Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 90,
+              "Title": "test.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Users\\test.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\Users\\test.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\Users\\test.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\Users\\test.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T21:42:32.267Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 92,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAABSwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-31T13:47:40.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 94,
+              "Title": "_202508211203_CreateTables.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211203_CreateTables.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Migrations\\_202508211203_CreateTables.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Migrations\\_202508211203_CreateTables.cs",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Migrations\\_202508211203_CreateTables.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAABYwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T12:42:06.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 95,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Create.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Create.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Create.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFoAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-30T21:41:54.937Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 96,
+              "Title": "ITblLnsOrderService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblLnsOrderService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UsecaseInterface\\ITblLnsOrderService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblLnsOrderService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UsecaseInterface\\ITblLnsOrderService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T10:07:20.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 120,
+              "Title": "ITblWfwProcessStepService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblWfwProcessStepService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UsecaseInterface\\ITblWfwProcessStepService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblWfwProcessStepService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UsecaseInterface\\ITblWfwProcessStepService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T11:47:10.903Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 99,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Edit.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Edit.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\SphCylRes\\Edit.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\SphCylRes\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-30T22:27:53.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 97,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Edit.cshtml",
+              "RelativeDocumentMoniker": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Edit.cshtml",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Edit.cshtml",
+              "RelativeToolTip": "HamrahanSystem.Presntation\\Views\\LensIndexMaterialTypes\\Edit.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAABSwDQAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-30T22:28:40.873Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 98,
+              "Title": "TblLnsLensIndexMaterialTypeService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsLensIndexMaterialTypeService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsLensIndexMaterialTypeService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsLensIndexMaterialTypeService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsLensIndexMaterialTypeService.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAlwDQAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:55:04.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 101,
+              "Title": "ITblClrDefineObjectService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblClrDefineObjectService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UsecaseInterface\\ITblClrDefineObjectService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\ITblClrDefineObjectService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UsecaseInterface\\ITblClrDefineObjectService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T21:52:48.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 100,
+              "Title": "TblDefineService.Configuration.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblDefineService.Configuration.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblDefineService.Configuration.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblDefineService.Configuration.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblDefineService.Configuration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T22:13:39.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 102,
+              "Title": "ITblLnsOrderRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblLnsOrderRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\ITblLnsOrderRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblLnsOrderRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\ITblLnsOrderRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T08:56:12.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 103,
+              "Title": "ITblWfwProcessRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T09:12:29.47Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 107,
+              "Title": "StringExtensions.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Extention\\Extensions\\StringExtensions.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Extention\\Extensions\\StringExtensions.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Extention\\Extensions\\StringExtensions.cs",
+              "RelativeToolTip": "HamrahanSystem.Extention\\Extensions\\StringExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:05:00.401Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 106,
+              "Title": "DatetimeExtensions.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Extention\\Extensions\\DatetimeExtensions.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Extention\\Extensions\\DatetimeExtensions.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Extention\\Extensions\\DatetimeExtensions.cs",
+              "RelativeToolTip": "HamrahanSystem.Extention\\Extensions\\DatetimeExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:08:26.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 104,
+              "Title": "ServiceContainer.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\DependencyInjection\\ServiceContainer.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\DependencyInjection\\ServiceContainer.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\DependencyInjection\\ServiceContainer.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\DependencyInjection\\ServiceContainer.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAA2wEcAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:31:51.518Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 105,
+              "Title": "ServiceContainer.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DependencyInjection\\ServiceContainer.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\DependencyInjection\\ServiceContainer.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DependencyInjection\\ServiceContainer.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\DependencyInjection\\ServiceContainer.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAA2wEcAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T06:30:26.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 109,
+              "Title": "UserConverter.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\UserConverter.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\MappingImplementation\\UserConverter.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\MappingImplementation\\UserConverter.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\MappingImplementation\\UserConverter.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAiwDkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T21:27:49.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 110,
+              "Title": "TblLnsOrder.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrder.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrder.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrder.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\TblLnsOrder.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAEBCwBIAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T12:20:14.256Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 111,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\User.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\User.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\User.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\User.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAQwFgAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T21:09:08.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 108,
+              "Title": "RoleDto.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\Other\\RoleDto.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\DTOs\\Other\\RoleDto.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\DTOs\\Other\\RoleDto.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\DTOs\\Other\\RoleDto.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA2wCMAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T15:54:41.386Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 112,
+              "Title": "ViewSalListCustomerService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\ViewSalListCustomerService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\ViewSalListCustomerService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\ViewSalListCustomerService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\ViewSalListCustomerService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAlwDMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T16:25:33.678Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 113,
+              "Title": "TblLnsBrandService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsBrandService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsBrandService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UseCaseImplementation\\TblLnsBrandService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UseCaseImplementation\\TblLnsBrandService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAcwD4AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-29T15:44:08.854Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 114,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Infrastructure\\Repository\\UserRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Infrastructure\\Repository\\UserRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Infrastructure\\Repository\\UserRepository.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAIA2wC0AAACnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T14:51:39.659Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 115,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\IUserService.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Application\\UsecaseInterface\\IUserService.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Application\\UsecaseInterface\\IUserService.cs",
+              "RelativeToolTip": "HamrahanSystem.Application\\UsecaseInterface\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T20:20:36.395Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 116,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\IUserRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\IUserRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T20:21:40.289Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 119,
+              "Title": "Role.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\Role.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\Role.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\Role.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\Role.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA4wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T16:10:04.645Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 118,
+              "Title": "TblWfwRoleStep.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblWfwRoleStep.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Model\\TblWfwRoleStep.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Model\\TblWfwRoleStep.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Model\\TblWfwRoleStep.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAABlwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T16:11:31.245Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 117,
+              "Title": "TblWfwRoleStep.Configuration.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwRoleStep.Configuration.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwRoleStep.Configuration.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwRoleStep.Configuration.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\EfModel\\Mapping\\TblWfwRoleStep.Configuration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAB/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T16:12:05.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 121,
+              "Title": "ITblWfwProcessStepRepository.cs",
+              "DocumentMoniker": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessStepRepository.cs",
+              "RelativeDocumentMoniker": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessStepRepository.cs",
+              "ToolTip": "D:\\D\\project\\HamrahanSystemGohar\\AdelLens web\\HamrahanSystem\\HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessStepRepository.cs",
+              "RelativeToolTip": "HamrahanSystem.Domain\\RepositoryInterface\\ITblWfwProcessStepRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T11:47:57.789Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

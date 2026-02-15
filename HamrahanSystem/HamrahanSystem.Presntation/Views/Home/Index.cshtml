@@ -1,0 +1,522 @@
+﻿@{
+    ViewData["Title"] = "داشبورد";
+
+    var roles = Context.Session.Get<List<string>>("Roles") ?? new List<string>();
+    var isAdmin = Context.Session.Get<bool?>("IsAdmin") ?? false;
+
+    var quickActions = new List<(string Title, string Description, string Icon, string Url)>();
+    var canUseCustomLens = isAdmin || roles.Contains("OrderReq_Index");
+    var canViewOrderLists = isAdmin || roles.Contains("ListOrder_Index") || roles.Contains("OrderReq_Index");
+
+    if (isAdmin || roles.Contains("OrderStock_Index"))
+    {
+        quickActions.Add(("سفارش عدسی آماده (عمده)", "ثبت سفارش عدسی‌های آماده", "fa fa-gift", Url.Action("OrderStock", "Orders") ?? "#"));
+    }
+    if (isAdmin || roles.Contains("OrderStockGranty_Index"))
+    {
+        quickActions.Add(("عدسی آماده با گارانتی", "ثبت سفارش با کارت گارانتی", "fa fa-shield", Url.Action("OrderStockGranty", "Orders") ?? "#"));
+    }
+    if (isAdmin || roles.Contains("OrderReq_Index"))
+    {
+        quickActions.Add(("عدسی سفارشی", "ثبت سفارش عدسی سفارشی", "fa fa-flask", Url.Action("CustomLensOrder", "Orders") ?? "#"));
+        quickActions.Add(("بررسی سفارش‌ها", "مشاهده و پیگیری سفارش‌ها", "fa fa-search", Url.Action("ListReqOrders", "Orders") ?? "#"));
+    }
+    if (isAdmin || roles.Contains("ListOrder_Index"))
+    {
+        quickActions.Add(("لیست سفارش‌ها", "دسترسی به سفارش‌های ثبت شده", "fa fa-list-alt", Url.Action("ListOrders", "Orders") ?? "#"));
+    }
+}
+
+<style>
+    .dashboard-v1 {
+        --home-bg: #f6f8fc;
+        --home-card: #ffffff;
+        --home-border: #e4e8f2;
+        --home-title: #141a2e;
+        --home-muted: #64748b;
+        --home-primary: #2f80ed;
+        --home-primary-soft: #eaf3ff;
+        --home-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        direction: rtl;
+    }
+
+    .dashboard-v1 .home-card {
+        background: var(--home-card);
+        border: 1px solid var(--home-border);
+        border-radius: 18px;
+        box-shadow: var(--home-shadow);
+    }
+
+    .dashboard-v1 .hero-card {
+        background: linear-gradient(140deg, #2563eb 0%, #1e40af 58%, #132f7a 100%);
+        border-radius: 18px;
+        color: #fff;
+        overflow: hidden;
+        min-height: 285px;
+        border: 0;
+        isolation: isolate;
+    }
+
+    .dashboard-v1 .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 12% 25%, rgba(255, 255, 255, 0.26), transparent 36%),
+                    radial-gradient(circle at 88% 80%, rgba(125, 211, 252, 0.28), transparent 42%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .dashboard-v1 .hero-card .hero-bg {
+        position: absolute;
+        inset-inline-end: -35px;
+        inset-block-end: -30px;
+        width: 360px;
+        opacity: 0.16;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .dashboard-v1 .hero-card .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 2rem;
+    }
+
+    .dashboard-v1 .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .38rem .75rem;
+        border-radius: 999px;
+        font-size: .78rem;
+        font-weight: 600;
+        background: rgba(15, 23, 42, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .dashboard-v1 .hero-card h1 {
+        color: #fff;
+        font-size: clamp(1.2rem, 2.1vw, 1.78rem);
+        line-height: 1.75;
+        margin: 0.9rem 0 0.55rem;
+        font-weight: 800;
+        max-width: 840px;
+    }
+
+    .dashboard-v1 .hero-description {
+        color: rgba(255, 255, 255, 0.88);
+        margin: 0;
+        font-size: .95rem;
+        max-width: 760px;
+        line-height: 1.95;
+    }
+
+    .dashboard-v1 .hero-meta {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
+    .dashboard-v1 .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: .38rem;
+        padding: .35rem .68rem;
+        border-radius: 999px;
+        font-size: .76rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+    }
+
+    .dashboard-v1 .hero-actions {
+        margin-top: 1.15rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .6rem;
+    }
+
+    .dashboard-v1 .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        text-decoration: none;
+        border-radius: 12px;
+        padding: .55rem .95rem;
+        font-size: .82rem;
+        font-weight: 700;
+        transition: .2s ease;
+    }
+
+    .dashboard-v1 .hero-btn-primary {
+        background: #fff;
+        color: #0f3b96;
+        border: 1px solid rgba(255, 255, 255, .8);
+    }
+
+    .dashboard-v1 .hero-btn-primary:hover {
+        transform: translateY(-1px);
+        background: #eef5ff;
+        color: #0f3b96;
+    }
+
+    .dashboard-v1 .hero-btn-ghost {
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, .46);
+        background: rgba(255, 255, 255, .1);
+    }
+
+    .dashboard-v1 .hero-btn-ghost:hover {
+        background: rgba(255, 255, 255, .2);
+        color: #fff;
+    }
+
+    .dashboard-v1 .hero-chip {
+        position: absolute;
+        inset-inline-end: 1.4rem;
+        inset-block-start: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.4rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        font-size: .78rem;
+        background: rgba(255, 255, 255, 0.14);
+        z-index: 3;
+    }
+
+    .dashboard-v1 .quick-title {
+        color: var(--home-title);
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-v1 .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .dashboard-v1 .quick-action {
+        min-height: 120px;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid var(--home-border);
+        background: #fff;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: .2s ease;
+    }
+
+    .dashboard-v1 .quick-action:hover {
+        border-color: #bad6ff;
+        background: var(--home-primary-soft);
+        transform: translateY(-2px);
+    }
+
+    .dashboard-v1 .quick-action i {
+        color: var(--home-primary);
+        font-size: 1.4rem;
+    }
+
+    .dashboard-v1 .quick-action .title {
+        color: var(--home-title);
+        font-weight: 700;
+        font-size: .96rem;
+        line-height: 1.45;
+    }
+
+    .dashboard-v1 .quick-action .desc {
+        color: var(--home-muted);
+        font-size: .78rem;
+    }
+
+    .dashboard-v1 .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .dashboard-v1 .kpi-card {
+        padding: 1.05rem 1rem;
+        border-radius: 14px;
+        border: 1px solid var(--home-border);
+        background: #fff;
+        display: flex;
+        align-items: center;
+        gap: .9rem;
+    }
+
+    .dashboard-v1 .kpi-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .dashboard-v1 .kpi-icon.icon-blue {
+        color: #1d4ed8;
+        background: #dbeafe;
+    }
+
+    .dashboard-v1 .kpi-icon.icon-green {
+        color: #15803d;
+        background: #dcfce7;
+    }
+
+    .dashboard-v1 .kpi-icon.icon-orange {
+        color: #c2410c;
+        background: #ffedd5;
+    }
+
+    .dashboard-v1 .kpi-icon.icon-purple {
+        color: #7e22ce;
+        background: #f3e8ff;
+    }
+
+    .dashboard-v1 .kpi-label {
+        color: var(--home-muted);
+        margin: 0;
+        font-size: .82rem;
+    }
+
+    .dashboard-v1 .kpi-value {
+        color: var(--home-title);
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .dashboard-v1 .activity-card {
+        margin-top: 14px;
+        overflow: hidden;
+    }
+
+    .dashboard-v1 .activity-head {
+        padding: .9rem 1rem;
+        border-bottom: 1px solid var(--home-border);
+        font-size: .95rem;
+        font-weight: 800;
+        color: var(--home-title);
+    }
+
+    .dashboard-v1 .activity-list {
+        margin: 0;
+        padding: .25rem 0;
+        list-style: none;
+    }
+
+    .dashboard-v1 .activity-list li {
+        padding: .75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px dashed #edf1f8;
+    }
+
+    .dashboard-v1 .activity-list li:last-child {
+        border-bottom: 0;
+    }
+
+    .dashboard-v1 .activity-list .label {
+        color: var(--home-title);
+        font-weight: 600;
+        font-size: .87rem;
+    }
+
+    .dashboard-v1 .activity-list .hint {
+        color: var(--home-muted);
+        font-size: .78rem;
+    }
+
+    .dashboard-v1 .activity-badge {
+        border-radius: 999px;
+        font-size: .72rem;
+        padding: .22rem .6rem;
+        background: #eef2ff;
+        color: #3730a3;
+        border: 1px solid #c7d2fe;
+        white-space: nowrap;
+    }
+
+    .dashboard-v1 .empty-actions {
+        border: 1px dashed var(--home-border);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        color: var(--home-muted);
+        font-size: .86rem;
+        background: #fbfdff;
+    }
+
+    @@media (max-width: 1399.98px) {
+        .dashboard-v1 .quick-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 991.98px) {
+        .dashboard-v1 .quick-grid,
+        .dashboard-v1 .kpi-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dashboard-v1 .hero-card {
+            min-height: auto;
+        }
+
+        .dashboard-v1 .hero-chip {
+            position: static;
+            margin-top: .55rem;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .dashboard-v1 .quick-grid,
+        .dashboard-v1 .kpi-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-v1 .hero-content {
+            padding: 1.15rem;
+        }
+
+        .dashboard-v1 .hero-actions {
+            width: 100%;
+        }
+
+        .dashboard-v1 .hero-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="dashboard-v1">
+    <div class="row g-5">
+        <div class="col-12 col-xxl-4">
+            <div class="home-card p-4 h-100">
+                <div class="quick-title">اقدام سریع</div>
+                @if (quickActions.Any())
+                {
+                    <div class="quick-grid">
+                        @foreach (var action in quickActions)
+                        {
+                            <a class="quick-action" href="@action.Url">
+                                <i class="@action.Icon" aria-hidden="true"></i>
+                                <div class="title">@action.Title</div>
+                                <div class="desc">@action.Description</div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-actions">برای حساب کاربری شما دسترسی میانبر تعریف نشده است.</div>
+                }
+            </div>
+        </div>
+
+        <div class="col-12 col-xxl-8">            <div class="hero-card position-relative mb-4">
+                <img class="hero-bg" src="~/assets/media/misc/city.png" alt="" />
+                <span class="hero-chip"><i class="fa fa-bolt"></i> Command Center - Dashboard</span>
+                <div class="hero-content">
+                    <span class="hero-kicker"><i class="fa fa-star"></i> AdelLens Optical Platform</span>
+                    <h1>عادل‌لنز، تولیدکننده عدسی‌های فری‌فرم با تمرکز بر کیفیت، دقت اپتیکی و تنوع طراحی.</h1>
+                    <p class="hero-description">
+                        ثبت سفارش، مدیریت جریان تولید و پیگیری وضعیت سفارش‌ها در یک پنل یکپارچه و سریع.
+                    </p>
+                    <div class="hero-meta">
+                        <span class="hero-pill"><i class="fa fa-check-circle"></i> FREE FORM</span>
+                        <span class="hero-pill"><i class="fa fa-shield"></i> پوشش متنوع</span>
+                        <span class="hero-pill"><i class="fa fa-bolt"></i> پاسخ سریع</span>
+                    </div>
+                    <div class="hero-actions">
+                        @if (canUseCustomLens)
+                        {
+                            <a class="hero-btn hero-btn-primary" href="@Url.Action("CustomLensOrder", "Orders")">
+                                <i class="fa fa-plus-circle"></i> شروع سفارش سفارشی
+                            </a>
+                        }
+                        @if (canViewOrderLists)
+                        {
+                            <a class="hero-btn hero-btn-ghost" href="@Url.Action("ListReqOrders", "Orders")">
+                                <i class="fa fa-list-alt"></i> پیگیری سفارش‌ها
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-icon icon-blue"><i class="fa fa-users"></i></span>
+                    <div>
+                        <p class="kpi-label">مشتریان</p>
+                        <p class="kpi-value">2117</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-icon icon-purple"><i class="fa fa-tag"></i></span>
+                    <div>
+                        <p class="kpi-label">نوع محصولات</p>
+                        <p class="kpi-value">14884</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-icon icon-green"><i class="fa fa-truck"></i></span>
+                    <div>
+                        <p class="kpi-label">سفارش‌های تکمیل شده</p>
+                        <p class="kpi-value">0%</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-icon icon-orange"><i class="fa fa-shopping-cart"></i></span>
+                    <div>
+                        <p class="kpi-label">سفارش‌های در حال انجام</p>
+                        <p class="kpi-value">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-card activity-card">
+                <div class="activity-head">وضعیت پنل دسترسی</div>
+                <ul class="activity-list">
+                    <li>
+                        <div>
+                            <div class="label">تعداد میانبرهای فعال</div>
+                            <div class="hint">بر اساس نقش‌های اختصاص داده شده به کاربر</div>
+                        </div>
+                        <span class="activity-badge">@quickActions.Count</span>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="label">وضعیت ثبت سفارش سفارشی</div>
+                            <div class="hint">در صورت وجود مجوز، از بخش اقدام سریع قابل دسترسی است</div>
+                        </div>
+                        <span class="activity-badge">Ready</span>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="label">نمایش سفارش‌های آماده</div>
+                            <div class="hint">عدسی آماده عمده و گارانتی در کارت‌های جداگانه</div>
+                        </div>
+                        <span class="activity-badge">Online</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

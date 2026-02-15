@@ -1,0 +1,271 @@
+@{
+    ViewBag.Title = "";
+    string BasePage = "CustomLensTypes";
+    var embedded = ViewBag.Embedded as bool? ?? false;
+    if (embedded)
+    {
+        Layout = "~/Views/Shared/_Layout_CustomLensEmbedded.cshtml";
+    }
+    var brandId = ViewBag.BrandId ?? 0;
+}
+
+@await Html.PartialAsync("_CustomLensPremiumGridStyle")
+
+<div class="card custom-lens-premium">
+    <div class="card-header bg-primary" style="display:flex;justify-content:flex-start;direction:ltr;">
+        <h3 class="card-title mb-0" style="margin:0 !important;text-align:left !important;">@ResourcePages.LensTypes</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group" id="divjqGrid">
+            <table id="jqGrid" class="table table-striped"></table>
+            <div id="jqGridPager"></div>
+        </div>
+
+        <div class="form-group text-center mb-4">
+            <input type="button" id="custom-lens-type-create-btn" class="btn btn-primary" value="À»  œ” Ì" onclick="LoadDialog(0,1)" />
+            <input type="button" id="custom-lens-type-import-btn" class="btn btn-success" value="«Ì„ÅÊ—  «ò”·" />
+            <input type="button" id="custom-lens-type-export-btn" class="btn btn-light-primary" value="«ò”ÅÊ—  «ò”·" />
+            <input type="file" id="custom-lens-type-import-file" class="d-none" accept=".xlsx,.xls" />
+            <div class="small text-muted mt-2"> — Ì» ” Ê‰ùÂ«: ‰«„° òœ°  Ê÷ÌÕ« °  — Ì» ‰„«Ì‘° Ê÷⁄Ì  («Œ Ì«—Ì)° ò—ÌœÊ— («Œ Ì«—Ì)</div>
+            <div id="custom-lens-type-import-errors" class="alert alert-danger mt-3 d-none text-start" dir="rtl"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var embeddedMode = @(embedded ? "true" : "false");
+    var embeddedQuery = embeddedMode ? '&embedded=1' : '';
+
+    var brandIdValue = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(brandId));
+
+    function LoadDialog(nodeId, typeId) {
+        var url = '';
+        switch (typeId) {
+            case 1: url = '@Url.Action("Create", BasePage)';
+                break;
+            case 2: url = '@Url.Action("Edit", BasePage)';
+                break;
+            case 3: url = '@Url.Action("Delete", BasePage)';
+                break;
+        }
+
+        if (typeId != 3) {
+            $.get(url, typeId >= 1 ? { id: nodeId, brandId: brandIdValue } : {})
+                .done(function (result) {
+                    $("#modal-loader").html(result);
+                    $("#modal-Tree").modal('show');
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+        else {
+            if (typeId == 3) {
+                $.post(url, { id: nodeId, brandId: brandIdValue })
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.RemoveSuccess');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+                return;
+            }
+        }
+        $(document).resize();
+    }
+    function LoadItems() {
+        $('#modal-Tree').modal('hide');
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        $('#jqGrid').jqGrid({
+            url: '@Url.Action("Detail", BasePage, new { brandId = brandId })',
+            datatype: 'json',
+            mtype: 'POST',
+            serializeGridData: function (postData) {
+                var data = {
+
+                };
+                postData._search = true;
+                data = $.extend(data, postData);
+                return JSON.stringify(data);
+            },
+
+            colNames: ['@ResourceCustomLensTypes.Column_Id', '@ResourceCustomLensTypes.Column_Brand', '@ResourceCustomLensTypes.Column_Name', '@ResourceCustomLensTypes.Column_Code', '@ResourceCustomLensTypes.Column_Description', '@ResourceCustomLensTypes.Column_OrderId', '@ResourceCustomLensTypes.Column_IsActive', '@ResourceCustomLensTypes.Column_EditDelete'],
+            colModel: [
+                { name: 'id', index: 'id', align: "Center", hidden: true, key: true, search: false },
+                { name: 'brandName', index: 'brandName', align: "Center", sortable: true, search: true },
+                {
+                    name: 'name', index: 'name', align: "Center", sortable: true, search: true,
+                    formatter: function (value, options, rowObject) {
+                        var url = '@Url.Action("Index", "CustomLensDesignTypes")' + '?lensTypeId=' + rowObject.id + embeddedQuery;
+                        var targetAttr = embeddedMode ? ' target="custom-lens-design-types-frame"' : '';
+                        return '<a href="' + url + '"' + targetAttr + ' class="text-primary fw-semibold">' + value + '</a>';
+                    }
+                },
+                { name: 'code', index: 'code', align: "Center", sortable: true, search: true },
+                { name: 'description', index: 'description', align: "Center", sortable: false, search: false },
+                { name: 'orderId', index: 'orderId', align: "Center", sortable: false, search: false },
+                { name: 'isActive', index: 'isActive', align: "Center", sortable: false, search: false },
+
+                {
+                    name: 'id', index: 'Action', align: "Center", sortable: false, search: false,
+                    formatter: function (value, options, rowObject) {
+                        var corridorOn = (rowObject.corridor === true || rowObject.corridor === "true" || rowObject.corridor === 1 || rowObject.corridor === "1");
+                        var corridorClass = corridorOn ? 'text-success' : 'text-danger';
+                        var corridorTitle = corridorOn ? 'ò—ÌœÊ—: œ«—œ' : 'ò—ÌœÊ—: ‰œ«—œ';
+                        var corridorIcon = corridorOn ? 'fa-check-square' : 'fa-square';
+                        var a = '<button type="button" title="@ResourcePages.Edit" onclick="LoadDialog(\'' + value + '\',2);"><i class="fa fa-2x fa-pen"></i> </button> ';
+                        a += '<button type="button" title="@ResourcePages.Delete" onclick="LoadDialog(\'' + value + '\',3);"><i class="fa fa-2x fa-trash"></i> </button> ';
+                        a += '<button type="button" title="' + corridorTitle + '" onclick="ToggleCorridor(\'' + value + '\');"><i class="fa fa-2x ' + corridorIcon + ' ' + corridorClass + '"></i> </button> ';
+                        return a;
+                    }
+                }
+            ],
+            subGridRowExpanded: function (subgrid_id, row_id) { },
+            subGridRowColapsed: function (subgrid_id, row_id) { },
+            subgroup: true,
+            rowNum: 20,
+            toppager: false,
+            height: 300,
+            direction: 'rtl',
+            rowList: [10, 20, 30, 40],
+            viewrecords: true,
+            gridview: true,
+            altRows: true,
+            hidegrid: false,
+            rownumbers: true,
+            recordpos: 'left',
+            multiselect: false,
+            scroll: true,
+            scrollrows: false,
+            jsonReader: {
+                page: function (obj) { return obj.page; },
+                total: function (obj) { return obj.total; },
+                records: function (obj) { return obj.records; },
+                root: function (obj) { return obj.rows; },
+                repeatitems: false,
+                id: "0"
+            },
+            pager: "#jqGridPager"
+        });
+        $('#jqGrid').trigger('reloadGrid');
+        $(document).resize();
+    }
+
+    $(function () {
+        LoadItems();
+
+        $('#custom-lens-type-import-btn').on('click', function () {
+            $('#custom-lens-type-import-file').val('');
+            $('#custom-lens-type-import-file').click();
+        });
+
+        $('#custom-lens-type-import-file').on('change', function () {
+            var file = this.files && this.files.length ? this.files[0] : null;
+            if (!file) {
+                return;
+            }
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('brandId', brandIdValue);
+            $.ajax({
+                url: '@Url.Action("ImportExcel", BasePage)',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (result) {
+                var $errorBox = $('#custom-lens-type-import-errors');
+                $errorBox.addClass('d-none').html('');
+                if (result && result.success) {
+                    toastr.success("", result.message || '@ResourceAlert.AddSucces');
+                    $errorBox.addClass('d-none').html('');
+                    LoadItems();
+                } else {
+                    var message = result && result.message ? result.message : '@ResourceAlert.AddError';
+                    toastr.error(message, '');
+                    if (result && result.errors && result.errors.length) {
+                        var html = '<div>' + escapeHtml(message) + '</div><ul class="mb-0">';
+                        result.errors.forEach(function (e) {
+                            html += '<li>' + escapeHtml(e) + '</li>';
+                        });
+                        html += '</ul>';
+                        $errorBox.html(html).removeClass('d-none');
+                    } else {
+                        $errorBox.html('<div>' + escapeHtml(message) + '</div>').removeClass('d-none');
+                    }
+                }
+            }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        });
+
+        $('#custom-lens-type-export-btn').on('click', function () {
+            var name = prompt('‰«„ ›«Ì· —« Ê«—œ ò‰Ìœ', 'CustomLensTypes');
+            if (name === null) {
+                return;
+            }
+            name = (name || '').trim();
+            if (!name) {
+                name = 'CustomLensTypes';
+            }
+            if (!name.toLowerCase().endsWith('.xlsx')) {
+                name += '.xlsx';
+            }
+            fetch('@Url.Action("ExportExcel", BasePage, new { brandId = brandId })', { method: 'GET' })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('download failed');
+                    }
+                    return response.blob();
+                })
+                .then(function (blob) {
+                    var url = window.URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = name;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(function () { toastr.error('@ResourceAlert.AddError', '') });
+        });
+
+        window.ToggleCorridor = function (id) {
+            $.post('@Url.Action("ToggleCorridor", BasePage)', { id: id, brandId: brandIdValue })
+                .done(function (result) {
+                    if (result && result.success) {
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result && result.message ? result.message : '');
+                    }
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+
+        function escapeHtml(value) {
+            return (value || '').toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

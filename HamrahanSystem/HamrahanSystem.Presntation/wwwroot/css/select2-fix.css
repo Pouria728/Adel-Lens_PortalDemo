@@ -1,0 +1,55 @@
+/* Global Select2 single-select alignment and clear/arrow spacing (RTL/LTR)
+   Apply full width only to the rendered control next to a real select,
+   not to the floating open dropdown container appended to body. */
+.select2-hidden-accessible + .select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    position: relative;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding-right: 3.25rem !important;
+    padding-left: 0.75rem !important;
+    line-height: 44px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    position: absolute !important;
+    right: 2rem !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+    float: none !important;
+    margin-right: 0 !important;
+    height: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    position: absolute !important;
+    right: 0.75rem !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+
+/* RTL tweaks */
+.select2-container--default[dir=rtl] .select2-selection--single .select2-selection__rendered {
+    padding-left: 3.25rem !important;
+    padding-right: 0.75rem !important;
+    text-align: right;
+}
+
+.select2-container--default[dir=rtl] .select2-selection--single .select2-selection__clear {
+    left: 2rem !important;
+    right: auto !important;
+}
+
+.select2-container--default[dir=rtl] .select2-selection--single .select2-selection__arrow {
+    left: 0.75rem !important;
+    right: auto !important;
+}

@@ -1,0 +1,2858 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsOrderDto
+@{
+    ViewBag.Title = "";
+}
+
+<style>
+    .custom-lens-order {
+        --cl-radius-card: 16px;
+        --cl-radius-field: 12px;
+        --cl-border: #dbe3f1;
+        --cl-border-strong: #3b82f6;
+        --cl-bg-field: #f7f9fc;
+        --cl-text: #2b2b2b;
+        --cl-muted: #8b8b8b;
+        --cl-shadow: 0 6px 18px rgba(28, 54, 102, 0.06);
+        position: relative;
+    }
+    .custom-lens-order > .card-body > .card {
+        border: 1px solid var(--cl-border);
+        border-radius: var(--cl-radius-card);
+        box-shadow: var(--cl-shadow);
+        overflow: hidden;
+    }
+    .custom-lens-order .card-header {
+        border-top-left-radius: var(--cl-radius-card);
+        border-top-right-radius: var(--cl-radius-card);
+    }
+    .custom-lens-order .form-control.form-control-solid,
+    .custom-lens-order .form-select.form-select-solid {
+        border-radius: var(--cl-radius-field);
+    }
+    .custom-lens-order .select2-container--default .select2-selection--single {
+        height: 42px;
+        border-radius: var(--cl-radius-field);
+        border: 1px solid transparent;
+        background: var(--cl-bg-field);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .custom-lens-order .select2-container--default.select2-container--open .select2-selection--single {
+        border-color: #7aa8ff;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+    .custom-lens-order .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 40px;
+        color: var(--cl-text);
+    }
+    .custom-lens-order .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100%;
+    }
+    .custom-lens-order .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        border-color: #7a8bb0 transparent transparent transparent;
+    }
+    .custom-lens-order .select2-container--default.select2-container--disabled .select2-selection--single,
+    .custom-lens-order .form-control:disabled,
+    .custom-lens-order .form-select:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    .custom-lens-order .select2-container--open .select2-dropdown {
+        border: 1px solid var(--cl-border);
+        box-shadow: var(--cl-shadow);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .select2-container--open {
+        z-index: 2500 !important;
+    }
+    .custom-lens-order .select2-results__option {
+        padding: 8px 12px;
+    }
+    .custom-lens-order .select2-results__option--highlighted[aria-selected] {
+        background-color: #eaf2ff;
+        color: #1f3f7f;
+    }
+    .custom-lens-order .custom-lens-spec .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .custom-lens-order .custom-lens-eye .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .custom-lens-order .custom-lens-frame .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-left: 56px !important;
+        padding-right: 14px !important;
+    }
+    .custom-lens-order .custom-lens-spec .select2-container--default .select2-selection--single .select2-selection__clear,
+    .custom-lens-order .custom-lens-eye .select2-container--default .select2-selection--single .select2-selection__clear,
+    .custom-lens-order .custom-lens-frame .select2-container--default .select2-selection--single .select2-selection__clear {
+        position: absolute !important;
+        left: 12px;
+        right: auto;
+        width: 14px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8fa0bd;
+        z-index: 4;
+    }
+    .custom-lens-order .custom-lens-spec .select2-container--default .select2-selection--single .select2-selection__arrow,
+    .custom-lens-order .custom-lens-eye .select2-container--default .select2-selection--single .select2-selection__arrow,
+    .custom-lens-order .custom-lens-frame .select2-container--default .select2-selection--single .select2-selection__arrow {
+        left: 34px;
+        right: auto;
+        width: 16px;
+        z-index: 3;
+    }
+    .custom-lens-customer .card-header {
+        text-align: right;
+        justify-content: flex-end;
+        direction: rtl;
+    }
+    .custom-lens-customer .card-title {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .custom-lens-customer .card-body {
+        padding: 12px 14px 10px;
+    }
+    .custom-lens-customer .customer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0;
+    }
+    .custom-lens-customer .customer-cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2px;
+    }
+    .custom-lens-customer .customer-code {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+        min-height: 13px;
+    }
+    .custom-lens-customer .customer-caption {
+        font-size: 10px;
+        color: var(--cl-muted);
+        text-align: center;
+        line-height: 1.25;
+        min-height: 13px;
+    }
+    .custom-lens-customer .customer-cell .form-control,
+    .custom-lens-customer .customer-cell .form-select,
+    .custom-lens-customer .customer-cell .select2-selection--single {
+        height: 36px;
+        min-height: 36px;
+        font-family: inherit !important;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .custom-lens-customer .customer-cell .form-select {
+        color: var(--cl-text);
+    }
+    .custom-lens-customer .customer-cell .form-select.is-empty {
+        color: var(--cl-muted);
+    }
+    .custom-lens-customer .customer-cell .form-control.is-empty {
+        color: var(--cl-muted);
+    }
+    .custom-lens-customer .customer-cell .form-control::placeholder {
+        color: var(--cl-muted);
+        opacity: 1;
+    }
+    .custom-lens-customer .customer-cell .form-select option {
+        font-family: inherit;
+        font-size: 12px;
+    }
+    .custom-lens-order .custom-lens-customer .select2-container {
+        width: 100% !important;
+        font-family: inherit !important;
+    }
+    .custom-lens-order .custom-lens-customer .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 34px;
+        padding-left: 34px !important;
+        padding-right: 34px !important;
+        font-family: inherit !important;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--cl-text) !important;
+    }
+    .custom-lens-order .custom-lens-customer .select2.is-empty .select2-selection__rendered {
+        color: var(--cl-muted) !important;
+    }
+    .custom-lens-order .custom-lens-customer .select2-container--default .select2-selection--single .select2-selection__placeholder {
+        color: var(--cl-muted) !important;
+        font-family: inherit !important;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .custom-lens-order .custom-lens-customer .select2-container--default .select2-selection--single .select2-selection__arrow {
+        left: 10px !important;
+        right: auto !important;
+        width: 16px;
+    }
+    .custom-lens-order .custom-lens-customer .select2-container--default .select2-selection--single .select2-selection__clear {
+        left: auto !important;
+        right: 10px !important;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute !important;
+        float: none !important;
+        margin: 0;
+        padding: 0;
+        width: 14px;
+        text-align: center;
+    }
+    .custom-lens-order .custom-lens-customer .select2-results__option {
+        font-family: inherit !important;
+        font-size: 12px;
+    }
+    .custom-lens-spec .card-header {
+        text-align: right;
+        justify-content: flex-end;
+        direction: rtl;
+    }
+    .custom-lens-spec .card-title {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .custom-lens-spec .card-body {
+        padding: 12px 14px 10px;
+    }
+    .custom-lens-spec .spec-table-wrap {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 2px;
+    }
+    .custom-lens-spec .spec-grid {
+        display: grid;
+        gap: 8px;
+        min-width: 760px;
+        margin: 0;
+    }
+    .custom-lens-spec .spec-grid.top {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #d7deeb;
+    }
+    .custom-lens-spec .spec-grid.bottom {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .custom-lens-spec .spec-cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2px;
+    }
+    .custom-lens-spec .spec-code {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .custom-lens-spec .spec-caption {
+        font-size: 10px;
+        color: var(--cl-muted);
+        text-align: center;
+        line-height: 1.25;
+        min-height: 13px;
+    }
+    .custom-lens-spec .spec-cell .form-select {
+        height: 36px;
+        min-height: 36px;
+    }
+    .custom-lens-frame .card-header {
+        text-align: right;
+        justify-content: flex-end;
+        direction: rtl;
+    }
+    .custom-lens-frame .card-title {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .custom-lens-color-services .card-header {
+        text-align: right;
+        justify-content: flex-end;
+        direction: rtl;
+    }
+    .custom-lens-color-services .card-title {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .custom-lens-color-services .card-body {
+        padding: 12px 14px 10px;
+    }
+    .custom-lens-color-services .color-grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+        min-width: 980px;
+    }
+    .custom-lens-color-services .color-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .custom-lens-color-services .color-code {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .custom-lens-color-services .color-caption {
+        font-size: 10px;
+        color: var(--cl-muted);
+        text-align: center;
+        line-height: 1.25;
+        min-height: 13px;
+    }
+    .custom-lens-color-services .color-cell .form-control,
+    .custom-lens-color-services .color-cell .select2-selection--single {
+        height: 36px;
+        min-height: 36px;
+    }
+    .custom-lens-color-services .order-note-wrap {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed #d7deeb;
+        direction: rtl;
+        text-align: right;
+    }
+    .custom-lens-color-services .order-note-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        margin-bottom: 4px;
+    }
+    .custom-lens-color-services .order-note-input {
+        min-height: 58px;
+        resize: vertical;
+        font-size: 12px;
+    }
+    .custom-lens-color-services .before-lens-type-wrap {
+        margin-top: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        direction: rtl;
+        text-align: center;
+    }
+    .custom-lens-color-services .before-lens-type-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+    }
+    .custom-lens-color-services .before-lens-option {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #2b2b2b;
+        margin: 0;
+        cursor: pointer;
+    }
+    .custom-lens-color-services .before-lens-option input[type="radio"] {
+        margin: 0;
+    }
+    /* Dedicated Select2 geometry for color/services section: arrow left, clear right, text in the middle */
+    .custom-lens-order .custom-lens-color-services .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-left: 34px !important;
+        padding-right: 34px !important;
+    }
+    .custom-lens-order .custom-lens-color-services .select2-container--default .select2-selection--single .select2-selection__arrow {
+        left: 10px !important;
+        right: auto !important;
+        width: 16px;
+    }
+    .custom-lens-order .custom-lens-color-services .select2-container--default .select2-selection--single .select2-selection__clear {
+        left: auto !important;
+        right: 10px !important;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute !important;
+        float: none !important;
+        margin: 0;
+        padding: 0;
+        width: 14px;
+        text-align: center;
+    }
+    .custom-lens-frame .card-body {
+        padding: 12px 14px 10px;
+    }
+    .custom-lens-frame .frame-table-wrap {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 2px;
+    }
+    .custom-lens-frame .frame-grid {
+        display: grid;
+        gap: 8px;
+        min-width: 1080px;
+        margin: 0;
+    }
+    .custom-lens-frame .frame-grid.top {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #d7deeb;
+    }
+    .custom-lens-frame .frame-grid.bottom {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .custom-lens-frame .frame-cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2px;
+    }
+    .custom-lens-frame .frame-code {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .custom-lens-frame .frame-code.frame-code-danger {
+        color: #d3363a;
+    }
+    .custom-lens-frame .frame-caption {
+        font-size: 10px;
+        color: var(--cl-muted);
+        text-align: center;
+        line-height: 1.25;
+        min-height: 13px;
+    }
+    .custom-lens-frame .frame-cell .form-control,
+    .custom-lens-frame .frame-cell .select2-selection--single {
+        height: 36px;
+        min-height: 36px;
+    }
+    .custom-lens-eye .eye-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        margin-bottom: 16px;
+    }
+    .custom-lens-eye .eye-badge {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: 3px solid #a7c7ff;
+        color: #1f1f1f;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f7fbff;
+        box-shadow: inset 0 0 0 3px #d7e6ff;
+    }
+    .custom-lens-eye .eye-center {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-weight: 700;
+        color: #2b2b2b;
+    }
+    .custom-lens-eye .eye-arrow {
+        font-size: 20px;
+        color: #b8c3d9;
+    }
+    .custom-lens-eye .eye-panel {
+        border: 2px solid var(--cl-border-strong);
+        border-radius: 16px;
+        padding: 12px 14px 10px;
+        background: #ffffff;
+    }
+    .custom-lens-eye .eye-title {
+        text-align: center;
+        font-weight: 700;
+        color: #2b2b2b;
+        margin-bottom: 8px;
+    }
+    .custom-lens-eye .eye-grid {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    .custom-lens-eye .eye-grid.main {
+        --eye-sign-col: 46px;
+        grid-template-columns:
+            var(--eye-sign-col)
+            minmax(0, calc((100% - 16px) / 3 - var(--eye-sign-col) - 8px))
+            var(--eye-sign-col)
+            minmax(0, calc((100% - 16px) / 3 - var(--eye-sign-col) - 8px))
+            minmax(0, calc((100% - 16px) / 3));
+        align-items: start;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #d7deeb;
+    }
+    .custom-lens-eye .eye-grid.triple {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .custom-lens-eye .eye-grid.middle {
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #d7deeb;
+    }
+    .custom-lens-eye .eye-grid.bottom {
+        margin-bottom: 0;
+    }
+    .custom-lens-eye .eye-cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2px;
+    }
+    .custom-lens-eye .eye-code {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .custom-lens-eye .eye-caption {
+        font-size: 10px;
+        color: var(--cl-muted);
+        text-align: center;
+        line-height: 1.25;
+        min-height: 13px;
+    }
+    .custom-lens-eye .eye-cell .form-control,
+    .custom-lens-eye .eye-cell .form-select {
+        height: 36px;
+        min-height: 36px;
+        text-align: center;
+    }
+    .custom-lens-eye .eye-cell-toggle .eye-toggle {
+        width: 26px !important;
+        min-width: 26px !important;
+        height: 26px !important;
+        padding: 0 !important;
+        border-radius: 6px !important;
+        margin: 0 auto;
+    }
+    .custom-lens-eye .eye-row {
+        display: grid;
+        grid-template-columns: 36px 1fr 36px 1fr 1fr;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .custom-lens-eye .eye-row.three {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .custom-lens-eye .eye-row.single {
+        grid-template-columns: 1fr;
+    }
+    .custom-lens-eye .eye-toggle {
+        width: 100%;
+        height: 36px;
+        border-radius: 10px;
+        border: none;
+        background: #ffb4a9;
+        color: #c1272d;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .custom-lens-eye .eye-toggle.eye-plus {
+        background: #b8f2c7;
+        color: #0f7a3b;
+    }
+    .custom-lens-eye .eye-toggle:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .custom-lens-eye .eye-note {
+        font-size: 11px;
+        color: var(--cl-muted);
+        text-align: center;
+        margin-top: -4px;
+    }
+    .custom-lens-eye .eye-copy {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #6bcf8f;
+        color: #1f7a3f;
+        background: #f2fff7;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+    }
+    .custom-lens-eye .select2-container {
+        width: 100% !important;
+    }
+    .custom-lens-eye .add-disabled {
+        opacity: 0.55;
+    }
+    .custom-lens-eye .add-disabled + .select2-container .select2-selection {
+        opacity: 0.55;
+    }
+    .custom-lens-order .custom-lens-eye .form-control.is-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-frame .form-control.is-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-color-services .form-control.is-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-color-services .color-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-color-services .color-invalid + .select2-container .select2-selection--single {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .position-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .position-invalid + .select2-container .select2-selection--single {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .baseprism-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .baseprism-invalid + .select2-container .select2-selection--single {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .eye-copy-wrap {
+        margin-top: 2px;
+        text-align: center;
+    }
+</style>
+
+<div class="card custom-lens-order">
+    <div class="card-header bg-primary"><h3 class="card-title align-items-start flex-column">عدسی سفارشی</h3></div>
+    <div class="card-body">
+        <form id="customLensOrderForm" autocomplete="off">
+        <div class="card mb-6 custom-lens-customer">
+            <div class="card-header bg-info"><h3 class="card-title align-items-start flex-column">اطلاعات مشتری</h3></div>
+            <div class="card-body">
+                <div class="customer-grid">
+                    <div class="customer-cell">
+                        <div class="customer-code">CUSTOMER</div>
+                        @Html.HiddenFor(model => model.DefineCustomerId, new { id = "DefineCustomerId", data_kt_element = "definecustomer" })
+                        <input type="text" id="DefineCustomerSearch" class="form-control form-control-solid form-control-sm" placeholder="مشتری" autocomplete="off" list="DefineCustomerSearchList" />
+                        <datalist id="DefineCustomerSearchList"></datalist>
+                        <div class="customer-caption">انتخاب مشتری</div>
+                    </div>
+                    <div class="customer-cell">
+                        <div class="customer-code">STORE NAME</div>
+                        @Html.TextBoxFor(model => model.StoreName, "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "نام فروشگاه", data_kt_element = "store" })
+                        <div class="customer-caption">بصورت انگلیسی وارد شود</div>
+                    </div>
+                    <div class="customer-cell">
+                        <div class="customer-code">CONSUMER</div>
+                        @Html.TextBoxFor(model => model.Consumer, "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "مصرف کننده", data_kt_element = "consumer" })
+                        <div class="customer-caption">بصورت انگلیسی وارد شود</div>
+                    </div>
+                    <div class="customer-cell">
+                        <div class="customer-code">DELIVERY TYPE</div>
+                        <select id="DeliveryType" name="DeliveryType" class="form-select form-select-solid form-select-sm" data_control="select2" data_placeholder="تحویل">
+                            <option value="">تحویل</option>
+                            <option value="Normal">عادی</option>
+                            <option value="Urgent">فوری</option>
+                        </select>
+                        <div class="customer-caption">نوع تحویل سفارش</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-6 custom-lens-spec" dir="ltr">
+            <div class="card-header bg-info"><h3 class="card-title align-items-start flex-column">مشخصات محصول</h3></div>
+            <div class="card-body" style="direction:ltr;text-align:left">
+                <div class="spec-table-wrap">
+                    <div class="spec-grid top">
+                        <div class="spec-cell">
+                            <div class="spec-code">BRAND</div>
+                            @Html.DropDownList("BrandId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Brand", data_kt_element = "brand" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">LENS TYPE</div>
+                            @Html.DropDownList("LensTypeId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Lens Type", data_kt_element = "lenstype" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">DESIGN TYPE</div>
+                            @Html.DropDownList("DesignTypeId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Design Type", data_kt_element = "designtype" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">LENS INDEX</div>
+                            @Html.DropDownList("LensIndexId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Lens Index", data_kt_element = "lensindex" })
+                        </div>
+                    </div>
+
+                    <div class="spec-grid bottom">
+                        <div class="spec-cell">
+                            <div class="spec-code">MATERIAL TYPE</div>
+                            @Html.DropDownList("MaterialTypeId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Material Type", data_kt_element = "materialtype" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">PRODUCT</div>
+                            @Html.DropDownList("DefineObjectId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Product", data_kt_element = "product" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">COATING</div>
+                            @Html.DropDownList("CoatingId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "COATING", data_kt_element = "coating" })
+                        </div>
+                        <div class="spec-cell">
+                            <div class="spec-code">CORRIDOR</div>
+                            @Html.DropDownList("Corridor", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "Corridor", data_kt_element = "corridor" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="card mb-6 custom-lens-eye">
+                <div class="card-header bg-info"><h3 class="card-title align-items-start flex-column">مشخصات چشم راست و چپ</h3></div>
+                <div class="card-body" style="direction:ltr;text-align:left">
+                <input type="hidden" id="RSphSign" name="RSphSign" value="-" />
+                <input type="hidden" id="LSphSign" name="LSphSign" value="-" />
+                <input type="hidden" id="RSphSignedValue" name="RSphSignedValue" value="" />
+                <input type="hidden" id="LSphSignedValue" name="LSphSignedValue" value="" />
+                <input type="hidden" id="RCylSign" name="RCylSign" value="-" />
+                <input type="hidden" id="LCylSign" name="LCylSign" value="-" />
+                <input type="hidden" id="RCylSignedValue" name="RCylSignedValue" value="" />
+                <input type="hidden" id="LCylSignedValue" name="LCylSignedValue" value="" />
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="eye-panel">
+                            <div class="eye-title">RIGHT EYE</div>
+                            <div class="eye-grid main">
+                                <div class="eye-cell eye-cell-toggle">
+                                    <div class="eye-code">SPH</div>
+                                    <button type="button" class="eye-toggle" data-toggle="sph" data-eye="r">-</button>
+                                    <div class="eye-caption">علامت اسفریک</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R SPH</div>
+                                    @Html.DropDownList("RSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R SPH" })
+                                    <div class="eye-caption">توان اسفریک</div>
+                                </div>
+                                <div class="eye-cell eye-cell-toggle">
+                                    <div class="eye-code">CYL</div>
+                                    <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="r">-</button>
+                                    <div class="eye-caption">علامت آستیگمات</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R CYL</div>
+                                    @Html.DropDownList("RCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R CYL" })
+                                    <div class="eye-caption">توان آستیگمات</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R AXIS</div>
+                                    @Html.TextBox("RAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "R Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
+                                    <div class="eye-caption">محور آستیگمات</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-grid triple middle">
+                                <div class="eye-cell">
+                                    <div class="eye-code">R ADD</div>
+                                    @Html.DropDownList("RAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R ADD" })
+                                    <div class="eye-caption">ادیشن</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R DIA</div>
+                                    @Html.DropDownList("RDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DIA" })
+                                    <div class="eye-caption">قطر عدسی</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R DC</div>
+                                    @Html.DropDownList("RDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DC" })
+                                    <div class="eye-caption">مقدار دیسنتره</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-grid triple bottom">
+                                <div class="eye-cell">
+                                    <div class="eye-code">R POSITION</div>
+                                    @Html.DropDownList("RPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Position" })
+                                    <div class="eye-caption">جهت دیسنتره</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R PRISM</div>
+                                    @Html.DropDownList("RPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Prism" })
+                                    <div class="eye-caption">توان پریزم</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">R BASE OF PRISM</div>
+                                    @Html.DropDownList("RBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Base of Prism" })
+                                    <div class="eye-caption">جهت بیس پریزم</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-copy-wrap">
+                                <button type="button" class="eye-copy" data-copy="r2l">کپی اطلاعات چشم چپ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="eye-panel">
+                            <div class="eye-title">LEFT EYE</div>
+                            <div class="eye-grid main">
+                                <div class="eye-cell eye-cell-toggle">
+                                    <div class="eye-code">SPH</div>
+                                    <button type="button" class="eye-toggle" data-toggle="sph" data-eye="l">-</button>
+                                    <div class="eye-caption">علامت اسفریک</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L SPH</div>
+                                    @Html.DropDownList("LSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L SPH" })
+                                    <div class="eye-caption">توان اسفریک</div>
+                                </div>
+                                <div class="eye-cell eye-cell-toggle">
+                                    <div class="eye-code">CYL</div>
+                                    <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="l">-</button>
+                                    <div class="eye-caption">علامت آستیگمات</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L CYL</div>
+                                    @Html.DropDownList("LCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L CYL" })
+                                    <div class="eye-caption">توان آستیگمات</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L AXIS</div>
+                                    @Html.TextBox("LAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "L Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
+                                    <div class="eye-caption">محور آستیگمات</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-grid triple middle">
+                                <div class="eye-cell">
+                                    <div class="eye-code">L ADD</div>
+                                    @Html.DropDownList("LAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L ADD" })
+                                    <div class="eye-caption">ادیشن</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L DIA</div>
+                                    @Html.DropDownList("LDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DIA" })
+                                    <div class="eye-caption">قطر عدسی</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L DC</div>
+                                    @Html.DropDownList("LDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DC" })
+                                    <div class="eye-caption">مقدار دیسنتره</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-grid triple bottom">
+                                <div class="eye-cell">
+                                    <div class="eye-code">L POSITION</div>
+                                    @Html.DropDownList("LPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Position" })
+                                    <div class="eye-caption">جهت دیسنتره</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L PRISM</div>
+                                    @Html.DropDownList("LPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Prism" })
+                                    <div class="eye-caption">توان پریزم</div>
+                                </div>
+                                <div class="eye-cell">
+                                    <div class="eye-code">L BASE OF PRISM</div>
+                                    @Html.DropDownList("LBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Base of Prism" })
+                                    <div class="eye-caption">جهت بیس پریزم</div>
+                                </div>
+                            </div>
+
+                            <div class="eye-copy-wrap">
+                                <button type="button" class="eye-copy" data-copy="l2r">کپی اطلاعات چشم راست</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-6 custom-lens-frame" dir="ltr">
+            <div class="card-header bg-info"><h3 class="card-title align-items-start flex-column">ابعاد فریم</h3></div>
+            <div class="card-body" style="direction:ltr;text-align:left">
+                <div class="frame-table-wrap">
+                    <div class="frame-grid top">
+                        <div class="frame-cell">
+                            <div class="frame-code frame-code-danger">HBOX</div>
+                            @Html.TextBox("HBOX", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">عرض حلقه</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code frame-code-danger">VBOX</div>
+                            @Html.TextBox("VBOX", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">ارتفاع حلقه</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">FITTING-R</div>
+                            @Html.TextBox("FITTINGR", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric frame-min-one", type = "number", step = "0.1", min = "1", inputmode = "decimal" })
+                            <div class="frame-caption">فیتینگ/سگمنت چشم راست</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">FITTING-L</div>
+                            @Html.TextBox("FITTINGL", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric frame-min-one", type = "number", step = "0.1", min = "1", inputmode = "decimal" })
+                            <div class="frame-caption">فیتینگ/سگمنت چشم چپ</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">DBL</div>
+                            @Html.TextBox("DBL", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">اندازه پل</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">ED</div>
+                            @Html.TextBox("ED", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">قطر موثر</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">PANTO</div>
+                            @Html.TextBox("PANTO", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">شیب پانتوسکوپیک</div>
+                        </div>
+                    </div>
+
+                    <div class="frame-grid bottom">
+                        <div class="frame-cell">
+                            <div class="frame-code">FFA</div>
+                            @Html.TextBox("FFA", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">بیس فریم</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">BVD</div>
+                            @Html.TextBox("BVD", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">فاصله قرنیه تا سطح پشت عدسی</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">BASE</div>
+                            @Html.DropDownList("BaseCurve", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_control = "select2", data_placeholder = "BASE" })
+                            <div class="frame-caption">بیس عدسی</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">IPDR</div>
+                            @Html.TextBox("IPDR", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">PD چشم راست</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">IPDL</div>
+                            @Html.TextBox("IPDL", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric", type = "number", step = "0.1", inputmode = "decimal" })
+                            <div class="frame-caption">PD چشم چپ</div>
+                        </div>
+                        <div class="frame-cell">
+                            <div class="frame-code">FRAME TYPE</div>
+                            @Html.DropDownList("FrameTypeId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_control = "select2", data_placeholder = "FRAME TYPE" })
+                            <div class="frame-caption">نوع فریم</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-6 custom-lens-color-services" dir="ltr">
+            <div class="card-header bg-info"><h3 class="card-title align-items-start flex-column">رنگ و خدمات</h3></div>
+            <div class="card-body" style="direction:ltr;text-align:left">
+                <div class="color-grid">
+                    <div class="color-cell">
+                        <div class="color-code">COLORING TYPE</div>
+                        @Html.DropDownList("ColoringTypeId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_control = "select2", data_placeholder = "COLORING TYPE" })
+                        <div class="color-caption">نوع رنگ آمیزی</div>
+                    </div>
+                    <div class="color-cell">
+                        <div class="color-code">COLOR</div>
+                        @Html.DropDownList("Color", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_control = "select2", data_placeholder = "COLOR" })
+                        <div class="color-caption">انتخاب رنگ</div>
+                    </div>
+                    <div class="color-cell">
+                        <div class="color-code">COLOR RATIO</div>
+                        @Html.TextBox("ColorRatio", "", new { @class = "form-control form-control-solid form-control-sm", type = "number", min = "0", max = "100", step = "1", inputmode = "numeric", placeholder = "0-100" })
+                        <div class="color-caption">درصد رنگ</div>
+                    </div>
+                    <div class="color-cell">
+                        <div class="color-code">TOP RATIO</div>
+                        @Html.TextBox("ColorRatioTop", "", new { @class = "form-control form-control-solid form-control-sm", type = "number", min = "0", max = "100", step = "1", inputmode = "numeric", placeholder = "0-100" })
+                        <div class="color-caption">درصد رنگ بالا</div>
+                    </div>
+                    <div class="color-cell">
+                        <div class="color-code">BOTTOM RATIO</div>
+                        @Html.TextBox("ColorBottom", "", new { @class = "form-control form-control-solid form-control-sm", type = "number", min = "0", max = "100", step = "1", inputmode = "numeric", placeholder = "0-100" })
+                        <div class="color-caption">درصد رنگ پایین</div>
+                    </div>
+                    <div class="color-cell">
+                        <div class="color-code">EXTRA SERVICES</div>
+                        @Html.DropDownList("ExtraServiceId", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_control = "select2", data_placeholder = "EXTRA SERVICES" })
+                        <div class="color-caption">انتخاب خدمات</div>
+                    </div>
+                </div>
+                <div class="order-note-wrap">
+                    <div class="order-note-label">توضیحات شما راجع به سفارش</div>
+                    @Html.TextAreaFor(model => model.BeforeLensSpec, new { @class = "form-control form-control-solid form-control-sm order-note-input", rows = "2", placeholder = "توضیحات شما راجع به سفارش" })
+                    <div class="before-lens-type-wrap">
+                        <span class="before-lens-type-title">مشخصات عدسی قبلی</span>
+                        <label class="before-lens-option">
+                            @Html.RadioButtonFor(model => model.BeforeLensType, 1)
+                            <span>تکدید</span>
+                        </label>
+                        <label class="before-lens-option">
+                            @Html.RadioButtonFor(model => model.BeforeLensType, 2)
+                            <span>دوردید</span>
+                        </label>
+                        <label class="before-lens-option">
+                            @Html.RadioButtonFor(model => model.BeforeLensType, 3)
+                            <span>تدریجی</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="form-group text-center mb-4">
+                <button type="button" class="btn btn-primary" data-kt-element="save-custom-order">ثبت</button>
+                <button type="button" class="btn btn-primary" data-kt-element="save-send-custom-order">ثبت و ارسال</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            function resolveDropdownParent($el) {
+                var $modal = $el.closest(".modal, .modal-content");
+                if ($modal.length) {
+                    return $modal;
+                }
+                var $sectionBody = $el.closest(".section-body");
+                if ($sectionBody.length) {
+                    return $sectionBody;
+                }
+                var $customCard = $el.closest(".custom-lens-order");
+                if ($customCard.length) {
+                    return $customCard;
+                }
+                return $(document.body);
+            }
+
+            function destroySelect2IfNeeded($el) {
+                if ($el.hasClass("select2-hidden-accessible")) {
+                    $el.select2("destroy");
+                }
+            }
+
+            $(".custom-lens-order select").each(function () {
+                var $select = $(this);
+                destroySelect2IfNeeded($select);
+                // Keep all dropdowns native in this form.
+                $select.removeAttr("data-control");
+                $select.removeAttr("data_control");
+                $select.removeAttr("data-kt-initialized");
+            });
+
+            function getSelect2Dropdown($el) {
+                var instance = $el.data("select2");
+                if (instance && instance.$dropdown && instance.$dropdown.length) {
+                    return instance.$dropdown;
+                }
+                return $(".select2-container--open .select2-dropdown");
+            }
+
+            var $defineCustomerId = $("#DefineCustomerId");
+            var $defineCustomerSearch = $("#DefineCustomerSearch");
+            var $defineCustomerSearchList = $("#DefineCustomerSearchList");
+            var customerSearchTimer = null;
+            var customerSearchRequest = null;
+            var customerSearchToken = 0;
+
+            function readCustomerItemId(item) {
+                if (!item || typeof item !== "object") {
+                    return "";
+                }
+                var idKeys = ["id", "Id", "value", "Value", "defineCustomerId", "DefineCustomerId", "defineObjectId", "DefineObjectId"];
+                for (var i = 0; i < idKeys.length; i++) {
+                    var idKey = idKeys[i];
+                    if (Object.prototype.hasOwnProperty.call(item, idKey) && item[idKey] != null && String(item[idKey]).trim() !== "") {
+                        return String(item[idKey]).trim();
+                    }
+                }
+                return "";
+            }
+
+            function readCustomerItemText(item) {
+                if (!item || typeof item !== "object") {
+                    return "";
+                }
+                var textKeys = ["text", "Text", "name", "Name", "nameFormal", "NameFormal"];
+                for (var i = 0; i < textKeys.length; i++) {
+                    var textKey = textKeys[i];
+                    if (Object.prototype.hasOwnProperty.call(item, textKey) && item[textKey] != null && String(item[textKey]).trim() !== "") {
+                        return String(item[textKey]).trim();
+                    }
+                }
+                return "";
+            }
+
+            function clearCustomerSearchResults() {
+                $defineCustomerSearchList.empty();
+            }
+
+            function applySelectedCustomerIdFromText() {
+                var typedText = String($defineCustomerSearch.val() || "").trim();
+                if (!typedText) {
+                    $defineCustomerId.val("");
+                    return;
+                }
+
+                var selectedId = "";
+                $defineCustomerSearchList.find("option").each(function () {
+                    if (String($(this).val() || "").trim() === typedText) {
+                        selectedId = String($(this).attr("data-id") || "").trim();
+                        return false;
+                    }
+                });
+
+                $defineCustomerId.val(selectedId);
+            }
+
+            function renderCustomerSearchResults(items) {
+                clearCustomerSearchResults();
+                (items || []).forEach(function (item) {
+                    var id = readCustomerItemId(item);
+                    var text = readCustomerItemText(item);
+                    if (!id || !text) {
+                        return;
+                    }
+                    var option = document.createElement("option");
+                    option.value = text;
+                    option.setAttribute("data-id", id);
+                    $defineCustomerSearchList.append(option);
+                });
+                applySelectedCustomerIdFromText();
+            }
+
+            function fetchCustomerSearchResults(term) {
+                if (customerSearchRequest && customerSearchRequest.readyState !== 4) {
+                    customerSearchRequest.abort();
+                }
+
+                var token = ++customerSearchToken;
+                customerSearchRequest = $.ajax({
+                    url: '@Url.Action("ListDefineCustomerSearch", "Orders")',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: { search: term }
+                }).done(function (data) {
+                    if (token !== customerSearchToken) {
+                        return;
+                    }
+                    var results = data && data.results ? data.results : [];
+                    renderCustomerSearchResults(results);
+                }).fail(function (_xhr, status) {
+                    if (status === "abort") {
+                        return;
+                    }
+                    clearCustomerSearchResults();
+                    applySelectedCustomerIdFromText();
+                });
+            }
+
+            $defineCustomerSearch
+                .off("input.customerNativeSearch")
+                .on("input.customerNativeSearch", function () {
+                    applySelectedCustomerIdFromText();
+                    var term = String($(this).val() || "").trim();
+                    if (customerSearchTimer) {
+                        clearTimeout(customerSearchTimer);
+                    }
+                    if (term.length < 2) {
+                        clearCustomerSearchResults();
+                        syncCustomerFieldVisualState();
+                        return;
+                    }
+                    customerSearchTimer = setTimeout(function () {
+                        fetchCustomerSearchResults(term);
+                    }, 250);
+                    syncCustomerFieldVisualState();
+                })
+                .off("change.customerNativeSearch blur.customerNativeSearch")
+                .on("change.customerNativeSearch blur.customerNativeSearch", function () {
+                    applySelectedCustomerIdFromText();
+                    syncCustomerFieldVisualState();
+                });
+
+            destroySelect2IfNeeded($("#DeliveryType"));
+
+            function hasValue(value) {
+                return value !== null && value !== undefined && String(value).trim() !== "";
+            }
+
+            function parseNullableInt(value) {
+                var text = String(value == null ? "" : value).trim();
+                if (!text) {
+                    return null;
+                }
+                var parsed = parseInt(text, 10);
+                return isNaN(parsed) ? null : parsed;
+            }
+
+            function parseNullableNumber(value) {
+                var text = String(value == null ? "" : value).trim();
+                if (!text) {
+                    return null;
+                }
+                var normalized = text.replace(",", ".");
+                var parsed = parseFloat(normalized);
+                return isNaN(parsed) ? null : parsed;
+            }
+
+            function parseCorridorValue(value) {
+                var parsed = parseNullableInt(value);
+                if (parsed == null || parsed <= 0) {
+                    return null;
+                }
+                return parsed;
+            }
+
+            function syncCustomerFieldVisualState() {
+                var $deliveryType = $("#DeliveryType");
+                var deliveryHasValue = hasValue($deliveryType.val());
+                $deliveryType.toggleClass("is-empty", !deliveryHasValue);
+
+                var customerHasValue = hasValue($defineCustomerSearch.val());
+                $defineCustomerSearch.toggleClass("is-empty", !customerHasValue);
+            }
+
+            $("#DeliveryType").off("change.customerVisual").on("change.customerVisual", syncCustomerFieldVisualState);
+            $("#DefineCustomerSearch")
+                .off("input.customerVisual change.customerVisual blur.customerVisual")
+                .on("input.customerVisual change.customerVisual blur.customerVisual", syncCustomerFieldVisualState);
+            syncCustomerFieldVisualState();
+
+            var ListCustomBrand = @Html.Raw(Json.Serialize(ViewBag.CustomBrandList ?? new List<object>()));
+            var ListCustomLensType = @Html.Raw(Json.Serialize(ViewBag.CustomLensTypeList ?? new List<object>()));
+            var ListCustomDesignType = @Html.Raw(Json.Serialize(ViewBag.CustomDesignTypeList ?? new List<object>()));
+            var ListCustomLensIndex = @Html.Raw(Json.Serialize(ViewBag.CustomLensIndexList ?? new List<object>()));
+            var ListCustomMaterial = @Html.Raw(Json.Serialize(ViewBag.CustomMaterialList ?? new List<object>()));
+            var ListCustomCoating = @Html.Raw(Json.Serialize(ViewBag.CustomCoatingList ?? new List<object>()));
+            var ListCustomProduct = @Html.Raw(Json.Serialize(ViewBag.CustomProductList ?? new List<object>()));
+            var ListCustomSph = @Html.Raw(Json.Serialize(ViewBag.CustomSphList ?? new List<object>()));
+            var ListCustomCyl = @Html.Raw(Json.Serialize(ViewBag.CustomCylList ?? new List<object>()));
+            var ListCustomAddition = @Html.Raw(Json.Serialize(ViewBag.CustomAdditionList ?? new List<object>()));
+
+            var $brand = $('[data-kt-element="brand"]');
+            var $lensType = $('[data-kt-element="lenstype"]');
+            var $designType = $('[data-kt-element="designtype"]');
+            var $lensIndex = $('[data-kt-element="lensindex"]');
+            var $materialType = $('[data-kt-element="materialtype"]');
+            var $product = $('[data-kt-element="product"]');
+            var $coating = $('[data-kt-element="coating"]');
+            var $corridor = $('[data-kt-element="corridor"]');
+            var $rSph = $("#RSph");
+            var $lSph = $("#LSph");
+            var $rCyl = $("#RCyl");
+            var $lCyl = $("#LCyl");
+            var $rAdd = $("#RAdd");
+            var $lAdd = $("#LAdd");
+            var $rDia = $("#RDia");
+            var $lDia = $("#LDia");
+            var $rDc = $("#RDC");
+            var $lDc = $("#LDC");
+            var $rPosition = $("#RPosition");
+            var $lPosition = $("#LPosition");
+            var $rPrism = $("#RPrism");
+            var $lPrism = $("#LPrism");
+            var $rBasePrism = $("#RBasePrism");
+            var $lBasePrism = $("#LBasePrism");
+            var $baseCurve = $("#BaseCurve");
+            var $frameType = $("#FrameTypeId");
+            var $hBox = $("#HBOX");
+            var $vBox = $("#VBOX");
+            var $dbl = $("#DBL");
+            var $ed = $("#ED");
+            var $ipdr = $("#IPDR");
+            var $ipdl = $("#IPDL");
+            var $coloringType = $("#ColoringTypeId");
+            var $color = $("#Color");
+            var $colorRatio = $("#ColorRatio");
+            var $topRatio = $("#ColorRatioTop");
+            var $bottomRatio = $("#ColorBottom");
+            var $extraService = $("#ExtraServiceId");
+            var $rSphSign = $("#RSphSign");
+            var $lSphSign = $("#LSphSign");
+            var $rSphSignedValue = $("#RSphSignedValue");
+            var $lSphSignedValue = $("#LSphSignedValue");
+            var $rCylSign = $("#RCylSign");
+            var $lCylSign = $("#LCylSign");
+            var $rCylSignedValue = $("#RCylSignedValue");
+            var $lCylSignedValue = $("#LCylSignedValue");
+            var $rAxis = $("#RAxis");
+            var $lAxis = $("#LAxis");
+            var positionOptions = [
+                { id: "To Nasal", text: "To Nasal" },
+                { id: "To Temple", text: "To Temple" }
+            ];
+            var basePrismOptions = [
+                { id: "UP", text: "UP" },
+                { id: "DOWN", text: "DOWN" },
+                { id: "IN", text: "IN" },
+                { id: "OUT", text: "OUT" },
+                { id: "IN/UP", text: "IN/UP" },
+                { id: "IN/DOWN", text: "IN/DOWN" },
+                { id: "OUT/UP", text: "OUT/UP" },
+                { id: "OUT/DOWN", text: "OUT/DOWN" }
+            ];
+            var baseCurveOptions = [{ id: "STA", text: "STA" }];
+            for (var baseCurveValue = 0; baseCurveValue <= 12; baseCurveValue += 0.5) {
+                var baseCurveText = baseCurveValue.toFixed(1);
+                baseCurveOptions.push({ id: baseCurveText, text: "BASE " + baseCurveText });
+            }
+            var frameTypeOptions = [
+                { id: "FULL", text: "FULL" },
+                { id: "RIMLESS", text: "RIMLESS" },
+                { id: "SEMI-RIMLESS", text: "SEMI-RIMLESS" }
+            ];
+            var coloringTypeOptions = [
+                { id: "FULL", text: "FULL" },
+                { id: "GRADUAL", text: "GRADUAL" },
+                { id: "SAME AS SAMPLE", text: "SAME AS SAMPLE" }
+            ];
+            var colorOptions = [
+                { id: "Brown", text: "Brown" },
+                { id: "Grey", text: "Grey" },
+                { id: "Green", text: "Green" },
+                { id: "Blue", text: "Blue" },
+                { id: "Yellow", text: "Yellow" },
+                { id: "Purple", text: "Purple" },
+                { id: "Pink", text: "Pink" },
+                { id: "Black", text: "Black" },
+                { id: "Orange", text: "Orange" },
+                { id: "Red", text: "Red" }
+            ];
+            var extraServiceOptions = [
+                { id: "DUAL ASPHERIC", text: "DUAL ASPHERIC" },
+                { id: "KNIFE EDGE", text: "KNIFE EDGE" },
+                { id: "MAX THIN", text: "MAX THIN" },
+                { id: "BALANCE", text: "BALANCE" },
+                { id: "Digital Lanticularization", text: "Digital Lanticularization" },
+                { id: "TOOLS", text: "TOOLS" },
+                { id: "دورتراشی", text: "دورتراشی" }
+            ];
+            var corridorOptions = [
+                { id: "0", text: "Auto" },
+                { id: "14", text: "14 mm" },
+                { id: "16", text: "16 mm" },
+                { id: "18", text: "18 mm" }
+            ];
+
+            function syncOpenDropdownWidth($el) {
+                // Keep Select2 native positioning to avoid top-of-page dropdown jumps.
+                return;
+            }
+
+            function bindSelect2DropdownWidth($el) {
+                return;
+            }
+
+            function bindHoverOpenSelect($el, namespace) {
+                var ns = namespace || "hover";
+                var $container = $el.next(".select2");
+                wireHoverOpen($el, $container, ns);
+            }
+
+            var lastWindowScrollAt = Date.now();
+            $(window).off("scroll.customLensHoverOpen").on("scroll.customLensHoverOpen", function () {
+                lastWindowScrollAt = Date.now();
+            });
+
+            function captureScrollState($el) {
+                var state = {
+                    pageX: window.pageXOffset || 0,
+                    pageY: window.pageYOffset || 0,
+                    containers: []
+                };
+                $el.parents().each(function () {
+                    var el = this;
+                    var style = window.getComputedStyle(el);
+                    var overflowY = style.overflowY;
+                    if ((overflowY === "auto" || overflowY === "scroll") && el.scrollHeight > el.clientHeight) {
+                        state.containers.push({ el: el, top: el.scrollTop, left: el.scrollLeft });
+                    }
+                });
+                return state;
+            }
+
+            function restoreScrollState(state) {
+                if (!state) {
+                    return;
+                }
+                state.containers.forEach(function (item) {
+                    item.el.scrollTop = item.top;
+                    item.el.scrollLeft = item.left;
+                });
+                var currentX = window.pageXOffset || 0;
+                var currentY = window.pageYOffset || 0;
+                if (Math.abs(currentX - state.pageX) > 1 || Math.abs(currentY - state.pageY) > 1) {
+                    window.scrollTo(state.pageX, state.pageY);
+                }
+            }
+
+            function openSelectFromHover($el) {
+                if ($el.prop("disabled")) {
+                    return;
+                }
+                if ($el.data("select2") && $el.data("select2").isOpen && $el.data("select2").isOpen()) {
+                    return;
+                }
+                if ((Date.now() - lastWindowScrollAt) < 180) {
+                    return;
+                }
+
+                var scrollState = captureScrollState($el);
+                $(".select2-hidden-accessible").not($el).each(function () {
+                    var $other = $(this);
+                    if ($other.data("select2")) {
+                        $other.select2("close");
+                    }
+                });
+                $el.select2("open");
+
+                // Select2 focuses its search input on open; keep viewport stable.
+                setTimeout(function () { restoreScrollState(scrollState); }, 0);
+                requestAnimationFrame(function () { restoreScrollState(scrollState); });
+            }
+
+            function wireHoverOpen($el, $container, namespace) {
+                var ns = namespace || "hover";
+                $container.off("mouseenter." + ns).on("mouseenter." + ns, function () {
+                    var prev = $container.data("hoverOpenTimer");
+                    if (prev) {
+                        clearTimeout(prev);
+                    }
+                    var timer = setTimeout(function () {
+                        openSelectFromHover($el);
+                    }, 110);
+                    $container.data("hoverOpenTimer", timer);
+                });
+                $container.off("mouseleave." + ns).on("mouseleave." + ns, function () {
+                    var timer = $container.data("hoverOpenTimer");
+                    if (timer) {
+                        clearTimeout(timer);
+                        $container.removeData("hoverOpenTimer");
+                    }
+                });
+            }
+
+            function toNativeOptions(data) {
+                return (data || []).map(function (item) {
+                    if (item && typeof item === "object") {
+                        return {
+                            id: readItemId(item) != null ? String(readItemId(item)) : "",
+                            text: readItemText(item) != null ? String(readItemText(item)) : ""
+                        };
+                    }
+                    return {
+                        id: String(item),
+                        text: String(item)
+                    };
+                });
+            }
+
+            function initSelect($el, data, placeholder) {
+                destroySelect2IfNeeded($el);
+                $el.empty();
+                $el.append(new Option("", "", false, false));
+
+                toNativeOptions(data).forEach(function (item) {
+                    $el.append(new Option(item.text, item.id, false, false));
+                });
+
+                if (placeholder) {
+                    $el.attr("data-placeholder", placeholder);
+                }
+
+                $el.val(null).trigger('change');
+                bindSelect2DropdownWidth($el);
+            }
+
+            function isTrueLike(value) {
+                return value === true || value === 1 || value === "1" || value === "true";
+            }
+
+            function getObjectValue(item, keys) {
+                if (!item || typeof item !== "object") {
+                    return undefined;
+                }
+                for (var i = 0; i < keys.length; i++) {
+                    var key = keys[i];
+                    if (Object.prototype.hasOwnProperty.call(item, key) && item[key] != null) {
+                        return item[key];
+                    }
+                }
+
+                var lowered = {};
+                Object.keys(item).forEach(function (k) {
+                    lowered[String(k).toLowerCase()] = item[k];
+                });
+                for (var j = 0; j < keys.length; j++) {
+                    var lk = String(keys[j]).toLowerCase();
+                    if (Object.prototype.hasOwnProperty.call(lowered, lk) && lowered[lk] != null) {
+                        return lowered[lk];
+                    }
+                }
+                return undefined;
+            }
+
+            function normalizeComparable(value) {
+                if (value == null) {
+                    return "";
+                }
+                return String(value).trim();
+            }
+
+            function sameId(left, right) {
+                return normalizeComparable(left) === normalizeComparable(right);
+            }
+
+            function readItemId(item) {
+                var value = getObjectValue(item, [
+                    "id", "Id", "ID", "value", "Value",
+                    "brandId", "BrandId",
+                    "lensTypeId", "LensTypeId",
+                    "designTypeId", "DesignTypeId",
+                    "customLensIndexId", "CustomLensIndexId",
+                    "customLensTypeMaterialId", "CustomLensTypeMaterialId",
+                    "customLensTypeCoatingId", "CustomLensTypeCoatingId",
+                    "customDesignTypeAdditionId", "CustomDesignTypeAdditionId",
+                    "customSphId", "CustomSphId",
+                    "customCylId", "CustomCylId",
+                    "defineObjectId", "DefineObjectId"
+                ]);
+                if (value == null || value === "") {
+                    value = getObjectValue(item, ["defineObjectId", "DefineObjectId"]);
+                }
+                return value;
+            }
+
+            function readItemText(item) {
+                var value = getObjectValue(item, [
+                    "text", "Text",
+                    "name", "Name",
+                    "title", "Title",
+                    "lensIndexName", "LensIndexName",
+                    "materialName", "MaterialName",
+                    "coatingName", "CoatingName",
+                    "codeObject", "CodeObject",
+                    "nameObject", "NameObject"
+                ]);
+                if (value == null || String(value).trim() === "") {
+                    var fallback = readItemId(item);
+                    return fallback == null ? "" : String(fallback);
+                }
+                return value;
+            }
+
+            function readItemParentId(item) {
+                return getObjectValue(item, [
+                    "parentid", "parentId", "ParentId", "parent_id", "Parentid",
+                    "brandId", "BrandId",
+                    "lensTypeId", "LensTypeId",
+                    "designTypeId", "DesignTypeId",
+                    "lensIndexId", "LensIndexId"
+                ]);
+            }
+
+            function readItemDefineObjectId(item) {
+                return getObjectValue(item, ["defineObjectId", "DefineObjectId", "defineobjectid", "DefineObjectID"]);
+            }
+
+            function readItemBool(item, keys) {
+                return isTrueLike(getObjectValue(item, keys));
+            }
+
+            function setAddEnabled(enabled) {
+                $rAdd.toggleClass("add-disabled", !enabled);
+                $lAdd.toggleClass("add-disabled", !enabled);
+                $rAdd.prop("disabled", !enabled).trigger("change");
+                $lAdd.prop("disabled", !enabled).trigger("change");
+            }
+
+            function buildIntegerRangeData(min, max) {
+                var data = [];
+                for (var i = min; i <= max; i++) {
+                    var value = String(i);
+                    data.push({ id: value, text: value });
+                }
+                return data;
+            }
+
+            function initDiaSelect($el, placeholder) {
+                var min = 40;
+                var max = 80;
+                var data = buildIntegerRangeData(min, max);
+                initSelect($el, data, placeholder || $el.attr("data-placeholder") || "");
+                $el.val(null).trigger("change");
+            }
+
+            function buildDcRangeData() {
+                var data = [];
+                for (var i = 1; i <= 10; i++) {
+                    var value = String(i);
+                    data.push({ id: value, text: value + " mm" });
+                }
+                return data;
+            }
+
+            function buildPrismRangeData() {
+                var data = [];
+                for (var i = 1; i <= 60; i++) {
+                    var value = (i * 0.25).toFixed(2);
+                    data.push({ id: value, text: value });
+                }
+                return data;
+            }
+
+            function initDcSelect($el, placeholder) {
+                var data = buildDcRangeData();
+                initSelect($el, data, placeholder || $el.attr("data-placeholder") || "");
+                $el.val(null).trigger("change");
+            }
+
+            initSelect($brand, ListCustomBrand, "Brand");
+            $brand.val(null).trigger('change');
+            initSelect($lensType, [], "Lens Type");
+            $lensType.prop('disabled', true).trigger('change');
+            initSelect($designType, [], "Design Type");
+            $designType.prop('disabled', true).trigger('change');
+            initSelect($lensIndex, [], "Lens Index");
+            $lensIndex.prop('disabled', true).trigger('change');
+            initSelect($materialType, [], "Material Type");
+            $materialType.prop('disabled', true).trigger('change');
+            initSelect($product, [], "Product");
+            $product.prop('disabled', true).trigger('change');
+            initSelect($coating, [], "COATING");
+            $coating.prop('disabled', true).trigger('change');
+            setCorridorByLensType(null);
+            initSelect($rSph, ListCustomSph, "R SPH");
+            initSelect($lSph, ListCustomSph, "L SPH");
+            initSelect($rCyl, ListCustomCyl, "R CYL");
+            initSelect($lCyl, ListCustomCyl, "L CYL");
+            initSelect($rAdd, [], "R ADD");
+            initSelect($lAdd, [], "L ADD");
+            initDiaSelect($rDia, "R DIA");
+            initDiaSelect($lDia, "L DIA");
+            initDcSelect($rDc, "R DC");
+            initDcSelect($lDc, "L DC");
+            initSelect($rPosition, positionOptions, "R Position");
+            initSelect($lPosition, positionOptions, "L Position");
+            initSelect($rPrism, buildPrismRangeData(), "R Prism");
+            initSelect($lPrism, buildPrismRangeData(), "L Prism");
+            initSelect($rBasePrism, basePrismOptions, "R Base of Prism");
+            initSelect($lBasePrism, basePrismOptions, "L Base of Prism");
+            initSelect($baseCurve, baseCurveOptions, "BASE");
+            initSelect($frameType, frameTypeOptions, "FRAME TYPE");
+            initSelect($coloringType, coloringTypeOptions, "COLORING TYPE");
+            initSelect($color, colorOptions, "COLOR");
+            initSelect($extraService, extraServiceOptions, "EXTRA SERVICES");
+            bindHoverOpenSelect($rPosition, "position");
+            bindHoverOpenSelect($lPosition, "position");
+            bindHoverOpenSelect($rPrism, "rprism");
+            bindHoverOpenSelect($lPrism, "lprism");
+            bindHoverOpenSelect($rBasePrism, "rbaseprism");
+            bindHoverOpenSelect($lBasePrism, "lbaseprism");
+            bindFrameNumericInputs();
+            setAddEnabled(false);
+            setSphToggleByDesignType(null);
+            syncSphSignedValue("r");
+            syncSphSignedValue("l");
+            syncCylSignedValue("r");
+            syncCylSignedValue("l");
+            bindSelect2DropdownWidth($("#DeliveryType"));
+
+            function normalizeSignedNumericText(raw) {
+                if (!raw) {
+                    return "";
+                }
+                var cleaned = String(raw).trim().replace(",", ".");
+                if (cleaned.startsWith("+") || cleaned.startsWith("-")) {
+                    cleaned = cleaned.substring(1);
+                }
+                var parsed = Number(cleaned);
+                if (!Number.isFinite(parsed)) {
+                    return "";
+                }
+                return Math.abs(parsed).toFixed(2);
+            }
+
+            function getToggleSign(toggleType, eye) {
+                var $btn = $(".eye-toggle[data-toggle='" + toggleType + "'][data-eye='" + eye + "']");
+                return $btn.hasClass("eye-plus") ? "+" : "-";
+            }
+
+            function syncSphSignedValue(eye) {
+                var sign = getToggleSign("sph", eye);
+                var $select = eye === "r" ? $rSph : $lSph;
+                var rawText = $select.find("option:selected").text();
+                var normalized = normalizeSignedNumericText(rawText);
+                if (eye === "r") {
+                    $rSphSign.val(sign);
+                    $rSphSignedValue.val(normalized ? (sign + normalized) : "");
+                } else {
+                    $lSphSign.val(sign);
+                    $lSphSignedValue.val(normalized ? (sign + normalized) : "");
+                }
+            }
+
+            function syncCylSignedValue(eye) {
+                var sign = getToggleSign("cyl", eye);
+                var $select = eye === "r" ? $rCyl : $lCyl;
+                var rawText = $select.find("option:selected").text();
+                var normalized = normalizeSignedNumericText(rawText);
+                if (eye === "r") {
+                    $rCylSign.val(sign);
+                    $rCylSignedValue.val(normalized ? (sign + normalized) : "");
+                } else {
+                    $lCylSign.val(sign);
+                    $lCylSignedValue.val(normalized ? (sign + normalized) : "");
+                }
+            }
+
+            function hasSelectedValue($select) {
+                var val = $select.val();
+                return val !== null && val !== undefined && String(val).trim() !== "";
+            }
+
+            function hasInputValue($input) {
+                var val = $input.val();
+                return val !== null && val !== undefined && String(val).trim() !== "";
+            }
+
+            function bindFrameNumericInputs() {
+                var $inputs = $(".custom-lens-frame input.frame-numeric");
+                $inputs.each(function () {
+                    var $input = $(this);
+                    $input.attr("step", "0.1");
+                    if ($input.hasClass("frame-min-one")) {
+                        $input.attr("min", "1");
+                    } else {
+                        $input.removeAttr("min");
+                    }
+                    $input.attr("inputmode", "decimal");
+                });
+
+                $inputs.off("keydown.frameNumeric").on("keydown.frameNumeric", function (e) {
+                    var forceMinOne = $(this).hasClass("frame-min-one");
+                    if (e.key === "e" || e.key === "E" || e.key === "+" || (forceMinOne && e.key === "-")) {
+                        e.preventDefault();
+                    }
+                });
+
+                $inputs.off("input.frameNumeric").on("input.frameNumeric", function () {
+                    var raw = String(this.value || "");
+                    var normalized = raw.replace(",", ".");
+                    normalized = normalized.replace(/[^0-9.\-]/g, "");
+
+                    if ($(this).hasClass("frame-min-one")) {
+                        normalized = normalized.replace(/\-/g, "");
+                    } else {
+                        var isNegative = normalized.indexOf("-") === 0;
+                        normalized = (isNegative ? "-" : "") + normalized.replace(/\-/g, "");
+                    }
+
+                    var firstDot = normalized.indexOf(".");
+                    if (firstDot !== -1) {
+                        normalized = normalized.substring(0, firstDot + 1) + normalized.substring(firstDot + 1).replace(/\./g, "");
+                    }
+
+                    if (normalized !== raw) {
+                        this.value = normalized;
+                    }
+                });
+
+                $inputs.off("blur.frameNumeric").on("blur.frameNumeric", function () {
+                    if (!$(this).hasClass("frame-min-one")) {
+                        return;
+                    }
+
+                    var raw = String(this.value || "").trim();
+                    if (!raw) {
+                        return;
+                    }
+
+                    var value = Number(raw.replace(",", "."));
+                    if (!Number.isFinite(value) || value < 1) {
+                        this.value = "1";
+                    }
+                });
+            }
+
+            function parseAxisValue(value) {
+                var raw = String(value || "").trim();
+                if (!raw) {
+                    return null;
+                }
+                if (!/^\d+$/.test(raw)) {
+                    return NaN;
+                }
+                var num = parseInt(raw, 10);
+                if (!Number.isInteger(num) || num < 1 || num > 180) {
+                    return NaN;
+                }
+                return num;
+            }
+
+            function setAxisValidationState($axis, isValid) {
+                var feedbackId = $axis.attr("id") + "Validation";
+                var $feedback = $("#" + feedbackId);
+
+                if (isValid) {
+                    $axis.removeClass("is-invalid");
+                    $feedback.remove();
+                    return;
+                }
+
+                $axis.addClass("is-invalid");
+                $feedback.remove();
+            }
+
+            function setFrameValidationState($field, isValid) {
+                if (isValid) {
+                    $field.removeClass("is-invalid");
+                    return;
+                }
+                $field.addClass("is-invalid");
+            }
+
+            function setColorSelectValidationState($field, isValid) {
+                if (isValid) {
+                    $field.removeClass("color-invalid");
+                    return;
+                }
+                $field.addClass("color-invalid");
+            }
+
+            function setColorInputValidationState($field, isValid) {
+                if (isValid) {
+                    $field.removeClass("is-invalid");
+                    return;
+                }
+                $field.addClass("is-invalid");
+            }
+
+            function validateColoringTypeRules() {
+                var selectedType = String($coloringType.val() || "").toUpperCase();
+                var isFull = selectedType === "FULL";
+                var isGradual = selectedType === "GRADUAL";
+                var isSameAsSample = selectedType === "SAME AS SAMPLE";
+                function isValidPercent($input) {
+                    var raw = String($input.val() || "").trim().replace(",", ".");
+                    var num = Number(raw);
+                    return raw !== "" && Number.isFinite(num) && num >= 0 && num <= 100;
+                }
+
+                if (isSameAsSample || (!isFull && !isGradual)) {
+                    setColorSelectValidationState($color, true);
+                    setColorInputValidationState($colorRatio, true);
+                    setColorInputValidationState($topRatio, true);
+                    setColorInputValidationState($bottomRatio, true);
+                    setColorSelectValidationState($extraService, true);
+                    return true;
+                }
+
+                var hasColor = hasSelectedValue($color);
+
+                setColorSelectValidationState($color, hasColor);
+
+                if (isFull) {
+                    var hasValidRatio = isValidPercent($colorRatio);
+                    setColorInputValidationState($colorRatio, hasValidRatio);
+                    setColorInputValidationState($topRatio, true);
+                    setColorInputValidationState($bottomRatio, true);
+                    setColorSelectValidationState($extraService, true);
+                    return hasColor && hasValidRatio;
+                }
+
+                var hasValidTopRatio = isValidPercent($topRatio);
+                var hasValidBottomRatio = isValidPercent($bottomRatio);
+                setColorInputValidationState($colorRatio, true);
+                setColorInputValidationState($topRatio, hasValidTopRatio);
+                setColorInputValidationState($bottomRatio, hasValidBottomRatio);
+                setColorSelectValidationState($extraService, true);
+                return hasColor && hasValidTopRatio && hasValidBottomRatio;
+            }
+
+            function syncColoringTypeRules() {
+                var selectedType = String($coloringType.val() || "").toUpperCase();
+                var isFull = selectedType === "FULL";
+                var isGradual = selectedType === "GRADUAL";
+                var isSameAsSample = selectedType === "SAME AS SAMPLE";
+
+                if (isFull) {
+                    $color.prop("disabled", false).trigger("change");
+                    $colorRatio.prop("disabled", false);
+                    $color.attr("required", "required");
+                    $colorRatio.attr("required", "required");
+
+                    $topRatio.val("");
+                    $bottomRatio.val("");
+                    $extraService.val(null).trigger("change");
+
+                    $topRatio.prop("disabled", true).removeAttr("required");
+                    $bottomRatio.prop("disabled", true).removeAttr("required");
+                    $extraService.prop("disabled", false).trigger("change");
+
+                    setColorInputValidationState($topRatio, true);
+                    setColorInputValidationState($bottomRatio, true);
+                    setColorSelectValidationState($extraService, true);
+                } else if (isGradual) {
+                    $color.prop("disabled", false).trigger("change");
+                    $topRatio.prop("disabled", false);
+                    $bottomRatio.prop("disabled", false);
+                    $color.attr("required", "required");
+                    $topRatio.attr("required", "required");
+                    $bottomRatio.attr("required", "required");
+
+                    $colorRatio.val("");
+                    $extraService.val(null).trigger("change");
+                    $colorRatio.prop("disabled", true).removeAttr("required");
+                    $extraService.prop("disabled", false).trigger("change");
+
+                    setColorInputValidationState($colorRatio, true);
+                    setColorSelectValidationState($extraService, true);
+                } else if (isSameAsSample) {
+                    $color.val(null).trigger("change");
+                    $extraService.val(null).trigger("change");
+                    $colorRatio.val("");
+                    $topRatio.val("");
+                    $bottomRatio.val("");
+
+                    $color.prop("disabled", true).trigger("change");
+                    $colorRatio.prop("disabled", true);
+                    $topRatio.prop("disabled", true);
+                    $bottomRatio.prop("disabled", true);
+                    $extraService.prop("disabled", false).trigger("change");
+
+                    $color.removeAttr("required");
+                    $colorRatio.removeAttr("required");
+                    $topRatio.removeAttr("required");
+                    $bottomRatio.removeAttr("required");
+                    $extraService.removeAttr("required");
+                } else {
+                    $color.prop("disabled", false).trigger("change");
+                    $colorRatio.prop("disabled", false);
+                    $topRatio.prop("disabled", false);
+                    $bottomRatio.prop("disabled", false);
+                    $extraService.prop("disabled", false).trigger("change");
+
+                    $color.removeAttr("required");
+                    $colorRatio.removeAttr("required");
+                    $topRatio.removeAttr("required");
+                    $bottomRatio.removeAttr("required");
+                    $extraService.removeAttr("required");
+                }
+
+                syncExtraServiceByDia();
+                validateColoringTypeRules();
+            }
+
+            function parseDiaNumber($field) {
+                var raw = String($field.val() || "").trim().replace(",", ".");
+                if (!raw) {
+                    return null;
+                }
+                var parsed = Number(raw);
+                return Number.isFinite(parsed) ? parsed : null;
+            }
+
+            function syncExtraServiceByDia() {
+                var rightDia = parseDiaNumber($rDia);
+                var leftDia = parseDiaNumber($lDia);
+                var hasDiaBelow50 = (rightDia !== null && rightDia < 50) || (leftDia !== null && leftDia < 50);
+
+                if (hasDiaBelow50) {
+                    $extraService.val("TOOLS").trigger("change");
+                }
+
+                $extraService.prop("disabled", false).trigger("change");
+                setColorSelectValidationState($extraService, true);
+            }
+
+            function syncFrameByDiaAvailability() {
+                var hasRightDia = hasSelectedValue($rDia);
+                var hasLeftDia = hasSelectedValue($lDia);
+                var disableCommon = hasRightDia && hasLeftDia;
+
+                [$hBox, $vBox, $dbl, $ed].forEach(function ($field) {
+                    $field.prop("disabled", disableCommon);
+                    if (disableCommon) {
+                        setFrameValidationState($field, true);
+                    }
+                });
+
+                $ipdr.prop("disabled", hasRightDia);
+                if (hasRightDia) {
+                    setFrameValidationState($ipdr, true);
+                }
+
+                $ipdl.prop("disabled", hasLeftDia);
+                if (hasLeftDia) {
+                    setFrameValidationState($ipdl, true);
+                }
+            }
+
+            function validateFrameByDiaRules() {
+                syncFrameByDiaAvailability();
+                var hasRightDia = hasSelectedValue($rDia);
+                var hasLeftDia = hasSelectedValue($lDia);
+
+                var requireCommon = !hasRightDia || !hasLeftDia;
+                var requireIpdr = !hasRightDia;
+                var requireIpdl = !hasLeftDia;
+
+                var commonFields = [$hBox, $vBox, $dbl, $ed];
+                var commonValid = true;
+                commonFields.forEach(function ($field) {
+                    var valid = $field.prop("disabled") || !requireCommon || hasInputValue($field);
+                    setFrameValidationState($field, valid);
+                    if (!valid) {
+                        commonValid = false;
+                    }
+                });
+
+                var ipdrValid = $ipdr.prop("disabled") || !requireIpdr || hasInputValue($ipdr);
+                var ipdlValid = $ipdl.prop("disabled") || !requireIpdl || hasInputValue($ipdl);
+                setFrameValidationState($ipdr, ipdrValid);
+                setFrameValidationState($ipdl, ipdlValid);
+
+                return commonValid && ipdrValid && ipdlValid;
+            }
+
+            function enforceAxisDigits($axis) {
+                var raw = String($axis.val() || "");
+                var normalized = raw.replace(/[^\d]/g, "");
+                if (normalized.length > 3) {
+                    normalized = normalized.substring(0, 3);
+                }
+                if (normalized) {
+                    var numeric = parseInt(normalized, 10);
+                    if (Number.isFinite(numeric) && numeric > 180) {
+                        normalized = "180";
+                    }
+                }
+                if (raw !== normalized) {
+                    $axis.val(normalized);
+                }
+            }
+
+            function setPositionValidationState($position, isValid) {
+                if (isValid) {
+                    $position.removeClass("position-invalid");
+                    return;
+                }
+                $position.addClass("position-invalid");
+            }
+
+            function validatePositionForEye(eye) {
+                var isRight = eye === "r";
+                var $dc = isRight ? $rDc : $lDc;
+                var $position = isRight ? $rPosition : $lPosition;
+                var hasDc = hasSelectedValue($dc);
+
+                if (!hasDc) {
+                    setPositionValidationState($position, true);
+                    return true;
+                }
+
+                var hasPosition = hasSelectedValue($position);
+                setPositionValidationState($position, hasPosition);
+                return hasPosition;
+            }
+
+            function validatePositionRules() {
+                var rightValid = validatePositionForEye("r");
+                var leftValid = validatePositionForEye("l");
+                return rightValid && leftValid;
+            }
+
+            function setBasePrismValidationState($basePrism, isValid) {
+                if (isValid) {
+                    $basePrism.removeClass("baseprism-invalid");
+                    return;
+                }
+                $basePrism.addClass("baseprism-invalid");
+            }
+
+            function validateBasePrismForEye(eye) {
+                var isRight = eye === "r";
+                var $prism = isRight ? $rPrism : $lPrism;
+                var $basePrism = isRight ? $rBasePrism : $lBasePrism;
+                var hasPrism = hasSelectedValue($prism);
+
+                if (!hasPrism) {
+                    setBasePrismValidationState($basePrism, true);
+                    return true;
+                }
+
+                var hasBasePrism = hasSelectedValue($basePrism);
+                setBasePrismValidationState($basePrism, hasBasePrism);
+                return hasBasePrism;
+            }
+
+            function validateBasePrismRules() {
+                var rightValid = validateBasePrismForEye("r");
+                var leftValid = validateBasePrismForEye("l");
+                return rightValid && leftValid;
+            }
+
+            function syncBasePrismAvailability(eye) {
+                var isRight = eye === "r";
+                var $prism = isRight ? $rPrism : $lPrism;
+                var $basePrism = isRight ? $rBasePrism : $lBasePrism;
+                var hasPrism = hasSelectedValue($prism);
+
+                if (!hasPrism) {
+                    $basePrism.val(null).trigger("change");
+                    $basePrism.prop("disabled", true).trigger("change");
+                    setBasePrismValidationState($basePrism, true);
+                    return;
+                }
+
+                $basePrism.prop("disabled", false).trigger("change");
+                validateBasePrismForEye(eye);
+            }
+
+            function syncPositionAvailability(eye) {
+                var isRight = eye === "r";
+                var $dc = isRight ? $rDc : $lDc;
+                var $position = isRight ? $rPosition : $lPosition;
+                var hasDc = hasSelectedValue($dc);
+
+                if (!hasDc) {
+                    $position.val(null).trigger("change");
+                    $position.prop("disabled", true).trigger("change");
+                    setPositionValidationState($position, true);
+                    return;
+                }
+
+                $position.prop("disabled", false).trigger("change");
+                validatePositionForEye(eye);
+            }
+
+            function validateAxisForEye(eye) {
+                var isRight = eye === "r";
+                var $axis = isRight ? $rAxis : $lAxis;
+                var $cyl = isRight ? $rCyl : $lCyl;
+                var axisValue = parseAxisValue($axis.val());
+                var hasCyl = hasSelectedValue($cyl);
+
+                if (!hasCyl) {
+                    if (axisValue === null) {
+                        setAxisValidationState($axis, true);
+                        return true;
+                    }
+                    if (Number.isNaN(axisValue)) {
+                        setAxisValidationState($axis, false);
+                        return false;
+                    }
+                    setAxisValidationState($axis, true);
+                    return true;
+                }
+
+                if (axisValue === null) {
+                    setAxisValidationState($axis, false);
+                    return false;
+                }
+                if (Number.isNaN(axisValue)) {
+                    setAxisValidationState($axis, false);
+                    return false;
+                }
+
+                setAxisValidationState($axis, true);
+                return true;
+            }
+
+            function validateAxisRules() {
+                var rightValid = validateAxisForEye("r");
+                var leftValid = validateAxisForEye("l");
+                return rightValid && leftValid;
+            }
+
+            function setCorridorByLensType(lensTypeId) {
+                var item = (ListCustomLensType || []).find(function (x) { return sameId(readItemId(x), lensTypeId); });
+                var has = item && readItemBool(item, ["corridor", "Corridor", "isCorridor", "IsCorridor"]);
+                if (has) {
+                    initSelect($corridor, corridorOptions, "Corridor");
+                    $corridor.prop('disabled', false).trigger('change');
+                } else {
+                    initSelect($corridor, [], "Corridor");
+                    $corridor.prop('disabled', true).trigger('change');
+                }
+            }
+
+            function setSphToggleByDesignType(designTypeId) {
+                var $toggles = $(".eye-toggle[data-toggle='sph']");
+                var item = (ListCustomDesignType || []).find(function (x) { return sameId(readItemId(x), designTypeId); });
+                var hasPlus = item && readItemBool(item, ["sphPlus", "SphPlus", "sph_plus"]);
+                var hasMinus = item && readItemBool(item, ["sphMinus", "SphMinus", "sph_minus"]);
+
+                if (!hasPlus && !hasMinus) {
+                    $toggles.prop("disabled", true).removeClass("eye-plus").text("-");
+                    syncSphSignedValue("r");
+                    syncSphSignedValue("l");
+                    return;
+                }
+                if (hasPlus && !hasMinus) {
+                    $toggles.prop("disabled", true).addClass("eye-plus").text("+");
+                    syncSphSignedValue("r");
+                    syncSphSignedValue("l");
+                    return;
+                }
+                if (!hasPlus && hasMinus) {
+                    $toggles.prop("disabled", true).removeClass("eye-plus").text("-");
+                    syncSphSignedValue("r");
+                    syncSphSignedValue("l");
+                    return;
+                }
+
+                $toggles.prop("disabled", false);
+                syncSphSignedValue("r");
+                syncSphSignedValue("l");
+            }
+
+            function setAdditionByDesignType(designTypeId) {
+                if (!designTypeId) {
+                    initSelect($rAdd, [], "R ADD");
+                    initSelect($lAdd, [], "L ADD");
+                    setAddEnabled(false);
+                    return;
+                }
+
+                var designType = (ListCustomDesignType || []).find(function (x) { return sameId(readItemId(x), designTypeId); });
+                if (!designType || !readItemBool(designType, ["addition", "Addition"])) {
+                    initSelect($rAdd, [], "R ADD");
+                    initSelect($lAdd, [], "L ADD");
+                    setAddEnabled(false);
+                    return;
+                }
+
+                var additions = (ListCustomAddition || [])
+                    .filter(function (x) { return sameId(readItemParentId(x), designTypeId); })
+                    .map(function (x) { return { id: readItemId(x), text: readItemText(x) }; });
+
+                initSelect($rAdd, additions, "R ADD");
+                initSelect($lAdd, additions, "L ADD");
+                setAddEnabled(true);
+            }
+
+            function getCoatingsByDesignType(designTypeId) {
+                if (!designTypeId) {
+                    return [];
+                }
+                return (ListCustomCoating || []).filter(function (x) { return sameId(readItemParentId(x), designTypeId); });
+            }
+
+            function hasCoatingPrerequisites() {
+                return hasSelectedValue($brand)
+                    && hasSelectedValue($lensType)
+                    && hasSelectedValue($designType)
+                    && hasSelectedValue($lensIndex)
+                    && hasSelectedValue($materialType);
+            }
+
+            function syncCoatingByDesignType() {
+                var designTypeId = $designType.val();
+                var canEnable = hasCoatingPrerequisites();
+                var coatings = canEnable ? getCoatingsByDesignType(designTypeId) : [];
+                var currentValue = $coating.val();
+                initSelect($coating, coatings, "COATING");
+
+                var hasCurrent = coatings.some(function (x) { return sameId(readItemId(x), currentValue); });
+                if (hasCurrent) {
+                    $coating.val(normalizeComparable(currentValue));
+                } else {
+                    $coating.val(null);
+                }
+
+                $coating.prop('disabled', !canEnable || coatings.length === 0).trigger('change');
+            }
+
+            $brand.off("change.customlens").on("change.customlens", function () {
+                var brandId = $(this).val();
+                if (!brandId) {
+                    initSelect($lensType, [], "Lens Type");
+                    $lensType.prop('disabled', true).trigger('change');
+                    initSelect($designType, [], "Design Type");
+                    $designType.prop('disabled', true).trigger('change');
+                    initSelect($lensIndex, [], "Lens Index");
+                    $lensIndex.prop('disabled', true).trigger('change');
+                    initSelect($materialType, [], "Material Type");
+                    $materialType.prop('disabled', true).trigger('change');
+                    initSelect($product, [], "Product");
+                    $product.prop('disabled', true).trigger('change');
+                    syncCoatingByDesignType();
+                    setCorridorByLensType(null);
+                    setSphToggleByDesignType(null);
+                    setAdditionByDesignType(null);
+                    return;
+                }
+                var lensTypes = (ListCustomLensType || []).filter(function (x) { return sameId(readItemParentId(x), brandId); });
+                initSelect($lensType, lensTypes, "Lens Type");
+                $lensType.prop('disabled', lensTypes.length === 0).trigger('change');
+                initSelect($designType, [], "Design Type");
+                $designType.prop('disabled', true).trigger('change');
+                initSelect($lensIndex, [], "Lens Index");
+                $lensIndex.prop('disabled', true).trigger('change');
+                initSelect($materialType, [], "Material Type");
+                $materialType.prop('disabled', true).trigger('change');
+                initSelect($product, [], "Product");
+                $product.prop('disabled', true).trigger('change');
+                syncCoatingByDesignType();
+                setCorridorByLensType(null);
+                setSphToggleByDesignType(null);
+                setAdditionByDesignType(null);
+            });
+
+            $lensType.off("change.customlens").on("change.customlens", function () {
+                var lensTypeId = $(this).val();
+                if (!lensTypeId) {
+                    initSelect($designType, [], "Design Type");
+                    $designType.prop('disabled', true).trigger('change');
+                    initSelect($lensIndex, [], "Lens Index");
+                    $lensIndex.prop('disabled', true).trigger('change');
+                    initSelect($materialType, [], "Material Type");
+                    $materialType.prop('disabled', true).trigger('change');
+                    initSelect($product, [], "Product");
+                    $product.prop('disabled', true).trigger('change');
+                    syncCoatingByDesignType();
+                    setCorridorByLensType(null);
+                    setSphToggleByDesignType(null);
+                    setAdditionByDesignType(null);
+                    return;
+                }
+                var designTypes = (ListCustomDesignType || []).filter(function (x) { return sameId(readItemParentId(x), lensTypeId); });
+                initSelect($designType, designTypes, "Design Type");
+                $designType.prop('disabled', designTypes.length === 0).trigger('change');
+                initSelect($lensIndex, [], "Lens Index");
+                $lensIndex.prop('disabled', true).trigger('change');
+                initSelect($materialType, [], "Material Type");
+                $materialType.prop('disabled', true).trigger('change');
+                initSelect($product, [], "Product");
+                $product.prop('disabled', true).trigger('change');
+                syncCoatingByDesignType();
+                setCorridorByLensType(lensTypeId);
+                setSphToggleByDesignType(null);
+                setAdditionByDesignType(null);
+            });
+
+            $designType.off("change.customlens").on("change.customlens", function () {
+                var designTypeId = $(this).val();
+                if (!designTypeId) {
+                    initSelect($lensIndex, [], "Lens Index");
+                    $lensIndex.prop('disabled', true).trigger('change');
+                    initSelect($materialType, [], "Material Type");
+                    $materialType.prop('disabled', true).trigger('change');
+                    initSelect($product, [], "Product");
+                    $product.prop('disabled', true).trigger('change');
+                    syncCoatingByDesignType();
+                    setSphToggleByDesignType(null);
+                    setAdditionByDesignType(null);
+                    return;
+                }
+                var lensIndexes = (ListCustomLensIndex || []).filter(function (x) { return sameId(readItemParentId(x), designTypeId); });
+                initSelect($lensIndex, lensIndexes, "Lens Index");
+                $lensIndex.prop('disabled', lensIndexes.length === 0).trigger('change');
+                initSelect($materialType, [], "Material Type");
+                $materialType.prop('disabled', true).trigger('change');
+                initSelect($product, [], "Product");
+                $product.prop('disabled', true).trigger('change');
+                syncCoatingByDesignType();
+                setSphToggleByDesignType(designTypeId);
+                setAdditionByDesignType(designTypeId);
+            });
+
+            $lensIndex.off("change.customlens").on("change.customlens", function () {
+                var lensIndexId = $(this).val();
+                if (!lensIndexId) {
+                    initSelect($materialType, [], "Material Type");
+                    $materialType.prop('disabled', true).trigger('change');
+                    initSelect($product, [], "Product");
+                    $product.prop('disabled', true).trigger('change');
+                    syncCoatingByDesignType();
+                    return;
+                }
+                var materials = (ListCustomMaterial || []).filter(function (x) { return sameId(readItemParentId(x), lensIndexId); });
+                var products = (ListCustomProduct || []).filter(function (x) { return sameId(readItemParentId(x), lensIndexId); });
+                initSelect($materialType, materials, "Material Type");
+                $materialType.prop('disabled', materials.length === 0).trigger('change');
+                initSelect($product, products, "Product");
+                $product.prop('disabled', true).trigger('change');
+                syncCoatingByDesignType();
+            });
+
+            $materialType.off("change.customlens").on("change.customlens", function () {
+                var materialId = $(this).val();
+                if (!materialId) {
+                    initSelect($product, [], "Product");
+                    $product.prop('disabled', true).trigger('change');
+                    syncCoatingByDesignType();
+                    return;
+                }
+                var lensIndexId = $lensIndex.val();
+                var products = (ListCustomProduct || []).filter(function (x) { return sameId(readItemParentId(x), lensIndexId); });
+                initSelect($product, products, "Product");
+                var material = (ListCustomMaterial || []).find(function (x) { return sameId(readItemId(x), materialId); });
+                var rawDefineObjectId = material ? readItemDefineObjectId(material) : "";
+                var defineObjectId = rawDefineObjectId != null ? String(rawDefineObjectId) : "";
+                if (defineObjectId) {
+                    $product.val(defineObjectId).trigger('change');
+                } else {
+                    $product.val(null).trigger('change');
+                }
+                $product.prop('disabled', true).trigger('change');
+                syncCoatingByDesignType();
+            });
+
+            function copyEye(fromPrefix, toPrefix) {
+                var fields = ["Sph", "Cyl", "Axis", "Add", "Dia", "DC", "Position", "Prism", "BasePrism", "StockItem"];
+                fields.forEach(function (field) {
+                    var $from = $("#" + fromPrefix + field);
+                    var $to = $("#" + toPrefix + field);
+                    if (!$from.length || !$to.length) {
+                        return;
+                    }
+                    var val = $from.val();
+                    $to.val(val);
+                    if ($to.hasClass("select2-hidden-accessible")) {
+                        $to.trigger("change");
+                    } else {
+                        $to.trigger("change");
+                    }
+                });
+            }
+
+            $(document).on("click", ".eye-copy[data-copy='r2l']", function () {
+                copyEye("R", "L");
+                syncSphSignedValue("l");
+                syncCylSignedValue("l");
+                validateAxisForEye("l");
+                syncPositionAvailability("l");
+                validatePositionForEye("l");
+                syncBasePrismAvailability("l");
+                validateBasePrismForEye("l");
+            });
+            $(document).on("click", ".eye-copy[data-copy='l2r']", function () {
+                copyEye("L", "R");
+                syncSphSignedValue("r");
+                syncCylSignedValue("r");
+                validateAxisForEye("r");
+                syncPositionAvailability("r");
+                validatePositionForEye("r");
+                syncBasePrismAvailability("r");
+                validateBasePrismForEye("r");
+            });
+
+            $rSph.on("change", function () { syncSphSignedValue("r"); });
+            $lSph.on("change", function () { syncSphSignedValue("l"); });
+            $rCyl.on("change", function () {
+                syncCylSignedValue("r");
+                validateAxisForEye("r");
+                syncPositionAvailability("r");
+                validatePositionForEye("r");
+            });
+            $lCyl.on("change", function () {
+                syncCylSignedValue("l");
+                validateAxisForEye("l");
+                syncPositionAvailability("l");
+                validatePositionForEye("l");
+            });
+            $rAxis.on("input change", function () {
+                enforceAxisDigits($rAxis);
+                validateAxisForEye("r");
+            });
+            $lAxis.on("input change", function () {
+                enforceAxisDigits($lAxis);
+                validateAxisForEye("l");
+            });
+            $rDc.on("change", function () {
+                syncPositionAvailability("r");
+                validatePositionForEye("r");
+            });
+            $lDc.on("change", function () {
+                syncPositionAvailability("l");
+                validatePositionForEye("l");
+            });
+            $rDia.on("change", function () {
+                validateFrameByDiaRules();
+                syncExtraServiceByDia();
+            });
+            $lDia.on("change", function () {
+                validateFrameByDiaRules();
+                syncExtraServiceByDia();
+            });
+            $rPosition.on("change", function () { validatePositionForEye("r"); });
+            $lPosition.on("change", function () { validatePositionForEye("l"); });
+            $rPrism.on("change", function () {
+                syncBasePrismAvailability("r");
+                validateBasePrismForEye("r");
+            });
+            $lPrism.on("change", function () {
+                syncBasePrismAvailability("l");
+                validateBasePrismForEye("l");
+            });
+            $rBasePrism.on("change", function () { validateBasePrismForEye("r"); });
+            $lBasePrism.on("change", function () { validateBasePrismForEye("l"); });
+
+            syncPositionAvailability("r");
+            syncPositionAvailability("l");
+            syncBasePrismAvailability("r");
+            syncBasePrismAvailability("l");
+            validateFrameByDiaRules();
+            syncColoringTypeRules();
+
+            $hBox.on("input change", function () { validateFrameByDiaRules(); });
+            $vBox.on("input change", function () { validateFrameByDiaRules(); });
+            $dbl.on("input change", function () { validateFrameByDiaRules(); });
+            $ed.on("input change", function () { validateFrameByDiaRules(); });
+            $ipdr.on("input change", function () { validateFrameByDiaRules(); });
+            $ipdl.on("input change", function () { validateFrameByDiaRules(); });
+            $coloringType.on("change", function () { syncColoringTypeRules(); });
+            $color.on("change", function () { validateColoringTypeRules(); });
+            $colorRatio.on("input change", function () { validateColoringTypeRules(); });
+            $topRatio.on("input change", function () { validateColoringTypeRules(); });
+            $bottomRatio.on("input change", function () { validateColoringTypeRules(); });
+
+            function getSelectedText($select) {
+                return String($select.find("option:selected").text() || "").trim();
+            }
+
+            function parseNullableScaledShort(value) {
+                var parsed = parseNullableNumber(value);
+                if (parsed == null) {
+                    return null;
+                }
+                return Math.round(parsed * 100);
+            }
+
+            function mapPositionCode(value) {
+                var normalized = String(value || "").trim().toUpperCase();
+                if (normalized === "TO NASAL") {
+                    return 1;
+                }
+                if (normalized === "TO TEMPLE") {
+                    return 2;
+                }
+                return null;
+            }
+
+            function mapBasePrismCode(value) {
+                var normalized = String(value || "").trim().toUpperCase();
+                var map = {
+                    "UP": 1,
+                    "DOWN": 2,
+                    "IN": 3,
+                    "OUT": 4,
+                    "IN/UP": 5,
+                    "IN/DOWN": 6,
+                    "OUT/UP": 7,
+                    "OUT/DOWN": 8
+                };
+                return Object.prototype.hasOwnProperty.call(map, normalized) ? map[normalized] : null;
+            }
+
+            function buildEyeMeta(meta) {
+                var parts = [];
+                Object.keys(meta || {}).forEach(function (key) {
+                    var value = String(meta[key] == null ? "" : meta[key]).trim();
+                    if (value) {
+                        parts.push(key + "=" + value);
+                    }
+                });
+                return parts.join(";");
+            }
+
+            function trimToMaxLength(value, maxLength) {
+                var text = String(value == null ? "" : value).trim();
+                if (!text) {
+                    return "";
+                }
+                if (!maxLength || maxLength <= 0 || text.length <= maxLength) {
+                    return text;
+                }
+                return text.substring(0, maxLength);
+            }
+
+            function buildOrderMeta() {
+                var maxLength = 254;
+                var currentLength = 0;
+                var parts = [];
+                var fittingRText = String($("#FITTINGR").val() || "").trim().replace(",", ".");
+                var fittingLText = String($("#FITTINGL").val() || "").trim().replace(",", ".");
+                var candidates = [
+                    { key: "FITTING-R", value: fittingRText },
+                    { key: "FITTING-L", value: fittingLText },
+                    { key: "DELIVERYTYPE", value: hasValue($("#DeliveryType").val()) ? getSelectedText($("#DeliveryType")) : "" },
+                    { key: "BASECURVE", value: getSelectedText($baseCurve) },
+                    { key: "LENSINDEX", value: getSelectedText($lensIndex) },
+                    { key: "MATERIAL", value: getSelectedText($materialType) },
+                    { key: "COATING", value: getSelectedText($coating) },
+                    { key: "COLORINGTYPE", value: getSelectedText($coloringType) },
+                    { key: "SERVICE", value: getSelectedText($extraService) }
+                ];
+
+                candidates.forEach(function (item) {
+                    var value = trimToMaxLength(item.value, 80);
+                    if (!value) {
+                        return;
+                    }
+
+                    var pair = item.key + "=" + value;
+                    var pairLength = pair.length + (parts.length > 0 ? 1 : 0);
+                    if (currentLength + pairLength > maxLength) {
+                        return;
+                    }
+
+                    parts.push(pair);
+                    currentLength += pairLength;
+                });
+
+                return parts.join(";");
+            }
+
+            function buildEyeItem(isRight, defineObjectId, consumer, storeName, needTools) {
+                var $sph = isRight ? $rSph : $lSph;
+                var $cyl = isRight ? $rCyl : $lCyl;
+                var $axis = isRight ? $rAxis : $lAxis;
+                var $add = isRight ? $rAdd : $lAdd;
+                var $dia = isRight ? $rDia : $lDia;
+                var $dc = isRight ? $rDc : $lDc;
+                var $position = isRight ? $rPosition : $lPosition;
+                var $prism = isRight ? $rPrism : $lPrism;
+                var $basePrism = isRight ? $rBasePrism : $lBasePrism;
+                var $ipd = isRight ? $ipdr : $ipdl;
+                var $sphSigned = isRight ? $rSphSignedValue : $lSphSignedValue;
+                var $cylSigned = isRight ? $rCylSignedValue : $lCylSignedValue;
+
+                var sphSigned = String($sphSigned.val() || "").trim();
+                var cylSigned = String($cylSigned.val() || "").trim();
+                var addText = getSelectedText($add).replace(",", ".");
+                var diaText = String($dia.val() || "").trim();
+                var dcText = String($dc.val() || "").trim();
+                var prismText = String($prism.val() || "").trim();
+                var basePrismText = String($basePrism.val() || "").trim();
+                var positionText = String($position.val() || "").trim();
+
+                return {
+                    IsRight: isRight ? 1 : 0,
+                    Quantity: 1,
+                    DefineObjectId: defineObjectId,
+                    ConsumerTitle: trimToMaxLength(consumer, 20),
+                    Optician: trimToMaxLength(storeName, 254),
+                    NeedTools: needTools,
+                    Axis: parseNullableInt($axis.val()),
+                    ItemAdd: parseNullableScaledShort(addText),
+                    Dia: parseNullableInt($dia.val()),
+                    Dc: parseNullableInt($dc.val()),
+                    Ipd: parseNullableNumber($ipd.val()),
+                    Prism: parseNullableScaledShort($prism.val()),
+                    BaseOfPrism: mapBasePrismCode(basePrismText),
+                    Position: mapPositionCode(positionText),
+                    Description: trimToMaxLength(buildEyeMeta({
+                        SPH: sphSigned,
+                        CYL: cylSigned,
+                        ADD: addText,
+                        DIA: diaText,
+                        DC: dcText,
+                        PRISM: prismText,
+                        BASE: basePrismText,
+                        POSITION: positionText
+                    }), 254)
+                };
+            }
+
+            function appendEyeItemToPayload(payload, index, item) {
+                Object.keys(item || {}).forEach(function (key) {
+                    var value = item[key];
+                    if (value === undefined || value === null) {
+                        return;
+                    }
+                    var text = typeof value === "string" ? value.trim() : value;
+                    if (text === "") {
+                        return;
+                    }
+                    payload["TblLnsOrderItems[" + index + "]." + key] = value;
+                });
+            }
+
+            function buildCustomOrderPayload() {
+                applySelectedCustomerIdFromText();
+
+                syncSphSignedValue("r");
+                syncSphSignedValue("l");
+                syncCylSignedValue("r");
+                syncCylSignedValue("l");
+
+                var payload = {
+                    DefineCustomerId: parseNullableInt($defineCustomerId.val()),
+                    StoreName: trimToMaxLength(String($("#StoreName").val() || "").trim(), 254),
+                    Consumer: trimToMaxLength(String($("#Consumer").val() || "").trim(), 254),
+                    BrandId: parseNullableInt($brand.val()),
+                    LensTypeId: parseNullableInt($lensType.val()),
+                    DesignTypeId: parseNullableInt($designType.val()),
+                    LensIndexId: parseNullableInt($lensIndex.val()),
+                    MaterialTypeId: parseNullableInt($materialType.val()),
+                    DefineObjectId: parseNullableInt($product.val()),
+                    CoatingId: parseNullableInt($coating.val()),
+                    Corridor: parseCorridorValue($corridor.val()),
+                    BeforeLensSpec: trimToMaxLength(String($("#BeforeLensSpec").val() || "").trim(), 20),
+                    BeforeLensType: parseNullableInt($("input[name='BeforeLensType']:checked").val()),
+                    Description: trimToMaxLength(buildOrderMeta(), 254),
+                    HBox: parseNullableNumber($hBox.val()),
+                    VBox: parseNullableNumber($vBox.val()),
+                    FittingR: parseNullableNumber($("#FITTINGR").val()),
+                    FittingL: parseNullableNumber($("#FITTINGL").val()),
+                    Dbl: parseNullableNumber($dbl.val()),
+                    EffectiveDiameter: parseNullableNumber($ed.val()),
+                    Panto: parseNullableNumber($("#PANTO").val()),
+                    Ffa: parseNullableNumber($("#FFA").val()),
+                    Vd: parseNullableNumber($("#BVD").val()),
+                    IpdR: parseNullableNumber($ipdr.val()),
+                    IpdL: parseNullableNumber($ipdl.val()),
+                    FrameTypeId: parseNullableInt($frameType.val()),
+                    ColoringTypeId: parseNullableInt($coloringType.val()),
+                    Color: trimToMaxLength(String($color.val() || "").trim(), 254),
+                    ColorRatio: parseNullableNumber($colorRatio.val()),
+                    ColorRatioTop: parseNullableNumber($topRatio.val()),
+                    ColorBottom: parseNullableNumber($bottomRatio.val())
+                };
+
+                var needTools = String($extraService.val() || "").trim().toUpperCase() === "TOOLS";
+                var rightEyeItem = buildEyeItem(true, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
+                var leftEyeItem = buildEyeItem(false, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
+                appendEyeItemToPayload(payload, 0, rightEyeItem);
+                appendEyeItemToPayload(payload, 1, leftEyeItem);
+
+                return payload;
+            }
+
+            function validateCustomOrderPayload(payload) {
+                if (!payload.DefineCustomerId) {
+                    toastr.error("مشتری را انتخاب کنید.", "");
+                    return false;
+                }
+                if (!payload.BrandId || !payload.LensTypeId || !payload.DesignTypeId || !payload.LensIndexId || !payload.MaterialTypeId || !payload.DefineObjectId) {
+                    toastr.error("مشخصات محصول کامل نیست.", "");
+                    return false;
+                }
+                return true;
+            }
+
+            function submitCustomLensOrder(isSend) {
+                syncCustomerFieldVisualState();
+
+                if (!validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules() || !validateColoringTypeRules()) {
+                    return;
+                }
+
+                var payload = buildCustomOrderPayload();
+                if (!validateCustomOrderPayload(payload)) {
+                    return;
+                }
+
+                var url = isSend
+                    ? '@Url.Action("CustomLensOrderSend", "Orders")'
+                    : '@Url.Action("CustomLensOrder", "Orders")';
+
+                var $buttons = $('[data-kt-element="save-custom-order"], [data-kt-element="save-send-custom-order"]');
+                $buttons.prop("disabled", true);
+
+                $.post(url, payload)
+                    .done(function (result) {
+                        if (result && result.success) {
+                            toastr.success("", "سفارش با موفقیت ثبت شد.");
+                            location.reload();
+                        } else {
+                            toastr.error((result && result.message) ? result.message : "خطا در ثبت سفارش.", "");
+                        }
+                    })
+                    .fail(function () {
+                        toastr.error("خطا در ثبت سفارش.", "");
+                    })
+                    .always(function () {
+                        $buttons.prop("disabled", false);
+                    });
+            }
+
+            $('[data-kt-element="save-custom-order"]').off("click.customlenssave").on("click.customlenssave", function () {
+                submitCustomLensOrder(false);
+            });
+
+            $('[data-kt-element="save-send-custom-order"]').off("click.customlenssave").on("click.customlenssave", function () {
+                submitCustomLensOrder(true);
+            });
+
+            $(document).on("click", "[data-toggle='sph'], [data-toggle='cyl']", function () {
+                var $btn = $(this);
+                if ($btn.prop("disabled")) {
+                    return;
+                }
+                var isPlus = $btn.hasClass("eye-plus");
+                if (isPlus) {
+                    $btn.removeClass("eye-plus").text("-");
+                } else {
+                    $btn.addClass("eye-plus").text("+");
+                }
+                if ($btn.data("toggle") === "sph") {
+                    var eye = ($btn.data("eye") || "").toString().toLowerCase();
+                    if (eye === "r" || eye === "l") {
+                        syncSphSignedValue(eye);
+                    }
+                }
+                if ($btn.data("toggle") === "cyl") {
+                    var eyeCyl = ($btn.data("eye") || "").toString().toLowerCase();
+                    if (eyeCyl === "r" || eyeCyl === "l") {
+                        syncCylSignedValue(eyeCyl);
+                    }
+                }
+            });
+
+            window.ValidateCustomLensAxis = validateAxisRules;
+
+            $("#customLensOrderForm").on("submit.customLensAxisValidation", function (e) {
+                if (!validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules() || !validateColoringTypeRules()) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+}
+

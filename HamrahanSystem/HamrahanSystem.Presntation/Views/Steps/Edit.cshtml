@@ -1,0 +1,142 @@
+﻿@model HamrahanSystem.Application.DTOs.TblWfwProcessStepDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+
+
+@using (Html.BeginForm("Edit", "TaxPayerCustomers", FormMethod.Post, new { @id = "form-TaxPayerCustomers" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning"><h2 class="card-title align-items-start flex-column">@($"{ResourcePages.Edit} {ResourcePages.Steps}")</h2> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ProcessStepId, Model.ProcessStepId)
+            @Html.HiddenFor(model => model.ProcessId, Model.TblWfwProcess.ProcessId)
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_Process, ResourcePages.Base_Process, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("TblWfwProcess", Model.TblWfwProcess.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_Name, ResourcePages.Base_Name, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_Code, ResourcePages.Base_Code, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsPrint, ResourcePages.Base_IsPrint, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsPrint, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                        @*              @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsBarcode, ResourcePages.Base_IsBarcode, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsBarcode, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                        @*              @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_ProcedureId, ResourcePages.Base_ProcedureId, htmlAttributes: new { @class = "col-lg-4 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ProcedureId, (List<SelectListItem>)ViewBag.ListProcedure, new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                        @*              @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row">
+                @Html.Label("test", "", htmlAttributes: new { @class = "col-form-label col-md-10" })
+
+            </div>
+            <div class="form-group row  border border-2 ">
+                @Html.ListBox("role", new MultiSelectList(ViewBag.ListRole, "RoleId", "RoleName", Model.TblWfwRoleStepes?.Select(y => y.RoleId)), new { multiple = "multiple", @class = "form-control" })
+                @Html.ValidationMessage("Role", new { @class = "text-danger" })
+            </div>
+            <div class="form-group row mt-6 border border-2">
+                @Html.ListBox("nextStep", new MultiSelectList(ViewBag.NextStepOptions, "Value", "Text", ViewBag.SelectedNextStepIds), new { multiple = "multiple", @class = "form-control" })
+                @Html.ValidationMessage("nextStep", new { @class = "text-danger" })
+            </div>
+
+
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="@($"{ResourcePages.Save} {ResourcePages.Steps}")" class="btn btn-success" />
+
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(function () {
+            localStorage.clear();
+
+        $("#role").bootstrapDualListbox({
+            nonSelectedListLabel: 'نقش های قابل تخصیص',
+            selectedListLabel: 'نقش های اختصاص یافته',
+            moveOnSelect: false
+        });
+        $("#nextStep").bootstrapDualListbox({
+            nonSelectedListLabel: 'گام های قابل انتخاب',
+            selectedListLabel: 'گام های بعدی این مرحله',
+            moveOnSelect: false
+        });
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+                 $form = $("#form-TaxPayerCustomers");
+
+                 $.post('@Url.Action("Edit", "Steps")',
+                     $form.serialize()
+
+                 )
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+    });
+
+</script>

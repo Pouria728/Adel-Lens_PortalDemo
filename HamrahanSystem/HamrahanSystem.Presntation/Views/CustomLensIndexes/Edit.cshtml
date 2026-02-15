@@ -1,0 +1,105 @@
+@model HamrahanSystem.Application.DTOs.TblLnsCustomLensIndexDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    var brandName = ViewBag.BrandName as string ?? string.Empty;
+    var lensTypeName = ViewBag.LensTypeName as string ?? string.Empty;
+    var designTypeName = ViewBag.DesignTypeName as string ?? string.Empty;
+}
+
+@using (Html.BeginForm("Edit", "CustomLensIndexes", FormMethod.Post, new { @id = "form-custom-lens-index-edit" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning" style="display:flex;justify-content:flex-end;direction:rtl;">
+            <h2 class="card-title mb-0" style="margin:0 !important;text-align:right !important;">Lens Index</h2>
+        </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CustomLensIndexId)
+            @Html.HiddenFor(model => model.DesignTypeId)
+
+            <div class="form-group row mb-6">
+                @Html.Label("Brand", "Brand", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-lg form-control-solid" value="@brandName" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Lens Type", "Lens Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-lg form-control-solid" value="@lensTypeName" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Design Type", "Design Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-lg form-control-solid" value="@designTypeName" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Lens Index", "Lens Index", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.LensIndexName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Coloring Type", "Coloring Type", htmlAttributes: new { @class = "col-lg-4 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.HasColoringType, htmlAttributes: new { @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="edit-btn" value="@($"{ResourcePages.Save} Lens Index")" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $(document).off("click", "#edit-btn")
+            .on("click", "#edit-btn", function () {
+                $form = $("#form-custom-lens-index-edit");
+
+                $.post('@Url.Action("Edit", "CustomLensIndexes")',
+                    $form.serialize()
+                )
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            });
+    });
+
+</script>

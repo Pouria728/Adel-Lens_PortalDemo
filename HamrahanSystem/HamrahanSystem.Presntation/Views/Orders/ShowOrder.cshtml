@@ -1,0 +1,328 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsOrderDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+
+
+@using (Html.BeginForm("Create", "TaxPayerCustomers", FormMethod.Post, new { @id = "form-TaxPayerCustomers" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-light-primary"><h3 class="card-title align-items-start flex-column">@($"{ResourcePages.ShowReport}")</h3> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (Model != null)
+            {
+                <div class="form-group">
+                    <table id="orderItems" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="min-w-50px w-80px">@ResourcePages.Base_EyeSide</th>
+                                <th class="min-w-300px w-475px">@ResourcePages.Base_DefineObject</th>
+                           
+                                <th class="min-w-80px w-150px">@ResourcePages.Base_Cyl</th>
+                                <th class="min-w-100px w-100px">@ResourcePages.Base_Sph</th>
+                                <th class="min-w-80px w-150px ">@ResourcePages.Base_Quantity</th>
+                                <th class="min-w-80px w-150px ">@ResourcePages.Base_NeedTools</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model.IndexDocument==(int)IndexDocument.LnsOrderGranty)
+                            {
+                            @foreach (var rownum in Model.TblLnsOrderItems.Where(x =>  x.RowNumber != null ).GroupBy(x => x.RowNumber).Select(g => new { key = g.Key, count = g.Count() }))
+                            {
+                                <tr>
+                                    @if (rownum.count > 1)
+                                    {
+                                        var itemdetailR = Model.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString() && x.IsRight == 1);
+                                        var itemdetailL = Model.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString() && x.IsRight == 0);
+
+                                        <td class="pe-7">
+                                            @Html.Label("IsRight0", "R", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+                                            @Html.Label("IsRight1", "L", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt1", data_kt_rel = "true" })
+
+                                        </td>
+                                        <td class="pe-7" style="direction:ltr!important">
+                                            @Html.Label("DefineObject", itemdetailR.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+                                            @Html.Label("DefineObject", itemdetailL.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "true" })
+
+                                        </td>
+                                        <td class="ps-0">
+                                                @Html.Label("DefineObject", itemdetailR.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+                                                @Html.Label("DefineObject", itemdetailL.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "true" })
+                                            </td>
+                                        <td>
+                                                @Html.Label("DefineObject", itemdetailR.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+                                                @Html.Label("DefineObject", itemdetailL.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "true" })
+
+                                        </td>
+                                        <td class="ps-0">
+                                            @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "false" })
+                                            @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "true" })
+
+                                        </td>
+                                        <td class="ps-0 ">
+
+                                            @Html.CheckBox("NeedTools", itemdetailR.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+                                            <br />
+                                            @Html.CheckBox("NeedTools", itemdetailL.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid1", data_kt_rel = "true" })
+
+
+                                        </td>
+                                    }
+                                    else
+                                    {
+
+                                        var itemdetail = Model.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString());
+
+                                        <td class="pe-7">
+                                            @if (itemdetail.IsRight == 1)
+                                            {
+                                                @Html.Label("IsRight0", "R", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+                                            }
+                                            else
+                                            {
+                                                @Html.Label("IsRight1", "L", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt1", data_kt_rel = "true" })
+                                            }
+
+
+                                        </td>
+                                        <td class="pe-7" style="direction:ltr!important">
+                                            @Html.Label("DefineObject", itemdetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+
+                                        </td>
+                                        <td class="ps-0">
+                                                @Html.Label("DefineObject", itemdetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+                                        </td>
+                                        <td>
+
+                                                @Html.Label("DefineObject", itemdetail.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+
+                                        </td>
+                                        <td class="ps-0">
+                                            @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "false" })
+
+                                        </td>
+                                        <td class="ps-0 ">
+
+                                            @Html.CheckBox("NeedTools", itemdetail.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+
+
+                                        </td>
+
+                                    }
+                                </tr>
+                            }
+                            }
+                            @foreach (var itemDetail in Model.TblLnsOrderItems.Where(x => x.RowNumber == null))
+                            {
+                                <tr>
+                                    <td class="pe-7">
+                                        @Html.Label("IsRight0", "", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="pe-7" style="direction:ltr!important">
+                                        @Html.Label("DefineObject", itemDetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="ps-0">
+                                        @Html.Label("DefineObject", itemDetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+                                    </td>
+                                    <td>
+
+                                        @Html.Label("DefineObject", itemDetail.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="ps-0">
+                                        @Html.Label("DefineObject", itemDetail.Quantity.ToString(), new { @class = "form-control form-control-solid", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="ps-0 ">
+
+                                        @Html.CheckBox("NeedTools", itemDetail.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group text-center mb-4">
+                    @if (Model.StatusId == 1)
+                    {
+                        <input type="button" id="create-btn" value="@($"{ResourcePages.AddSend}")" class="btn btn-success" />
+                        <input type="button" id="remove-btn" value="@($"{ResourcePages.Remove}") " class="btn btn-success" />
+                    }
+                    else
+                    {
+                        <input type="button" id="remove-btn" value="@($"{ResourcePages.Remove}") " class="btn btn-success" />
+                    }
+
+                </div>
+            }
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    function trimNameObject(name, sph, cyl) {
+        var raw = (name || '').toString();
+        var result = raw.trim();
+        if (!result) {
+            return result;
+        }
+
+        function normalizeText(value) {
+            return (value || '').toString().replace(/[\u200E\u200F]/g, '').trim();
+        }
+
+        function parseNumber(value) {
+            var text = normalizeText(value).replace(/^\+/, '');
+            if (!text) {
+                return null;
+            }
+            var num = Number(text);
+            if (!isNaN(num)) {
+                return num;
+            }
+            return text;
+        }
+
+        function valuesEqual(left, right) {
+            if (!left || !right) {
+                return false;
+            }
+            var leftValue = parseNumber(left);
+            var rightValue = parseNumber(right);
+            if (typeof leftValue === 'number' && typeof rightValue === 'number') {
+                return Math.abs(leftValue - rightValue) < 0.001;
+            }
+            return leftValue === rightValue;
+        }
+
+        var hasLrm = raw.indexOf('\u200E') === 0;
+        var cleanedName = normalizeText(result);
+        var parts = cleanedName.split(/\s+/);
+        var sphText = normalizeText(sph);
+        var cylText = normalizeText(cyl);
+
+        if (parts.length >= 2 && sphText && cylText &&
+            valuesEqual(parts[parts.length - 2], sphText) &&
+            valuesEqual(parts[parts.length - 1], cylText)) {
+            parts = parts.slice(0, -2);
+        } else if (parts.length >= 1) {
+            var last = parts[parts.length - 1];
+            if ((sphText && valuesEqual(last, sphText)) || (cylText && valuesEqual(last, cylText))) {
+                parts = parts.slice(0, -1);
+            }
+        }
+
+        var output = parts.join(' ').trim();
+        if (!output) {
+            return output;
+        }
+        return (hasLrm ? '\u200E' : '') + output;
+    }
+
+    $(function () {
+        $('#orderItems [data-kt-element="defineobjectR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].nameobject);
+           
+        });
+
+         $('#orderItems [data-kt-element="cylR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].text);
+        });
+
+                $('#orderItems [data-kt-element="sphR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_sph_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].text);
+        });
+
+        $('#orderItems tbody tr').each(function () {
+            var $row = $(this);
+            $row.find('[data-kt-element="defineobjectR"]').each(function () {
+                var rel = $(this).attr('data-kt-rel');
+                var relSelector = rel ? '[data-kt-rel="' + rel + '"]' : '';
+                var sph = $row.find('[data-kt-element="sphR"]' + relSelector).first().text();
+                var cyl = $row.find('[data-kt-element="cylR"]' + relSelector).first().text();
+                var name = $(this).text();
+                $(this).text(trimNameObject(name, sph, cyl));
+            });
+        });
+
+
+
+
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+
+
+                 $.post('@Url.Action("OrderSend", "Orders")',{id:'@Model.OrderId'})
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.SendSuccess');
+                            $("#modal-Tree").modal('toggle');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+         $(document).off("click", "#remove-btn")
+             .on("click", "#remove-btn", function () {
+
+
+                 $.post('@Url.Action("OrderRemove", "Orders")',{ id: '@Model.OrderId' })
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.ChangeStatus');
+                             LoadItems();
+                            $("#modal-Tree").modal('toggle');
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+    });
+
+
+</script>

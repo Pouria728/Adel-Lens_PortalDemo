@@ -1,0 +1,332 @@
+@{
+    ViewBag.Title = "";
+    string BasePage = "CustomLensDesignTypes";
+    var lensTypeId = ViewBag.LensTypeId ?? 0;
+}
+
+@await Html.PartialAsync("_CustomLensPremiumGridStyle")
+
+<div class="card custom-lens-premium">
+    <div class="card-header bg-primary" style="display:flex;justify-content:flex-start;direction:ltr;">
+        <h3 class="card-title mb-0" style="margin:0 !important;text-align:left !important;">Design Type</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group" id="divjqGrid">
+            <table id="jqGrid" class="table table-striped"></table>
+            <div id="jqGridPager"></div>
+        </div>
+
+        <div class="form-group text-center mb-4">
+            <input type="button" id="custom-design-type-create-btn" class="btn btn-primary" value="À»  œ” Ì" onclick="LoadDialog(0,1)" />
+            <input type="button" id="custom-design-type-import-btn" class="btn btn-success" value="«Ì„ÅÊ—  «ò”·" onclick="TriggerCustomDesignTypeImport()" />
+            <input type="button" id="custom-design-type-export-btn" class="btn btn-light-primary" value="«ò”ÅÊ—  «ò”·" onclick="ExportCustomDesignTypes()" />
+            <input type="file" id="custom-design-type-import-file" class="d-none" accept=".xlsx,.xls" />
+            <div class="small text-muted mt-2"> — Ì» ” Ê‰ùÂ«: ⁄‰Ê«‰° òœ°  Ê÷ÌÕ« °  — Ì» ‰„«Ì‘° Ê÷⁄Ì  («Œ Ì«—Ì)</div>
+            <div id="custom-design-type-import-errors" class="alert alert-danger mt-3 d-none text-start" dir="rtl"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function LoadDialog(nodeId, typeId) {
+        url = ''
+        switch (typeId) {
+            case 1: url = '@Url.Action("Create", BasePage)';
+                break;
+            case 2: url = '@Url.Action("Edit", BasePage)';
+                break;
+            case 3: url = '@Url.Action("Delete", BasePage)';
+                break;
+        }
+
+        if (typeId != 3) {
+            $.get(url, typeId >= 1 ? { id: nodeId, lensTypeId: lensTypeIdValue } : {})
+                .done(function (result) {
+                    $("#modal-loader").html(result);
+                    $("#modal-Tree").modal('show');
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+        else {
+            if (typeId == 3) {
+                $.post(url, { id: nodeId, lensTypeId: lensTypeIdValue })
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.RemoveSuccess');
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+
+                LoadItems();
+                return;
+            }
+        }
+        $(document).resize();
+    }
+
+    var lensTypeIdValue = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(lensTypeId));
+
+    function LoadItems() {
+        $('#modal-Tree').modal('hide');
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        $('#jqGrid').jqGrid({
+            url: '@Url.Action("Detail", BasePage, new { lensTypeId = lensTypeId })',
+            datatype: 'json',
+            mtype: 'POST',
+            serializeGridData: function (postData) {
+                var data = {
+
+                };
+                postData._search = true;
+                data = $.extend(data, postData);
+                return JSON.stringify(data);
+            },
+
+            colNames: ['@ResourceCustomLensDesignTypes.Column_Id', '@ResourceCustomLensDesignTypes.Column_Brand', '@ResourceCustomLensDesignTypes.Column_LensType', '@ResourceCustomLensDesignTypes.Column_Name', '@ResourceCustomLensDesignTypes.Column_Code', '@ResourceCustomLensDesignTypes.Column_Coating', '@ResourceCustomLensDesignTypes.Column_Description', '@ResourceCustomLensDesignTypes.Column_OrderId', '@ResourceCustomLensDesignTypes.Column_IsActive', '@ResourceCustomLensDesignTypes.Column_Features', '@ResourceCustomLensDesignTypes.Column_EditDelete'],
+            colModel: [
+                { name: 'id', index: 'id', align: "Center", hidden: true, key: true, search: false },
+                { name: 'brandName', index: 'brandName', align: "Center", sortable: false, search: false },
+                {
+                    name: 'lensTypeName', index: 'lensTypeName', align: "Center", sortable: false, search: false,
+                    formatter: function (value, rowData, index) {
+                        return value ? value : 'Lens Type';
+                    }
+                },
+                {
+                    name: 'name', index: 'name', align: "Center", sortable: true, search: true,
+                    formatter: function (value, rowData, index) {
+                        var url = '@Url.Action("Index", "CustomLensIndexes")' + '?designTypeId=' + index.id;
+                        var text = value ? value : 'Design Type';
+                        return '<a href="' + url + '" class="text-primary fw-semibold">' + text + '</a>';
+                    }
+                },
+                { name: 'code', index: 'code', align: "Center", sortable: true, search: true },
+                {
+                    name: 'coating', index: 'coating', align: "Center", sortable: false, search: false,
+                    formatter: function (value, rowData, index) {
+                        var url = '@Url.Action("Index", "CustomLensTypeCoatings")' + '?designTypeId=' + index.id;
+                        return '<a href="' + url + '" class="text-primary fw-bold">Coating</a>';
+                    }
+                },
+                { name: 'description', index: 'description', align: "Center", sortable: false, search: false },
+                { name: 'orderId', index: 'orderId', align: "Center", sortable: false, search: false },
+                { name: 'isActive', index: 'isActive', align: "Center", sortable: false, search: false },
+                {
+                    name: 'flags', index: 'flags', align: "Center", sortable: false, search: false,
+                    formatter: function (value, options, rowObject) {
+                        var sphPlusOn = (rowObject.sphPlus === true || rowObject.sphPlus === "true" || rowObject.sphPlus === 1 || rowObject.sphPlus === "1");
+                        var sphMinusOn = (rowObject.sphMinus === true || rowObject.sphMinus === "true" || rowObject.sphMinus === 1 || rowObject.sphMinus === "1");
+                        var additionOn = (rowObject.addition === true || rowObject.addition === "true" || rowObject.addition === 1 || rowObject.addition === "1");
+                        var sphPlusClass = sphPlusOn ? 'text-success' : 'text-danger';
+                        var sphMinusClass = sphMinusOn ? 'text-success' : 'text-danger';
+                        var additionClass = additionOn ? 'text-success' : 'text-danger';
+
+                        var sphPlusIcon = sphPlusOn ? 'fa-check-square' : 'fa-square';
+                        var sphMinusIcon = sphMinusOn ? 'fa-check-square' : 'fa-square';
+                        var additionIcon = additionOn ? 'fa-check-square' : 'fa-square';
+
+                        var a = '<button type="button" title="Sph+" onclick="ToggleSphPlus(\'' + rowObject.id + '\');"><i class="fa fa-2x ' + sphPlusIcon + ' ' + sphPlusClass + '"></i> </button> ';
+                        a += '<button type="button" title="Sph-" onclick="ToggleSphMinus(\'' + rowObject.id + '\');"><i class="fa fa-2x ' + sphMinusIcon + ' ' + sphMinusClass + '"></i> </button> ';
+                        var additionTitle = additionOn ? 'Addition: œ«—œ' : 'Addition: ‰œ«—œ';
+                        a += '<button type="button" title="' + additionTitle + '" onclick="ToggleAddition(\'' + rowObject.id + '\',' + (additionOn ? 'true' : 'false') + ');"><i class="fa fa-2x ' + additionIcon + ' ' + additionClass + '"></i> </button> ';
+                        if (additionOn) {
+                            a += '<button type="button" title="„œÌ—Ì  «œÌ‘‰" onclick="OpenAdditionWizard(\'' + rowObject.id + '\');"><i class="fa fa-2x fa-magic text-primary"></i> </button> ';
+                        }
+                        return a;
+                    }
+                },
+
+                {
+                    name: 'id', index: 'Action', align: "Center", sortable: false, search: false,
+                    formatter: function (value, rowData, index) {
+                        var a = '<button type="button" title="@ResourcePages.Edit" onclick="LoadDialog(\'' + value + '\',2);"><i class="fa fa-2x fa-pen"></i> </button> ';
+                        a += '<button type="button" title="@ResourcePages.Delete" onclick="LoadDialog(\'' + value + '\',3);"><i class="fa fa-2x fa-trash"></i> </button> ';
+                        return a;
+                    }
+                }
+            ],
+            subGridRowExpanded: function (subgrid_id, row_id) { },
+            subGridRowColapsed: function (subgrid_id, row_id) { },
+            subgroup: true,
+            rowNum: 20,
+            toppager: false,
+            height: 300,
+            direction: 'rtl',
+            rowList: [10, 20, 30, 40],
+            viewrecords: true,
+            gridview: true,
+            altRows: true,
+            hidegrid: false,
+            rownumbers: true,
+            recordpos: 'left',
+            multiselect: false,
+            scroll: true,
+            scrollrows: false,
+            jsonReader: {
+                page: function (obj) { return obj.page; },
+                total: function (obj) { return obj.total; },
+                records: function (obj) { return obj.records; },
+                root: function (obj) { return obj.rows; },
+                repeatitems: false,
+                id: "0"
+            },
+            pager: "#jqGridPager"
+        });
+        $('#jqGrid').trigger('reloadGrid');
+        $(document).resize();
+    }
+
+    $(function () {
+        LoadItems();
+
+        window.ToggleSphPlus = function (id) {
+            $.post('@Url.Action("ToggleSphPlus", BasePage)', { id: id, lensTypeId: lensTypeIdValue })
+                .done(function (result) {
+                    if (result && result.success) {
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result && result.message ? result.message : '');
+                    }
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+
+        window.ToggleSphMinus = function (id) {
+            $.post('@Url.Action("ToggleSphMinus", BasePage)', { id: id, lensTypeId: lensTypeIdValue })
+                .done(function (result) {
+                    if (result && result.success) {
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result && result.message ? result.message : '');
+                    }
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+
+        window.ToggleAddition = function (id, isOn) {
+            if (isOn) {
+                var confirmRemove = confirm('¬Ì« «“ €Ì—›⁄«· ò—œ‰ «Ì‰ „Ê—œ „ÿ„∆‰ Â” Ìœø');
+                if (!confirmRemove) {
+                    return;
+                }
+            }
+
+            $.post('@Url.Action("ToggleAddition", BasePage)', { id: id, lensTypeId: lensTypeIdValue })
+                .done(function (result) {
+                    if (result && result.success) {
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result && result.message ? result.message : '');
+                    }
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+
+        window.OpenAdditionWizard = function (designTypeId) {
+            if (!designTypeId) {
+                return;
+            }
+            var url = '@Url.Action("Index", "CustomLensAdditionValues")' + '?designTypeId=' + designTypeId;
+            window.open(url, '_blank');
+        }
+
+    });
+
+    function escapeHtml(value) {
+        return (value || '').toString()
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function TriggerCustomDesignTypeImport() {
+        var input = document.getElementById('custom-design-type-import-file');
+        if (!input) {
+            return;
+        }
+        input.value = '';
+        input.click();
+    }
+
+    $(function () {
+        var importInput = document.getElementById('custom-design-type-import-file');
+        if (!importInput) {
+            return;
+        }
+        importInput.addEventListener('change', function () {
+            var file = this.files && this.files.length ? this.files[0] : null;
+            if (!file) {
+                return;
+            }
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('lensTypeId', lensTypeIdValue);
+            fetch('@Url.Action("ImportExcel", BasePage)', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            }).then(function (response) {
+                return response.text();
+            }).then(function (text) {
+                var result = null;
+                try {
+                    result = JSON.parse(text);
+                } catch (e) {
+                    result = { success: false, message: text || '@ResourceAlert.AddError' };
+                }
+                var $errorBox = $('#custom-design-type-import-errors');
+                $errorBox.addClass('d-none').html('');
+                if (result && result.success) {
+                    if (window.toastr) {
+                        toastr.success("", result.message || '@ResourceAlert.AddSucces');
+                    }
+                    $errorBox.addClass('d-none').html('');
+                    LoadItems();
+                } else {
+                    var message = result && result.message ? result.message : '@ResourceAlert.AddError';
+                    if (window.toastr) {
+                        toastr.error(message, '');
+                    } else {
+                        alert(message);
+                    }
+                    if (result && result.errors && result.errors.length) {
+                        var html = '<div>' + escapeHtml(message) + '</div><ul class="mb-0">';
+                        result.errors.forEach(function (e) {
+                            html += '<li>' + escapeHtml(e) + '</li>';
+                        });
+                        html += '</ul>';
+                        $errorBox.html(html).removeClass('d-none');
+                    } else {
+                        $errorBox.html('<div>' + escapeHtml(message) + '</div>').removeClass('d-none');
+                    }
+                }
+            }).catch(function () {
+                if (window.toastr) {
+                    toastr.error('@ResourceAlert.AddError', '');
+                } else {
+                    alert('@ResourceAlert.AddError');
+                }
+            });
+        });
+    });
+
+    function ExportCustomDesignTypes() {
+        var name = prompt('‰«„ ›«Ì· —« Ê«—œ ò‰Ìœ', 'CustomDesignTypes');
+        if (name === null) {
+            return;
+        }
+        name = (name || '').trim();
+        if (!name) {
+            name = 'CustomDesignTypes';
+        }
+        if (!name.toLowerCase().endsWith('.xlsx')) {
+            name += '.xlsx';
+        }
+        var url = '@Url.Action("ExportExcel", BasePage, new { lensTypeId = lensTypeId })';
+        window.location = url;
+    }
+
+</script>
+

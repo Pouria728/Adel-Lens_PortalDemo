@@ -1,0 +1,570 @@
+@{
+    ViewBag.Title = "";
+    string BasePage = "CustomLensBrands";
+    var embedded = ViewBag.Embedded as bool? ?? false;
+    if (embedded)
+    {
+        Layout = "~/Views/Shared/_Layout_CustomLensEmbedded.cshtml";
+    }
+}
+
+<style>
+    .custom-brand-premium {
+        --cbp-bg: #f6f8fc;
+        --cbp-surface: #ffffff;
+        --cbp-border: #dbe4f3;
+        --cbp-text: #12213f;
+        --cbp-muted: #6f7f9f;
+        --cbp-primary: #2f80ed;
+        --cbp-primary-2: #1e5fc7;
+        --cbp-success: #11a96b;
+        --cbp-danger: #e05252;
+        --cbp-shadow: 0 14px 34px rgba(15, 32, 76, 0.09);
+        direction: rtl;
+    }
+
+    .custom-brand-premium .cbp-shell {
+        background: var(--cbp-surface);
+        border: 1px solid var(--cbp-border);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--cbp-shadow);
+    }
+
+    .custom-brand-premium .cbp-header {
+        background: linear-gradient(120deg, var(--cbp-primary), var(--cbp-primary-2));
+        color: #fff;
+        padding: 1rem 1.1rem;
+        border-bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .custom-brand-premium .cbp-title {
+        margin: 0;
+        color: #fff;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .custom-brand-premium .cbp-subtitle {
+        margin: .25rem 0 0;
+        color: rgba(255, 255, 255, .9);
+        font-size: .78rem;
+    }
+
+    .custom-brand-premium .cbp-stat {
+        min-width: 86px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, .35);
+        border-radius: 12px;
+        padding: .3rem .55rem;
+        background: rgba(255, 255, 255, .16);
+    }
+
+    .custom-brand-premium .cbp-stat strong {
+        display: block;
+        font-size: 1rem;
+        color: #fff;
+        line-height: 1.15;
+    }
+
+    .custom-brand-premium .cbp-stat span {
+        display: block;
+        font-size: .7rem;
+        color: rgba(255, 255, 255, .92);
+    }
+
+    .custom-brand-premium .cbp-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: .55rem;
+        margin-bottom: .9rem;
+    }
+
+    .custom-brand-premium .cbp-btn {
+        border: 1px solid transparent;
+        border-radius: 10px;
+        padding: .45rem .9rem;
+        font-size: .8rem;
+        font-weight: 700;
+        transition: .18s ease;
+    }
+
+    .custom-brand-premium .cbp-btn-primary {
+        background: #1f74e8;
+        border-color: #1f74e8;
+        color: #fff;
+    }
+
+    .custom-brand-premium .cbp-btn-primary:hover {
+        background: #165fc2;
+        border-color: #165fc2;
+        color: #fff;
+    }
+
+    .custom-brand-premium .cbp-btn-success {
+        background: #11ad66;
+        border-color: #11ad66;
+        color: #fff;
+    }
+
+    .custom-brand-premium .cbp-btn-success:hover {
+        background: #0d8a51;
+        border-color: #0d8a51;
+        color: #fff;
+    }
+
+    .custom-brand-premium .cbp-btn-soft {
+        background: #edf4ff;
+        border-color: #d0e2ff;
+        color: #2f69c9;
+    }
+
+    .custom-brand-premium .cbp-btn-soft:hover {
+        background: #deecff;
+        color: #2558a8;
+    }
+
+    .custom-brand-premium #divjqGrid {
+        border: 1px solid #dce5f5;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .custom-brand-premium #gbox_jqGrid,
+    .custom-brand-premium #gview_jqGrid,
+    .custom-brand-premium .ui-jqgrid {
+        border: 0 !important;
+    }
+
+    .custom-brand-premium .ui-jqgrid-hdiv {
+        background: #f3f7ff;
+        border-bottom: 1px solid #e0e9f9;
+    }
+
+    .custom-brand-premium .ui-jqgrid .ui-jqgrid-htable th {
+        color: #1e3160;
+        font-size: .78rem;
+        font-weight: 800;
+        border-inline-start-color: #e8effa !important;
+        border-inline-end-color: #e8effa !important;
+    }
+
+    .custom-brand-premium .ui-jqgrid .ui-jqgrid-htable th div {
+        height: auto !important;
+        line-height: 1.3;
+        padding: .15rem .1rem;
+    }
+
+    .custom-brand-premium .ui-jqgrid-btable tr.jqgrow td {
+        border-color: #eef2fa !important;
+        color: #24355d;
+        font-size: .8rem;
+        padding: .35rem .25rem;
+    }
+
+    .custom-brand-premium .ui-jqgrid-btable tr.jqgrow:nth-child(even) td {
+        background: #fbfdff;
+    }
+
+    .custom-brand-premium .ui-jqgrid-btable tr.jqgrow:hover td {
+        background: #f2f8ff !important;
+    }
+
+    .custom-brand-premium .cbp-link {
+        color: #2372e7;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .custom-brand-premium .cbp-link:hover {
+        color: #1b57ba;
+        text-decoration: underline;
+    }
+
+    .custom-brand-premium .cbp-grid-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f8ff;
+        color: #35548f;
+        margin: 0 2px;
+        transition: .15s ease;
+        cursor: pointer;
+    }
+
+    .custom-brand-premium .cbp-grid-btn i {
+        font-size: .88rem !important;
+    }
+
+    .custom-brand-premium .cbp-grid-btn:hover {
+        background: #e8f0ff;
+    }
+
+    .custom-brand-premium .cbp-grid-btn-delete {
+        background: #fff1f1;
+        color: #bf2f2f;
+        border-color: #ffdede;
+    }
+
+    .custom-brand-premium .cbp-grid-btn-delete:hover {
+        background: #ffe4e4;
+    }
+
+    .custom-brand-premium .cbp-status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 66px;
+        padding: .18rem .55rem;
+        border-radius: 999px;
+        font-size: .72rem;
+        font-weight: 700;
+        border: 1px solid transparent;
+    }
+
+    .custom-brand-premium .cbp-status--active {
+        color: #0f7e4e;
+        background: #dcf9eb;
+        border-color: #b7edd0;
+    }
+
+    .custom-brand-premium .cbp-status--inactive {
+        color: #b13a3a;
+        background: #ffe9e9;
+        border-color: #ffcccc;
+    }
+
+    .custom-brand-premium .cbp-note {
+        font-size: .73rem;
+        color: #6f80a4;
+        text-align: center;
+        margin-top: .65rem;
+    }
+
+    .custom-brand-premium #custom-brand-import-errors {
+        border-radius: 10px;
+        margin-top: .8rem;
+    }
+
+    .custom-brand-premium.is-embedded .cbp-header {
+        padding: .68rem .9rem;
+    }
+
+    .custom-brand-premium.is-embedded .cbp-subtitle {
+        display: none;
+    }
+
+    .custom-brand-premium.is-embedded .cbp-toolbar {
+        margin-bottom: .65rem;
+    }
+
+    @@media (max-width: 767.98px) {
+        .custom-brand-premium .cbp-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .custom-brand-premium .cbp-stat {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="custom-brand-premium @(embedded ? "is-embedded" : "is-full")">
+    <div class="cbp-shell card border-0">
+        <div class="cbp-header card-header">
+            <div>
+                <h3 class="cbp-title">@ResourcePages.Brands</h3>
+                <p class="cbp-subtitle">مدیریت حرفه‌ای برندهای عدسی سفارشی و ورود سریع به Lens Type.</p>
+            </div>
+            <div class="cbp-stat">
+                <strong id="custom-brand-total">0</strong>
+                <span>Brand</span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="cbp-toolbar">
+                <input type="button" id="custom-brand-create-btn" class="cbp-btn cbp-btn-primary" value="ثبت دستی" onclick="LoadDialog(0,1)" />
+                <input type="button" id="custom-brand-import-btn" class="cbp-btn cbp-btn-success" value="ایمپورت اکسل" />
+                <input type="button" id="custom-brand-export-btn" class="cbp-btn cbp-btn-soft" value="اکسپورت اکسل" />
+                <input type="file" id="custom-brand-import-file" class="d-none" accept=".xlsx,.xls" />
+            </div>
+
+            <div class="form-group" id="divjqGrid">
+                <table id="jqGrid"></table>
+                <div id="jqGridPager"></div>
+            </div>
+
+            <div class="cbp-note">ترتیب ستون‌ها: نام، کد، توضیحات، ترتیب نمایش، وضعیت (اختیاری)</div>
+            <div id="custom-brand-import-errors" class="alert alert-danger d-none text-start" dir="rtl"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var embeddedMode = @(embedded ? "true" : "false");
+    var embeddedQuery = embeddedMode ? '&embedded=1' : '';
+
+    function LoadDialog(nodeId, typeId) {
+        var url = '';
+        switch (typeId) {
+            case 1: url = '@Url.Action("Create", BasePage)';
+                break;
+            case 2: url = '@Url.Action("Edit", BasePage)';
+                break;
+            case 3: url = '@Url.Action("Delete", BasePage)';
+                break;
+        }
+
+        if (typeId != 3) {
+            $.get(url, typeId >= 1 ? { id: nodeId } : {})
+                .done(function (result) {
+                    $("#modal-loader").html(result);
+                    $("#modal-Tree").modal('show');
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+        else {
+            $.post(url, { id: nodeId })
+                .done(function (result) {
+                    if (result.success) {
+                        toastr.success("", '@ResourceAlert.RemoveSuccess');
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result.message);
+                    }
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            return;
+        }
+        $(document).resize();
+    }
+
+    function formatStatus(value) {
+        var raw = (value || '').toString().trim();
+        var normalized = raw.toLowerCase();
+        var active = raw === 'فعال' || raw === '1' || normalized === 'true' || normalized === 'active';
+        var text = raw || (active ? 'فعال' : 'غیرفعال');
+        var cls = active ? 'cbp-status cbp-status--active' : 'cbp-status cbp-status--inactive';
+        return '<span class="' + cls + '">' + text + '</span>';
+    }
+
+    function updateTotalCount(data) {
+        var records = 0;
+        if (data && typeof data.records !== 'undefined') {
+            records = data.records || 0;
+        } else {
+            records = $('#jqGrid').jqGrid('getGridParam', 'records') || 0;
+        }
+        $('#custom-brand-total').text(records);
+    }
+
+    function LoadItems() {
+        $('#modal-Tree').modal('hide');
+
+        if ($('#jqGrid')[0].grid) {
+            $('#jqGrid').jqGrid('GridUnload');
+        }
+
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        $('#jqGrid').jqGrid({
+            url: '@Url.Action("Detail", BasePage)',
+            datatype: 'json',
+            mtype: 'POST',
+            serializeGridData: function (postData) {
+                postData._search = true;
+                return JSON.stringify(postData);
+            },
+            colNames: [
+                '@ResourceCustomLensBrands.Column_Id',
+                '@ResourceCustomLensBrands.Column_Brand',
+                '@ResourceCustomLensBrands.Column_Code',
+                '@ResourceCustomLensBrands.Column_Description',
+                '@ResourceCustomLensBrands.Column_OrderId',
+                '@ResourceCustomLensBrands.Column_IsActive',
+                '@ResourceCustomLensBrands.Column_EditDelete'
+            ],
+            colModel: [
+                { name: 'id', index: 'id', align: "center", hidden: true, key: true, search: false },
+                {
+                    name: 'name',
+                    index: 'name',
+                    align: "center",
+                    sortable: true,
+                    search: true,
+                    width: 190,
+                    formatter: function (value, options, rowObject) {
+                        var url = '@Url.Action("Index", "CustomLensTypes")' + '?brandId=' + rowObject.id + embeddedQuery;
+                        var targetAttr = embeddedMode ? ' target="custom-lens-types-frame"' : '';
+                        return '<a href="' + url + '"' + targetAttr + ' class="cbp-link">' + (value || '') + '</a>';
+                    }
+                },
+                { name: 'code', index: 'code', align: "center", sortable: true, search: true, width: 140 },
+                { name: 'description', index: 'description', align: "center", sortable: false, search: false, width: 160 },
+                { name: 'orderId', index: 'orderId', align: "center", sortable: false, search: false, width: 100 },
+                {
+                    name: 'isActive',
+                    index: 'isActive',
+                    align: "center",
+                    sortable: false,
+                    search: false,
+                    width: 130,
+                    formatter: function (value) { return formatStatus(value); }
+                },
+                {
+                    name: 'id',
+                    index: 'Action',
+                    align: "center",
+                    sortable: false,
+                    search: false,
+                    width: 110,
+                    formatter: function (value) {
+                        var editBtn = '<button type="button" class="cbp-grid-btn" title="@ResourcePages.Edit" onclick="LoadDialog(\'' + value + '\',2);"><i class="fa fa-pen"></i></button>';
+                        var delBtn = '<button type="button" class="cbp-grid-btn cbp-grid-btn-delete" title="@ResourcePages.Delete" onclick="LoadDialog(\'' + value + '\',3);"><i class="fa fa-trash"></i></button>';
+                        return editBtn + delBtn;
+                    }
+                }
+            ],
+            rowNum: 20,
+            rowList: [10, 20, 30, 40],
+            toppager: false,
+            height: embeddedMode ? 260 : 420,
+            direction: 'rtl',
+            viewrecords: true,
+            gridview: true,
+            altRows: true,
+            hidegrid: false,
+            rownumbers: true,
+            recordpos: 'left',
+            multiselect: false,
+            scroll: true,
+            scrollrows: false,
+            autowidth: true,
+            shrinkToFit: true,
+            jsonReader: {
+                page: function (obj) { return obj.page; },
+                total: function (obj) { return obj.total; },
+                records: function (obj) { return obj.records; },
+                root: function (obj) { return obj.rows; },
+                repeatitems: false,
+                id: "0"
+            },
+            loadComplete: function (data) {
+                updateTotalCount(data);
+            },
+            pager: "#jqGridPager"
+        });
+
+        $('#jqGrid').trigger('reloadGrid');
+        $(document).resize();
+    }
+
+    $(function () {
+        LoadItems();
+
+        $('#custom-brand-import-btn').on('click', function () {
+            $('#custom-brand-import-file').val('');
+            $('#custom-brand-import-file').click();
+        });
+
+        $('#custom-brand-import-file').on('change', function () {
+            var file = this.files && this.files.length ? this.files[0] : null;
+            if (!file) {
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            $.ajax({
+                url: '@Url.Action("ImportExcel", BasePage)',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (result) {
+                var $errorBox = $('#custom-brand-import-errors');
+                $errorBox.addClass('d-none').html('');
+
+                if (result && result.success) {
+                    toastr.success("", result.message || '@ResourceAlert.AddSucces');
+                    LoadItems();
+                    return;
+                }
+
+                var message = result && result.message ? result.message : '@ResourceAlert.AddError';
+                toastr.error(message, '');
+
+                if (result && result.errors && result.errors.length) {
+                    var html = '<div>' + escapeHtml(message) + '</div><ul class="mb-0">';
+                    result.errors.forEach(function (e) {
+                        html += '<li>' + escapeHtml(e) + '</li>';
+                    });
+                    html += '</ul>';
+                    $errorBox.html(html).removeClass('d-none');
+                } else {
+                    $errorBox.html('<div>' + escapeHtml(message) + '</div>').removeClass('d-none');
+                }
+            }).fail(function () {
+                toastr.error('@ResourceAlert.AddError', '');
+            });
+        });
+
+        $('#custom-brand-export-btn').on('click', function () {
+            var name = prompt('نام فایل را وارد کنید', 'CustomBrands');
+            if (name === null) {
+                return;
+            }
+
+            name = (name || '').trim();
+            if (!name) {
+                name = 'CustomBrands';
+            }
+            if (!name.toLowerCase().endsWith('.xlsx')) {
+                name += '.xlsx';
+            }
+
+            fetch('@Url.Action("ExportExcel", BasePage)', { method: 'GET' })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('download failed');
+                    }
+                    return response.blob();
+                })
+                .then(function (blob) {
+                    var url = window.URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = name;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(function () {
+                    toastr.error('@ResourceAlert.AddError', '');
+                });
+        });
+
+        function escapeHtml(value) {
+            return (value || '').toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    });
+</script>

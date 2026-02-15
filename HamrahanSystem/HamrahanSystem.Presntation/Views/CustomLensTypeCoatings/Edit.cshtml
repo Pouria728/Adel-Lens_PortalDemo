@@ -1,0 +1,78 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsCustomLensTypeCoatingDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Edit", "CustomLensTypeCoatings", FormMethod.Post, new { @id = "form-custom-lens-type-coating" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning"><h2 class="card-title align-items-start flex-column">@($"{ResourcePages.Edit} Lens Type & Coating")</h2> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CustomLensTypeCoatingId)
+            @Html.HiddenFor(model => model.DesignTypeId)
+
+            <div class="form-group row mb-6">
+                @Html.Label("Lens Type", "Lens Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.LensTypeName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Coating", "Coating", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CoatingName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="edit-btn" value="@($"{ResourcePages.Save} Lens Type & Coating")" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $(document).off("click", "#edit-btn")
+            .on("click", "#edit-btn", function () {
+                $form = $("#form-custom-lens-type-coating");
+
+                $.post('@Url.Action("Edit", "CustomLensTypeCoatings")',
+                    $form.serialize()
+                )
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            });
+    });
+
+</script>
+

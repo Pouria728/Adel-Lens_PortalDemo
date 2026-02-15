@@ -1,0 +1,234 @@
+@{
+    ViewBag.Title = "";
+    string BasePage = "CustomLensAdditionValues";
+    var designTypeId = ViewBag.DesignTypeId ?? 0;
+    var designTypeName = ViewBag.DesignTypeName as string ?? "";
+    var designTypeLabel = designTypeId is int did && did > 0 ? designTypeName : "Â„Â Design Type Â«";
+    var lensTypeName = ViewBag.LensTypeName as string ?? "";
+    var lensTypeLabel = designTypeId is int lid && lid > 0 ? lensTypeName : "Â„Â Lens Type Â«";
+    var brandName = ViewBag.BrandName as string ?? "";
+    var brandLabel = designTypeId is int bid && bid > 0 ? brandName : "Â„Â »—‰œÂ«";
+}
+
+@await Html.PartialAsync("_CustomLensPremiumGridStyle")
+
+<div class="card custom-lens-premium">
+    <div class="card-header bg-primary"><h3 class="card-title align-items-start flex-column">«œÌ‘‰ - @brandLabel - @lensTypeLabel - @designTypeLabel </h3> </div>
+    <div class="card-body">
+        <div class="form-group" id="divjqGrid">
+            <table id="jqGrid" class="table table-striped"></table>
+            <div id="jqGridPager"></div>
+        </div>
+
+        <div class="form-group text-center mb-4">
+            @if (designTypeId is int didBtn && didBtn > 0)
+            {
+                <input type="button" id="custom-addition-create-btn" class="btn btn-primary" value="À»  œ” Ì" onclick="LoadDialog(0,1)" />
+                <input type="button" id="custom-addition-import-btn" class="btn btn-success" value="«Ì„ÅÊ—  «ò”·" />
+                <input type="button" id="custom-addition-export-btn" class="btn btn-light-primary" value="«ò”ÅÊ—  «ò”·" />
+                <input type="file" id="custom-addition-import-file" class="d-none" accept=".xlsx,.xls" />
+                <div class="small text-muted mt-2"> — Ì» ” Ê‰ùÂ«: Addition°  — Ì» ‰„«Ì‘° Ê÷⁄Ì  («Œ Ì«—Ì)</div>
+                <div id="custom-addition-import-errors" class="alert alert-danger mt-3 d-none text-start" dir="rtl"></div>
+            }
+            else
+            {
+                <div class="small text-muted mt-2">»—«Ì À»  Addition «» œ« Design Type —« «‰ Œ«» ò‰Ìœ.</div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function LoadDialog(nodeId, typeId) {
+        var url = '';
+        switch (typeId) {
+            case 1: url = '@Url.Action("Create", BasePage)';
+                break;
+            case 2: url = '@Url.Action("Edit", BasePage)';
+                break;
+            case 3: url = '@Url.Action("Delete", BasePage)';
+                break;
+        }
+
+        if (typeId != 3) {
+            $.get(url, typeId >= 1 ? { id: nodeId, designTypeId: @designTypeId } : {})
+                .done(function (result) {
+                    $("#modal-loader").html(result);
+                    $("#modal-Tree").modal('show');
+                }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        }
+        else {
+            if (typeId == 3) {
+                $.post(url, { id: nodeId, designTypeId: @designTypeId })
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.RemoveSuccess');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+                return;
+            }
+        }
+        $(document).resize();
+    }
+
+    function LoadItems() {
+        $('#modal-Tree').modal('hide');
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        $('#jqGrid').jqGrid({
+            url: '@Url.Action("Detail", BasePage, new { designTypeId = designTypeId })',
+            datatype: 'json',
+            mtype: 'POST',
+            serializeGridData: function (postData) {
+                var data = {
+
+                };
+                postData._search = true;
+                data = $.extend(data, postData);
+                return JSON.stringify(data);
+            },
+
+            colNames: ['@ResourceCustomLensAdditionValues.Column_Brand', '@ResourceCustomLensAdditionValues.Column_LensType', '@ResourceCustomLensAdditionValues.Column_DesignType', '@ResourceCustomLensAdditionValues.Column_Addition', '@ResourceCustomLensAdditionValues.Column_OrderId', '@ResourceCustomLensAdditionValues.Column_IsActive', '@ResourceCustomLensAdditionValues.Column_EditDelete'],
+            colModel: [
+                { name: 'brandName', index: 'brandName', align: "Center", sortable: false, search: false },
+                { name: 'lensTypeName', index: 'lensTypeName', align: "Center", sortable: false, search: false },
+                { name: 'designTypeName', index: 'designTypeName', align: "Center", sortable: false, search: false },
+                { name: 'additionValue', index: 'additionValue', align: "Center", sortable: false, search: false },
+                { name: 'orderId', index: 'orderId', align: "Center", sortable: false, search: false },
+                { name: 'isActive', index: 'isActive', align: "Center", sortable: false, search: false },
+                {
+                    name: 'id', index: 'Action', align: "Center", sortable: false, search: false,
+                    formatter: function (value, rowData, index) {
+                        var a = '<button type="button" title="@ResourcePages.Edit" onclick="LoadDialog(\'' + value + '\',2);"><i class="fa fa-2x fa-pen"></i> </button> ';
+                        a += '<button type="button" title="@ResourcePages.Delete" onclick="LoadDialog(\'' + value + '\',3);"><i class="fa fa-2x fa-trash"></i> </button> ';
+                        return a;
+                    }
+                }
+            ],
+            subGridRowExpanded: function (subgrid_id, row_id) { },
+            subGridRowColapsed: function (subgrid_id, row_id) { },
+            subgroup: true,
+            rowNum: 20,
+            toppager: true,
+            height: 300,
+            direction: 'rtl',
+            rowList: [10, 20, 30, 40],
+            viewrecords: true,
+            gridview: true,
+            altRows: true,
+            hidegrid: false,
+            rownumbers: true,
+            recordpos: 'left',
+            multiselect: false,
+            scroll: true,
+            scrollrows: false,
+            jsonReader: {
+                page: function (obj) { return obj.page; },
+                total: function (obj) { return obj.total; },
+                records: function (obj) { return obj.records; },
+                root: function (obj) { return obj.rows; },
+                repeatitems: false,
+                id: "0"
+            },
+            pager: "#jqGridPager",
+            caption: '«œÌ‘‰'
+        });
+        $('#jqGrid').trigger('reloadGrid');
+        $(document).resize();
+    }
+
+    $(function () {
+        LoadItems();
+
+        $('#custom-addition-import-btn').on('click', function () {
+            $('#custom-addition-import-file').val('');
+            $('#custom-addition-import-file').click();
+        });
+
+        $('#custom-addition-import-file').on('change', function () {
+            var file = this.files && this.files.length ? this.files[0] : null;
+            if (!file) {
+                return;
+            }
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('designTypeId', @designTypeId);
+            $.ajax({
+                url: '@Url.Action("ImportExcel", BasePage)',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (result) {
+                var $errorBox = $('#custom-addition-import-errors');
+                $errorBox.addClass('d-none').html('');
+                if (result && result.success) {
+                    toastr.success("", result.message || '@ResourceAlert.AddSucces');
+                    $errorBox.addClass('d-none').html('');
+                    LoadItems();
+                } else {
+                    var message = result && result.message ? result.message : '@ResourceAlert.AddError';
+                    toastr.error(message, '');
+                    if (result && result.errors && result.errors.length) {
+                        var html = '<div>' + escapeHtml(message) + '</div><ul class="mb-0">';
+                        result.errors.forEach(function (e) {
+                            html += '<li>' + escapeHtml(e) + '</li>';
+                        });
+                        html += '</ul>';
+                        $errorBox.html(html).removeClass('d-none');
+                    } else {
+                        $errorBox.html('<div>' + escapeHtml(message) + '</div>').removeClass('d-none');
+                    }
+                }
+            }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+        });
+
+        $('#custom-addition-export-btn').on('click', function () {
+            var name = prompt('‰«„ ›«Ì· —« Ê«—œ ò‰Ìœ', 'CustomDesignTypeAddition');
+            if (name === null) {
+                return;
+            }
+            name = (name || '').trim();
+            if (!name) {
+                name = 'CustomDesignTypeAddition';
+            }
+            if (!name.toLowerCase().endsWith('.xlsx')) {
+                name += '.xlsx';
+            }
+            fetch('@Url.Action("ExportExcel", BasePage, new { designTypeId = designTypeId })', { method: 'GET' })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('download failed');
+                    }
+                    return response.blob();
+                })
+                .then(function (blob) {
+                    var url = window.URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = name;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(function () { toastr.error('@ResourceAlert.AddError', '') });
+        });
+
+        function escapeHtml(value) {
+            return (value || '').toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+    });
+
+</script>

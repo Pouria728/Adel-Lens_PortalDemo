@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "";
+    string BasePage = "Orders";
+}
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h3 class="card-title align-items-start flex-column">@ResourcePages.ListOrder </h3>
+
+    </div>
+    <div class="card-body">
+        <div class="mb-5 hover-scroll-x">
+            <div class="d-grid">
+                <ul class="nav nav-tabs flex-nowrap text-nowrap">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0 active" data-bs-toggle="tab" href="#kt_tab_pane_1">@ResourcePages.Requestes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" href="#kt_tab_pane_2">@ResourcePages.RequestFeildes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" href="#kt_tab_pane_3">@ResourcePages.RequestSteps</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-paned">
+            </div>
+            @* <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+            </div> *@
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+        var page=$('.nav-link.active').attr("href");
+        loadPage(page);
+          $('.nav-link').on("click",function(){
+            var page=$('.nav-link.active').attr("href")
+              loadPage(page);
+          });
+
+
+    });
+    function loadPage(page)
+    {
+        var url='';
+      switch (page)
+            {
+            case "#kt_tab_pane_1": url='@Url.Action("Index", "BaseRequests")';
+            break;
+            case "#kt_tab_pane_2": url='@Url.Action("Index", "BaseRequestFieldes")';
+            break;
+            case "#kt_tab_pane_3": url='@Url.Action("Index", "BaseRequestSteps")';
+            break;
+
+            }
+            $.get(url).done(function (result) {
+                  $("#myTabContent .tab-paned").html(result);
+             });
+    }
+</script>

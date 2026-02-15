@@ -1,0 +1,88 @@
+@model HamrahanSystem.Application.DTOs.UserActivityLogDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    string actionTitle = Model.ActionType switch
+    {
+        "Login" => "ورود",
+        "Logout" => "خروج",
+        "Request" => "درخواست",
+        _ => Model.ActionType ?? "-"
+    };
+    string formTitle = ViewBag.FormTitle as string ?? (Model.FormName ?? "-");
+    string createdAtText = ViewBag.PersianCreatedAt as string ?? Model.CreatedAt.ToString("yyyy/MM/dd HH:mm:ss");
+}
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h3 class="card-title align-items-start flex-column">جزئیات فعالیت</h3>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6"><strong>کاربر:</strong> @(Model.UserName ?? "-")</div>
+            <div class="col-md-6"><strong>زمان:</strong> @createdAtText</div>
+            <div class="col-md-6"><strong>نوع اقدام:</strong> @actionTitle</div>
+            <div class="col-md-6"><strong>فرم:</strong> @formTitle</div>
+            <div class="col-md-6"><strong>متد:</strong> @(ViewBag.HttpMethodTitle ?? Model.HttpMethod ?? "-")</div>
+            <div class="col-md-6"><strong>کد وضعیت:</strong> @(Model.StatusCode?.ToString() ?? "-")</div>
+            <div class="col-md-6"><strong>مدت (ms):</strong> @(Model.DurationMs?.ToString() ?? "-")</div>
+            <div class="col-md-6"><strong>&#73;&#80;&#32;&#1593;&#1605;&#1608;&#1605;&#1740;:</strong> @(ViewBag.PublicIp ?? "-")</div>
+            <div class="col-md-6"><strong>&#73;&#80;&#32;&#1582;&#1589;&#1608;&#1589;&#1740;:</strong> @(ViewBag.PrivateIp ?? "-")</div>
+        </div>
+
+        <div class="mb-4">
+            <h5>جزئیات درخواست</h5>
+            <div class="mb-2"><strong>مسیر:</strong> @(Model.Path ?? "-")</div>
+            <div class="mb-2"><strong>کوئری:</strong> @(Model.QueryString ?? "-")</div>
+            <div class="mb-2"><strong>User Agent:</strong> @(Model.UserAgent ?? "-")</div>
+            <div class="mb-2">
+                <strong>بدنه:</strong>
+                <pre class="bg-light p-3 rounded" style="max-height: 200px; overflow: auto;">@(string.IsNullOrWhiteSpace(Model.RequestBody) ? "-" : Model.RequestBody)</pre>
+            </div>
+        </div>
+
+        <div>
+            <h5>تغییرات داده</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>موجودیت</th>
+                        <th>شناسه موجودیت</th>
+                        <th>عملیات</th>
+                        <th>تغییرات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (Model.Details == null || Model.Details.Count == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">تغییری ثبت نشده</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var detail in Model.Details)
+                    {
+                        var operationTitle = detail.Operation switch
+                        {
+                            "Insert" => "افزودن",
+                            "Update" => "ویرایش",
+                            "Delete" => "حذف",
+                            _ => detail.Operation ?? "-"
+                        };
+                        <tr>
+                            <td>@(detail.EntityName ?? "-")</td>
+                            <td>@(detail.EntityId ?? "-")</td>
+                            <td>@operationTitle</td>
+                            <td>
+                                <pre class="bg-light p-2 rounded" style="max-height: 160px; overflow: auto;">@(string.IsNullOrWhiteSpace(detail.Changes) ? "-" : detail.Changes)</pre>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

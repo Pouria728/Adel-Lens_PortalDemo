@@ -1,0 +1,120 @@
+@model HamrahanSystem.Application.DTOs.TblLnsDesignTypeDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    var brandName = ViewBag.BrandName as string ?? string.Empty;
+    var lensTypeName = ViewBag.LensTypeName as string ?? string.Empty;
+}
+
+@using (Html.BeginForm("Create", "CustomLensDesignTypes", FormMethod.Post, new { @id = "form-custom-lens-design-types-create" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning" style="display:flex;justify-content:flex-end;direction:rtl;">
+            <h2 class="card-title mb-0" style="margin:0 !important;text-align:right !important;">Design Type</h2>
+        </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.DesignTypeId)
+            @Html.HiddenFor(model => model.LensTypeId)
+
+            <div class="form-group row mb-6">
+                @Html.Label("Brand", "Brand", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-lg form-control-solid" value="@brandName" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Lens Type", "Lens Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-lg form-control-solid" value="@lensTypeName" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_Name, "عنوان Design Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_Code, ResourcePages.Base_Code, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_Description, ResourcePages.Base_Description, htmlAttributes: new { @class = "col-lg-4 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("گزینه‌ها", "گزینه‌ها", htmlAttributes: new { @class = "col-lg-4 col-form-label fw-semibold fs-6" })
+                <div class="col-md-6">
+                    <div class="form-check form-check-inline me-4">
+                        @Html.CheckBoxFor(model => model.SphPlus, htmlAttributes: new { @class = "form-check-input", @id = "SphPlus" })
+                        <label class="form-check-label" for="SphPlus">Sph+</label>
+                    </div>
+                    <div class="form-check form-check-inline me-4">
+                        @Html.CheckBoxFor(model => model.SphMinus, htmlAttributes: new { @class = "form-check-input", @id = "SphMinus" })
+                        <label class="form-check-label" for="SphMinus">Sph-</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.CheckBoxFor(model => model.Addition, htmlAttributes: new { @class = "form-check-input", @id = "Addition" })
+                        <label class="form-check-label" for="Addition">Addition</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="@($"{ResourcePages.Save} {ResourcePages.DesignTypes}")" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $(document).off("click", "#create-btn")
+            .on("click", "#create-btn", function () {
+                $form = $("#form-custom-lens-design-types-create");
+
+                $.post('@Url.Action("Create", "CustomLensDesignTypes")',
+                    $form.serialize()
+                )
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            });
+    });
+
+</script>

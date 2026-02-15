@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "لیست سفارش‌ها";
+    string BasePage = "Orders";
+}
+
+<link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0"><i class="bi bi-basket2 me-2"></i>@ResourcePages.ListOrder</h3>
+        <div>
+            <button class="btn btn-light btn-sm me-2" onclick="LoadItems()"><i class="bi bi-arrow-clockwise"></i> بروزرسانی</button>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#columnModal">
+                <i class="bi bi-columns-gap"></i> تنظیم ستون‌ها
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <!-- پنل فیلتر پیشرفته با تاریخ -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-2">
+                <label class="form-label fw-semibold">نام مشتری</label>
+                <input type="text" id="filterCustomer" class="form-control form-control-solid" placeholder="نام مشتری">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-semibold">وضعیت سفارش</label>
+                <select id="filterStatus" class="form-select form-select-solid">
+                    <option value="">همه</option>
+                    <option value="در انتظار">در انتظار</option>
+                    <option value="تأیید شده">تأیید شده</option>
+                    <option value="لغو شده">لغو شده</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-semibold">فاکتور</label>
+                <input type="text" id="filterFactor" class="form-control form-control-solid" placeholder="شماره فاکتور">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">تاریخ شروع</label>
+                <input type="date" id="filterStartDate" class="form-control form-control-solid">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">تاریخ پایان</label>
+                <input type="date" id="filterEndDate" class="form-control form-control-solid">
+            </div>
+        </div>
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" id="applyFilter"><i class="bi bi-funnel"></i> اعمال فیلتر</button>
+            <button class="btn btn-secondary" id="clearFilter"><i class="bi bi-x-circle"></i> پاک کردن فیلترها</button>
+        </div>
+
+        <div id="ordersTabulator" class="mt-4"></div>
+    </div>
+</div>
+
+<!-- Modal ستون‌ها -->
+<div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="columnModalLabel">انتخاب ستون‌ها</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="columnList"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="applyColumns">اعمال</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">پیام</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+@section Scripts {
+<script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    function statusColor(status) {
+        switch (status) {
+            case "در انتظار": return "<span class='badge bg-warning text-dark'>در انتظار</span>";
+            case "تأیید شده": return "<span class='badge bg-success'>تأیید شده</span>";
+            case "لغو شده": return "<span class='badge bg-danger'>لغو شده</span>";
+            default: return "<span class='badge bg-secondary'>" + status + "</span>";
+        }
+    }
+
+    // بارگذاری ستون‌ها از LocalStorage
+    let storedColumns = JSON.parse(localStorage.getItem("ordersColumns") || "null");
+    let columns = [
+        { title: "ID", field: "id", visible: true },
+        { title: "مشتری", field: "customer", hozAlign: "center" },
+        { title: "فاکتور", field: "factorNo", hozAlign: "center" },
+        { title: "وضعیت", field: "statusOrder", hozAlign: "center",
+          formatter: function(cell){ return statusColor(cell.getValue()); } },
+        { title: "IndexDoc", field: "indexDocuments", hozAlign: "center" },
+        { title: "تاریخ ایجاد", field: "createDate", hozAlign: "center" },
+        { title: "عملیات", field: "id", hozAlign: "center",
+          formatter: function(cell){
+            var id = cell.getValue();
+            return `<button class="btn btn-sm btn-outline-danger" onclick="DeleteOrder('${id}')"><i class="bi bi-trash"></i></button>`;
+          } }
+    ];
+    if(storedColumns){
+        columns.forEach(col=>{
+            let stored = storedColumns.find(c=>c.field===col.field);
+            if(stored) col.visible = stored.visible;
+        });
+    }
+
+    var table = new Tabulator("#ordersTabulator", {
+        layout: "fitDataStretch",
+        height: "500px",
+        ajaxURL: '@Url.Action("Detail", BasePage)',
+        ajaxConfig: "POST",
+        ajaxContentType: "json",
+        ajaxParams: function () { return {}; },
+        ajaxResponse: function (url, params, response) { return response.rows; },
+        pagination: "local",
+        paginationSize: 20,
+        placeholder: "هیچ داده‌ای یافت نشد",
+        responsiveLayout: true,
+        rtl: true,
+        movableColumns: true,
+        tooltips: true,
+        columns: columns
+    });
+
+    window.LoadItems = () => table.replaceData();
+
+    // ذخیره فیلترها و ستون‌ها
+    function saveSettings() {
+        let colSettings = table.getColumns().map(c=>({field:c.getField(), visible:c.isVisible()}));
+        localStorage.setItem("ordersColumns", JSON.stringify(colSettings));
+
+        let filters = {
+            customer: document.getElementById("filterCustomer").value,
+            factor: document.getElementById("filterFactor").value,
+            status: document.getElementById("filterStatus").value,
+            startDate: document.getElementById("filterStartDate").value,
+            endDate: document.getElementById("filterEndDate").value
+        };
+        localStorage.setItem("ordersFilters", JSON.stringify(filters));
+    }
+
+    // بارگذاری فیلترها از LocalStorage
+    let storedFilters = JSON.parse(localStorage.getItem("ordersFilters") || "null");
+    if(storedFilters){
+        document.getElementById("filterCustomer").value = storedFilters.customer || "";
+        document.getElementById("filterFactor").value = storedFilters.factor || "";
+        document.getElementById("filterStatus").value = storedFilters.status || "";
+        document.getElementById("filterStartDate").value = storedFilters.startDate || "";
+        document.getElementById("filterEndDate").value = storedFilters.endDate || "";
+        document.getElementById("applyFilter").click();
+    }
+
+    document.getElementById("applyFilter").addEventListener("click", function(){
+        let customer = document.getElementById("filterCustomer").value.toLowerCase();
+        let factor = document.getElementById("filterFactor").value.toLowerCase();
+        let status = document.getElementById("filterStatus").value;
+        let start = document.getElementById("filterStartDate").value;
+        let end = document.getElementById("filterEndDate").value;
+
+        table.setFilter(row => {
+            let valid = true;
+            if(customer) valid = valid && row.customer.toLowerCase().includes(customer);
+            if(factor) valid = valid && row.factorNo.toLowerCase().includes(factor);
+            if(status) valid = valid && row.statusOrder === status;
+            if(start) valid = valid && row.createDate >= start;
+            if(end) valid = valid && row.createDate <= end;
+            return valid;
+        });
+
+        saveSettings();
+    });
+
+    document.getElementById("clearFilter").addEventListener("click", function(){
+        document.querySelectorAll("#filterCustomer, #filterFactor").forEach(i=>i.value="");
+        document.getElementById("filterStatus").value="";
+        document.getElementById("filterStartDate").value="";
+        document.getElementById("filterEndDate").value="";
+        table.clearFilter();
+        saveSettings();
+    });
+
+    // Modal ستون‌ها
+    function renderColumnList() {
+        var columnListDiv = document.getElementById("columnList");
+        columnListDiv.innerHTML = "";
+        table.getColumns().forEach(col => {
+            var checked = col.isVisible() ? "checked" : "";
+            columnListDiv.insertAdjacentHTML("beforeend",
+                `<div class="form-check">
+                    <input class="form-check-input col-checkbox" type="checkbox" data-field="${col.getField()}" ${checked}>
+                    <label class="form-check-label">${col.getDefinition().title}</label>
+                </div>`);
+        });
+    }
+    var colModalEl = document.getElementById('columnModal');
+    colModalEl.addEventListener('show.bs.modal', renderColumnList);
+    document.getElementById("applyColumns").addEventListener("click", function(){
+        document.querySelectorAll(".col-checkbox").forEach(chk => {
+            var field = chk.getAttribute("data-field");
+            chk.checked ? table.showColumn(field) : table.hideColumn(field);
+        });
+        bootstrap.Modal.getInstance(colModalEl).hide();
+        saveSettings();
+    });
+
+    window.DeleteOrder = function(id){
+        if(confirm("آیا از حذف این سفارش اطمینان دارید؟")){
+            fetch('@Url.Action("DeleteOrder", BasePage)', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({id:id})
+            }).then(()=>table.replaceData());
+        }
+    };
+
+});
+</script>
+}

@@ -1,0 +1,447 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = HamrahanSystem.Presntation
+build_property.RootNamespace = HamrahanSystem.Presntation
+build_property.ProjectDir = d:\Project\AdelLens web\HamrahanSystem\HamrahanSystem.Presntation\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = d:\Project\AdelLens web\HamrahanSystem\HamrahanSystem.Presntation
+build_property._RazorSourceGeneratorDebug = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestConfig/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RDb25maWdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestFieldes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RGaWVsZGVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestFieldes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RGaWVsZGVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestFieldes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RGaWVsZGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestSteps/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RTdGVwc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestSteps/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RTdGVwc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequestSteps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RTdGVwc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequests/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequests/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BaseRequests/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFzZVJlcXVlc3RzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypeRs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZVJzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypeRs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZVJzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypeRs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZVJzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/BrandLensTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRMZW5zVHlwZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Brands/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Brands/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Brands/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Coatings/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29hdGluZ3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Coatings/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29hdGluZ3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Coatings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29hdGluZ3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/ColoringTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JpbmdUeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/ColoringTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JpbmdUeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/ColoringTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JpbmdUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/CustomLensBrands/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tTGVuc0JyYW5kc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/CustomLensBrands/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tTGVuc0JyYW5kc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Cyles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3lsZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Cyles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3lsZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Cyles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3lsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypeLensIndexs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZUxlbnNJbmRleHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypeLensIndexs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZUxlbnNJbmRleHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypeLensIndexs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZUxlbnNJbmRleHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/DesignTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduVHlwZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/FrameTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnJhbWVUeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/FrameTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnJhbWVUeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/FrameTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnJhbWVUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexMaterialTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4TWF0ZXJpYWxUeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexMaterialTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4TWF0ZXJpYWxUeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexMaterialTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4TWF0ZXJpYWxUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRSphs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UlNwaHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRSphs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UlNwaHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRSphs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UlNwaHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexRs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4UnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensIndexs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc0luZGV4c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeDesignTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVEZXNpZ25UeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeDesignTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVEZXNpZ25UeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeDesignTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVEZXNpZ25UeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRLensIndexRs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSTGVuc0luZGV4UnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRLensIndexRs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSTGVuc0luZGV4UnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRLensIndexRs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSTGVuc0luZGV4UnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypeRs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVSc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/LensTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVuc1R5cGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/MaterialTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxUeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/MaterialTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxUeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/MaterialTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/ListOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXExpc3RPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/ListOrdersNew.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXExpc3RPcmRlcnNOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/ListReqOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXExpc3RSZXFPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/OrderSpecial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXE9yZGVyU3BlY2lhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/OrderStock.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXE9yZGVyU3RvY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/OrderStockGranty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXE9yZGVyU3RvY2tHcmFudHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/Print.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFByaW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/ShowOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFNob3dPcmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Orders/ShowOrderReq.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFNob3dPcmRlclJlcS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Process/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Process/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Process/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Roles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Roles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Roles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/_Layout_Athe_RTL.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfQXRoZV9SVEwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/_Layout_M.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfTS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/_Layout_M_Rtl.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfTV9SdGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/SphCylRes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BoQ3lsUmVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/SphCylRes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BoQ3lsUmVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/SphCylRes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BoQ3lsUmVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Sphs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3Boc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Sphs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3Boc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Sphs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3Boc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Steps/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RlcHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Steps/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RlcHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Steps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RlcHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/UserActivityLogs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjdGl2aXR5TG9nc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/UserActivityLogs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckFjdGl2aXR5TG9nc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Users/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Users/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Users/test.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcdGVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[d:/Project/AdelLens web/HamrahanSystem/HamrahanSystem.Presntation/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-512flmbxev

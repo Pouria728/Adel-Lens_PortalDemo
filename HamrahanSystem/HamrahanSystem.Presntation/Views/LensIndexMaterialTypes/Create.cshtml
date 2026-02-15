@@ -1,0 +1,132 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsLensIndexMaterialTypeDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    HamrahanSystem.Application.DTOs.TblLnsDesignTypeLensIndexDto item = ViewBag.DesignTypeLensIndex;
+    Model.TblLnsDesignTypeLensIndex = item;
+}
+
+
+
+@using (Html.BeginForm("Create", "TaxPayerCustomers", FormMethod.Post, new { @id = "form-TaxPayerCustomers" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-light-primary"><h3 class="card-title align-items-start flex-column">@($"{ResourcePages.Add} {ResourcePages.LensTypeRs}")</h3> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.DesignTypeLensIndexId, Model.TblLnsDesignTypeLensIndex.DesignTypeLensIndexId)
+
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_Brand, ResourcePages.Base_Brand, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("Brand", Model.TblLnsDesignTypeLensIndex.TblLnsBrandDesignType.TblLnsBrandLensType.TblLnsBrand.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_LensType, ResourcePages.Base_LensType, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("LensType", Model.TblLnsDesignTypeLensIndex.TblLnsBrandDesignType.TblLnsBrandLensType.TblLnsLensType.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_DesignType, ResourcePages.Base_DesignType, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("DesignType", Model.TblLnsDesignTypeLensIndex.TblLnsBrandDesignType.TblLnsDesignType.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.Base_LensIndex, ResourcePages.Base_LensIndex, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.Label("LensIndex", Model.TblLnsDesignTypeLensIndex.TblLnsLensIndex.Name, new { @class = "form-control form-control-lg form-control-solid" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_MaterialType, ResourcePages.Base_MaterialType, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MaterialTypeId, new MultiSelectList(ViewBag.ListMaterialType, "MaterialTypeId", "Name"), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_DefineObject, ResourcePages.Base_DefineObject, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.DefineObjectId, new List<SelectListItem>(), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="@($"{ResourcePages.Save} {ResourcePages.LensTypeRs}")" class="btn btn-success" />
+
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(function () {
+        KTComponents.init();
+                 $("#DefineObjectId").select2({
+            //theme: "bootstrap4",
+             //dropdownParent: $("#modal-Tree"),
+            language: 'fa',
+            minimumInputLength: 4,
+            dir:"rtl",
+            ajax: {
+                url:  '@Url.Action("ListDefineDefineObjectSearch", "SphCylRes")',
+                type: 'POST',
+                dataType: 'JSON',
+                // contentType: "application/json; charset=utf-8",
+                delay: 250,
+                data:
+                    function (params) {
+                        var test={search:params.term}
+                        return test // search term
+
+                    }
+                    ,
+                processResults: function (data) {
+
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+                 $form = $("#form-TaxPayerCustomers");
+
+                 $.post('@Url.Action("Create", "LensIndexMaterialTypes")',
+                     $form.serialize()
+
+                 )
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+    });
+
+
+</script>

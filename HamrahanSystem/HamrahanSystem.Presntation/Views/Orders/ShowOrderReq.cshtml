@@ -1,0 +1,1225 @@
+﻿@model HamrahanSystem.Application.DTOs.TblWfwOrderProcessStepDto
+@using System.Globalization
+@using HamrahanSystem.Application.DTOs
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    int itemcount = 0;
+
+    var currentOrder = Model?.TblWfwOrderProcess?.TblLnsOrder;
+    bool isCustomLensOrder = currentOrder?.IndexDocument == (int)IndexDocument.LnsOrder;
+    bool barcodeCheck = Model != null &&
+                        (Model.TblWfwProcessStep.TblWfwProcess.IndexDocument == (int)IndexDocument.LnsReadyOrder ||
+                         Model.TblWfwProcessStep.TblWfwProcess.IndexDocument == (int)IndexDocument.LnsOrderGranty) &&
+                        Model.TblWfwProcessStep.IsBarcode &&
+                        Model.StatusId == (int)StatusRequest.Inprogress;
+}
+
+
+@using (Html.BeginForm("Create", "TaxPayerCustomers", FormMethod.Post, new { @id = "form-TaxPayerCustomers" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-light-primary"><h3 class="card-title align-items-start flex-column">@($"{ResourcePages.ShowReport}")</h3> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (Model != null)
+            {
+                @Html.HiddenFor(model => model.OrderProcessStepId, Model.OrderProcessStepId)
+            }
+            @if (Model != null)
+            {
+                var customerName = ViewBag.CustomerName as string ?? string.Empty;
+                var order = Model.TblWfwOrderProcess?.TblLnsOrder;
+                Func<HamrahanSystem.Application.DTOs.TblLnsOrderItemDto, string> resolveConsumer = item =>
+                    !string.IsNullOrWhiteSpace(item?.ConsumerTitle) ? item.ConsumerTitle : (order?.Consumer ?? string.Empty);
+                Func<HamrahanSystem.Application.DTOs.TblLnsOrderItemDto, string> resolveStore = item =>
+                    !string.IsNullOrWhiteSpace(item?.Optician) ? item.Optician : (order?.StoreName ?? string.Empty);
+
+                if (barcodeCheck)
+                {
+                    <div class="form-group row">
+                        @Html.Label(ResourcePages.Base_BarCode, ResourcePages.Base_BarCode, htmlAttributes: new { @class = "col-lg-3 col-form-label required fw-semibold fs-6" })
+                        <div class="col-md-4">
+                            <input type="text" id="getbarcode" class="form-control form-control-lg form-control-solid" />
+                            @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                        </div>
+                    </div>
+                }
+                @if (!isCustomLensOrder)
+                {
+                    <div class="form-group row mb-6">
+                        @Html.Label(ResourcePages.Base_DefineCustomer, ResourcePages.Base_DefineCustomer, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
+                        <div class="col-md-4">
+                            @Html.Label("CustomerName", customerName, new { @class = "form-control-plaintext" })
+                        </div>
+                        <div class="col-lg-2"></div>
+                        <div class="col-md-4"></div>
+                    </div>
+                }
+                @if (isCustomLensOrder)
+                {
+                    var customSphLookup = ViewBag.CustomSphLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customCylLookup = ViewBag.CustomCylLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customBrandLookup = ViewBag.CustomBrandLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customLensTypeLookup = ViewBag.CustomLensTypeLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customDesignTypeLookup = ViewBag.CustomDesignTypeLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customLensIndexLookup = ViewBag.CustomLensIndexLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customMaterialLookup = ViewBag.CustomMaterialLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+                    var customCoatingLookup = ViewBag.CustomCoatingLookup as Dictionary<int, string> ?? new Dictionary<int, string>();
+
+                    string Fallback(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value.Trim();
+                    string FallbackInt(int? value) => value.HasValue ? value.Value.ToString(CultureInfo.InvariantCulture) : "-";
+                    string FallbackShort(short? value) => value.HasValue ? value.Value.ToString(CultureInfo.InvariantCulture) : "-";
+                    string FallbackFloat(float? value) => value.HasValue ? value.Value.ToString("0.##", CultureInfo.InvariantCulture) : "-";
+                    string FallbackDecimal(decimal? value) => value.HasValue ? value.Value.ToString("0.##", CultureInfo.InvariantCulture) : "-";
+
+                    string Lookup(Dictionary<int, string> source, int? key, string? fallback = null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(fallback))
+                        {
+                            return fallback.Trim();
+                        }
+
+                        if (key.HasValue && source.TryGetValue(key.Value, out var text) && !string.IsNullOrWhiteSpace(text))
+                        {
+                            return text.Trim();
+                        }
+
+                        return "-";
+                    }
+
+                    Dictionary<string, string> ParseEyeMeta(string? raw)
+                    {
+                        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                        if (string.IsNullOrWhiteSpace(raw))
+                        {
+                            return result;
+                        }
+
+                        foreach (var part in raw.Split(';', StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            var idx = part.IndexOf('=');
+                            if (idx <= 0)
+                            {
+                                continue;
+                            }
+
+                            var key = part.Substring(0, idx).Trim();
+                            var value = part.Substring(idx + 1).Trim();
+                            if (!string.IsNullOrWhiteSpace(key) && !string.IsNullOrWhiteSpace(value) && !result.ContainsKey(key))
+                            {
+                                result[key] = value;
+                            }
+                        }
+
+                        return result;
+                    }
+
+                    string EyeMeta(Dictionary<string, string> meta, string key)
+                    {
+                        if (meta.TryGetValue(key, out var value) && !string.IsNullOrWhiteSpace(value))
+                        {
+                            return value.Trim();
+                        }
+
+                        return string.Empty;
+                    }
+
+                    string FirstNonEmpty(params string?[] values)
+                    {
+                        foreach (var value in values)
+                        {
+                            if (!string.IsNullOrWhiteSpace(value))
+                            {
+                                return value.Trim();
+                            }
+                        }
+
+                        return string.Empty;
+                    }
+
+                    string FormatTwoDecimal(string? value)
+                    {
+                        if (string.IsNullOrWhiteSpace(value))
+                        {
+                            return "-";
+                        }
+
+                        var normalized = value.Trim().Replace("٫", ".").Replace(",", ".");
+                        if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed))
+                        {
+                            return parsed.ToString("0.##", CultureInfo.InvariantCulture);
+                        }
+
+                        return value.Trim();
+                    }
+
+                    string ResolveSph(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        if (eye == null)
+                        {
+                            return "-";
+                        }
+
+                        var fromMeta = EyeMeta(meta, "SPH");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(eye.TblLnsSph?.Name))
+                        {
+                            return eye.TblLnsSph.Name.Trim();
+                        }
+
+                        if (eye.SphId.HasValue)
+                        {
+                            return Lookup(customSphLookup, eye.SphId);
+                        }
+
+                        if (eye.LensIndexRSphId.HasValue)
+                        {
+                            return Lookup(customSphLookup, eye.LensIndexRSphId, eye.TblLnsLensIndexRSph?.TblLnsSph?.Name);
+                        }
+
+                        return "-";
+                    }
+
+                    string ResolveCyl(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        if (eye == null)
+                        {
+                            return "-";
+                        }
+
+                        var fromMeta = EyeMeta(meta, "CYL");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(eye.TblLnsCyl?.Name))
+                        {
+                            return eye.TblLnsCyl.Name.Trim();
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(eye.TblLnsSphCyl?.TblLnsCyl?.Name))
+                        {
+                            return eye.TblLnsSphCyl.TblLnsCyl.Name.Trim();
+                        }
+
+                        if (eye.CylId.HasValue)
+                        {
+                            return Lookup(customCylLookup, eye.CylId);
+                        }
+
+                        return "-";
+                    }
+
+                    string ResolveAdd(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "ADD");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        if (eye?.ItemAdd.HasValue == true)
+                        {
+                            var raw = eye.ItemAdd.Value;
+                            if (Math.Abs(raw) >= 20)
+                            {
+                                return (raw / 100m).ToString("0.##", CultureInfo.InvariantCulture);
+                            }
+
+                            return raw.ToString(CultureInfo.InvariantCulture);
+                        }
+
+                        return "-";
+                    }
+
+                    string ResolveDia(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "DIA");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        return FallbackShort(eye?.Dia);
+                    }
+
+                    string ResolveDc(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "DC");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        return FallbackShort(eye?.Dc);
+                    }
+
+                    string ResolvePrism(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "PRISM");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        if (eye?.Prism.HasValue == true)
+                        {
+                            var raw = eye.Prism.Value;
+                            if (Math.Abs(raw) >= 20)
+                            {
+                                return (raw / 100m).ToString("0.##", CultureInfo.InvariantCulture);
+                            }
+
+                            return raw.ToString(CultureInfo.InvariantCulture);
+                        }
+
+                        return "-";
+                    }
+
+                    string ResolveBasePrism(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "BASE");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        return eye?.BaseOfPrism switch
+                        {
+                            1 => "UP",
+                            2 => "DOWN",
+                            3 => "IN",
+                            4 => "OUT",
+                            5 => "IN/UP",
+                            6 => "IN/DOWN",
+                            7 => "OUT/UP",
+                            8 => "OUT/DOWN",
+                            _ => FallbackShort(eye?.BaseOfPrism)
+                        };
+                    }
+
+                    string ResolvePosition(TblLnsOrderItemDto? eye, Dictionary<string, string> meta)
+                    {
+                        var fromMeta = EyeMeta(meta, "POSITION");
+                        if (!string.IsNullOrWhiteSpace(fromMeta))
+                        {
+                            return fromMeta;
+                        }
+
+                        return eye?.Position switch
+                        {
+                            1 => "TO NASAL",
+                            2 => "TO TEMPLE",
+                            _ => FallbackShort(eye?.Position)
+                        };
+                    }
+
+                    string ResolvePd(TblLnsOrderItemDto? eye, decimal? orderPd)
+                    {
+                        if (eye?.Ipd.HasValue == true)
+                        {
+                            return FallbackFloat(eye.Ipd);
+                        }
+
+                        return FallbackDecimal(orderPd);
+                    }
+
+                    var factorNo = !string.IsNullOrWhiteSpace(order?.FactorNo)
+                        ? order.FactorNo!.Trim()
+                        : (((order?.IndexDocument ?? 0) != (int)IndexDocument.LnsOrder ? "ST" : "RX") + (order?.OrderId ?? 0).ToString().PadLeft(8, '0'));
+
+                    var rightEye = order?.TblLnsOrderItems?.FirstOrDefault(x => x.IsRight == 1)
+                                   ?? order?.TblLnsOrderItems?.FirstOrDefault();
+                    var leftEye = order?.TblLnsOrderItems?.FirstOrDefault(x => x.IsRight == 0)
+                                  ?? order?.TblLnsOrderItems?.Skip(1).FirstOrDefault();
+                    var orderMeta = ParseEyeMeta(order?.Description);
+                    var rightEyeMeta = ParseEyeMeta(rightEye?.Description);
+                    var leftEyeMeta = ParseEyeMeta(leftEye?.Description);
+                    var deliveryTypeName = EyeMeta(orderMeta, "DELIVERYTYPE");
+                    var fittingRValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "FITTINGR"),
+                        EyeMeta(orderMeta, "FITTING-R"),
+                        EyeMeta(orderMeta, "SEGR")
+                    );
+                    if (string.IsNullOrWhiteSpace(fittingRValue))
+                    {
+                        fittingRValue = FallbackDecimal(order?.FittingR);
+                    }
+                    fittingRValue = FormatTwoDecimal(fittingRValue);
+                    var fittingLValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "FITTINGL"),
+                        EyeMeta(orderMeta, "FITTING-L"),
+                        EyeMeta(orderMeta, "SEGL")
+                    );
+                    if (string.IsNullOrWhiteSpace(fittingLValue))
+                    {
+                        fittingLValue = FallbackDecimal(order?.FittingL);
+                    }
+                    fittingLValue = FormatTwoDecimal(fittingLValue);
+                    var baseCurveValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "BASECURVE"),
+                        EyeMeta(orderMeta, "BASE")
+                    );
+                    if (string.IsNullOrWhiteSpace(baseCurveValue))
+                    {
+                        baseCurveValue = FallbackInt(order?.ItemBase);
+                    }
+
+                    var beforeLensType = order?.BeforeLensType switch
+                    {
+                        1 => "تکدید",
+                        2 => "دوردید",
+                        3 => "تدریجی",
+                        _ => "-"
+                    };
+
+                    var corridor = order?.Corridor switch
+                    {
+                        0 => "Auto",
+                        14 => "14 mm",
+                        16 => "16 mm",
+                        18 => "18 mm",
+                        null => "-",
+                        _ => $"{order?.Corridor} mm"
+                    };
+
+                    var productName = ViewBag.ProductName as string;
+                    if (string.IsNullOrWhiteSpace(productName))
+                    {
+                        productName = order?.TblLnsOrderItems?.FirstOrDefault()?.TblClrDefineObject?.NameObject;
+                    }
+
+                    var brandName = EyeMeta(orderMeta, "BRAND");
+                    if (string.IsNullOrWhiteSpace(brandName))
+                    {
+                        brandName = !string.IsNullOrWhiteSpace(order?.TblLnsBrand?.Name)
+                            ? order!.TblLnsBrand.Name
+                            : Lookup(customBrandLookup, order?.BrandId);
+                    }
+
+                    var lensTypeName = EyeMeta(orderMeta, "LENSTYPE");
+                    if (string.IsNullOrWhiteSpace(lensTypeName))
+                    {
+                        lensTypeName = !string.IsNullOrWhiteSpace(order?.TblLnsLensType?.Name)
+                            ? order!.TblLnsLensType.Name
+                            : Lookup(customLensTypeLookup, order?.LensTypeId);
+                    }
+
+                    var designTypeName = EyeMeta(orderMeta, "DESIGNTYPE");
+                    if (string.IsNullOrWhiteSpace(designTypeName))
+                    {
+                        designTypeName = !string.IsNullOrWhiteSpace(order?.TblLnsDesignType?.Name)
+                            ? order!.TblLnsDesignType.Name
+                            : Lookup(customDesignTypeLookup, order?.DesignTypeId);
+                    }
+
+                    var lensIndexName = EyeMeta(orderMeta, "LENSINDEX");
+                    if (string.IsNullOrWhiteSpace(lensIndexName))
+                    {
+                        lensIndexName = !string.IsNullOrWhiteSpace(order?.TblLnsLensIndex?.Name)
+                            ? order!.TblLnsLensIndex.Name
+                            : Lookup(customLensIndexLookup, order?.LensIndexId);
+                    }
+
+                    var materialName = EyeMeta(orderMeta, "MATERIAL");
+                    if (string.IsNullOrWhiteSpace(materialName))
+                    {
+                        materialName = !string.IsNullOrWhiteSpace(order?.TblLnsMaterialType?.Name)
+                            ? order!.TblLnsMaterialType.Name
+                            : Lookup(customMaterialLookup, order?.MaterialTypeId);
+                    }
+
+                    var coatingName = EyeMeta(orderMeta, "COATING");
+                    if (string.IsNullOrWhiteSpace(coatingName))
+                    {
+                        coatingName = !string.IsNullOrWhiteSpace(order?.TblLnsCoating?.Name)
+                            ? order!.TblLnsCoating.Name
+                            : Lookup(customCoatingLookup, order?.CoatingId);
+                    }
+
+                    var serviceName = EyeMeta(orderMeta, "SERVICE");
+                    if (string.IsNullOrWhiteSpace(serviceName))
+                    {
+                        serviceName = order?.TblLnsOrderservices?.FirstOrDefault()?.DefineServiceId?.ToString(CultureInfo.InvariantCulture) ?? "-";
+                    }
+                    var coloringTypeName = FirstNonEmpty(
+                        EyeMeta(orderMeta, "COLORINGTYPE"),
+                        EyeMeta(orderMeta, "COLORING TYPE")
+                    );
+                    if (string.IsNullOrWhiteSpace(coloringTypeName))
+                    {
+                        coloringTypeName = !string.IsNullOrWhiteSpace(order?.TblLnsColoringType?.Name)
+                            ? order!.TblLnsColoringType.Name
+                            : FallbackInt(order?.ColoringTypeId);
+                    }
+                    var colorRatioValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "COLORRATIO"),
+                        EyeMeta(orderMeta, "COLOR RATIO")
+                    );
+                    if (string.IsNullOrWhiteSpace(colorRatioValue))
+                    {
+                        colorRatioValue = FallbackDecimal(order?.ColorRatio);
+                    }
+                    var topRatioValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "TOPRATIO"),
+                        EyeMeta(orderMeta, "TOP RATIO"),
+                        EyeMeta(orderMeta, "COLORRATIOTOP")
+                    );
+                    if (string.IsNullOrWhiteSpace(topRatioValue))
+                    {
+                        topRatioValue = FallbackDecimal(order?.ColorRatioTop);
+                    }
+                    var bottomRatioValue = FirstNonEmpty(
+                        EyeMeta(orderMeta, "BOTTOMRATIO"),
+                        EyeMeta(orderMeta, "BOTTOM RATIO"),
+                        EyeMeta(orderMeta, "COLORBOTTOM"),
+                        EyeMeta(orderMeta, "BOTTOM")
+                    );
+                    if (string.IsNullOrWhiteSpace(bottomRatioValue))
+                    {
+                        bottomRatioValue = FallbackDecimal(order?.ColorBottom);
+                    }
+                    <div class="custom-order-preview">
+                        <div class="custom-order-preview__head">
+                            <span class="custom-order-preview__title">پیش نمایش سفارش</span>
+                            <span class="custom-order-preview__factor">@factorNo</span>
+                        </div>
+
+                        <div class="custom-order-preview__meta">
+                            <div class="meta-item"><span>مشتری</span><strong>@Fallback(customerName)</strong></div>
+                            <div class="meta-item"><span>فروشگاه</span><strong>@Fallback(order?.StoreName)</strong></div>
+                            <div class="meta-item"><span>مصرف کننده</span><strong>@Fallback(order?.Consumer)</strong></div>
+                            <div class="meta-item"><span>نحوه تحویل</span><strong>@Fallback(deliveryTypeName)</strong></div>
+                            <div class="meta-item"><span>شماره سفارش</span><strong>@factorNo</strong></div>
+                        </div>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width:120px">عنوان عدسی</th>
+                                    <th colspan="10">@Fallback(productName)</th>
+                                </tr>
+                                <tr>
+                                    <th>چشم</th>
+                                    <th>SPH</th>
+                                    <th>CYL</th>
+                                    <th>AXIS</th>
+                                    <th>ADD</th>
+                                    <th>DIA</th>
+                                    <th>PD</th>
+                                    <th>POSITION</th>
+                                    <th>PRISM</th>
+                                    <th>BP</th>
+                                    <th>DC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="eye-side">RIGHT</td>
+                                    <td>@ResolveSph(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolveCyl(rightEye, rightEyeMeta)</td>
+                                    <td>@FallbackInt(rightEye?.Axis)</td>
+                                    <td>@ResolveAdd(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolveDia(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolvePd(rightEye, order?.IpdR)</td>
+                                    <td>@ResolvePosition(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolvePrism(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolveBasePrism(rightEye, rightEyeMeta)</td>
+                                    <td>@ResolveDc(rightEye, rightEyeMeta)</td>
+                                </tr>
+                                <tr>
+                                    <td class="eye-side">LEFT</td>
+                                    <td>@ResolveSph(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolveCyl(leftEye, leftEyeMeta)</td>
+                                    <td>@FallbackInt(leftEye?.Axis)</td>
+                                    <td>@ResolveAdd(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolveDia(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolvePd(leftEye, order?.IpdL)</td>
+                                    <td>@ResolvePosition(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolvePrism(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolveBasePrism(leftEye, leftEyeMeta)</td>
+                                    <td>@ResolveDc(leftEye, leftEyeMeta)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>HBOX</th>
+                                    <th>VBOX</th>
+                                    <th>FITTING-R</th>
+                                    <th>FITTING-L</th>
+                                    <th>DBL</th>
+                                    <th>ED</th>
+                                    <th>PA</th>
+                                    <th>FFA</th>
+                                    <th>BVD</th>
+                                    <th>BASE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@FallbackFloat(order?.HBox)</td>
+                                    <td>@FallbackFloat(order?.VBox)</td>
+                                    <td>@Fallback(fittingRValue)</td>
+                                    <td>@Fallback(fittingLValue)</td>
+                                    <td>@FallbackFloat(order?.Dbl)</td>
+                                    <td>@FallbackFloat(order?.EffectiveDiameter)</td>
+                                    <td>@FallbackFloat(order?.Panto)</td>
+                                    <td>@FallbackFloat(order?.Ffa)</td>
+                                    <td>@FallbackFloat(order?.Vd)</td>
+                                    <td>@Fallback(baseCurveValue)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>Coating</th>
+                                    <th>مشخصات عدسی قبلی</th>
+                                    <th>Coloring</th>
+                                    <th>نوع فریم</th>
+                                    <th>Corridor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Fallback(coatingName)</td>
+                                    <td>@beforeLensType</td>
+                                    <td>@Fallback(order?.Color)</td>
+                                    <td>@Fallback(order?.TblLnsFrameType?.Name)</td>
+                                    <td>@corridor</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>Coloring Type</th>
+                                    <th>Color Ratio</th>
+                                    <th>Top Ratio</th>
+                                    <th>Bottom Ratio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Fallback(coloringTypeName)</td>
+                                    <td>@Fallback(colorRatioValue)</td>
+                                    <td>@Fallback(topRatioValue)</td>
+                                    <td>@Fallback(bottomRatioValue)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>توضیحات</th>
+                                    <th>خدمات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Fallback(order?.BeforeLensSpec)</td>
+                                    <td>@Fallback(serviceName)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>BRAND</th>
+                                    <th>LENS TYPE</th>
+                                    <th>DESIGN TYPE</th>
+                                    <th>LENS INDEX</th>
+                                    <th>MATERIAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Fallback(brandName)</td>
+                                    <td>@Fallback(lensTypeName)</td>
+                                    <td>@Fallback(designTypeName)</td>
+                                    <td>@Fallback(lensIndexName)</td>
+                                    <td>@Fallback(materialName)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                <div class="form-group">
+                    <table id="orderItems" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="min-w-50px w-80px">@ResourcePages.Base_EyeSide</th>
+                                <th class="min-w-300px w-475px">@ResourcePages.Base_DefineObject</th>
+
+                                <th class="min-w-80px w-150px">@ResourcePages.Base_Cyl</th>
+                                <th class="min-w-100px w-100px">@ResourcePages.Base_Sph</th>
+                                <th class="min-w-80px w-150px ">@ResourcePages.Base_Quantity</th>
+
+                                <th class="min-w-80px w-150px ">@ResourcePages.Base_ProvidedQuantity</th>
+
+                                <th class="min-w-150px w-200px ">@ResourcePages.Base_Consumer</th>
+                                <th class="min-w-150px w-200px ">@ResourcePages.Base_StoreName</th>
+                                <th class="min-w-80px w-150px ">@ResourcePages.Base_NeedTools</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.TblWfwOrderProcess.TblLnsOrder.IndexDocument == (int)IndexDocument.LnsOrderGranty)
+                            {
+                                @foreach (var rownum in Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems.Where(x => x.RowNumber != null).GroupBy(x => x.RowNumber).Select(g => new { key = g.Key, count = g.Count() }))
+                                {
+                                    <tr>
+                                        @if (rownum.count > 1)
+                                        {
+                                            var itemdetailR = Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString() && x.IsRight == 1);
+                                            var itemdetailL = Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString() && x.IsRight == 0);
+
+                                            <td class="pe-7">
+                                                @Html.Label("IsRight0", "R", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+                                                @Html.Label("IsRight1", "L", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt1", data_kt_rel = "true" })
+
+                                            </td>
+                                            <td class="pe-7" style="direction:ltr!important">
+                                                @Html.Label("DefineObject", itemdetailR.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+                                                @Html.Label("DefineObject", itemdetailL.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "true" })
+
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("DefineObject", itemdetailR.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+                                                @Html.Label("DefineObject", itemdetailL.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "true" })
+                                            </td>
+                                            <td>
+
+                                                @Html.Label("DefineObject", itemdetailR.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+                                                @Html.Label("DefineObject", itemdetailL.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "true" })
+
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "false", data_kt_element = $"quantity_{itemdetailR.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+                                                @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "true", data_kt_element = $"quantity_{itemdetailL.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+
+                                            </td>
+                                            @if (barcodeCheck)
+                                            {
+                                                <td class="ps-0">
+                                                    @Html.TextBoxFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity, "000", new { @class = "form-control form-control-solid", data_kt_element = $"id_{itemdetailR.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+                                                    @Html.HiddenFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].OrderItemId, itemdetailR.OrderItemId)
+                                                    @Html.TextBoxFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount + 1].ProvidedQuantity, "000", new { @class = "form-control form-control-solid", data_kt_element = $"id_{itemdetailL.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+                                                    @Html.HiddenFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount + 1].OrderItemId, itemdetailL.OrderItemId)
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="ps-0">
+                                                    @Html.Label("ProvidedQuantity", Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity.GetValueOrDefault(0).ToString(), new { @class = "form-control form-control-solid" })
+                                                    @Html.Label("ProvidedQuantity", Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount+1].ProvidedQuantity.GetValueOrDefault(0).ToString(), new { @class = "form-control form-control-solid" })
+
+                                                </td>
+                                            }
+                                            <td class="ps-0">
+                                                @Html.Label("Consumer", resolveConsumer(itemdetailR), new { @class = "form-control form-control-solid" })
+                                                @Html.Label("Consumer", resolveConsumer(itemdetailL), new { @class = "form-control form-control-solid" })
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("StoreName", resolveStore(itemdetailR), new { @class = "form-control form-control-solid" })
+                                                @Html.Label("StoreName", resolveStore(itemdetailL), new { @class = "form-control form-control-solid" })
+                                            </td>
+                                            <td class="ps-0 ">
+
+                                                @Html.CheckBox("NeedTools", itemdetailR.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+                                                <br />
+                                                @Html.CheckBox("NeedTools", itemdetailL.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid1", data_kt_rel = "true" })
+
+
+                                            </td>
+                                            {
+                                                itemcount = itemcount + 2;
+                                            }
+
+                                        }
+                                        else
+                                        {
+
+                                            var itemdetail = Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems.Single(x => x.RowNumber == rownum.key.ToString());
+
+                                            <td class="pe-7">
+                                                @if (itemdetail.IsRight == 1)
+                                                {
+                                                    @Html.Label("IsRight0", "R", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.Label("IsRight1", "L", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt1", data_kt_rel = "true" })
+                                                }
+
+
+                                            </td>
+                                            <td class="pe-7" style="direction:ltr!important">
+                                                @Html.Label("DefineObject", itemdetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("DefineObject", itemdetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+                                            </td>
+                                            <td>
+
+                                                @Html.Label("DefineObject", itemdetail.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("DefineObject", "1", new { @class = "form-control form-control-solid", data_kt_rel = "false", data_kt_element = $"quantity_{itemdetail.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+
+                                            </td>
+                                            @if (barcodeCheck)
+                                            {
+                                                <td class="ps-0">
+                                                    @Html.TextBoxFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity, "000", new { @class = "form-control form-control-solid", data_kt_element = $"id_{itemdetail.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+                                                    @Html.HiddenFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].OrderItemId, itemdetail.OrderItemId)
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="ps-0">
+                                                    @Html.Label("ProvidedQuantity", Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity.GetValueOrDefault(0).ToString(), new { @class = "form-control form-control-solid" })
+
+                                                </td>
+                                            }
+                                            <td class="ps-0">
+                                                @Html.Label("Consumer", resolveConsumer(itemdetail), new { @class = "form-control form-control-solid" })
+                                            </td>
+                                            <td class="ps-0">
+                                                @Html.Label("StoreName", resolveStore(itemdetail), new { @class = "form-control form-control-solid" })
+                                            </td>
+                                            <td class="ps-0 ">
+
+                                                @Html.CheckBox("NeedTools", itemdetail.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+
+
+                                            </td>
+                                            {
+                                                itemcount = itemcount + 1;
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            }
+                            @foreach (var itemDetail in Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems.Where(x => x.RowNumber == null))
+                            {
+
+                                <tr>
+                                    <td class="pe-7">
+                                        @Html.Label("IsRight0", "", new { @class = "form-control form-control-solid", data_kt_element = "isrighttxt0", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="pe-7" style="direction:ltr!important">
+                                        @Html.Label("DefineObject", itemDetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "defineobjectR", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td class="ps-0">
+                                        @Html.Label("DefineObject", itemDetail.SphCylId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "cylR", data_kt_rel = "false" })
+
+                                    </td>
+                                    <td>
+                                        @Html.Label("DefineObject", itemDetail.LensIndexRSphId.ToString(), new { @class = "form-control form-control-solid", data_kt_element = "sphR", data_kt_rel = "false" })
+
+
+                                    </td>
+                                    <td class="ps-0">
+                                        @Html.Label("DefineObject", itemDetail.Quantity.ToString(), new { @class = "form-control form-control-solid", data_kt_rel = "false", data_kt_element = $"quantity_{itemDetail.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+
+                                    </td>
+                                    @if (barcodeCheck)
+                                    {
+                                        <td class="ps-0">
+                                            @Html.TextBoxFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity, "000", new { @class = "form-control form-control-solid", data_kt_element = $"id_{itemDetail.TblClrDefineObject.TechnicalSpecs.ToString()}" })
+                                            @Html.HiddenFor(model => model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].OrderItemId, itemDetail.OrderItemId)
+                                        </td>
+                                    }
+
+                                    else
+                                    {
+                                        <td class="ps-0">
+                                            @Html.Label("ProvidedQuantity", Model.TblWfwOrderProcess.TblLnsOrder.TblLnsOrderItems[itemcount].ProvidedQuantity.GetValueOrDefault(0).ToString(), new { @class = "form-control form-control-solid" })
+
+                                        </td>
+                                    
+                                    }
+
+                                    <td class="ps-0">
+                                        @Html.Label("Consumer", resolveConsumer(itemDetail), new { @class = "form-control form-control-solid" })
+                                    </td>
+                                    <td class="ps-0">
+                                        @Html.Label("StoreName", resolveStore(itemDetail), new { @class = "form-control form-control-solid" })
+                                    </td>
+                                    <td class="ps-0 ">
+
+                                        @Html.CheckBox("NeedTools", itemDetail.NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid0", data_kt_rel = "false" })
+
+
+                                    </td>
+                                </tr>
+                                {
+                                    itemcount = itemcount + 1;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                }
+
+                <div class="form-group text-center mb-4">
+                    @if (Model.StatusId == 1)
+                    {
+                        <input type="button" id="create-btn" value="@($"{ResourcePages.AddSend}")" class="btn btn-success" />
+
+                    }
+                    @if (Model.TblWfwProcessStep.IsPrint)
+                    {
+                        @if (Model.TblWfwOrderProcess.TblLnsOrder.IndexDocument == 5002)
+                        {
+                            <a target="_blank" class="btn btn-info" href='@Url.Action("Print", "Orders", new { orderId = Helper.EncryptOrder(Model.TblWfwOrderProcess.TblLnsOrder.OrderId.ToString()), printType = 2 })'><i class="fa fa-print">چاپ </i></a>
+                        }
+                        @if (Model.TblWfwOrderProcess.TblLnsOrder.IndexDocument == 5003)
+                        {
+                            <a target="_blank" class="btn btn-info" href='@Url.Action("Print", "Orders", new { orderId = Helper.EncryptOrder(Model.TblWfwOrderProcess.TblLnsOrder.OrderId.ToString()), printType = 3 })'><i class="fa fa-print">چاپ </i></a>
+                        }
+                    }
+                    @if (Model.TblWfwOrderProcess.TblLnsOrder.IndexDocument == 5003)
+                    {
+                        <a target="_blank" class="btn btn-info" href='@Url.Action("Print", "Orders", new { orderId = Helper.EncryptOrder(Model.TblWfwOrderProcess.TblLnsOrder.OrderId.ToString()), printType = 4 })'><i class="fa fa-print">چاپ گارانتی</i></a>
+                    }
+
+
+
+                </div>
+            }
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    function trimNameObject(name, sph, cyl) {
+        var raw = (name || '').toString();
+        var result = raw.trim();
+        if (!result) {
+            return result;
+        }
+
+        function normalizeText(value) {
+            return (value || '').toString().replace(/[\u200E\u200F]/g, '').trim();
+        }
+
+        function parseNumber(value) {
+            var text = normalizeText(value).replace(/^\+/, '');
+            if (!text) {
+                return null;
+            }
+            var num = Number(text);
+            if (!isNaN(num)) {
+                return num;
+            }
+            return text;
+        }
+
+        function valuesEqual(left, right) {
+            if (!left || !right) {
+                return false;
+            }
+            var leftValue = parseNumber(left);
+            var rightValue = parseNumber(right);
+            if (typeof leftValue === 'number' && typeof rightValue === 'number') {
+                return Math.abs(leftValue - rightValue) < 0.001;
+            }
+            return leftValue === rightValue;
+        }
+
+        var hasLrm = raw.indexOf('\u200E') === 0;
+        var cleanedName = normalizeText(result);
+        var parts = cleanedName.split(/\s+/);
+        var sphText = normalizeText(sph);
+        var cylText = normalizeText(cyl);
+
+        if (parts.length >= 2 && sphText && cylText &&
+            valuesEqual(parts[parts.length - 2], sphText) &&
+            valuesEqual(parts[parts.length - 1], cylText)) {
+            parts = parts.slice(0, -2);
+        } else if (parts.length >= 1) {
+            var last = parts[parts.length - 1];
+            if ((sphText && valuesEqual(last, sphText)) || (cylText && valuesEqual(last, cylText))) {
+                parts = parts.slice(0, -1);
+            }
+        }
+
+        var output = parts.join(' ').trim();
+        if (!output) {
+            return output;
+        }
+        return (hasLrm ? '\u200E' : '') + output;
+    }
+
+    $(function () {
+        $('#orderItems [data-kt-element="defineobjectR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].nameobject);
+
+        });
+
+         $('#orderItems [data-kt-element="cylR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].text);
+        });
+
+                $('#orderItems [data-kt-element="sphR"]').each(function(){
+
+               const storedDataString = sessionStorage.getItem('list_sph_r');
+            let data = [];
+            id=($(this).text());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+            }
+             if(data.length >0)
+            $(this).text("\u200E"+data[0].text);
+        });
+
+        $('#orderItems tbody tr').each(function () {
+            var $row = $(this);
+            $row.find('[data-kt-element="defineobjectR"]').each(function () {
+                var rel = $(this).attr('data-kt-rel');
+                var relSelector = rel ? '[data-kt-rel="' + rel + '"]' : '';
+                var sph = $row.find('[data-kt-element="sphR"]' + relSelector).first().text();
+                var cyl = $row.find('[data-kt-element="cylR"]' + relSelector).first().text();
+                var name = $(this).text();
+                $(this).text(trimNameObject(name, sph, cyl));
+            });
+        });
+
+
+
+
+
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+
+                 $form = $("#form-TaxPayerCustomers");
+                 $.post('@Url.Action("OrderReqSend", "Orders")',$form.serialize())
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.SendSuccess');
+                            $("#modal-Tree").modal('toggle');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+         $(document).off("click", "#remove-btn")
+             .on("click", "#remove-btn", function () {
+
+
+                 $.post('@Url.Action("OrderReqRemove", "Orders")',{ id: '@Model.OrderProcessStepId' })
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.ChangeStatus');
+                             LoadItems();
+                            $("#modal-Tree").modal('toggle');
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+         $("#getbarcode").on("keydown", function(e) {
+             if (e.key === "Enter") {
+                 e.preventDefault();
+                 var id = $(this).val().trim();
+                 if(!id) return;
+                 var item = $('[data-kt-element="id_'+id+'"]');
+                 var itemquantity = $('[data-kt-element="quantity_'+id+'"]');
+                 var count = item.length;
+                 let itemcount = 0;
+                 let run = false;
+                 while(!run && itemcount < count)
+                 {
+                   var value = item.eq(itemcount).val();
+                   var valuequantity = itemquantity.eq(itemcount).text();
+                   if(value == undefined || value == '' )
+                       value='0';
+                   if(parseInt(valuequantity) > parseInt(value))
+                   {
+                      $('[data-kt-element="id_'+id+'"]').eq(itemcount).val(parseInt(value)+1);
+                      run = true;
+                   }
+                   else
+                    itemcount = itemcount + 1;
+                 }
+                 if(itemcount >= count)
+                 {
+                      toastr.error('@ResourceAlert.AddError', '@ResourceAlert.OverFlowLens');
+                 }
+                 $(this).val('');
+             }
+         });
+
+    });
+
+
+</script>
+
+<style>
+    #modal-Tree .modal-dialog {
+        max-width: 100vw;
+        width: 100vw;
+        margin: 0 auto;
+    }
+
+    #modal-Tree .modal-body {
+        overflow: auto;
+    }
+
+    #modal-Tree .modal-content {
+        height: 100vh;
+    }
+
+    .custom-order-preview {
+        border: 1px solid #d5dff0;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        margin-bottom: 16px;
+    }
+
+    .custom-order-preview__head {
+        background: #2f7fd0;
+        color: #fff;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 700;
+    }
+
+    .custom-order-preview__title {
+        font-size: 16px;
+    }
+
+    .custom-order-preview__factor {
+        font-size: 18px;
+        letter-spacing: 0.5px;
+    }
+
+    .custom-order-preview__meta {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px 14px;
+        background: #f4f8ff;
+        border-bottom: 1px solid #d5dff0;
+    }
+
+    .custom-order-preview__meta .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        text-align: center;
+    }
+
+    .custom-order-preview__meta .meta-item span {
+        font-size: 11px;
+        color: #5f6f8f;
+        font-weight: 600;
+    }
+
+    .custom-order-preview__meta .meta-item strong {
+        font-size: 13px;
+        color: #1f2f4d;
+        font-weight: 700;
+        min-height: 20px;
+        display: block;
+        word-break: break-word;
+    }
+
+    .custom-order-preview .preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        direction: ltr;
+        margin: 0;
+    }
+
+    .custom-order-preview .preview-table + .preview-table {
+        border-top: 1px solid #d5dff0;
+    }
+
+    .custom-order-preview .preview-table th,
+    .custom-order-preview .preview-table td {
+        border: 1px solid #d5dff0;
+        text-align: center;
+        padding: 6px 4px;
+        font-size: 12px;
+        line-height: 1.35;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .custom-order-preview .preview-table th {
+        background: #e8f1ff;
+        color: #17365f;
+        font-weight: 700;
+    }
+
+    .custom-order-preview .preview-table td {
+        color: #1f2f4d;
+        background: #fff;
+    }
+
+    .custom-order-preview .preview-table .eye-side {
+        font-weight: 700;
+        background: #f4f8ff;
+    }
+
+    @@media (max-width: 992px) {
+        .custom-order-preview__meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+</style>

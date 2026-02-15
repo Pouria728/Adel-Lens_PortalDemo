@@ -1,0 +1,106 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsCustomLensTypeMaterialDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "CustomLensTypeMaterials", FormMethod.Post, new { @id = "form-custom-lens-type-material-create" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning"><h2 class="card-title align-items-start flex-column">ثبت Material</h2> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CustomLensTypeMaterialId)
+            @Html.Hidden("DesignTypeId", Model.DesignTypeId ?? (int?)ViewBag.DesignTypeId ?? 0)
+            @Html.Hidden("LensIndexId", Model.LensIndexId ?? (int?)ViewBag.LensIndexId ?? 0)
+
+            <div class="form-group row mb-6">
+                @Html.Label("Lens Type", "Lens Type", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.LensTypeName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label("Material", "Material", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.MaterialName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                </div>
+            </div>
+
+<div class="form-group row mb-6">
+                @Html.Label("WarehouseItem", "کالای انبار", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.DefineObjectId, ViewBag.ListDefineObject as List<SelectListItem> ?? new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg", data_control = "select2", data_placeholder = "جستجو...", data_dropdown_parent = "#modal-Tree" })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="ثبت Material" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#DefineObjectId").select2({
+            language: 'fa',
+            minimumInputLength: 2,
+            dir: "rtl",
+            ajax: {
+                url: '@Url.Action("SearchDefineObject", "CustomLensTypeMaterials")',
+                type: 'POST',
+                dataType: 'JSON',
+                delay: 250,
+                data: function (params) {
+                    return { search: params.term };
+                },
+                processResults: function (data) {
+                    return { results: data.results };
+                },
+                cache: true
+            }
+        });
+        $(document).off("click", "#create-btn")
+            .on("click", "#create-btn", function () {
+                $form = $("#form-custom-lens-type-material-create");
+
+                var designTypeId = $("#DesignTypeId").val() || 0;
+                var lensIndexId = $("#LensIndexId").val() || 0;
+                var url = '@Url.Action("Create", "CustomLensTypeMaterials")' + '?designTypeId=' + designTypeId + '&lensIndexId=' + lensIndexId;
+                $.post(url, $form.serialize())
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            });
+    });
+
+</script>
+
+

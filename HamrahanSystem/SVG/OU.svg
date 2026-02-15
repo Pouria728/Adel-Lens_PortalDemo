@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 100" class="logo-ou" fill="none">
+  <g class="ou-frame" stroke="var(--ou-frame, #cfcfcf)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="62" cy="50" rx="44" ry="34" stroke-width="4" opacity="0.95"/>
+    <ellipse cx="184" cy="50" rx="44" ry="34" stroke-width="4" opacity="0.95"/>
+    <path d="M21 35 C28 18, 45 10, 62 10 C79 10, 96 18, 103 35" stroke-width="3" opacity="0.45"/>
+    <path d="M21 65 C28 82, 45 90, 62 90 C79 90, 96 82, 103 65" stroke-width="3" opacity="0.45"/>
+    <path d="M143 35 C150 18, 167 10, 184 10 C201 10, 218 18, 225 35" stroke-width="3" opacity="0.45"/>
+    <path d="M143 65 C150 82, 167 90, 184 90 C201 90, 218 82, 225 65" stroke-width="3" opacity="0.45"/>
+    <path d="M14 50 h-10" stroke-width="3" opacity="0.35"/>
+    <path d="M110 50 h10" stroke-width="3" opacity="0.35"/>
+    <path d="M136 50 h-10" stroke-width="3" opacity="0.35"/>
+    <path d="M232 50 h10" stroke-width="3" opacity="0.35"/>
+    <g fill="var(--ou-frame, #cfcfcf)" stroke="none" opacity="0.32">
+      <circle cx="34" cy="18" r="3"/>
+      <circle cx="22" cy="30" r="2.5"/>
+      <circle cx="26" cy="78" r="3"/>
+      <circle cx="40" cy="86" r="2.5"/>
+      <circle cx="212" cy="18" r="3"/>
+      <circle cx="224" cy="30" r="2.5"/>
+      <circle cx="220" cy="78" r="3"/>
+      <circle cx="206" cy="86" r="2.5"/>
+      <circle cx="123" cy="26" r="3"/>
+      <circle cx="123" cy="74" r="3"/>
+    </g>
+  </g>
+
+  <g class="ou-lenses" stroke="var(--ou-lens, #d9d9d9)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="62" cy="50" rx="38" ry="28" stroke-width="2.5" opacity="0.75"/>
+    <ellipse cx="184" cy="50" rx="38" ry="28" stroke-width="2.5" opacity="0.75"/>
+    <g fill="var(--ou-lens, #d9d9d9)" stroke="none" opacity="0.22">
+      <circle cx="110" cy="26" r="2.8"/>
+      <circle cx="136" cy="26" r="2.8"/>
+    </g>
+  </g>
+
+  <g class="ou-text" stroke="var(--ou-text, #bfbfbf)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="104" cy="60" rx="14" ry="18" stroke-width="6" opacity="0.9"/>
+    <path d="M128 40 v24 c0 10 8 18 18 18 s18-8 18-18 V44"
+          stroke-width="6" opacity="0.9"/>
+  </g>
+</svg>

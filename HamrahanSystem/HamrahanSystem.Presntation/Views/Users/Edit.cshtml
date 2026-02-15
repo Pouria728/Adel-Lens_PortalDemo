@@ -1,0 +1,152 @@
+﻿@model HamrahanSystem.Application.DTOs.UserDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+
+
+@using (Html.BeginForm("Edit", "TaxPayerCustomers", FormMethod.Post, new { @id = "form-TaxPayerCustomers" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning"><h2 class="card-title align-items-start flex-column">@($"{ResourcePages.Edit} {ResourcePages.Users}")</h2> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model=>model.UserId,Model.UserId)
+            <div class="form-group row mb-6 ">
+                @Html.Label(ResourcePages.FirstName, ResourcePages.FirstName, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+                @Html.Label(ResourcePages.LastName, ResourcePages.LastName, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Mobile, ResourcePages.Mobile, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.MobilePhoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+                @Html.Label(ResourcePages.CustomerId, ResourcePages.CustomerId, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.InfoCustomerId, new MultiSelectList(ViewBag.ListCustomer, "DefineCustomerId", "NameFormal"), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree", data_allow_clear = "true" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Role, ResourcePages.Role, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.UserRoles[0].RoleId, new MultiSelectList(ViewBag.ListRole, "RoleId", "RoleName", Model.UserRoles?.Select(y => y.RoleId)), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+                @Html.Label(ResourcePages.UserName, ResourcePages.UserName, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Password, ResourcePages.Password, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+                @Html.Label(ResourcePages.RePassword, ResourcePages.RePassword, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid" } })
+                    @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                        @*              @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+                @Html.Label(ResourcePages.Base_IsAdmin, ResourcePages.Base_IsAdmin, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsAdmin, htmlAttributes: new { @checked = true, @class = "form-check-input" })
+                        @*              @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" }) *@
+                    </div>
+                </div>
+            </div>
+            
+
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="create-btn" value="@($"{ResourcePages.Save} ")" class="btn btn-success" />
+
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    
+    $(function () {
+        KTComponents.init();
+            $("#InfoCustomerId").select2({
+            //theme: "bootstrap4",
+            dropdownParent: $("#modal-Tree"),
+            language: 'fa',
+            minimumInputLength: 2,
+            dir:"rtl",
+            ajax: {
+                url:  '@Url.Action("ListDefineCustomerSearch", "Orders")',
+                type: 'POST',
+                dataType: 'JSON',
+                // contentType: "application/json; charset=utf-8",
+                delay: 250,
+                data:
+                    function (params) {
+                        var test={search:params.term}
+                        return test // search term
+
+                    }
+                    ,
+                processResults: function (data) {
+
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+
+         $(document).off("click", "#create-btn")
+             .on("click", "#create-btn", function () {
+                 $form = $("#form-TaxPayerCustomers");
+
+                 $.post('@Url.Action("Edit", "Users")',
+                     $form.serialize()
+
+                 )
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+         });
+    });
+
+</script>

@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>بازگشت</value>
+  </data>
+  <data name="Base_Name" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Base_IsActive" xml:space="preserve">
+    <value>وضعیت(فعال/غیرفعال)</value>
+  </data>
+  <data name="Base_Code" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="Base_Description" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Base_OrderId" xml:space="preserve">
+    <value>ترتیب نمایش</value>
+  </data>
+  <data name="Coatings" xml:space="preserve">
+    <value>Coating</value>
+  </data>
+  <data name="ColoringTypes" xml:space="preserve">
+    <value>Coloring</value>
+  </data>
+  <data name="Cyles" xml:space="preserve">
+    <value>Cyl</value>
+  </data>
+  <data name="DesignTypes" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="FrameTypes" xml:space="preserve">
+    <value>Frame</value>
+  </data>
+  <data name="LensIndexRs" xml:space="preserve">
+    <value>Lens Index</value>
+  </data>
+  <data name="LensIndexs" xml:space="preserve">
+    <value>Lens Index</value>
+  </data>
+  <data name="LensTypeRs" xml:space="preserve">
+    <value>Lens Type</value>
+  </data>
+  <data name="LensTypes" xml:space="preserve">
+    <value>Lens Type</value>
+  </data>
+  <data name="MaterialTypes" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Sphs" xml:space="preserve">
+    <value>Sph</value>
+  </data>
+  <data name="Base_Id" xml:space="preserve">
+    <value>شماره</value>
+  </data>
+  <data name="BrandLensTypeR" xml:space="preserve">
+    <value>LensType مرتبط</value>
+  </data>
+  <data name="BrandLensType" xml:space="preserve">
+    <value>LensType مرتبط</value>
+  </data>
+  <data name="LensTypeRLenIndexR" xml:space="preserve">
+    <value>Lens Index مرتبط</value>
+  </data>
+  <data name="LenIndexRSph" xml:space="preserve">
+    <value>sph مرتبط</value>
+  </data>
+  <data name="SphCylRs" xml:space="preserve">
+    <value>cyl مرتبط</value>
+  </data>
+  <data name="LensTypeDesignTypes" xml:space="preserve">
+    <value>design type مرتبط</value>
+  </data>
+  <data name="DesignTypeLensIndexs" xml:space="preserve">
+    <value>lens index مرتبط</value>
+  </data>
+  <data name="LensIndexMaterialTypes" xml:space="preserve">
+    <value>Material Types مرتبط</value>
+  </data>
+  <data name="SphCylR" xml:space="preserve">
+    <value>cyl مرتبط</value>
+  </data>
+  <data name="Base_Brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Base_LensType" xml:space="preserve">
+    <value>Lens Type</value>
+  </data>
+  <data name="Base_LensIndex" xml:space="preserve">
+    <value>Lens Index</value>
+  </data>
+  <data name="Base_Sph" xml:space="preserve">
+    <value>SPH</value>
+  </data>
+  <data name="Base_DesignType" xml:space="preserve">
+    <value>Design Type</value>
+  </data>
+  <data name="Base_MaterialType" xml:space="preserve">
+    <value>Material Type</value>
+  </data>
+  <data name="Base_Cyl" xml:space="preserve">
+    <value>CYL</value>
+  </data>
+  <data name="Base_DefineObject" xml:space="preserve">
+    <value>کالا انبار</value>
+  </data>
+  <data name="Base_Quantity" xml:space="preserve">
+    <value>تعداد</value>
+  </data>
+  <data name="Base_NeedTools" xml:space="preserve">
+    <value>لوازم</value>
+  </data>
+  <data name="Base_Consumer" xml:space="preserve">
+    <value>مصرف کننده</value>
+  </data>
+  <data name="Base_StoreName" xml:space="preserve">
+    <value>فروشگاه</value>
+  </data>
+  <data name="Base_DefineCustomer" xml:space="preserve">
+    <value>مشتری</value>
+  </data>
+  <data name="OrderStock" xml:space="preserve">
+    <value>عدسی آماده (عمده)</value>
+  </data>
+  <data name="Base_EyeSide" xml:space="preserve">
+    <value>چشم</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>گروه دسترسی</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>کاربران</value>
+  </data>
+  <data name="Steps" xml:space="preserve">
+    <value>گام های  فرآیند</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>فرآیندها</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>نام خانوادگی</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>تلفن همراه</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>نام کاربری</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>رمز عبور</value>
+  </data>
+  <data name="RePassword" xml:space="preserve">
+    <value>تکرار رمز عبور</value>
+  </data>
+  <data name="CustomerId" xml:space="preserve">
+    <value>مشتری</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>دسترسی</value>
+  </data>
+  <data name="Base_IsAdmin" xml:space="preserve">
+    <value>مدیر سیستم</value>
+  </data>
+  <data name="IndexDocument" xml:space="preserve">
+    <value> فرآیند عدسی </value>
+  </data>
+  <data name="Base_IsPrint" xml:space="preserve">
+    <value>چاپ  خودکار</value>
+  </data>
+  <data name="Base_Process" xml:space="preserve">
+    <value>عنوان فرآیند</value>
+  </data>
+  <data name="OrderStockGranty" xml:space="preserve">
+    <value>عدسی آماده با کارت گارانتی</value>
+  </data>
+  <data name="ListOrder" xml:space="preserve">
+    <value>سفارشها</value>
+  </data>
+  <data name="OrderType" xml:space="preserve">
+    <value>نوع سفارش</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>وضعیت سفارش</value>
+  </data>
+  <data name="OrderStep" xml:space="preserve">
+    <value>مرحله سفارش</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
+  <data name="OrderRequest" xml:space="preserve">
+    <value>وضعیت درخواست</value>
+  </data>
+  <data name="ListReqOrder" xml:space="preserve">
+    <value>بررسی سفارشها</value>
+  </data>
+  <data name="AddSend" xml:space="preserve">
+    <value>ثبت و ارسال</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>تاریخ و زمان ایجاد</value>
+  </data>
+  <data name="ShowReport" xml:space="preserve">
+    <value>جزییات درخواست</value>
+  </data>
+  <data name="Base_IsBarcode" xml:space="preserve">
+    <value>ویرایش تعداد با بارکد خوان</value>
+  </data>
+  <data name="Base_ProcedureId" xml:space="preserve">
+    <value>فعالیت درخواستی </value>
+  </data>
+  <data name="Base_BarCode" xml:space="preserve">
+    <value>بار کد کالا</value>
+  </data>
+  <data name="Base_ProvidedQuantity" xml:space="preserve">
+    <value>تعداد تایید شده انبار</value>
+  </data>
+  <data name="Base_Axis" xml:space="preserve">
+    <value>Axis</value>
+  </data>
+  <data name="Requestes" xml:space="preserve">
+    <value>درخواست </value>
+  </data>
+  <data name="RequestFeildes" xml:space="preserve">
+    <value>اطلاعات مورد نیاز درخواست</value>
+  </data>
+  <data name="RequestSteps" xml:space="preserve">
+    <value>مراحل بررسی درخواست</value>
+  </data>
+  <data name="Base_IsStock" xml:space="preserve">
+    <value>نمایش در عدسی آماده؟</value>
+  </data>
+  <data name="Base_IsStockGranty" xml:space="preserve">
+    <value>نمایش در عدسی آماده  گارانتی؟</value>
+  </data>
+  <data name="Base_IsSpecial" xml:space="preserve">
+    <value>نمایش در عدسی سفارشی ؟</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Base_Factore" xml:space="preserve">
+    <value>شماره فاکتور</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>عملیات</value>
+  </data>
+  <data name="FactorNo" xml:space="preserve">
+    <value>شماره فاکتور</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>ردیف</value>
+  </data>
+</root>

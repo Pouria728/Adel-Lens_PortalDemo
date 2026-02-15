@@ -1,0 +1,771 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsOrderDto
+@{
+    ViewBag.Title = "";
+    string BasePage = "Orders";
+}
+
+
+
+<div class="card">
+    <div class="card-header bg-primary"><h3 class="card-title align-items-start flex-column">@ResourcePages.OrderStock </h3> </div>
+    <div class="card-body ltr">
+
+
+        <!--begin::Form-->
+        @* <form action="" id="kt_invoice_form"> *@
+        <div id="kt_invoice_form">
+            <!--begin::Wrapper-->
+            <div class="mb-0">
+                <!--begin::Row-->
+                <div class="row gx-10 mb-5">
+                    @if ((bool)ViewBag.IsCutomer)
+                    {
+                        <div class="col-md-4 mb-2">
+                            @Html.DropDownListFor(model => model.DefineCustomerId, new MultiSelectList(ViewBag.ListCustomer, "DefineCustomerId", "NameFormal"), new { @class = "form-select form-select-solid form-select-lg ", id = "DefineCustomerId", data_control = "select2", data_placeholder = ResourcePages.Base_DefineCustomer, data_kt_element = "definecustomer" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4 mb-2">
+                            @Html.DropDownListFor(model => model.DefineCustomerId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", id = "DefineCustomerId", data_control = "select2", data_placeholder = ResourcePages.Base_DefineCustomer, data_kt_element = "definecustomer" })
+                        </div>
+                    }
+                    <div class="col-md-4 mb-2">
+                        @Html.TextBoxFor(model => model.StoreName, "", new { @class = "form-control form-control-solid ", placeholder = ResourcePages.Base_StoreName, data_kt_element = "storename" })
+                    </div>
+
+                </div>
+                <!--begin::Separator-->
+                <div class="separator separator-dashed my-10"></div>
+                <!--end::Separator-->
+                <div class="row gx-10 mb-5  " style="direction:ltr!important ">
+
+
+                    <div class="col-md-4 mb-2">
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Brand, data_kt_element = "brand" })
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandLensTypeRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_LensType, data_kt_element = "lenstype" })
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="row">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensTypeRLensIndexRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_LensIndex, data_kt_element = "lensindex" })
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="form-control text-center" data-kt-element="add-itemcyl"><i class="fa fa-table"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensIndexRSphId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Sph, data_kt_element = "sph" })
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].SphCylId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Cyl, data_kt_element = "cyl" })
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].DefineObjectId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_DefineObject, data_kt_element = "defineobject" })
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        @Html.EditorFor(model => model.TblLnsOrderItems[0].Quantity, new { htmlAttributes = new { @Value = "1", @class = "form-control form-control-lg form-control-solid", placeholder = ResourcePages.Base_Quantity, @min = 1, data_kt_element = "quantity" } })
+                    </div>
+                    <div class="col-md-4 mb-2">
+
+                        <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack  mb-5">
+                            <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700">@ResourcePages.Base_NeedTools</span>
+                            @Html.CheckBoxFor(model => model.TblLnsOrderItems[0].NeedTools, new { @class = "form-check-input", data_kt_element = "needtools", @checked = true })
+                        </label>
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="form-group text-center mb-4">
+                    <button type="button" class="btn btn-success w-md-200px py-2 hover-scale" data-kt-element="add-item"><i class="fa fa-plus"></i> @ResourcePages.Add </button>
+                </div>
+                <form action="" id="kt_invoice_form2">
+                    <!--begin::Table wrapper-->
+                    <div class="table-responsive mb-10">
+
+                        @Html.HiddenFor(model => model.DefineCustomerId, new { data_kt_element = "definecustomerid" })
+                        @Html.HiddenFor(model => model.StoreName, new { data_kt_element = "storenametxt" })
+                        @Html.HiddenFor(model => model.Consumer, new { data_kt_element = "consumertxt" })
+                        <!--begin::Table-->
+                        <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
+                            <!--begin::Table head-->
+                            <thead>
+                                <tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+                                    <th class="min-w-50px w-50px text-center">@ResourcePages.No</th>
+                                    <th class="min-w-300px w-475px">@ResourcePages.Base_DefineObject</th>
+                                    <th class="min-w-100px w-120px">@ResourcePages.Base_Cyl</th>
+                                    <th class="min-w-100px w-120px">@ResourcePages.Base_Sph</th>
+
+                                    <th class="min-w-80px w-150px ">@ResourcePages.Base_Quantity</th>
+                                    <th class="min-w-80px w-150px ">@ResourcePages.Base_NeedTools</th>
+                                    <th class="min-w-75px w-75px text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <!--end::Table head-->
+                            <!--begin::Table body-->
+                            <tbody>
+                                <tr data-kt-element="empty">
+                                    <th colspan="5" class="text-muted text-center py-10">گزینه ای در لیست وجود ندارد </th>
+                                </tr>
+                            </tbody>
+                            <!--end::Table body-->
+                            <!--begin::Table foot-->
+                            <tfoot>
+                            </tfoot>
+                            <!--end::Table foot-->
+                        </table>
+                    </div>
+
+                </form>
+                <!--end::Table-->
+                <!--begin::Item template-->
+                <table class="table d-none" data-kt-element="item-template">
+                    <tr class="border-bottom border-bottom-dashed border-gray-300" data-kt-element="item" data_kt_counter="0">
+                        <td><Label data_kt_element="rowno"></Label></td>
+                        <td class="pe-7" style="direction:ltr!important">
+                            @Html.Label("DefineObject", "", new { @class = "form-control form-control-solid", data_kt_element = "defineobjecttxt" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].DefineObjectId, new { data_kt_element = "defineobjectid" })
+
+                        </td>
+                        <td>
+                            @Html.Label("DefineObject", "", new { @class = "form-control form-control-solid", data_kt_element = "cyltxt" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].SphCylId, new { data_kt_element = "cylid" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].BrandLensTypeRId, new { data_kt_element = "lenstypeid" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].BrandId, new { data_kt_element = "brandid" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].LensTypeRLensIndexRId, new { data_kt_element = "lensindexid" })
+                        </td>
+                        <td class="ps-0">
+                            @Html.Label("DefineObject", "", new { @class = "form-control form-control-solid", data_kt_element = "sphtxt" })
+                            @Html.HiddenFor(model => model.TblLnsOrderItems[0].LensIndexRSphId, new { data_kt_element = "sphid" })
+                        </td>
+
+                        <td class="ps-0">
+                            @Html.EditorFor(model => model.TblLnsOrderItems[0].Quantity, new { htmlAttributes = new { @class = "form-control form-control-lg form-control-solid", placeholder = ResourcePages.Base_Quantity, @min = 1, data_kt_element = "quantityid" } })
+
+                        </td>
+                        <td class="ps-0 ">
+
+                            @Html.CheckBoxFor(model => model.TblLnsOrderItems[0].NeedTools, new { @class = "form-check-input", data_kt_element = "needtoolsid", @checked = true })
+
+
+                        </td>
+                        <td class="pt-5 text-end">
+                            <button type="button" class="btn btn-sm btn-icon btn-active-color-primary me-1" data-kt-element="edit-item">
+                                <i class="fa fa-edit fs-3"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+                                <i class="ki-duotone ki-trash fs-3">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table d-none" data-kt-element="empty-template">
+                    <tr data-kt-element="empty">
+                        <th colspan="5" class="text-muted text-center py-10">No items</th>
+                    </tr>
+                </table>
+                <!--end::Item template-->
+                <!--begin::Notes-->
+                <div class="mb-0">
+                    <label class="form-label fs-6 fw-bold text-gray-700">@ResourcePages.Base_Description</label>
+
+                    @Html.TextAreaFor(model => model.Description, 3, 0, new { @class = "form-control form-control-solid" })
+                </div>
+                <!--end::Notes-->
+            </div>
+            <!--end::Wrapper-->
+            <div class="modal fade" role="dialog" id="modal-Order" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content rounded">
+                        <div class="modal-header justify-content-end border-0 pb-0">
+                            <!--begin::Close-->
+                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                <i class="ki-duotone ki-cross fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <div class="modal-body pt-0 pb-15 px-5 px-xl-20 " id="modal-OrderCyl" data-kt-element="cylitems">
+                            <div class="text-muted small mb-2" dir="rtl">سطرها: SPH ، ستون‌ها: CYL</div>
+                            <div class="row mh-350px scroll-y cyl-grid-wrap" dir="ltr">
+                            <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700 cyl-grid-table">
+                                <!--begin::Table head-->
+                                <thead>
+                                    <tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+                                    </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody>
+                                </tbody>
+                            </table>
+                            </div>
+                            
+                            <div class="row text-center mt-11">
+                                <input type="button" data-kt-element="submit-itemcyl" class="btn btn-success" value="@ResourcePages.Add" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table d-none" data-kt-element="item-templateCyl">
+                <div data-kt-element="item-headercyl">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-center cyl-grid-cell"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-kt-element="cylitem" class="text-center cyl-grid-cell">
+                                    <div class="form-floating cyl-grid-input">
+                                    <input type="text" data-kt-element="countlens" placeholder="" class="form-control" />
+                                        <label data-kt-element="labelcountlens"></label>
+                                  
+                                    </div>
+                                    <input type="hidden" data-kt-element="sphidgrid" />
+                                    <input type="hidden" data-kt-element="sphtitlegrid" />
+                                    <input type="hidden" data-kt-element="sphcylidgrid" />
+                                    <input type="hidden" data-kt-element="sphcyltitlegrid" />
+                                    <input type="hidden" data-kt-element="defineobjectidgrid" />
+                                    <input type="hidden" data-kt-element="defineobjecttitlegrid" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div>
+        </div>
+        <!--end::Form-->
+        <div class="modal fade" role="dialog" id="modal-OrderPreview" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content rounded">
+                    <div class="modal-header justify-content-between border-0 pb-0">
+                        <h3 class="modal-title">پیش نمایش سفارش</h3>
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <i class="ki-duotone ki-cross fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
+                        <div class="row g-5 mb-6" id="orderPreviewHeader">
+                            <div class="col-12">
+                                <div class="d-flex flex-column">
+                                    <span class="text-muted fs-7">@ResourcePages.Base_DefineCustomer</span>
+                                    <span class="fw-semibold text-gray-800" data-preview="customer">--</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex flex-column">
+                                    <span class="text-muted fs-7">@ResourcePages.Base_Description</span>
+                                    <span class="fw-semibold text-gray-800" data-preview="description" style="white-space: pre-wrap;">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed my-6"></div>
+                        <div class="table-responsive">
+                            <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700">
+                                <thead>
+                                    <tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+                                        <th class="min-w-50px w-50px text-center">@ResourcePages.No</th>
+                                        <th class="min-w-300px w-475px">@ResourcePages.Base_DefineObject</th>
+                                        <th class="min-w-100px w-120px">@ResourcePages.Base_Cyl</th>
+                                        <th class="min-w-100px w-120px">@ResourcePages.Base_Sph</th>
+                                        <th class="min-w-80px w-150px">@ResourcePages.Base_Quantity</th>
+                                        <th class="min-w-80px w-150px">@ResourcePages.Base_NeedTools</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-preview="items-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="text-end fw-bold mt-4 mb-4">
+                            <span class="me-2">جمع تعداد عدسی:</span>
+                            <span data-preview="lens-total">0</span>
+                        </div>
+                        <div class="text-center mt-8">
+                            <input type="button" onclick="Accept()" class="btn btn-primary" value="@ResourcePages.Add" />
+                            <input type="button" onclick="AcceptSend()" class="btn btn-primary" value="@ResourcePages.AddSend" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-end fw-bold mb-4">
+            <span class="me-2">جمع تعداد عدسی:</span>
+            <span data-kt-element="lens-total">0</span>
+        </div>
+        <div class="form-group text-center mb-4">
+            <input type="button" onclick="Accept()" class="btn btn-primary" value="@ResourcePages.Add" />
+            <input type="button" onclick="PreviewOrder()" class="btn btn-light-primary" value="پیش نمایش" />
+            <input type="button" onclick="AcceptSend()" class="btn btn-primary" value="@ResourcePages.AddSend" />
+        </div>
+    </div>
+</div>
+
+<style>
+    #modal-OrderCyl .cyl-grid-wrap {
+        overflow-x: hidden;
+    }
+    #modal-OrderCyl .cyl-grid-table {
+        table-layout: fixed;
+        width: 100%;
+    }
+    #modal-OrderCyl .cyl-grid-table th,
+    #modal-OrderCyl .cyl-grid-table td {
+        min-width: 0 !important;
+        width: auto !important;
+        padding: 6px;
+        white-space: normal;
+    }
+    #modal-OrderCyl .cyl-grid-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: #ffffff;
+    }
+    #modal-OrderCyl .cyl-grid-cell {
+        font-size: 11px;
+    }
+    #modal-OrderCyl .cyl-grid-input {
+        width: 100% !important;
+        margin: 0;
+    }
+    #modal-OrderCyl .cyl-grid-table .form-control {
+        width: 100%;
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    #modal-OrderCyl .cyl-grid-input label {
+        display: none;
+    }
+    #modal-OrderCyl .cyl-grid-table tbody tr:nth-child(even) td {
+        background-color: #f6f8fb;
+    }
+    #modal-OrderCyl .cyl-grid-table tbody tr:nth-child(odd) td {
+        background-color: #ffffff;
+    }
+</style>
+
+
+<script type="text/javascript">
+    var testQuentity=0;
+    function getLensTotal() {
+        var total = 0;
+        $('#kt_invoice_form2 [data-kt-element="items"] tbody [data-kt-element="item"]').each(function () {
+            var value = $(this).find('[data-kt-element="quantityid"]').val();
+            if (value === undefined || value === null) {
+                return;
+            }
+            var normalized = value.toString().replace(/,/g, '').trim();
+            var count = parseInt(normalized, 10);
+            if (!isNaN(count)) {
+                total += count;
+            }
+        });
+        return total;
+    }
+
+    function updateLensTotal() {
+        var total = getLensTotal();
+        $('[data-kt-element="lens-total"]').text(total);
+        return total;
+    }
+
+    function PreviewOrder() {
+        var $modal = $('#modal-OrderPreview');
+        if ($modal.length === 0) {
+            return;
+        }
+
+        var normalizePreviewText = function (value) {
+            var text = (value || '').toString().trim();
+            return text ? text : '--';
+        };
+
+        var getSelectText = function ($select) {
+            if (!$select || $select.length === 0) {
+                return '';
+            }
+            var selectedValue = $select.val();
+            if (selectedValue === undefined || selectedValue === null || selectedValue === '') {
+                return '';
+            }
+            if ($select.data('select2')) {
+                var data = $select.select2('data');
+                if (data && data.length > 0 && data[0].text !== undefined) {
+                    return data[0].text;
+                }
+            }
+            var option = $select.find('option:selected');
+            return option.length ? option.text() : '';
+        };
+
+        var setPreviewText = function (key, value) {
+            $modal.find('[data-preview="' + key + '"]').text(normalizePreviewText(value));
+        };
+
+        setPreviewText('customer', getSelectText($('#DefineCustomerId')));
+        setPreviewText('description', $('[name="Description"]').val());
+
+        var $tbody = $modal.find('[data-preview="items-body"]');
+        $tbody.empty();
+
+        var findField = function (row, key) {
+            return row.querySelector('[data-kt-element="' + key + '"], [data_kt_element="' + key + '"]');
+        };
+
+        var getFieldText = function (row, key) {
+            var el = findField(row, key);
+            if (!el) {
+                return '';
+            }
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                return el.value;
+            }
+            return el.textContent;
+        };
+
+        var getFieldChecked = function (row, key) {
+            var el = findField(row, key);
+            if (!el) {
+                return false;
+            }
+            return el.checked === true;
+        };
+
+        var addPreviewRow = function (entry) {
+            var $row = $('<tr/>');
+            $('<td/>', { class: 'text-center' }).text(normalizePreviewText(entry.rowNo)).appendTo($row);
+            $('<td/>').text(normalizePreviewText(entry.defineObject)).appendTo($row);
+            $('<td/>').text(normalizePreviewText(entry.cyl)).appendTo($row);
+            $('<td/>').text(normalizePreviewText(entry.sph)).appendTo($row);
+            $('<td/>').text(normalizePreviewText(entry.quantity)).appendTo($row);
+            $('<td/>').text(entry.needTools ? 'بله' : 'خیر').appendTo($row);
+            $tbody.append($row);
+        };
+
+        var rows = $('#kt_invoice_form2 [data-kt-element="items"] tbody [data-kt-element="item"]');
+        if (rows.length === 0) {
+            var $emptyRow = $('<tr/>');
+            $('<td/>', { class: 'text-muted text-center py-10', colspan: 6 })
+                .text('آیتمی برای نمایش وجود ندارد')
+                .appendTo($emptyRow);
+            $tbody.append($emptyRow);
+        } else {
+            rows.each(function () {
+                addPreviewRow({
+                    rowNo: getFieldText(this, 'rowno'),
+                    defineObject: getFieldText(this, 'defineobjecttxt'),
+                    cyl: getFieldText(this, 'cyltxt'),
+                    sph: getFieldText(this, 'sphtxt'),
+                    quantity: getFieldText(this, 'quantityid'),
+                    needTools: getFieldChecked(this, 'needtoolsid')
+                });
+            });
+        }
+
+        $modal.find('[data-preview="lens-total"]').text(getLensTotal());
+        updateLensTotal();
+        $modal.modal('show');
+    }
+     function Accept()
+    {
+        var quantity= $('#kt_invoice_form2 [data-kt-element="quantityid"]');
+        testQuentity=0;
+        quantity.each(function(index){
+            if(parseInt($(this).val())<=0)
+            {
+            testQuentity=1
+            return;
+            }
+        });
+
+        if(testQuentity==1)
+        {
+        toastr.error('@ResourceAlert.ZeroQuantity', '');
+         return;
+        }
+          var customer= $('#kt_invoice_form2 [data-kt-element="definecustomerid"]').val();
+        if(customer==undefined || customer=='' ||customer==null )
+        {
+            toastr.error('@ResourceAlert.Customer', '');
+            return;
+        }
+
+         $form = $("#kt_invoice_form2");
+         var aa=$form.serialize();
+          $.post('@Url.Action("OrderStock", "Orders")',
+                     aa
+                 )
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                             location.reload();
+
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+
+
+    }
+    function AcceptSend()
+    {
+        var quantity= $('#kt_invoice_form2 [data-kt-element="quantityid"]');
+        testQuentity=0;
+        quantity.each(function(index){
+            if(parseInt($(this).val())<=0)
+            {
+            testQuentity=1
+            return;
+            }
+        });
+
+        if(testQuentity==1)
+        {
+        toastr.error('@ResourceAlert.ZeroQuantity', '');
+         return;
+        }
+          var customer= $('#kt_invoice_form2 [data-kt-element="definecustomerid"]').val();
+        if(customer==undefined || customer=='' ||customer==null )
+        {
+            toastr.error('@ResourceAlert.Customer', '');
+            return;
+        }
+         $form = $("#kt_invoice_form2");
+         var aa=$form.serialize();
+          $.post('@Url.Action("OrderStockSend", "Orders")',aa)
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("", '@ResourceAlert.AddSucces');
+                             location.reload();
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+
+
+    }
+
+    var ListBrand = @Html.Raw(Json.Serialize(ViewBag.ListBrand));
+     var ListLensType = @Html.Raw(Json.Serialize(ViewBag.ListLensType));
+     var ListLensIndex = @Html.Raw(Json.Serialize(ViewBag.ListLensIndex));
+     var ListSph = @Html.Raw(Json.Serialize(ViewBag.ListSph));
+     var ListCyl = @Html.Raw(Json.Serialize(ViewBag.ListCyl));
+
+
+    sessionStorage.setItem('list_brand', JSON.stringify(ListBrand));
+    sessionStorage.setItem('list_lenstype_r',JSON.stringify(ListLensType));
+    sessionStorage.setItem('list_lensindex_r',JSON.stringify(ListLensIndex));
+    sessionStorage.setItem('list_sph_r',JSON.stringify(ListSph));
+    sessionStorage.setItem('list_cyl_r',JSON.stringify(ListCyl));
+    $(function () {
+        var lensTotalTarget = document.querySelector('#kt_invoice_form2 [data-kt-element="items"] tbody');
+        if (lensTotalTarget) {
+            var observer = new MutationObserver(function () {
+                updateLensTotal();
+            });
+            observer.observe(lensTotalTarget, { childList: true, subtree: true });
+        }
+        $('#kt_invoice_form2').on('input change', '[data-kt-element="quantityid"]', function () {
+            updateLensTotal();
+        });
+        updateLensTotal();
+
+        $("#DefineCustomerId").select2({
+            //theme: "bootstrap4",
+             //dropdownParent: $("#modal-Tree"),
+            language: 'fa',
+            minimumInputLength: 2,
+            dir:"rtl",
+            ajax: {
+                url:  '@Url.Action("ListDefineCustomerSearch", "Orders")',
+                type: 'POST',
+                dataType: 'JSON',
+                // contentType: "application/json; charset=utf-8",
+                delay: 250,
+                data:
+                    function (params) {
+                        var test={search:params.term}
+                        return test // search term
+
+                    }
+                    ,
+                processResults: function (data) {
+
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            }
+        });
+
+
+            const storedDataString = sessionStorage.getItem('list_brand');
+            let data = [];
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+            }
+
+            $('[data-kt-element="brand"]').select2({
+          data: data
+
+        });
+
+        $('[data-kt-element="brand"]').on("select2:select", function () {
+             if (window.__ktInvoiceEditRestore) {
+                 return;
+             }
+             $('[data-kt-element="lenstype"]').empty();
+               $('[data-kt-element="lensindex"]').empty();
+              $('[data-kt-element="sph"]').empty();
+              $('[data-kt-element="cyl"]').empty();
+              $('[data-kt-element="defineobject"]').empty();
+             const storedDataString = sessionStorage.getItem('list_lenstype_r');
+            let data = [];
+            id=($(this).val());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.parentid==id);
+            }
+
+            $('[data-kt-element="lenstype"]').select2({
+                data: data
+
+             });
+             $('[data-kt-element="lenstype"]').val('').trigger('select2:select');
+              $('[data-kt-element="lenstype"]').select2('val','');
+            $('[data-kt-element="lenstype"]').select2();
+        });
+
+          $('[data-kt-element="lenstype"]').on("select2:select", function () {
+              if (window.__ktInvoiceEditRestore) {
+                  return;
+              }
+              $('[data-kt-element="lensindex"]').empty();
+              $('[data-kt-element="sph"]').empty();
+              $('[data-kt-element="cyl"]').empty();
+              $('[data-kt-element="defineobject"]').empty();
+                  const storedDataString = sessionStorage.getItem('list_lensindex_r');
+            let data = [];
+            id=($(this).val());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.parentid==id);
+            }
+
+            $('[data-kt-element="lensindex"]').select2({
+                data: data
+
+             });
+             $('[data-kt-element="lensindex"]').val('').trigger('select2:select');
+              $('[data-kt-element="lensindex"]').select2('val','');
+            $('[data-kt-element="lensindex"]').select2();
+        });
+
+         $('[data-kt-element="lensindex"]').on("select2:select", function () {
+             if (window.__ktInvoiceEditRestore) {
+                 return;
+             }
+             $('[data-kt-element="sph"]').empty();
+             $('[data-kt-element="cyl"]').empty();
+             $('[data-kt-element="defineobject"]').empty();
+            const storedDataString = sessionStorage.getItem('list_sph_r');
+            let data = [];
+            id=($(this).val());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.parentid==id);
+            }
+
+            $('[data-kt-element="sph"]').select2({
+                data: data
+
+             });
+             $('[data-kt-element="sph"]').val('').trigger('select2:select');
+                $('[data-kt-element="sph"]').select2('val','');
+            $('[data-kt-element="sph"]').select2();
+        });
+
+        $('[data-kt-element="sph"]').on("select2:select", function () {
+            if (window.__ktInvoiceEditRestore) {
+                return;
+            }
+            $('[data-kt-element="cyl"]').empty();
+            $('[data-kt-element="defineobject"]').empty();
+                  const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            id=($(this).val());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.parentid==id);
+            }
+
+            $('[data-kt-element="cyl"]').select2({
+                data: data
+
+             });
+             $('[data-kt-element="cyl"]').val('').trigger('select2:select');
+                $('[data-kt-element="cyl"]').select2('val','');
+            $('[data-kt-element="cyl"]').select2();
+        });
+
+               $('[data-kt-element="cyl"]').on("select2:select", function () {
+            if (window.__ktInvoiceEditRestore) {
+                return;
+            }
+            $('[data-kt-element="defineobject"]').empty();
+                  const storedDataString = sessionStorage.getItem('list_cyl_r');
+            let data = [];
+            let datain = [];
+            id=($(this).val());
+            if (storedDataString) {
+                data = JSON.parse(storedDataString);
+                data= data.filter(x=>x.id==id);
+                if(data.length >0)
+                    datain=[{id:data[0].defineobjectid,text:data[0].nameobject}]
+            }
+
+            $('[data-kt-element="defineobject"]').select2({
+                data: datain
+
+             });
+
+        });
+
+    });
+
+</script>
+@section scripts
+{
+    <script src="~/assets/js/custom/apps/invoices/create.js" asp-append-version="true"></script>
+
+}
+
+

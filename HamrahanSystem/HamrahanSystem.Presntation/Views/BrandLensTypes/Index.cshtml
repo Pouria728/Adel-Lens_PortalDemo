@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "";
+    string BasePage = "BrandLensTypes";
+    int brandId = ViewBag.BrandId;
+}
+
+<div class="card">
+    <div class="card-header bg-primary"><h3 class="card-title align-items-start flex-column">@ResourcePages.Brands </h3> </div>
+    <div class="card-body">
+        @*   <div class="col-md-8">
+            <select id="ProductId" class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+            </select>
+        </div> *@
+        <div class="form-group" id="divjqGrid">
+            <table id="jqGrid" class="table table-striped"></table>
+            <div id="jqGridPager"></div>
+        </div>
+
+        <div class="form-group text-center mb-4">
+            <input type="button" onclick="LoadDialog(@brandId,1)" class="btn btn-primary" value="@ResourcePages.Add" />
+            <a href="@Url.Action("Index", "Brands")" class="btn btn-info">@ResourcePages.Back</a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function LoadDialog(nodeId, typeId) {
+        //$("#modal-loader").html("");
+            url = ''
+            switch (typeId) {
+                case 1: url = '@Url.Action("Create", BasePage)';
+                    break;
+                case 2: url = '@Url.Action("Edit", BasePage)';
+                    break;
+                case 3: url = '@Url.Action("Delete", BasePage)';
+                    break;
+
+
+            }
+
+            if (typeId != 3) {
+                $.get(url, typeId >= 1 ? { id: nodeId } : {})
+                    .done(function (result) {
+
+                        $("#modal-loader").html(result);
+                        $("#modal-Tree").modal('show');
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            }
+            else {
+
+                if (typeId == 3) {
+                    $.post(url,{ id: nodeId })
+                     .done(function (result) {
+
+                         if (result.success) {
+                             toastr.success("",'@ResourceAlert.RemoveSuccess' );
+                         } else {
+                             toastr.error('@ResourceAlert.AddError', result.message);
+                         }
+                         
+
+                     }).fail(function () { toastr.error('@ResourceAlert.AddError' , '') });
+                       
+                           LoadItems();
+                            return;
+                        }
+        }
+        $(document).resize();
+
+    }
+    function LoadItems() {
+         $('#modal-Tree').modal('hide');
+        $.jgrid.defaults.responsive = true;
+        $.jgrid.defaults.styleUI = 'Bootstrap';
+
+        $('#jqGrid').jqGrid({
+            url:'@Url.Action("Detail", BasePage)',
+            datatype: 'json',
+            mtype: 'POST',
+            serializeGridData: function (postData) {
+                var data = {
+                    id:@brandId
+                };
+                postData._search = true;
+                // if (postData.searchField == undefined) {
+                //     postData.searchField = "";
+                //     postData.searchOper = "";
+                //     postData.searchString = "";
+                // }
+                data = $.extend(data, postData);
+                return JSON.stringify(data);
+            },
+           // ajaxGridOptions: { contentType: "application/json" },
+       colNames: ['@ResourcePages.Base_Id','@ResourcePages.Base_Brand','@ResourcePages.Base_LensType','@ResourcePages.Base_OrderId', ''],
+            colModel: [
+                { name: 'id', index: 'id', align: "Center", hidden: true, key: true, search: false },
+                { name: 'brandName', index: 'brandName', align: "Center", sortable: true, search: true },
+                { name: 'lenstype', index: 'lenstype', align: "Center", sortable: true, search: true },
+                { name: 'orderId', index: 'orderId', align: "Center", sortable: false, search: false },
+
+                {
+                    name: 'id', index: 'Action', align: "Center", sortable: false, search: false,
+                    formatter: function (value, rowData, index) {
+
+                        var a = '<button type="button"   title="@ResourcePages.Edit" onclick="LoadDialog(\'' + value + '\',2);"><i class="fa fa-2x fa-pen"></i> </button> ';
+                        a += '<button type="button"  title="@ResourcePages.Delete" onclick="LoadDialog(\'' + value + '\',3);"><i class="fa fa-2x fa-trash"></i> </button> ';
+                        a += ' <a class="text-gray-800 p-10" href="@Url.Action("Index", "LensTypeDesignTypes")?Id='+value+'" title="@ResourcePages.LensTypeDesignTypes"><i class="fa-solid fa-2x fa-circle-nodes"></i></a>'
+                        return a;
+
+                    }
+                }
+            ],
+            subGridRowExpanded:function(subgrid_id, row_id) {},
+            subGridRowColapsed: function(subgrid_id, row_id) {},
+            subgroup:true,
+            //pager: '#pager',
+            rowNum: 20,
+            //width: newWidth,
+            toppager: true,
+            height: 300,
+            direction: 'rtl',
+            rowList: [10, 20, 30, 40],
+            viewrecords: true,
+            gridview: true,
+            altRows: true,
+            hidegrid: false,
+            rownumbers: true,
+            recordpos: 'left',
+            multiselect: false,
+            scroll: true,
+            scrollrows: false,
+            jsonReader: {
+                page: function (obj) { return obj.page; },
+                total: function (obj) { return obj.total; },
+                records: function (obj) { return obj.records; },
+                root: function (obj) { return obj.rows; },
+                repeatitems: false,
+                id: "0"
+            },
+            pager: "#jqGridPager",
+            caption: '@ResourcePages.Brands'
+        });
+        $('#jqGrid').trigger('reloadGrid');
+        // $('#jqGrid').navGrid('#jqGridPager',
+        //     {
+        //         edit: false, add: false, del: false, search: true, refresh: true, view: false, position:"right", cloneToTop: true
+        //     }, {}, {}, {}, { sopt: ['cn'] });
+        $(document).resize();
+
+    }
+    $(function () {
+        LoadItems();
+
+    });
+
+</script>

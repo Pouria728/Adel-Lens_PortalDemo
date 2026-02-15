@@ -1,0 +1,74 @@
+﻿@model HamrahanSystem.Application.DTOs.TblLnsCustomDesignTypeAdditionDto
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Edit", "CustomLensAdditionValues", FormMethod.Post, new { @id = "form-custom-addition-edit" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-warning"><h2 class="card-title align-items-start flex-column">ویرایش ادیشن</h2> </div>
+        <div class="card-body">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CustomDesignTypeAdditionId)
+            @Html.HiddenFor(model => model.DesignTypeId)
+
+            <div class="form-group row mb-6">
+                @Html.Label("Addition", "Addition", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.AdditionValue, new { @class = "form-control", @placeholder = "مثال: 1.25" })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_OrderId, ResourcePages.Base_OrderId, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row mb-6">
+                @Html.Label(ResourcePages.Base_IsActive, ResourcePages.Base_IsActive, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @class = "form-check-input" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mb-4">
+                <input type="button" id="edit-btn" value="ذخیره ادیشن" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $(document).off("click", "#edit-btn")
+            .on("click", "#edit-btn", function () {
+                $form = $("#form-custom-addition-edit");
+
+                $.post('@Url.Action("Edit", "CustomLensAdditionValues")',
+                    $form.serialize()
+                )
+                    .done(function (result) {
+                        if (result.success) {
+                            toastr.success("", '@ResourceAlert.AddSucces');
+                            LoadItems();
+                        } else {
+                            toastr.error('@ResourceAlert.AddError', result.message);
+                        }
+                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+            });
+    });
+
+</script>
+
+
+
+
