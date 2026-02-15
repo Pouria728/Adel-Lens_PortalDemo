@@ -69,6 +69,19 @@
         </div>
 
         <div class="form-group row mb-6">
+            <label class="col-lg-2 col-form-label fw-semibold fs-6">اسکن/شماره سفارش</label>
+            <div class="col-md-4">
+                <input type="text" id="advanceOrderCode" class="form-control form-control-solid" placeholder="RX00000001" autocomplete="off" />
+            </div>
+            <div class="col-md-3">
+                <button type="button" id="btnAdvanceByCode" class="btn btn-success w-100">انتقال به مرحله بعد</button>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <small class="text-muted">فعلا تست با تایپ دستی هم مجاز است.</small>
+            </div>
+        </div>
+
+        <div class="form-group row mb-6">
             <div class="col-md-6">
                 <div class="alert alert-primary py-3 mb-0 d-flex justify-content-between align-items-center">
                     <span>سفارش‌های در جریان</span>
@@ -108,6 +121,40 @@
     
     sessionStorage.setItem('list_cyl_r',JSON.stringify(ListCyl));
     sessionStorage.setItem('list_sph_r',JSON.stringify(ListSph));
+
+    function normalizeOrderCode(value) {
+        return (value || '')
+            .toString()
+            .trim()
+            .replace(/\s+/g, '')
+            .replace(/-/g, '')
+            .replace(/[۰-۹]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 1728); })
+            .replace(/[٠-٩]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 1584); })
+            .toUpperCase();
+    }
+
+    function advanceOrderByCode() {
+        var orderCode = normalizeOrderCode($('#advanceOrderCode').val());
+        if (!orderCode) {
+            toastr.warning('شماره سفارش را وارد کنید.');
+            $('#advanceOrderCode').focus();
+            return;
+        }
+
+        $.post('@Url.Action("OrderReqSendByCode", BasePage)', { orderCode: orderCode })
+            .done(function (result) {
+                if (result.success) {
+                    toastr.success('', '@ResourceAlert.SendSuccess');
+                    $('#advanceOrderCode').val('').focus();
+                    LoadItems();
+                } else {
+                    toastr.error('@ResourceAlert.AddError', result.message || '');
+                    $('#advanceOrderCode').focus().select();
+                }
+            }).fail(function () {
+                toastr.error('@ResourceAlert.AddError', '');
+            });
+    }
 
     function LoadDialog(nodeId, typeId) {
         //$("#modal-loader").html("");
@@ -310,6 +357,17 @@
         if (typeof datepicker === 'function') {
             datepicker();
         }
+
+        $('#btnAdvanceByCode').off('click').on('click', function () {
+            advanceOrderByCode();
+        });
+
+        $('#advanceOrderCode').off('keydown').on('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                advanceOrderByCode();
+            }
+        }).focus();
 
 
         $("#customer").select2({

@@ -16,6 +16,6 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HamrahanSystem.Domain
-build_property.ProjectDir = d:\Project\AdelLens web\HamrahanSystem\HamrahanSystem.Domain\
+build_property.ProjectDir = D:\Project\AdelLens web\HamrahanSystem\HamrahanSystem.Domain\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

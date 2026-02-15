@@ -700,6 +700,95 @@ namespace HamrahanSystem.Presntation.Controllers
 		[HttpPost]
 		public IActionResult OrderReqSend(TblWfwOrderProcessStepDto item)
 		{
+			return Json(new
+			{
+				success = false,
+				message = "ثبت و ارسال دستی غیرفعال است. لطفا فقط از طریق اسکن گان اقدام کنید."
+			});
+		}
+
+		[Authorize(Roles = "admin,OrderReq_Index")]
+		[HttpPost]
+		public IActionResult OrderReqSendByCode(string orderCode)
+		{
+			var normalizedCode = NormalizeOrderCode(orderCode);
+			if (string.IsNullOrWhiteSpace(normalizedCode))
+			{
+				return Json(new
+				{
+					success = false,
+					message = "شماره سفارش وارد نشده است."
+				});
+			}
+
+			bool isAdmin = HttpContext.Session.Get<bool>("IsAdmin");
+			int? roleId = isAdmin ? null : HttpContext.Session.Get<int?>("RoleId");
+			int? customerId = HttpContext.Session.Get<int?>("CustomerId");
+
+			List<TblWfwOrderProcessStepDto> inprogressSteps = LoadInprogressSteps(roleId, customerId, normalizedCode);
+
+			var currentStep = inprogressSteps
+				.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
+				.Where(HasStepAccess)
+				.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
+				.OrderByDescending(x => x.DateCreate)
+				.FirstOrDefault();
+
+			if (currentStep == null)
+			{
+				inprogressSteps = LoadInprogressSteps(roleId, customerId, null);
+				currentStep = inprogressSteps
+					.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
+					.Where(HasStepAccess)
+					.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
+					.OrderByDescending(x => x.DateCreate)
+					.FirstOrDefault();
+			}
+
+			if (currentStep == null)
+			{
+				return Json(new
+				{
+					success = false,
+					message = "سفارش در مراحل در جریانِ کارتابل شما پیدا نشد."
+				});
+			}
+
+			if (currentStep.StatusId != (int)StatusRequest.Inprogress)
+			{
+				return Json(new
+				{
+					success = false,
+					message = "این مرحله قبلا خاتمه یافته و قابل تغییر نیست."
+				});
+			}
+
+			currentStep.StatusId = (int)StatusRequest.Complete;
+			currentStep.DateComplete = DateTime.Now;
+			currentStep.UserId = HttpContext.Session.Get<int>("UserId");
+			tblWfwOrderProcessStepService.UpdateStatus(currentStep);
+
+			return Json(new
+			{
+				success = true,
+				message = ""
+			});
+		}
+
+		[Authorize(Roles = "admin,OrderReq_Index")]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult OrderReqSendByScan(TblWfwOrderProcessStepDto item, string scannedCode, int? scanDurationMs, int? scanLength)
+		{
+			if (!IsLikelyScannerInput(scanDurationMs, scanLength))
+			{
+				return Json(new
+				{
+					success = false,
+					message = "ورود دستی مجاز نیست. لطفا فقط با گان اسکن کنید."
+				});
+			}
+
 			var currentStep = tblWfwOrderProcessStepService.GetById(item.OrderProcessStepId).Result;
 			if (currentStep == null)
 			{
@@ -710,12 +799,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				});
 			}
 
-			bool isAdmin = HttpContext.Session.Get<bool>("IsAdmin");
-			int? roleId = HttpContext.Session.Get<int?>("RoleId");
-			bool hasRoleAccess = roleId.HasValue &&
-								 currentStep.TblWfwProcessStep?.TblWfwRoleStepes?.Any(x => x.RoleId == roleId.Value) == true;
-
-			if (!isAdmin && !hasRoleAccess)
+			if (!HasStepAccess(currentStep))
 			{
 				return Json(new
 				{
@@ -730,6 +814,16 @@ namespace HamrahanSystem.Presntation.Controllers
 				{
 					success = false,
 					message = "این مرحله قبلا خاتمه یافته و قابل تغییر نیست."
+				});
+			}
+
+			var order = currentStep.TblWfwOrderProcess?.TblLnsOrder;
+			if (!IsOrderCodeMatch(scannedCode, order))
+			{
+				return Json(new
+				{
+					success = false,
+					message = "شماره سفارش اسکن‌شده معتبر نیست یا با این سفارش مطابقت ندارد."
 				});
 			}
 
@@ -754,8 +848,105 @@ namespace HamrahanSystem.Presntation.Controllers
 				success = true,
 				message = ""
 			});
-
 		}
+
+		private bool HasStepAccess(TblWfwOrderProcessStepDto currentStep)
+		{
+			bool isAdmin = HttpContext.Session.Get<bool>("IsAdmin");
+			int? roleId = HttpContext.Session.Get<int?>("RoleId");
+			bool hasRoleAccess = roleId.HasValue &&
+								 currentStep.TblWfwProcessStep?.TblWfwRoleStepes?.Any(x => x.RoleId == roleId.Value) == true;
+			return isAdmin || hasRoleAccess;
+		}
+
+		private static bool IsLikelyScannerInput(int? scanDurationMs, int? scanLength)
+		{
+			if (!scanDurationMs.HasValue || !scanLength.HasValue)
+			{
+				return false;
+			}
+
+			if (scanLength.Value < 4 || scanLength.Value <= 1)
+			{
+				return false;
+			}
+
+			if (scanDurationMs.Value <= 0 || scanDurationMs.Value > 1500)
+			{
+				return false;
+			}
+
+			var avgGap = (double)scanDurationMs.Value / (scanLength.Value - 1);
+			return avgGap <= 120;
+		}
+
+		private List<TblWfwOrderProcessStepDto> LoadInprogressSteps(int? roleId, int? customerId, string? factorNo)
+		{
+			var result = tblWfwOrderProcessStepService
+				.GetAllByFilter((int)StatusRequest.Inprogress, null, null, customerId, roleId, null, null, null, null, "desc", "dateCreate", factorNo ?? string.Empty, null, null)
+				.Result;
+
+			return result.Item1 ?? new List<TblWfwOrderProcessStepDto>();
+		}
+
+		private static bool IsOrderCodeMatch(string? scannedCode, TblLnsOrderDto? order)
+		{
+			if (order == null)
+			{
+				return false;
+			}
+
+			var normalizedScanned = NormalizeOrderCode(scannedCode);
+			if (string.IsNullOrWhiteSpace(normalizedScanned))
+			{
+				return false;
+			}
+
+			var expectedCode = NormalizeOrderCode(ResolveOrderCode(order));
+			if (string.Equals(normalizedScanned, expectedCode, StringComparison.OrdinalIgnoreCase))
+			{
+				return true;
+			}
+
+			return long.TryParse(normalizedScanned, out var scannedOrderId) &&
+				   scannedOrderId == order.OrderId;
+		}
+
+		private static string ResolveOrderCode(TblLnsOrderDto order)
+		{
+			if (!string.IsNullOrWhiteSpace(order.FactorNo))
+			{
+				return order.FactorNo.Trim();
+			}
+
+			var prefix = order.IndexDocument == (int)IndexDocument.LnsOrder ? "RX" : "ST";
+			return prefix + order.OrderId.ToString().PadLeft(8, '0');
+		}
+
+		private static string NormalizeOrderCode(string? value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+			{
+				return string.Empty;
+			}
+
+			var normalized = value.Trim().Replace(" ", string.Empty).Replace("-", string.Empty);
+			var chars = normalized.ToCharArray();
+			for (var i = 0; i < chars.Length; i++)
+			{
+				if (chars[i] >= '۰' && chars[i] <= '۹')
+				{
+					chars[i] = (char)('0' + (chars[i] - '۰'));
+				}
+				else if (chars[i] >= '٠' && chars[i] <= '٩')
+				{
+					chars[i] = (char)('0' + (chars[i] - '٠'));
+				}
+			}
+
+			return new string(chars).ToUpperInvariant();
+		}
+
 		[Authorize(Roles = "admin,OrderReq_Index")]
 		[HttpPost]
 		public IActionResult OrderReqRemove(int Id)

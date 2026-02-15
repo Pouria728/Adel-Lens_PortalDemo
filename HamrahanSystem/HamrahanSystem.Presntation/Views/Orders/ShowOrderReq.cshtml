@@ -9,6 +9,10 @@
 
     var currentOrder = Model?.TblWfwOrderProcess?.TblLnsOrder;
     bool isCustomLensOrder = currentOrder?.IndexDocument == (int)IndexDocument.LnsOrder;
+    var orderFactorNo = !string.IsNullOrWhiteSpace(currentOrder?.FactorNo)
+        ? currentOrder!.FactorNo!.Trim()
+        : (((currentOrder?.IndexDocument ?? 0) != (int)IndexDocument.LnsOrder ? "ST" : "RX") +
+           (currentOrder?.OrderId ?? 0).ToString().PadLeft(8, '0'));
     bool barcodeCheck = Model != null &&
                         (Model.TblWfwProcessStep.TblWfwProcess.IndexDocument == (int)IndexDocument.LnsReadyOrder ||
                          Model.TblWfwProcessStep.TblWfwProcess.IndexDocument == (int)IndexDocument.LnsOrderGranty) &&
@@ -333,10 +337,6 @@
                         return FallbackDecimal(orderPd);
                     }
 
-                    var factorNo = !string.IsNullOrWhiteSpace(order?.FactorNo)
-                        ? order.FactorNo!.Trim()
-                        : (((order?.IndexDocument ?? 0) != (int)IndexDocument.LnsOrder ? "ST" : "RX") + (order?.OrderId ?? 0).ToString().PadLeft(8, '0'));
-
                     var rightEye = order?.TblLnsOrderItems?.FirstOrDefault(x => x.IsRight == 1)
                                    ?? order?.TblLnsOrderItems?.FirstOrDefault();
                     var leftEye = order?.TblLnsOrderItems?.FirstOrDefault(x => x.IsRight == 0)
@@ -491,7 +491,7 @@
                     <div class="custom-order-preview">
                         <div class="custom-order-preview__head">
                             <span class="custom-order-preview__title">پیش نمایش سفارش</span>
-                            <span class="custom-order-preview__factor">@factorNo</span>
+                            <span class="custom-order-preview__factor">@orderFactorNo</span>
                         </div>
 
                         <div class="custom-order-preview__meta">
@@ -499,7 +499,7 @@
                             <div class="meta-item"><span>فروشگاه</span><strong>@Fallback(order?.StoreName)</strong></div>
                             <div class="meta-item"><span>مصرف کننده</span><strong>@Fallback(order?.Consumer)</strong></div>
                             <div class="meta-item"><span>نحوه تحویل</span><strong>@Fallback(deliveryTypeName)</strong></div>
-                            <div class="meta-item"><span>شماره سفارش</span><strong>@factorNo</strong></div>
+                            <div class="meta-item"><span>شماره سفارش</span><strong>@orderFactorNo</strong></div>
                         </div>
 
                         <table class="preview-table">
@@ -887,8 +887,11 @@
                 <div class="form-group text-center mb-4">
                     @if (Model.StatusId == 1)
                     {
-                        <input type="button" id="create-btn" value="@($"{ResourcePages.AddSend}")" class="btn btn-success" />
-
+                        <div class="alert alert-info order-scan-hint mb-3">
+                            <div>انتقال به مرحله بعد از صفحه لیست سفارش‌ها انجام می‌شود.</div>
+                            <div class="mt-1"><strong>@orderFactorNo</strong></div>
+                            <div class="small text-muted mt-1">در این فرم امکان ارسال مرحله غیرفعال است.</div>
+                        </div>
                     }
                     @if (Model.TblWfwProcessStep.IsPrint)
                     {
@@ -1027,28 +1030,6 @@
             });
         });
 
-
-
-
-
-         $(document).off("click", "#create-btn")
-             .on("click", "#create-btn", function () {
-
-                 $form = $("#form-TaxPayerCustomers");
-                 $.post('@Url.Action("OrderReqSend", "Orders")',$form.serialize())
-                     .done(function (result) {
-
-                         if (result.success) {
-                             toastr.success("", '@ResourceAlert.SendSuccess');
-                            $("#modal-Tree").modal('toggle');
-                            LoadItems();
-                         } else {
-                             toastr.error('@ResourceAlert.AddError', result.message);
-                         }
-
-
-                     }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
-         });
          $(document).off("click", "#remove-btn")
              .on("click", "#remove-btn", function () {
 
