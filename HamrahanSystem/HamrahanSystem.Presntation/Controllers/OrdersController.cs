@@ -2,9 +2,11 @@
 using HamrahanSystem.Application.UseCaseImplementation;
 using HamrahanSystem.Application.UseCaseInterface;
 using HamrahanSystem.Presntation.Models;
+using HamrahanSystem.Presntation.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.SignalR;
 using NetTopologySuite.Index.HPRtree;
 using Newtonsoft.Json;
@@ -12,6 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using static FastReport.Fonts.FastGraphicsPath;
 
 namespace HamrahanSystem.Presntation.Controllers
@@ -25,9 +28,12 @@ namespace HamrahanSystem.Presntation.Controllers
 		ITblLnsCustomLensIndexService tblLnsCustomLensIndexService, ITblLnsCustomLensTypeMaterialService tblLnsCustomLensTypeMaterialService,
 		ITblLnsCustomLensTypeCoatingService tblLnsCustomLensTypeCoatingService, ITblClrDefineObjectService tblClrDefineObjectService,
 		ITblLnsCustomSphService tblLnsCustomSphService, ITblLnsCustomCylService tblLnsCustomCylService,
-		ITblLnsCustomDesignTypeAdditionService tblLnsCustomDesignTypeAdditionService
+		ITblLnsCustomDesignTypeAdditionService tblLnsCustomDesignTypeAdditionService,
+		ICustomLensAutoPrintService customLensAutoPrintService,
+		ICustomLensPrintSettingsService customLensPrintSettingsService
 		) : Controller
 	{
+		private static readonly Regex CustomLensPrintPlaceholderRegex = new(@"\{(orderId|factorNo|printer)\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 		[Authorize(Roles = "admin,OrderStock_Index")]
 		public IActionResult OrderStock()
@@ -503,7 +509,7 @@ namespace HamrahanSystem.Presntation.Controllers
 
         [Authorize(Roles = "admin,OrderReq_Index")]
         [HttpPost]
-        public IActionResult CustomLensOrderSend(TblLnsOrderDto item)
+        public async Task<IActionResult> CustomLensOrderSend(TblLnsOrderDto item)
         {
             item.Company = 3;
             item.CreateDate = DateTime.Now.ToString();
@@ -519,7 +525,12 @@ namespace HamrahanSystem.Presntation.Controllers
 
             try
             {
-                tblLnsOrderService.Add(item, true);
+                await tblLnsOrderService.Add(item, true);
+                if (item.StatusId == (int)StatusOrder.Inprogress && item.OrderId > 0)
+                {
+                    await customLensAutoPrintService.DispatchAsync(item.OrderId, item.FactorNo);
+                }
+
                 return Json(new
                 {
                     success = true,
@@ -645,6 +656,17 @@ namespace HamrahanSystem.Presntation.Controllers
 				var order = item.Result?.TblWfwOrderProcess?.TblLnsOrder;
 				if (order != null && order.IndexDocument == (int)IndexDocument.LnsOrder)
 				{
+					var printSettings = customLensPrintSettingsService.GetAsync().Result;
+					var firstPrinter = printSettings.Printers?.FirstOrDefault() ?? string.Empty;
+					var factorNo = !string.IsNullOrWhiteSpace(order.FactorNo)
+						? order.FactorNo.Trim()
+						: "RX" + order.OrderId.ToString().PadLeft(8, '0');
+					ViewBag.CustomLensPrintPreviewUrl = BuildCustomLensPrintUrl(
+						printSettings.ReportUrlTemplate,
+						order.OrderId,
+						factorNo,
+						firstPrinter);
+
 					if (order.DefineObjectId.HasValue)
 					{
 						var defineObject = tblClrDefineObjectService.GetById(order.DefineObjectId.Value).Result;
@@ -1409,6 +1431,39 @@ namespace HamrahanSystem.Presntation.Controllers
             public string DateCreate { get; set; } = string.Empty;
             public string DateComplete { get; set; } = string.Empty;
             public string StatusRequest { get; set; } = string.Empty;
+        }
+
+        private static string BuildCustomLensPrintUrl(string? template, long orderId, string? factorNo, string? printer)
+        {
+            if (string.IsNullOrWhiteSpace(template))
+            {
+                return string.Empty;
+            }
+
+            var replaced = CustomLensPrintPlaceholderRegex.Replace(template, match =>
+            {
+                var key = match.Groups[1].Value.ToLowerInvariant();
+                return key switch
+                {
+                    "orderid" => Uri.EscapeDataString(orderId.ToString()),
+                    "factorno" => Uri.EscapeDataString(factorNo ?? string.Empty),
+                    "printer" => Uri.EscapeDataString(printer ?? string.Empty),
+                    _ => string.Empty
+                };
+            }).Trim();
+
+            if (string.IsNullOrWhiteSpace(replaced))
+            {
+                return string.Empty;
+            }
+
+            var hasPrinterPlaceholder = template.Contains("{printer}", StringComparison.OrdinalIgnoreCase);
+            if (!hasPrinterPlaceholder && !string.IsNullOrWhiteSpace(printer))
+            {
+                replaced = QueryHelpers.AddQueryString(replaced, "printer", printer);
+            }
+
+            return replaced;
         }
 
         [Authorize]

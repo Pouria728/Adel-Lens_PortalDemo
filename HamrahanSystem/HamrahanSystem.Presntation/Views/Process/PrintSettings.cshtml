@@ -1,0 +1,46 @@
+@model HamrahanSystem.Presntation.Models.CustomLensPrintSettingsViewModel
+@{
+    ViewBag.Title = "";
+}
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h3 class="card-title align-items-start flex-column">تنظیمات چاپ خودکار عدسی سفارشی</h3>
+    </div>
+    <div class="card-body">
+        @if (TempData["PrintSettingsSaved"] is string message && !string.IsNullOrWhiteSpace(message))
+        {
+            <div class="alert alert-success">@message</div>
+        }
+
+        <form method="post" asp-action="PrintSettings" asp-controller="Process">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4 form-check form-switch">
+                <input asp-for="IsEnabled" class="form-check-input" />
+                <label asp-for="IsEnabled" class="form-check-label">فعال‌سازی چاپ خودکار هنگام ثبت و ارسال عدسی سفارشی</label>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="ReportUrlTemplate" class="form-label">آدرس گزارش چاپ</label>
+                <input asp-for="ReportUrlTemplate" class="form-control form-control-solid" dir="ltr" />
+                <small class="form-text text-muted">
+                    از متغیرهای <code>{orderId}</code>، <code>{factorNo}</code> و <code>{printer}</code> می‌توانید داخل آدرس استفاده کنید.
+                </small>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="PrinterNamesText" class="form-label">لیست پرینترها</label>
+                <textarea asp-for="PrinterNamesText" class="form-control form-control-solid" rows="6" dir="ltr"></textarea>
+                <small class="form-text text-muted">
+                    هر پرینتر را در یک خط جدا وارد کنید.
+                </small>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">ذخیره تنظیمات</button>
+                <a class="btn btn-light ms-2" href="@Url.Action("Index", "Process")">بازگشت</a>
+            </div>
+        </form>
+    </div>
+</div>

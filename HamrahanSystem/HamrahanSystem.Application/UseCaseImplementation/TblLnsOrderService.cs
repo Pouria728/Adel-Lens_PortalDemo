@@ -64,6 +64,11 @@ namespace HamrahanSystem.Application.UseCaseImplementation
                     }
                 }
             }
+
+            dto.OrderId = item.OrderId;
+            dto.FactorNo = item.FactorNo;
+            dto.StatusId = item.StatusId;
+
             return Task.CompletedTask;
         }
 

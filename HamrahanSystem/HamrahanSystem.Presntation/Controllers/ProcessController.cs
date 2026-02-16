@@ -3,6 +3,8 @@ using HamrahanSystem.Application.MappingImplementation;
 using HamrahanSystem.Application.UseCaseImplementation;
 using HamrahanSystem.Application.UseCaseInterface;
 using HamrahanSystem.Domain.Entity;
+using HamrahanSystem.Presntation.Models;
+using HamrahanSystem.Presntation.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +18,51 @@ using System.Linq.Expressions;
 namespace HamrahanSystem.Presntation.Controllers
 {
 	[Authorize]
-	public class ProcessController(ITblWfwProcessService tblWfwProcessService,ICacheService cacheService) : Controller
+	public class ProcessController(ITblWfwProcessService tblWfwProcessService,ICacheService cacheService, ICustomLensPrintSettingsService customLensPrintSettingsService) : Controller
 	{
 		[Authorize(Roles = "admin,Process_Index")]
 		public IActionResult Index()
 		{
 			
 			return View();
+		}
+
+		[Authorize(Roles = "admin,Process_Index")]
+		public async Task<IActionResult> PrintSettings()
+		{
+			var settings = await customLensPrintSettingsService.GetAsync();
+			var model = new CustomLensPrintSettingsViewModel
+			{
+				IsEnabled = settings.IsEnabled,
+				ReportUrlTemplate = settings.ReportUrlTemplate,
+				PrinterNamesText = string.Join(Environment.NewLine, settings.Printers)
+			};
+			return View(model);
+		}
+
+		[Authorize(Roles = "admin,Process_Index")]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> PrintSettings(CustomLensPrintSettingsViewModel model)
+		{
+			model ??= new CustomLensPrintSettingsViewModel();
+
+			var printerNames = (model.PrinterNamesText ?? string.Empty)
+				.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(x => x.Trim())
+				.Where(x => !string.IsNullOrWhiteSpace(x))
+				.Distinct(StringComparer.OrdinalIgnoreCase)
+				.ToList();
+
+			await customLensPrintSettingsService.SaveAsync(new CustomLensPrintSettings
+			{
+				IsEnabled = model.IsEnabled,
+				ReportUrlTemplate = (model.ReportUrlTemplate ?? string.Empty).Trim(),
+				Printers = printerNames
+			});
+
+			TempData["PrintSettingsSaved"] = "تنظیمات چاپ با موفقیت ذخیره شد.";
+			return RedirectToAction(nameof(PrintSettings));
 		}
 		[Authorize(Roles = "admin,Process_Create")]
 		public IActionResult Create()

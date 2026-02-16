@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/25/2025 17:33:53" ReportInfo.Modified="11/20/2025 13:20:57" ReportInfo.CreatorVersion="2024.2.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="LnsOrder" ReferenceName="LnsOrder" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="Company" DataType="System.String"/>
+      <Column Name="CompanyId" DataType="System.String"/>
+      <Column Name="CreateDate" DataType="System.String"/>
+      <Column Name="OrderNo" DataType="System.String"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrderDetail" ReferenceName="LnsOrderDetail" DataType="System.Int32" Enabled="true">
+      <Column Name="CodeKala" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Axis" DataType="System.String"/>
+      <Column Name="SPH" DataType="System.String"/>
+      <Column Name="SYI" DataType="System.String"/>
+      <Column Name="NO" DataType="System.Int32"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="OrderDetailId" DataType="System.Int64"/>
+      <Column Name="RowNo" DataType="System.String" PropName="Column"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrdePrivate" ReferenceName="LnsOrdePrivate" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="Company" DataType="System.String"/>
+      <Column Name="CompanyId" DataType="System.String"/>
+      <Column Name="CreateDate" DataType="System.String"/>
+      <Column Name="OrderNo" DataType="System.String"/>
+      <Column Name="HBox" DataType="System.String"/>
+      <Column Name="VBox" DataType="System.String"/>
+      <Column Name="DBL" DataType="System.String"/>
+      <Column Name="ED" DataType="System.String"/>
+      <Column Name="PA" DataType="System.String"/>
+      <Column Name="FFA" DataType="System.String"/>
+      <Column Name="VD" DataType="System.String"/>
+      <Column Name="Base" DataType="System.String"/>
+      <Column Name="Frame" DataType="System.String"/>
+      <Column Name="Color" DataType="System.String"/>
+      <Column Name="Comment" DataType="System.String"/>
+      <Column Name="Mobile" DataType="System.String"/>
+      <Column Name="Tel" DataType="System.String"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="Corridor" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Services" DataType="System.String"/>
+      <Column Name="Coating" DataType="System.String"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrderDetailPrivate" ReferenceName="LnsOrderDetailPrivate" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="OrderDetailId" DataType="System.Int64"/>
+      <Column Name="CodeKala" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Axis" DataType="System.String"/>
+      <Column Name="SPH" DataType="System.String"/>
+      <Column Name="CYL" DataType="System.String"/>
+      <Column Name="ADD" DataType="System.String"/>
+      <Column Name="PRISM" DataType="System.String"/>
+      <Column Name="BPRISM" DataType="System.String"/>
+      <Column Name="Fitting" DataType="System.String"/>
+      <Column Name="DIA" DataType="System.String"/>
+      <Column Name="PD" DataType="System.String"/>
+      <Column Name="DC" DataType="System.String"/>
+      <Column Name="NO" DataType="System.String"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="SideType" DataType="System.String"/>
+      <Column Name="SideTypeId" DataType="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+    </BusinessObjectDataSource>
+    <Relation Name="Table_Table1" ParentDataSource="null" ChildDataSource="null" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Relation Name="LnsOrder_LnsOrderDetail" ParentDataSource="LnsOrder" ChildDataSource="LnsOrderDetail" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Relation Name="LnsOrderDetail_LnsOrderDetailPrivate" ParentDataSource="LnsOrdePrivate" ChildDataSource="LnsOrderDetailPrivate" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Total Name="Total" Expression="[LnsOrderDetail.NO]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="210.1" PaperHeight="148.1" RawPaperSize="11" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data5" Width="718.58" Height="113.4" StartNewPage="true" DataSource="LnsOrdePrivate">
+      <TextObject Name="Text75" Left="170.1" Top="47.25" Width="463.05" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Company]" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt"/>
+      <TextObject Name="Text76" Top="47.25" Width="170.1" Height="18.9" Border.Lines="All" Fill.Color="White" Text="[LnsOrdePrivate.CreateDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text77" Left="633.15" Top="47.25" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="مشتری :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text78" Left="633.15" Top="66.15" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="تلفن همراه :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text79" Left="481.95" Top="66.15" Width="151.2" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Mobile]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text80" Left="396.9" Top="66.15" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="تلفن :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text81" Left="274.05" Top="66.15" Width="122.85" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Tel]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text82" Left="189" Top="66.15" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="پوشش :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text83" Top="66.15" Width="189" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Coating]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text84" Left="633.15" Top="85.05" Width="85.05" Height="28.35" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="نام عدسی :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text85" Top="85.05" Width="633.15" Height="28.35" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.NameKala]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <BarcodeObject Name="Barcode1" Left="9.45" Top="9.45" Width="145" Height="28.35" Text="[LnsOrdePrivate.OrderNo]" ShowText="false" AllowExpressions="true"/>
+      <TextObject Name="Text98" Left="274.05" Top="18.9" Width="94.5" Height="18.9" Text="[LnsOrdePrivate.OrderNo]" Font="Arial, 10pt"/>
+      <ChildBand Name="Child4" Top="117.4" Width="718.58" Height="18.9">
+        <SubreportObject Name="Subreport2" Width="94.5" Height="18.9" ReportPage="Page4"/>
+        <ChildBand Name="Child5" Top="140.3" Width="718.58" Height="75.6" CanGrow="true">
+          <TextObject Name="Text55" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="HBOX" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text56" Left="56.7" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="VBOX" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text57" Left="113.4" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="DBL&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text58" Left="170.1" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="ED" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text59" Left="226.8" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="PA" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text60" Left="283.5" Top="18.9" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="FFA" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text61" Left="359.1" Top="18.9" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="VD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text62" Left="453.6" Top="18.9" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="BASE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text63" Left="529.2" Top="18.9" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="FRAME" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text64" Left="623.7" Top="18.9" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="COLOR" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text65" Top="47.25" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.HBox]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text66" Left="56.7" Top="47.25" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.VBox]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text67" Left="113.4" Top="47.25" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.DBL]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text68" Left="170.1" Top="47.25" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.ED]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text69" Left="226.8" Top="47.25" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.PA]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text70" Left="283.5" Top="47.25" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.FFA]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text71" Left="359.1" Top="47.25" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.VD]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text72" Left="453.6" Top="47.25" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.Base]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text73" Left="529.2" Top="47.25" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.Frame]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <TextObject Name="Text74" Left="623.7" Top="47.25" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.Color]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+          <ChildBand Name="Child1" Top="219.9" Width="718.58" Height="189">
+            <TextObject Name="Text88" Left="633.15" Top="37.8" Width="85.05" Height="56.7" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="توضیحات :" HorzAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text89" Left="132.3" Top="37.8" Width="500.85" Height="56.7" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Comment]" RightToLeft="true" Font="Arial, 10pt"/>
+            <TextObject Name="Text91" Top="37.8" Width="132.3" Height="56.7" Border.Lines="All" Fill.Color="White" Text="[LnsOrdePrivate.Corridor]" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text92" Left="633.15" Top="94.5" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="نام عینک ساز :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text93" Left="481.95" Top="94.5" Width="151.2" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.Company]" HorzAlign="Right" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt"/>
+            <TextObject Name="Text94" Left="396.9" Top="94.5" Width="85.05" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="نام فروشگاه :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text95" Left="245.7" Top="94.5" Width="151.2" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.StoreName]" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt"/>
+            <TextObject Name="Text96" Left="151.2" Top="94.5" Width="94.5" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="نام مصرف کننده :" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text97" Top="94.5" Width="151.2" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="White" CanGrow="true" GrowToBottom="true" Text="[LnsOrdePrivate.Masrafkonande]" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 10pt"/>
+            <TextObject Name="Text86" Left="633.15" Top="9.45" Width="85.05" Height="28.35" Border.Lines="Right, Top, Bottom" Fill.Color="White" Text="خدمات :" HorzAlign="Center" RightToLeft="true" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text87" Left="132.3" Top="9.45" Width="500.85" Height="28.35" Border.Lines="Left, Top, Bottom" Fill.Color="White" Text="[LnsOrdePrivate.Services]" HorzAlign="Center" Font="Arial, 10pt"/>
+            <TextObject Name="Text90" Top="9.45" Width="132.3" Height="28.35" Border.Lines="All" Fill.Color="White" Text="CORRIDOR :" Font="Arial, 10pt, style=Bold"/>
+          </ChildBand>
+        </ChildBand>
+      </ChildBand>
+    </DataBand>
+  </ReportPage>
+  <ReportPage Name="Page4" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data4" Top="32.35" Width="718.2" Height="28.35" DataSource="LnsOrderDetailPrivate">
+      <TextObject Name="Text44" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="[LnsOrderDetailPrivate.SideType]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text45" Left="75.6" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.SPH]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text46" Left="132.3" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.CYL]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text47" Left="189" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.Axis]&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text48" Left="245.7" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.ADD]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text49" Left="302.4" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.PRISM]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text50" Left="378" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.BPRISM]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text51" Left="472.5" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.Fitting]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text52" Left="548.1" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.DIA]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text53" Left="604.8" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.PD]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text54" Left="661.5" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="White" Text="[LnsOrderDetailPrivate.DC]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <DataHeaderBand Name="DataHeader2" Width="718.2" Height="28.35">
+        <TextObject Name="Text33" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="LightGray" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text34" Left="75.6" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="SPH" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text35" Left="132.3" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="CYL&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text36" Left="189" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="AXIS&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text37" Left="245.7" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="ADD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text38" Left="302.4" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="PRISM&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text39" Left="378" Width="94.5" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="B.PRISM" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text40" Left="472.5" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="FITTING" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text41" Left="548.1" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="DIA" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text42" Left="604.8" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="PD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text43" Left="661.5" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="Gainsboro" Text="DC" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

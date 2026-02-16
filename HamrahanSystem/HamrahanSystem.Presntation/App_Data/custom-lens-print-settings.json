@@ -1,0 +1,7 @@
+{
+  "isEnabled": true,
+  "reportUrlTemplate": "https://localhost:7181/Home/PDFReportPage2?reportname=RXOrder\u0026selectedValue={factorNo}\u0026printer={printer}",
+  "printers": [
+    "Canon MF210 Series (redirected 2)"
+  ]
+}

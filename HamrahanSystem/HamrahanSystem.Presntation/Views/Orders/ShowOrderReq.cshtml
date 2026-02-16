@@ -9,6 +9,7 @@
 
     var currentOrder = Model?.TblWfwOrderProcess?.TblLnsOrder;
     bool isCustomLensOrder = currentOrder?.IndexDocument == (int)IndexDocument.LnsOrder;
+    var customLensPrintPreviewUrl = ViewBag.CustomLensPrintPreviewUrl as string ?? string.Empty;
     var orderFactorNo = !string.IsNullOrWhiteSpace(currentOrder?.FactorNo)
         ? currentOrder!.FactorNo!.Trim()
         : (((currentOrder?.IndexDocument ?? 0) != (int)IndexDocument.LnsOrder ? "ST" : "RX") +
@@ -490,8 +491,27 @@
                     }
                     <div class="custom-order-preview">
                         <div class="custom-order-preview__head">
-                            <span class="custom-order-preview__title">پیش نمایش سفارش</span>
-                            <span class="custom-order-preview__factor">@orderFactorNo</span>
+                            <div class="custom-order-preview__head-main">
+                                <span class="custom-order-preview__title">پیش نمایش سفارش</span>
+                                <span class="custom-order-preview__factor">@orderFactorNo</span>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(customLensPrintPreviewUrl))
+                            {
+                                <a class="custom-order-preview__print"
+                                   href="@customLensPrintPreviewUrl"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   title="مشاهده PDF / چاپ">
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="custom-order-preview__print custom-order-preview__print--disabled"
+                                      title="آدرس چاپ در تنظیمات ثبت نشده است.">
+                                    <i class="fa fa-print" aria-hidden="true"></i>
+                                </span>
+                            }
                         </div>
 
                         <div class="custom-order-preview__meta">
@@ -1118,6 +1138,12 @@
         font-weight: 700;
     }
 
+    .custom-order-preview__head-main {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
     .custom-order-preview__title {
         font-size: 16px;
     }
@@ -1125,6 +1151,30 @@
     .custom-order-preview__factor {
         font-size: 18px;
         letter-spacing: 0.5px;
+    }
+
+    .custom-order-preview__print {
+        width: 34px;
+        height: 34px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.15s ease-in-out;
+    }
+
+    .custom-order-preview__print:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .custom-order-preview__print--disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
     }
 
     .custom-order-preview__meta {

@@ -43,6 +43,12 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuditContext, AuditContext>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddSingleton<ICustomLensPrintSettingsService, CustomLensPrintSettingsService>();
+builder.Services.AddScoped<ICustomLensAutoPrintService, CustomLensAutoPrintService>();
+builder.Services.AddHttpClient("CustomLensAutoPrint", client =>
+{
+	client.Timeout = TimeSpan.FromSeconds(10);
+});
 builder.Services.AddDistributedRedisCache(options => {
 	options.Configuration = config.GetConnectionString("ServerRedis");
 	options.InstanceName = "";
