@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HamrahanSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c2a0462d621f31fd780b7627727e65f2f74a37a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d97d51923f03b3329843b2a7b5131842802b06a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HamrahanSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HamrahanSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
