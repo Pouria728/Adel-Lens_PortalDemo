@@ -63,7 +63,7 @@ namespace HamrahanSystem.Application.UseCaseImplementation
 			var item = dto.ToEntity();
 			return TblWfwOrderProcessStepRepository.Update(item);
 		}
-		public Task UpdateStatus(TblWfwOrderProcessStepDto dto)
+		public Task UpdateStatus(TblWfwOrderProcessStepDto dto, int? relationStepId = null)
 		{
 			var itemorder = TblWfwOrderProcessStepRepository.GetByKey(dto.OrderProcessStepId);
 			if (itemorder == null)
@@ -94,7 +94,7 @@ namespace HamrahanSystem.Application.UseCaseImplementation
 				return Task.CompletedTask;
 			}
 
-			var nextProcessStepId = ResolveNextProcessStepId(processSteps, currentProcessStep);
+			var nextProcessStepId = ResolveNextProcessStepId(processSteps, currentProcessStep, relationStepId);
 			if (nextProcessStepId.HasValue)
 			{
 				TblWfwOrderProcessStepRepository.Add(new TblWfwOrderProcessStep
@@ -117,7 +117,7 @@ namespace HamrahanSystem.Application.UseCaseImplementation
 			return Task.CompletedTask;
 		}
 
-		private int? ResolveNextProcessStepId(IList<TblWfwProcessStep> processSteps, TblWfwProcessStep currentProcessStep)
+		private int? ResolveNextProcessStepId(IList<TblWfwProcessStep> processSteps, TblWfwProcessStep currentProcessStep, int? forcedRelationStepId)
 		{
 			var activeProcessSteps = processSteps
 				.Where(x => x.IsActive.HasValue && x.IsActive == 1)
@@ -126,9 +126,24 @@ namespace HamrahanSystem.Application.UseCaseImplementation
 
 			var activeStepIds = activeProcessSteps.Select(x => x.ProcessStepId).ToHashSet();
 
-			// If explicit relations are defined for this step, respect them first.
-			var relationTargets = (tblWfwRelationStepRepository.GetAll() ?? Array.Empty<TblWfwRelationStep>())
+			var relationsFromCurrent = (tblWfwRelationStepRepository.GetAll() ?? Array.Empty<TblWfwRelationStep>())
 				.Where(x => x.FromProcessStepId == currentProcessStep.ProcessStepId && x.ToProcessStepId.HasValue)
+				.ToList();
+
+			if (forcedRelationStepId.HasValue && forcedRelationStepId.Value > 0)
+			{
+				var explicitTarget = relationsFromCurrent
+					.FirstOrDefault(x => x.RelationStepId == forcedRelationStepId.Value)
+					?.ToProcessStepId;
+
+				if (explicitTarget.HasValue && activeStepIds.Contains(explicitTarget.Value))
+				{
+					return explicitTarget.Value;
+				}
+			}
+
+			// If explicit relations are defined for this step, respect them first.
+			var relationTargets = relationsFromCurrent
 				.Select(x => x.ToProcessStepId!.Value)
 				.Where(activeStepIds.Contains)
 				.Distinct()

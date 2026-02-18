@@ -5,7 +5,6 @@ using HamrahanSystem.Application.UseCaseInterface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -212,7 +211,9 @@ namespace HamrahanSystem.Presntation.Controllers
             };
             ViewBag.DesignTypeId = designTypeValue;
             ViewBag.LensIndexId = lensIndexValue ?? 0;
-            ViewBag.ListDefineObject = new List<SelectListItem>();
+            ViewBag.DefineObjectName = string.Empty;
+            ViewBag.DefineObjectBarcode = string.Empty;
+            ViewBag.DefineObjectCode = string.Empty;
             return View(dto);
         }
 
@@ -323,28 +324,18 @@ namespace HamrahanSystem.Presntation.Controllers
             var safeLensIndexId = item.LensIndexId ?? lensIndexId ?? 0;
             ViewBag.DesignTypeId = safeDesignTypeId;
             ViewBag.LensIndexId = safeLensIndexId;
+            ViewBag.DefineObjectName = string.Empty;
+            ViewBag.DefineObjectBarcode = string.Empty;
+            ViewBag.DefineObjectCode = string.Empty;
             if (item.DefineObjectId.HasValue)
             {
                 var defineObject = tblClrDefineObjectService.GetById(item.DefineObjectId.Value).Result;
                 if (defineObject != null)
                 {
-                    ViewBag.ListDefineObject = new List<SelectListItem>
-                    {
-                        new SelectListItem
-                        {
-                            Value = defineObject.DefineObjectId.ToString(),
-                            Text = BuildDefineObjectText(defineObject)
-                        }
-                    };
+                    ViewBag.DefineObjectName = Normalize(defineObject.NameObject);
+                    ViewBag.DefineObjectBarcode = Normalize(defineObject.TechnicalSpecs);
+                    ViewBag.DefineObjectCode = Normalize(defineObject.CodeObject);
                 }
-                else
-                {
-                    ViewBag.ListDefineObject = new List<SelectListItem>();
-                }
-            }
-            else
-            {
-                ViewBag.ListDefineObject = new List<SelectListItem>();
             }
             return View(item);
         }
@@ -790,15 +781,26 @@ namespace HamrahanSystem.Presntation.Controllers
         }
 
         [HttpPost]
-        public JsonResult SearchDefineObject(string search)
+        public JsonResult SearchDefineObject(string search, string field = "all")
         {
             var results = tblClrDefineObjectService.Search(search).Result ?? new List<TblClrDefineObjectDto>();
+            var normalizedField = Normalize(field).ToLowerInvariant();
+            var term = Normalize(search);
+            if (!string.IsNullOrWhiteSpace(term))
+            {
+                results = results
+                    .Where(item => MatchDefineObjectByField(item, term, normalizedField))
+                    .ToList();
+            }
             var items = new
             {
                 results = results.Select(item => new
                 {
                     id = item.DefineObjectId,
-                    text = BuildDefineObjectText(item)
+                    text = BuildDefineObjectDisplay(item, normalizedField),
+                    name = Normalize(item.NameObject),
+                    barcode = Normalize(item.TechnicalSpecs),
+                    code = Normalize(item.CodeObject)
                 })
             };
             return Json(items);
@@ -854,6 +856,41 @@ namespace HamrahanSystem.Presntation.Controllers
                 parts.Add(item.TechnicalSpecs.Trim());
             }
             return string.Join(" - ", parts);
+        }
+
+        private static bool MatchDefineObjectByField(TblClrDefineObjectDto item, string term, string field)
+        {
+            if (item == null || string.IsNullOrWhiteSpace(term))
+            {
+                return false;
+            }
+
+            var valueName = Normalize(item.NameObject);
+            var valueBarcode = Normalize(item.TechnicalSpecs);
+            var valueCode = Normalize(item.CodeObject);
+
+            bool Match(string value) => value.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+
+            return field switch
+            {
+                "name" => Match(valueName),
+                "barcode" => Match(valueBarcode),
+                "code" => Match(valueCode),
+                _ => Match(valueName) || Match(valueBarcode) || Match(valueCode)
+            };
+        }
+
+        private static string BuildDefineObjectDisplay(TblClrDefineObjectDto item, string field)
+        {
+            var text = field switch
+            {
+                "name" => Normalize(item?.NameObject),
+                "barcode" => Normalize(item?.TechnicalSpecs),
+                "code" => Normalize(item?.CodeObject),
+                _ => BuildDefineObjectText(item)
+            };
+
+            return string.IsNullOrWhiteSpace(text) ? BuildDefineObjectText(item) : text;
         }
 
         private static bool ParseStatus(string? text, out bool isValid)

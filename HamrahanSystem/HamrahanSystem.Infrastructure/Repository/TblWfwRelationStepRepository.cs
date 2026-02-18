@@ -32,18 +32,48 @@ namespace HamrahanSystem.Infrastructure.Repository
 
         public virtual Task ReplaceForFromStep(int fromProcessStepId, IEnumerable<int> toProcessStepIds)
         {
+            SyncForFromStep(fromProcessStepId, toProcessStepIds).Wait();
+            return Task.CompletedTask;
+        }
+
+        public virtual Task<Dictionary<int, int>> SyncForFromStep(int fromProcessStepId, IEnumerable<int> toProcessStepIds)
+        {
             var normalizedTargets = (toProcessStepIds ?? Enumerable.Empty<int>())
                 .Where(x => x > 0)
                 .Distinct()
                 .ToList();
+            var normalizedTargetSet = normalizedTargets.ToHashSet();
+            var normalizedTargetList = normalizedTargets.ToList();
 
             var existingRelations = objectSet.Where(x => x.FromProcessStepId == fromProcessStepId).ToList();
-            if (existingRelations.Count > 0)
+
+            // Keep at most one relation per target step for this source step.
+            foreach (var duplicate in existingRelations
+                         .Where(x => x.ToProcessStepId.HasValue)
+                         .GroupBy(x => x.ToProcessStepId!.Value)
+                         .SelectMany(x => x.OrderBy(y => y.RelationStepId).Skip(1))
+                         .ToList())
             {
-                objectSet.RemoveRange(existingRelations);
+                objectSet.Remove(duplicate);
             }
 
-            foreach (var targetStepId in normalizedTargets)
+            var preservedRelations = existingRelations
+                .Where(x => x.ToProcessStepId.HasValue)
+                .GroupBy(x => x.ToProcessStepId!.Value)
+                .Select(x => x.OrderBy(y => y.RelationStepId).First())
+                .ToList();
+
+            foreach (var relation in preservedRelations.Where(x => !normalizedTargetSet.Contains(x.ToProcessStepId!.Value)))
+            {
+                objectSet.Remove(relation);
+            }
+
+            var existingTargetIds = preservedRelations
+                .Where(x => x.ToProcessStepId.HasValue && normalizedTargetSet.Contains(x.ToProcessStepId.Value))
+                .Select(x => x.ToProcessStepId!.Value)
+                .ToHashSet();
+
+            foreach (var targetStepId in normalizedTargets.Where(x => !existingTargetIds.Contains(x)))
             {
                 objectSet.Add(new TblWfwRelationStep
                 {
@@ -53,7 +83,18 @@ namespace HamrahanSystem.Infrastructure.Repository
             }
 
             Save();
-            return Task.CompletedTask;
+
+            // Materialize first to avoid SQL Server OPENJSON translation for runtime collections.
+            var relationMap = objectSet
+                .Where(x => x.FromProcessStepId == fromProcessStepId && x.ToProcessStepId.HasValue)
+                .ToList()
+                .Where(x => x.ToProcessStepId.HasValue && normalizedTargetList.Contains(x.ToProcessStepId.Value))
+                .GroupBy(x => x.ToProcessStepId!.Value)
+                .ToDictionary(
+                    x => x.Key,
+                    x => x.OrderBy(y => y.RelationStepId).First().RelationStepId);
+
+            return Task.FromResult(relationMap);
         }
 
         public new AdelModel Context 

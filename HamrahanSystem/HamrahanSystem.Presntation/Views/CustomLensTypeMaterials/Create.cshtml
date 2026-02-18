@@ -31,10 +31,24 @@
                 </div>
             </div>
 
-<div class="form-group row mb-6">
+            <div class="form-group row mb-6">
+                @Html.HiddenFor(model => model.DefineObjectId, new { id = "DefineObjectId", data_name = ViewBag.DefineObjectName ?? "", data_barcode = ViewBag.DefineObjectBarcode ?? "", data_code = ViewBag.DefineObjectCode ?? "" })
                 @Html.Label("WarehouseItem", "کالای انبار", htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
-                <div class="col-md-6">
-                    @Html.DropDownListFor(model => model.DefineObjectId, ViewBag.ListDefineObject as List<SelectListItem> ?? new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg", data_control = "select2", data_placeholder = "جستجو...", data_dropdown_parent = "#modal-Tree" })
+                <div class="col-md-8">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" id="WarehouseItemName" class="form-control form-control-solid form-control-lg" placeholder="نام کالای انبار" autocomplete="off" list="WarehouseItemNameList" />
+                            <datalist id="WarehouseItemNameList"></datalist>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="WarehouseItemBarcode" class="form-control form-control-solid form-control-lg" placeholder="بارکد کالای انبار" autocomplete="off" list="WarehouseItemBarcodeList" />
+                            <datalist id="WarehouseItemBarcodeList"></datalist>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="WarehouseItemCode" class="form-control form-control-solid form-control-lg" placeholder="کد کالای انبار" autocomplete="off" list="WarehouseItemCodeList" />
+                            <datalist id="WarehouseItemCodeList"></datalist>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -64,40 +78,282 @@
 <script type="text/javascript">
 
     $(function () {
-        $("#DefineObjectId").select2({
-            language: 'fa',
-            minimumInputLength: 2,
-            dir: "rtl",
-            ajax: {
-                url: '@Url.Action("SearchDefineObject", "CustomLensTypeMaterials")',
-                type: 'POST',
-                dataType: 'JSON',
-                delay: 250,
-                data: function (params) {
-                    return { search: params.term };
-                },
-                processResults: function (data) {
-                    return { results: data.results };
-                },
-                cache: true
+        var $defineObjectId = $("#DefineObjectId");
+        var $warehouseItemName = $("#WarehouseItemName");
+        var $warehouseItemBarcode = $("#WarehouseItemBarcode");
+        var $warehouseItemCode = $("#WarehouseItemCode");
+        var $warehouseItemNameList = $("#WarehouseItemNameList");
+        var $warehouseItemBarcodeList = $("#WarehouseItemBarcodeList");
+        var $warehouseItemCodeList = $("#WarehouseItemCodeList");
+        var isSyncingWarehouse = false;
+        var warehouseSearchTimers = {};
+        var warehouseSearchRequests = {};
+        var warehouseSearchTokens = {};
+
+        var warehouseFieldMap = {
+            name: { $input: $warehouseItemName, $list: $warehouseItemNameList },
+            barcode: { $input: $warehouseItemBarcode, $list: $warehouseItemBarcodeList },
+            code: { $input: $warehouseItemCode, $list: $warehouseItemCodeList }
+        };
+
+        function normalizeText(value) {
+            return String(value == null ? "" : value).trim();
+        }
+
+        function toEnglishDigits(value) {
+            return normalizeText(value)
+                .replace(/[۰-۹]/g, function (d) { return String(d.charCodeAt(0) - 1776); })
+                .replace(/[٠-٩]/g, function (d) { return String(d.charCodeAt(0) - 1632); });
+        }
+
+        function canonicalText(value) {
+            return toEnglishDigits(value).replace(/\s+/g, " ").toLowerCase();
+        }
+
+        function clearWarehouseSearchResults(field) {
+            warehouseFieldMap[field].$list.empty();
+        }
+
+        function clearAllWarehouseSearchResults() {
+            clearWarehouseSearchResults("name");
+            clearWarehouseSearchResults("barcode");
+            clearWarehouseSearchResults("code");
+        }
+
+        function createWarehouseOption(item) {
+            var option = document.createElement("option");
+            option.value = normalizeText(item.text);
+            option.setAttribute("data-id", normalizeText(item.id));
+            option.setAttribute("data-name", normalizeText(item.name));
+            option.setAttribute("data-barcode", normalizeText(item.barcode));
+            option.setAttribute("data-code", normalizeText(item.code));
+            return option;
+        }
+
+        function renderWarehouseSearchResults(field, items) {
+            var $list = warehouseFieldMap[field].$list;
+            $list.empty();
+            (items || []).forEach(function (item) {
+                if (!item || !item.id || !item.text) {
+                    return;
+                }
+                $list.append(createWarehouseOption(item));
+            });
+            applySelectedWarehouseFromInput(field);
+        }
+
+        function fetchWarehouseSearchResults(field, term) {
+            if (warehouseSearchRequests[field] && warehouseSearchRequests[field].readyState !== 4) {
+                warehouseSearchRequests[field].abort();
             }
-        });
+
+            var token = (warehouseSearchTokens[field] || 0) + 1;
+            warehouseSearchTokens[field] = token;
+            warehouseSearchRequests[field] = $.ajax({
+                url: '@Url.Action("SearchDefineObject", "CustomLensTypeMaterials")',
+                type: "POST",
+                dataType: "JSON",
+                data: { search: term, field: field }
+            }).done(function (data) {
+                if (warehouseSearchTokens[field] !== token) {
+                    return;
+                }
+                renderWarehouseSearchResults(field, data && data.results ? data.results : []);
+            }).fail(function (_xhr, status) {
+                if (status === "abort") {
+                    return;
+                }
+                clearWarehouseSearchResults(field);
+                applySelectedWarehouseFromInput(field);
+            });
+        }
+
+        function applyWarehouseSelection(item) {
+            if (!item || !item.id) {
+                clearWarehouseSelection();
+                return;
+            }
+
+            isSyncingWarehouse = true;
+            $defineObjectId.val(normalizeText(item.id));
+            $warehouseItemName.val(normalizeText(item.name || item.text));
+            $warehouseItemBarcode.val(normalizeText(item.barcode || item.text));
+            $warehouseItemCode.val(normalizeText(item.code || item.text));
+            clearAllWarehouseSearchResults();
+            isSyncingWarehouse = false;
+        }
+
+        function clearWarehouseSelection() {
+            if (isSyncingWarehouse) {
+                return;
+            }
+
+            isSyncingWarehouse = true;
+            $defineObjectId.val("");
+            $warehouseItemName.val("");
+            $warehouseItemBarcode.val("");
+            $warehouseItemCode.val("");
+            clearAllWarehouseSearchResults();
+            isSyncingWarehouse = false;
+        }
+
+        function findWarehouseOptionByValue(field, typedText) {
+            var selectedOption = null;
+            var canonicalTyped = canonicalText(typedText);
+            warehouseFieldMap[field].$list.find("option").each(function () {
+                if (canonicalText($(this).val()) === canonicalTyped) {
+                    selectedOption = $(this);
+                    return false;
+                }
+            });
+            return selectedOption;
+        }
+
+        function applySelectedWarehouseFromInput(field) {
+            if (isSyncingWarehouse) {
+                return;
+            }
+
+            var typedText = normalizeText(warehouseFieldMap[field].$input.val());
+            if (!typedText) {
+                $defineObjectId.val("");
+                return;
+            }
+
+            var $option = findWarehouseOptionByValue(field, typedText);
+            if (!$option || !$option.length) {
+                $defineObjectId.val("");
+                return;
+            }
+
+            applyWarehouseSelection({
+                id: $option.attr("data-id"),
+                name: $option.attr("data-name"),
+                barcode: $option.attr("data-barcode"),
+                code: $option.attr("data-code"),
+                text: $option.val()
+            });
+        }
+
+        function bindWarehouseField(field) {
+            var $input = warehouseFieldMap[field].$input;
+            $input.on("input", function () {
+                applySelectedWarehouseFromInput(field);
+                var term = normalizeText($input.val());
+                if (warehouseSearchTimers[field]) {
+                    clearTimeout(warehouseSearchTimers[field]);
+                }
+                if (term.length < 2) {
+                    clearWarehouseSearchResults(field);
+                    return;
+                }
+                warehouseSearchTimers[field] = setTimeout(function () {
+                    fetchWarehouseSearchResults(field, term);
+                }, 250);
+            });
+            $input.on("change blur", function () {
+                applySelectedWarehouseFromInput(field);
+            });
+        }
+
+        function findExactWarehouseMatch(field, term, results) {
+            var canonicalTerm = canonicalText(term);
+            var propertyName = field === "name" ? "name" : (field === "barcode" ? "barcode" : "code");
+
+            var matches = (results || []).filter(function (item) {
+                var byField = canonicalText(item && item[propertyName]);
+                var byText = canonicalText(item && item.text);
+                return byField === canonicalTerm || byText === canonicalTerm;
+            });
+
+            return matches.length === 1 ? matches[0] : null;
+        }
+
+        function resolveWarehouseFromServer(field, term, done) {
+            $.ajax({
+                url: '@Url.Action("SearchDefineObject", "CustomLensTypeMaterials")',
+                type: "POST",
+                dataType: "JSON",
+                data: { search: term, field: field }
+            }).done(function (data) {
+                var results = data && data.results ? data.results : [];
+                var matchedItem = findExactWarehouseMatch(field, term, results);
+                if (matchedItem) {
+                    applyWarehouseSelection(matchedItem);
+                    done(true);
+                    return;
+                }
+                done(false);
+            }).fail(function () {
+                done(false);
+            });
+        }
+
+        function ensureWarehouseSelection(done) {
+            var selectedId = normalizeText($defineObjectId.val());
+            if (selectedId) {
+                done(true);
+                return;
+            }
+
+            var candidates = [
+                { field: "code", term: normalizeText($warehouseItemCode.val()) },
+                { field: "barcode", term: normalizeText($warehouseItemBarcode.val()) },
+                { field: "name", term: normalizeText($warehouseItemName.val()) }
+            ].filter(function (item) { return item.term.length > 0; });
+
+            if (!candidates.length) {
+                done(false);
+                return;
+            }
+
+            var index = 0;
+            var tryNext = function () {
+                if (index >= candidates.length) {
+                    done(false);
+                    return;
+                }
+
+                var candidate = candidates[index++];
+                resolveWarehouseFromServer(candidate.field, candidate.term, function (resolved) {
+                    if (resolved) {
+                        done(true);
+                    } else {
+                        tryNext();
+                    }
+                });
+            };
+
+            tryNext();
+        }
+
+        bindWarehouseField("name");
+        bindWarehouseField("barcode");
+        bindWarehouseField("code");
+
         $(document).off("click", "#create-btn")
             .on("click", "#create-btn", function () {
-                $form = $("#form-custom-lens-type-material-create");
+                var $form = $("#form-custom-lens-type-material-create");
 
-                var designTypeId = $("#DesignTypeId").val() || 0;
-                var lensIndexId = $("#LensIndexId").val() || 0;
-                var url = '@Url.Action("Create", "CustomLensTypeMaterials")' + '?designTypeId=' + designTypeId + '&lensIndexId=' + lensIndexId;
-                $.post(url, $form.serialize())
-                    .done(function (result) {
-                        if (result.success) {
-                            toastr.success("", '@ResourceAlert.AddSucces');
-                            LoadItems();
-                        } else {
-                            toastr.error('@ResourceAlert.AddError', result.message);
-                        }
-                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+                ensureWarehouseSelection(function (resolved) {
+                    if (!resolved) {
+                        toastr.error("کالای انبار را از لیست جستجو انتخاب کنید.", "");
+                        return;
+                    }
+
+                    var designTypeId = $("#DesignTypeId").val() || 0;
+                    var lensIndexId = $("#LensIndexId").val() || 0;
+                    var url = '@Url.Action("Create", "CustomLensTypeMaterials")' + '?designTypeId=' + designTypeId + '&lensIndexId=' + lensIndexId;
+                    $.post(url, $form.serialize())
+                        .done(function (result) {
+                            if (result.success) {
+                                toastr.success("", '@ResourceAlert.AddSucces');
+                                LoadItems();
+                            } else {
+                                toastr.error('@ResourceAlert.AddError', result.message);
+                            }
+                        }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
+                });
             });
     });
 

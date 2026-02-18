@@ -12,5 +12,6 @@ namespace HamrahanSystem.Domain.Repository
         TblWfwRelationStep GetByKey(int _RelationStepId);
         ICollection<TblWfwRelationStep> GetByFromProcessStepId(int fromProcessStepId);
         Task ReplaceForFromStep(int fromProcessStepId, IEnumerable<int> toProcessStepIds);
+        Task<Dictionary<int, int>> SyncForFromStep(int fromProcessStepId, IEnumerable<int> toProcessStepIds);
     }
 }

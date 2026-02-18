@@ -69,6 +69,7 @@ namespace HamrahanSystem.Infrastructure.Repository
             item.LensIndexId = tblLnsCustomLensTypeMaterial.LensIndexId;
             item.LensTypeName = tblLnsCustomLensTypeMaterial.LensTypeName;
             item.MaterialName = tblLnsCustomLensTypeMaterial.MaterialName;
+            item.DefineObjectId = tblLnsCustomLensTypeMaterial.DefineObjectId;
             item.OrderId = tblLnsCustomLensTypeMaterial.OrderId;
             item.IsActive = tblLnsCustomLensTypeMaterial.IsActive;
             Save();

@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "";
     string BasePage = "LensIndexRs";
+    var grantyCustomers = ViewBag.ListCustomer as IEnumerable<HamrahanSystem.Application.DTOs.ViewSalListCustomerDto>;
+    var defaultGrantyCustomer = grantyCustomers?.FirstOrDefault();
+    var defaultGrantyCustomerId = defaultGrantyCustomer?.DefineCustomerId?.ToString() ?? "";
+    var defaultGrantyCustomerName = defaultGrantyCustomer?.NameFormal ?? "";
 }
 
 
@@ -18,20 +22,11 @@
             <div class="mb-0">
                 <!--begin::Row-->
                 <div class="row gx-10 mb-5">
-
-                    @if ((bool)ViewBag.IsCutomer)
-                    {
-                        <div class="col-md-4 mb-2">
-                            @Html.DropDownListFor(model => model.DefineCustomerId, new MultiSelectList(ViewBag.ListCustomer, "DefineCustomerId", "NameFormal"), new { @class = "form-select form-select-solid form-select-lg ", id = "DefineCustomerId", data_control = "select2", data_placeholder = ResourcePages.Base_DefineCustomer, data_kt_element = "definecustomer" })
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-4 mb-2">
-                            @Html.DropDownListFor(model => model.DefineCustomerId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", id = "DefineCustomerId", data_control = "select2", data_placeholder = ResourcePages.Base_DefineCustomer, data_kt_element = "definecustomer" })
-                        </div>
-                    }
-
+                    <div class="col-md-4 mb-2">
+                        @Html.HiddenFor(model => model.DefineCustomerId, new { id = "DefineCustomerId", data_kt_element = "definecustomer", @Value = defaultGrantyCustomerId })
+                        <input type="text" id="DefineCustomerSearch" class="form-control form-control-solid form-control-lg" placeholder="@ResourcePages.Base_DefineCustomer" autocomplete="off" list="DefineCustomerSearchList" value="@defaultGrantyCustomerName" />
+                        <datalist id="DefineCustomerSearchList"></datalist>
+                    </div>
 
                 </div>
                 <!--begin::Separator-->
@@ -39,14 +34,15 @@
                 <!--end::Separator-->
                 <div class="row gx-10 mb-5  ">
                     <div class="col-md-6 mb-2">
-                        @Html.TextBoxFor(model => model.TblLnsOrderItems[0].ConsumerTitle, "", new { @class = "form-control form-control-solid", placeholder = ResourcePages.Base_Consumer, data_kt_element = "consumer" })
+                        @Html.TextBoxFor(model => model.TblLnsOrderItems[0].ConsumerTitle, "", new { @class = "form-control form-control-solid", placeholder = ResourcePages.Base_Consumer, data_kt_element = "consumer", autocomplete = "off" })
                     </div>
-                    <div class="col-md-6 mb-2">
-
-                        <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack  mb-5">
-                            <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700">@ResourcePages.Base_NeedTools</span>
-                            @Html.CheckBoxFor(model => model.TblLnsOrderItems[0].NeedTools, new { @class = "form-check-input", data_kt_element = "needtools",@checked = true })
-                        </label>
+                    <div class="col-md-6 mb-2 d-flex align-items-center">
+                        <div class="d-flex align-items-center gap-2 orderstock-tools-group">
+                            <span class="orderstock-inline-label">@ResourcePages.Base_NeedTools</span>
+                            <label class="form-check form-switch form-check-custom form-check-solid m-0">
+                                @Html.CheckBoxFor(model => model.TblLnsOrderItems[0].NeedTools, new { @class = "form-check-input", data_kt_element = "needtools", @checked = true })
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row gx-10 mb-5" data-kt-element="store-edit-row" style="display:none">
@@ -58,14 +54,17 @@
 
 
                     <div class="col-md-4 mb-2">
-                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Brand, data_kt_element = "brand" })
+                        <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Brand</label>
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_Brand, data_kt_element = "brand" })
                     </div>
                     <div class="col-md-4 mb-2">
-                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandLensTypeRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_LensType, data_kt_element = "lenstype" })
+                        <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_LensType</label>
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].BrandLensTypeRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_LensType, data_kt_element = "lenstype" })
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensTypeRLensIndexRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_LensIndex, data_kt_element = "lensindex" })
+                        <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_LensIndex</label>
+                        @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensTypeRLensIndexRId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_LensIndex, data_kt_element = "lensindex" })
                     </div>
                 </div>
                 <div class="form-group row" data-kt-buttons="true" data-kt-buttons-target=".form-check-image, .form-check-input">
@@ -126,16 +125,20 @@
                         </div>
                         <div class="row gx-10 border-top m-1 pt-2 border-gray-300 " style="direction:ltr ">
                             <div class="col-md-4 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensIndexRSphId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Sph, data_kt_element = "sph0" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Sph</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].LensIndexRSphId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_Sph, data_kt_element = "sph0" })
                             </div>
                             <div class="col-md-4 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].SphCylId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Cyl, data_kt_element = "cyl0" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Cyl</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].SphCylId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_Cyl, data_kt_element = "cyl0" })
                             </div>
                             <div class="col-md-4 mb-2">
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Axis</label>
                                 @Html.EditorFor(model => model.TblLnsOrderItems[0].Axis, new { htmlAttributes = new { min = 0, max = 180, style = " font-family: 'Arial Narrow', Arial, sans-serif !important;", @class = "form-control form-control-solid ", placeholder = ResourcePages.Base_Axis, data_kt_element = "axis0" } })
                             </div>
                             <div class="col-md-12 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].DefineObjectId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_DefineObject, data_kt_element = "defineobject0" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_DefineObject</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[0].DefineObjectId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_DefineObject, data_kt_element = "defineobject0", @disabled = "disabled" })
                             </div>
 
                         </div>
@@ -153,16 +156,20 @@
                         </div>
                         <div class="row gx-10 border-top m-1 pt-2  border-gray-300 " style="direction:ltr ">
                             <div class="col-md-4 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].LensIndexRSphId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Sph, data_kt_element = "sph1" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Sph</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].LensIndexRSphId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_Sph, data_kt_element = "sph1" })
                             </div>
                             <div class="col-md-4 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].SphCylId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_Cyl, data_kt_element = "cyl1" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Cyl</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].SphCylId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_Cyl, data_kt_element = "cyl1" })
                             </div>
                             <div class="col-md-4 mb-2">
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_Axis</label>
                                 @Html.EditorFor(model => model.TblLnsOrderItems[1].Axis, new { htmlAttributes = new { min = 0, max = 180, style = " font-family: 'Arial Narrow', Arial, sans-serif !important;", @class = "form-control form-control-solid ", placeholder = ResourcePages.Base_Axis, data_kt_element = "axis1" } })
                             </div>
                             <div class="col-md-12 mb-2">
-                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].DefineObjectId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_control = "select2", data_placeholder = ResourcePages.Base_DefineObject, data_kt_element = "defineobject1" })
+                                <label class="form-label mb-1 text-center d-block orderstock-field-label">@ResourcePages.Base_DefineObject</label>
+                                @Html.DropDownListFor(model => model.TblLnsOrderItems[1].DefineObjectId, new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-lg ", data_placeholder = ResourcePages.Base_DefineObject, data_kt_element = "defineobject1", @disabled = "disabled" })
                             </div>
 
                         </div>
@@ -418,6 +425,30 @@
 
 
 <style>
+    .orderstock-field-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 6px !important;
+    }
+
+    .orderstock-inline-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #56698d;
+        letter-spacing: 0.2px;
+        line-height: 1.2;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .orderstock-tools-group {
+        margin-left: 18px;
+    }
+
     .order-items-scroll {
         max-height: 288px;
         overflow-y: auto;
@@ -482,7 +513,24 @@
             $modal.find('[data-preview="' + key + '"]').text(normalizePreviewText(value));
         };
 
-        setPreviewText('customer', getSelectText($('#DefineCustomerId')));
+        var customerPreviewText = String($('#DefineCustomerSearch').val() || '').trim();
+        if (!customerPreviewText) {
+            var customerId = String($('#DefineCustomerId').val() || '').trim();
+            if (customerId && Array.isArray(ListCustomer)) {
+                var selectedCustomer = ListCustomer.find(function (item) {
+                    if (!item || typeof item !== 'object') {
+                        return false;
+                    }
+                    var itemId = String(item.defineCustomerId ?? item.DefineCustomerId ?? item.id ?? '').trim();
+                    return itemId === customerId;
+                });
+                if (selectedCustomer) {
+                    customerPreviewText = String(selectedCustomer.nameFormal ?? selectedCustomer.NameFormal ?? selectedCustomer.text ?? '').trim();
+                }
+            }
+        }
+
+        setPreviewText('customer', customerPreviewText);
         setPreviewText('description', $('[name="Description"]').val());
 
         var $tbody = $modal.find('[data-preview="items-body"]');
@@ -592,7 +640,7 @@
 
                          if (result.success) {
                              toastr.success("", '@ResourceAlert.AddSucces');
-                             location.reload();
+                             window.location.replace('@Url.Action("OrderStockGranty", "Orders")?clearConsumer=1&_=' + Date.now());
                          } else {
                              toastr.error('@ResourceAlert.AddError', result.message);
                          }
@@ -620,7 +668,7 @@
 
                          if (result.success) {
                              toastr.success("", '@ResourceAlert.AddSucces');
-                             location.reload();
+                             window.location.replace('@Url.Action("OrderStockGranty", "Orders")?clearConsumer=1&_=' + Date.now());
                          } else {
                              toastr.error('@ResourceAlert.AddError', result.message);
                          }
@@ -636,6 +684,7 @@
      var ListLensIndex = @Html.Raw(Json.Serialize(ViewBag.ListLensIndex));
      var ListSph = @Html.Raw(Json.Serialize(ViewBag.ListSph));
      var ListCyl = @Html.Raw(Json.Serialize(ViewBag.ListCyl));
+     var ListCustomer = @Html.Raw(Json.Serialize(ViewBag.ListCustomer));
 
 
     sessionStorage.setItem('list_brand', JSON.stringify(ListBrand));
@@ -644,6 +693,14 @@
     sessionStorage.setItem('list_sph_r',JSON.stringify(ListSph));
     sessionStorage.setItem('list_cyl_r',JSON.stringify(ListCyl));
     $(function () {
+        var clearConsumer = new URLSearchParams(window.location.search).get('clearConsumer') === '1';
+        if (clearConsumer) {
+            $('[data-kt-element="consumer"]').val('');
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState({}, document.title, '@Url.Action("OrderStockGranty", "Orders")');
+            }
+        }
+
         var lensTotalTarget = document.querySelector('#kt_invoice_form2 [data-kt-element="items"] tbody');
         if (lensTotalTarget) {
             var observer = new MutationObserver(function () {
@@ -653,11 +710,318 @@
         }
         updateLensTotal();
 
-        $(document).on('focus', '.select2-selection', function () {
-            var $select = $(this).closest('.select2-container').prev('select:enabled');
-            if ($select.length) {
-                $select.select2('open');
+        var $defineCustomerId = $('#DefineCustomerId');
+        var $defineCustomerSearch = $('#DefineCustomerSearch');
+        var $defineCustomerSearchList = $('#DefineCustomerSearchList');
+        var customerSearchTimer = null;
+        var customerSearchRequest = null;
+        var customerSearchToken = 0;
+
+        function readCustomerItemId(item) {
+            if (!item || typeof item !== 'object') {
+                return '';
             }
+            return String(item.defineCustomerId ?? item.DefineCustomerId ?? item.id ?? '').trim();
+        }
+
+        function readCustomerItemText(item) {
+            if (!item || typeof item !== 'object') {
+                return '';
+            }
+            return String(item.nameFormal ?? item.NameFormal ?? item.text ?? '').trim();
+        }
+
+        function clearCustomerSearchResults() {
+            $defineCustomerSearchList.empty();
+        }
+
+        function renderCustomerSearchResults(items) {
+            clearCustomerSearchResults();
+            (items || []).forEach(function (item) {
+                var id = readCustomerItemId(item);
+                var text = readCustomerItemText(item);
+                if (!id || !text) {
+                    return;
+                }
+                var option = document.createElement('option');
+                option.value = text;
+                option.setAttribute('data-id', id);
+                $defineCustomerSearchList.append(option);
+            });
+        }
+
+        function applySelectedCustomerIdFromText() {
+            var typedText = String($defineCustomerSearch.val() || '').trim();
+            if (!typedText) {
+                $defineCustomerId.val('');
+                return;
+            }
+
+            var selectedId = '';
+            $defineCustomerSearchList.find('option').each(function () {
+                if (String($(this).val() || '').trim() === typedText) {
+                    selectedId = String($(this).attr('data-id') || '').trim();
+                    return false;
+                }
+            });
+
+            if (!selectedId) {
+                var match = (ListCustomer || []).find(function (item) {
+                    var text = readCustomerItemText(item);
+                    return text && text.toLowerCase() === typedText.toLowerCase();
+                });
+                if (match) {
+                    selectedId = readCustomerItemId(match);
+                }
+            }
+
+            $defineCustomerId.val(selectedId);
+        }
+
+        function syncCustomerSearchValueFromHidden() {
+            var selectedId = String($defineCustomerId.val() || '').trim();
+            if (!selectedId) {
+                return;
+            }
+            var selectedText = '';
+            $defineCustomerSearchList.find('option').each(function () {
+                if (String($(this).attr('data-id') || '').trim() === selectedId) {
+                    selectedText = String($(this).val() || '').trim();
+                    return false;
+                }
+            });
+            if (selectedText) {
+                $defineCustomerSearch.val(selectedText);
+            }
+        }
+
+        function filterLocalCustomers(term) {
+            var text = String(term || '').trim().toLowerCase();
+            if (!text) {
+                return (ListCustomer || []);
+            }
+            return (ListCustomer || []).filter(function (item) {
+                return readCustomerItemText(item).toLowerCase().indexOf(text) !== -1;
+            });
+        }
+
+        function fetchCustomerSearchResults(term) {
+            if (customerSearchRequest && customerSearchRequest.readyState !== 4) {
+                customerSearchRequest.abort();
+            }
+
+            var token = ++customerSearchToken;
+            customerSearchRequest = $.ajax({
+                url: '@Url.Action("ListDefineCustomerSearch", "Orders")',
+                type: 'POST',
+                dataType: 'JSON',
+                data: { search: term }
+            }).done(function (data) {
+                if (token !== customerSearchToken) {
+                    return;
+                }
+                renderCustomerSearchResults(data && data.results ? data.results : []);
+                applySelectedCustomerIdFromText();
+            }).fail(function (_xhr, status) {
+                if (status === 'abort') {
+                    return;
+                }
+                renderCustomerSearchResults(filterLocalCustomers(term));
+                applySelectedCustomerIdFromText();
+            });
+        }
+
+        renderCustomerSearchResults(ListCustomer || []);
+        syncCustomerSearchValueFromHidden();
+        applySelectedCustomerIdFromText();
+
+        $defineCustomerSearch
+            .off('input.orderStockGrantyCustomerSearch')
+            .on('input.orderStockGrantyCustomerSearch', function () {
+                applySelectedCustomerIdFromText();
+                var term = String($(this).val() || '').trim();
+                if (customerSearchTimer) {
+                    clearTimeout(customerSearchTimer);
+                }
+                if (term.length < 2) {
+                    renderCustomerSearchResults(filterLocalCustomers(term));
+                    return;
+                }
+                customerSearchTimer = setTimeout(function () {
+                    fetchCustomerSearchResults(term);
+                }, 250);
+            })
+            .off('change.orderStockGrantyCustomerSearch blur.orderStockGrantyCustomerSearch')
+            .on('change.orderStockGrantyCustomerSearch blur.orderStockGrantyCustomerSearch', function () {
+                applySelectedCustomerIdFromText();
+            });
+
+        function populateNativeSelect($select, items) {
+            $select.empty();
+            $select.append($('<option/>', { value: '', text: '' }));
+            (items || []).forEach(function (item) {
+                $select.append($('<option/>', { value: item.id, text: item.text }));
+            });
+        }
+
+        function clearNativeSelect($select) {
+            populateNativeSelect($select, []);
+            $select.val('');
+        }
+
+        function parseStoredList(key) {
+            const raw = sessionStorage.getItem(key);
+            if (!raw) {
+                return [];
+            }
+            try {
+                return JSON.parse(raw);
+            } catch (_e) {
+                return [];
+            }
+        }
+
+        var $brand = $('[data-kt-element="brand"]');
+        var $lensType = $('[data-kt-element="lenstype"]');
+        var $lensIndex = $('[data-kt-element="lensindex"]');
+        var $sph0 = $('[data-kt-element="sph0"]');
+        var $sph1 = $('[data-kt-element="sph1"]');
+        var $cyl0 = $('[data-kt-element="cyl0"]');
+        var $cyl1 = $('[data-kt-element="cyl1"]');
+        var $defineObject0 = $('[data-kt-element="defineobject0"]');
+        var $defineObject1 = $('[data-kt-element="defineobject1"]');
+
+        function enforceDefineObjectReadOnly() {
+            $defineObject0.prop('disabled', true);
+            $defineObject1.prop('disabled', true);
+        }
+
+        function populateDefineObjectFromCyl($defineObject, cylId) {
+            var data = parseStoredList('list_cyl_r').filter(function (x) { return String(x.id) === String(cylId); });
+            var defineObjectData = [];
+            if (data.length > 0 && data[0].defineobjectid) {
+                defineObjectData = [{ id: data[0].defineobjectid, text: data[0].nameobject }];
+            }
+            populateNativeSelect($defineObject, defineObjectData);
+            if (defineObjectData.length > 0) {
+                $defineObject.val(String(defineObjectData[0].id));
+            } else {
+                $defineObject.val('');
+            }
+            $defineObject.trigger('change');
+            enforceDefineObjectReadOnly();
+        }
+
+        populateNativeSelect($brand, parseStoredList('list_brand'));
+        clearNativeSelect($lensType);
+        clearNativeSelect($lensIndex);
+        clearNativeSelect($sph0);
+        clearNativeSelect($sph1);
+        clearNativeSelect($cyl0);
+        clearNativeSelect($cyl1);
+        clearNativeSelect($defineObject0);
+        clearNativeSelect($defineObject1);
+        enforceDefineObjectReadOnly();
+
+        $('[data-kt-element="axis0"]').on('input', function () {
+            try {
+                var value = parseInt($(this).val(), 10);
+                if (value > 180) {
+                    $(this).val(0);
+                    return;
+                }
+                $(this).val(value);
+            } catch (_e) {
+                $(this).val('');
+            }
+        });
+
+        $('[data-kt-element="axis1"]').on('input', function () {
+            try {
+                var value = parseInt($(this).val(), 10);
+                if (value > 180) {
+                    $(this).val(0);
+                    return;
+                }
+                $(this).val(value);
+            } catch (_e) {
+                $(this).val('');
+            }
+        });
+
+        $brand.on('change', function () {
+            var id = $(this).val();
+            var data = parseStoredList('list_lenstype_r').filter(function (x) { return String(x.parentid) === String(id); });
+            populateNativeSelect($lensType, data);
+            clearNativeSelect($lensIndex);
+            clearNativeSelect($sph0);
+            clearNativeSelect($sph1);
+            clearNativeSelect($cyl0);
+            clearNativeSelect($cyl1);
+            clearNativeSelect($defineObject0);
+            clearNativeSelect($defineObject1);
+            enforceDefineObjectReadOnly();
+        });
+
+        $lensType.on('change', function () {
+            var id = $(this).val();
+            var data = parseStoredList('list_lensindex_r').filter(function (x) { return String(x.parentid) === String(id); });
+            populateNativeSelect($lensIndex, data);
+            clearNativeSelect($sph0);
+            clearNativeSelect($sph1);
+            clearNativeSelect($cyl0);
+            clearNativeSelect($cyl1);
+            clearNativeSelect($defineObject0);
+            clearNativeSelect($defineObject1);
+            enforceDefineObjectReadOnly();
+        });
+
+        $lensIndex.on('change', function () {
+            var id = $(this).val();
+            var data = parseStoredList('list_sph_r').filter(function (x) { return String(x.parentid) === String(id); });
+            populateNativeSelect($sph0, data);
+            populateNativeSelect($sph1, data);
+            clearNativeSelect($cyl0);
+            clearNativeSelect($cyl1);
+            clearNativeSelect($defineObject0);
+            clearNativeSelect($defineObject1);
+            enforceDefineObjectReadOnly();
+        });
+
+        $sph0.on('change', function () {
+            var id = $(this).val();
+            var data = parseStoredList('list_cyl_r').filter(function (x) { return String(x.parentid) === String(id); });
+            populateNativeSelect($cyl0, data);
+            clearNativeSelect($defineObject0);
+            enforceDefineObjectReadOnly();
+        });
+
+        $sph1.on('change', function () {
+            var id = $(this).val();
+            var data = parseStoredList('list_cyl_r').filter(function (x) { return String(x.parentid) === String(id); });
+            populateNativeSelect($cyl1, data);
+            clearNativeSelect($defineObject1);
+            enforceDefineObjectReadOnly();
+        });
+
+        $cyl0.on('change', function () {
+            populateDefineObjectFromCyl($defineObject0, $(this).val());
+        });
+
+        $cyl1.on('change', function () {
+            populateDefineObjectFromCyl($defineObject1, $(this).val());
+        });
+
+        $('#sameasright').on('click', function () {
+            $sph1.val($sph0.val()).trigger('change');
+            $cyl1.val($cyl0.val()).trigger('change');
+            $('[data-kt-element="axis1"]').val($('[data-kt-element="axis0"]').val());
+        });
+
+        $('#sameasleft').on('click', function () {
+            $sph0.val($sph1.val()).trigger('change');
+            $cyl0.val($cyl1.val()).trigger('change');
+            $('[data-kt-element="axis0"]').val($('[data-kt-element="axis1"]').val());
         });
 
         function isOuSelected() {
@@ -666,60 +1030,28 @@
 
         function isRightEyeLastFieldFocused() {
             var active = document.activeElement;
-            if (!active) {
-                return false;
-            }
-            var $active = $(active);
-            if ($active.is('[data-kt-element="defineobject1"], [data-kt-element="axis1"]')) {
-                return true;
-            }
-            var $container = $active.closest('.select2-container');
-            if ($container.length) {
-                var $select = $container.prev('select');
-                return $select.is('[data-kt-element="defineobject1"]');
-            }
-            return false;
+            return !!active && (active.matches('[data-kt-element="axis1"]') || active.matches('[data-kt-element="cyl1"]'));
         }
 
         function isLeftEyeLastFieldFocused() {
             var active = document.activeElement;
-            if (!active) {
-                return false;
-            }
-            var $active = $(active);
-            if ($active.is('[data-kt-element="defineobject0"], [data-kt-element="axis0"]')) {
-                return true;
-            }
-            var $container = $active.closest('.select2-container');
-            if ($container.length) {
-                var $select = $container.prev('select');
-                return $select.is('[data-kt-element="defineobject0"]');
-            }
-            return false;
+            return !!active && (active.matches('[data-kt-element="axis0"]') || active.matches('[data-kt-element="cyl0"]'));
         }
 
         function focusLeftEyeStart() {
             var $target = $('#lefteye').find('[data-kt-element="sph0"]:enabled');
             if ($target.length) {
                 $target.focus();
-                $target.select2('open');
                 return;
             }
             $target = $('#lefteye').find('[data-kt-element="cyl0"]:enabled');
             if ($target.length) {
                 $target.focus();
-                $target.select2('open');
                 return;
             }
             $target = $('#lefteye').find('[data-kt-element="axis0"]:enabled');
             if ($target.length) {
                 $target.focus();
-                return;
-            }
-            $target = $('#lefteye').find('[data-kt-element="defineobject0"]:enabled');
-            if ($target.length) {
-                $target.focus();
-                $target.select2('open');
             }
         }
 
@@ -748,304 +1080,39 @@
             focusLeftEyeStart();
         });
 
-             $('input[name="radioGroup"]').on("change", function () {
-                 $('#lefteye').find(":input").prop('disabled', true);
-                 $('#righteye').find(":input").prop('disabled', true);
-                 $('#lefteye').removeClass("active");
-                 $('#righteye').removeClass("active");
-                 $('#sameasright').hide();
-                 $('#sameasleft').hide();
-                 var item=$('input[name="radioGroup"]:checked').val();
+        $('input[name="radioGroup"]').on('change', function () {
+            $('#lefteye').find(':input').prop('disabled', true);
+            $('#righteye').find(':input').prop('disabled', true);
+            $('#lefteye').removeClass('active');
+            $('#righteye').removeClass('active');
+            $('#sameasright').hide();
+            $('#sameasleft').hide();
+            var item = $('input[name="radioGroup"]:checked').val();
 
-                 switch(item)
-                 {
-                     case "1":
-                        $('#lefteye').addClass('active');
-                        $('#righteye').addClass('active');
-                        $('#lefteye').find(":input").prop('disabled', false);
-                        $('#righteye').find(":input").prop('disabled', false);
-                        $('#sameasright').show();
-                 $('#sameasleft').show();
-                     break;
-                     case "2":
-                        $('#lefteye').addClass('active');
-                        $('#lefteye').find(":input").prop('disabled', false);
-
-                     break;
-                     case "3":
-                        $('#righteye').addClass('active');
-                        $('#righteye').find(":input").prop('disabled', false);
-                     break
-                 }
-
-
-             });
-    $('input[name="radioGroup"][value="1"]').prop('checked', true);
-    $('input[name="radioGroup"]').trigger('change');
-
-        $("#DefineCustomerId").select2({
-            //theme: "bootstrap4",
-             //dropdownParent: $("#modal-Tree"),
-            language: 'fa',
-            minimumInputLength: 2,
-            dir:"rtl",
-            ajax: {
-                url:  '@Url.Action("ListDefineCustomerSearch", "Orders")',
-                type: 'POST',
-                dataType: 'JSON',
-                // contentType: "application/json; charset=utf-8",
-                delay: 250,
-                data:
-                    function (params) {
-                        var test={search:params.term}
-                        return test // search term
-
-                    }
-                    ,
-                processResults: function (data) {
-
-                    return {
-                        results: data.results
-                    };
-                },
-                cache: true
+            switch (item) {
+                case '1':
+                    $('#lefteye').addClass('active');
+                    $('#righteye').addClass('active');
+                    $('#lefteye').find(':input').prop('disabled', false);
+                    $('#righteye').find(':input').prop('disabled', false);
+                    $('#sameasright').show();
+                    $('#sameasleft').show();
+                    break;
+                case '2':
+                    $('#lefteye').addClass('active');
+                    $('#lefteye').find(':input').prop('disabled', false);
+                    break;
+                case '3':
+                    $('#righteye').addClass('active');
+                    $('#righteye').find(':input').prop('disabled', false);
+                    break;
             }
+
+            enforceDefineObjectReadOnly();
         });
 
-
-            const storedDataString = sessionStorage.getItem('list_brand');
-            let data = [];
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-            }
-
-            $('[data-kt-element="brand"]').select2({
-          data: data
-
-        });
-        $('[data-kt-element="axis0"]').on("input", function () {
-            try{
-            value= parseInt($(this).val());
-            
-            if(value>180)
-            {
-                $(this).val(0);
-            return;
-            }
-            $(this).val(value);
-            }
-            catch
-            {
-                $(this).val('');
-            }
-        });
-        $('[data-kt-element="axis1"]').on("input", function () {
-            try
-            {
-               value= parseInt($(this).val());
-               
-            if(value>180)
-            {
-                $(this).val(0);
-                return;
-            }
-
-            $(this).val(value);
-            }
-            catch
-            {
-                $(this).val('');
-            }
-        });
-
-
-
-
-
-        $('[data-kt-element="brand"]').on("select2:select", function () {
-             $('[data-kt-element="lenstype"]').empty();
-               $('[data-kt-element="lensindex"]').empty();
-              $('[data-kt-element="sph0"],[data-kt-element="sph1"]').empty();
-             $('[data-kt-element="cyl0"],[data-kt-element="cyl1"]').empty();
-             $('[data-kt-element="defineobject0"],[data-kt-element="defineobject1"]').empty();
-             const storedDataString = sessionStorage.getItem('list_lenstype_r');
-            let data = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.parentid==id);
-            }
-
-            $('[data-kt-element="lenstype"]').select2({
-                data: data
-
-             });
-             $('[data-kt-element="lenstype"]').select2('val','');
-             $('[data-kt-element="lenstype"]').val('').trigger('select2:select');
-             $('[data-kt-element="lenstype"]').select2();
-             
-        });
-
-          $('[data-kt-element="lenstype"]').on("select2:select", function () {
-              $('[data-kt-element="lensindex"]').empty();
-              $('[data-kt-element="sph0"],[data-kt-element="sph1"]').empty();
-             $('[data-kt-element="cyl0"],[data-kt-element="cyl1"]').empty();
-             $('[data-kt-element="defineobject0"],[data-kt-element="defineobject1"]').empty();
-                  const storedDataString = sessionStorage.getItem('list_lensindex_r');
-            let data = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.parentid==id);
-            }
-
-            $('[data-kt-element="lensindex"]').select2({
-                data: data
-
-             });
-             
-            $('[data-kt-element="lensindex"]').val('').trigger('select2:select');
-            $('[data-kt-element="lensindex"]').select2('val','');
-            $('[data-kt-element="lensindex"]').select2();
-        });
-
-         $('[data-kt-element="lensindex"]').on("select2:select", function () {
-             $('[data-kt-element="sph0"],[data-kt-element="sph1"]').empty();
-             $('[data-kt-element="cyl0"],[data-kt-element="cyl1"]').empty();
-             $('[data-kt-element="defineobject0"],[data-kt-element="defineobject1"]').empty();
-            const storedDataString = sessionStorage.getItem('list_sph_r');
-            let data = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.parentid==id);
-            }
-
-            $('[data-kt-element="sph0"],[data-kt-element="sph1"]').select2({
-                data: data
-
-             });
-             
-             $('[data-kt-element="sph0"]').val('').trigger('select2:select');
-             $('[data-kt-element="sph1"]').val('').trigger('select2:select');
-             $('[data-kt-element="sph0"]').select2('val','');
-             $('[data-kt-element="sph1"]').select2('val','');
-             $('[data-kt-element="sph0"]').select2();
-             $('[data-kt-element="sph1"]').select2();
-        });
-
-        $('[data-kt-element="sph0"]').on("select2:select", function () {
-            $('[data-kt-element="cyl0"]').empty();
-            $('[data-kt-element="defineobject0"]').empty();
-                  const storedDataString = sessionStorage.getItem('list_cyl_r');
-            let data = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.parentid==id);
-            }
-
-            $('[data-kt-element="cyl0"]').select2({
-                data: data
-
-             });
-             
-             $('[data-kt-element="cyl0"]').val('').trigger('select2:select');
-             $('[data-kt-element="cyl0"]').select2('val','');
-             $('[data-kt-element="cyl0"]').select2();
-             
-             
-        });
-
-               $('[data-kt-element="cyl0"]').on("select2:select", function () {
-            $('[data-kt-element="defineobject0"]').empty();
-                  const storedDataString = sessionStorage.getItem('list_cyl_r');
-            let data = [];
-            let datain = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.id==id);
-                if(data.length >0)
-                    datain=[{id:data[0].defineobjectid,text:data[0].nameobject}]
-            }
-
-            $('[data-kt-element="defineobject0"]').select2({
-                data: datain
-
-             });
-
-        });
-
-        $('[data-kt-element="sph1"]').on("select2:select", function () {
-            $('[data-kt-element="cyl1"]').empty();
-            $('[data-kt-element="defineobject1"]').empty();
-                  const storedDataString = sessionStorage.getItem('list_cyl_r');
-            let data = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.parentid==id);
-            }
-
-            $('[data-kt-element="cyl1"]').select2({
-                data: data
-             });
-             
-             $('[data-kt-element="cyl1"]').val('').trigger('select2:select');
-             $('[data-kt-element="cyl1"]').select2('val','');
-             $('[data-kt-element="cyl1"]').select2();
-             
-        });
-
-         $('[data-kt-element="cyl1"]').on("select2:select", function () {
-            $('[data-kt-element="defineobject1"]').empty();
-                  const storedDataString = sessionStorage.getItem('list_cyl_r');
-            let data = [];
-            let datain = [];
-            id=($(this).val());
-            if (storedDataString) {
-                data = JSON.parse(storedDataString);
-                data= data.filter(x=>x.id==id);
-                if(data.length >0)
-                    datain=[{id:data[0].defineobjectid,text:data[0].nameobject}]
-            }
-
-            $('[data-kt-element="defineobject1"]').select2({
-                data: datain
-
-             });
-
-        });
-
-
-
-
-           $('#sameasright').on("click", function () {
-             
-             $('[data-kt-element="sph1"]').val($('[data-kt-element="sph0"]').val()).trigger('select2:select');
-              $('[data-kt-element="cyl1"]').val($('[data-kt-element="cyl0"]').val()).trigger('select2:select');
-              $('[data-kt-element="axis1"]').val($('[data-kt-element="axis0"]').val());
-
-              $('[data-kt-element="sph1"]').select2();
-              $('[data-kt-element="cyl1"]').select2();
-             
-             });
-
-
-              $('#sameasleft').on("click", function () {
-               
-                  $('[data-kt-element="sph0"]').val($('[data-kt-element="sph1"]').val()).trigger('select2:select');
-              $('[data-kt-element="cyl0"]').val($('[data-kt-element="cyl1"]').val()).trigger('select2:select');
-              $('[data-kt-element="axis0"]').val($('[data-kt-element="axis1"]').val());
-
-              $('[data-kt-element="sph0"]').select2();
-              $('[data-kt-element="cyl0"]').select2();
-
-
-             });
-
-
+        $('input[name="radioGroup"][value="1"]').prop('checked', true);
+        $('input[name="radioGroup"]').trigger('change');
     });
 
 </script>

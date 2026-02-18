@@ -122,8 +122,7 @@ var KTAppInvoicesCreateGranty = (function () {
                 if (!el) {
                     return;
                 }
-                $(el).val(value).trigger('select2:select');
-                $(el).trigger('change');
+                $(el).val(value).trigger('change');
             };
             e.addEventListener("keydown", function (event) {
                 if (event.key !== "Tab" || event.shiftKey) {
@@ -141,12 +140,7 @@ var KTAppInvoicesCreateGranty = (function () {
                     return;
                 }
                 event.preventDefault();
-                var s2 = $(rightSph).data('select2');
-                if (s2 && s2.$selection) {
-                    s2.$selection.focus();
-                } else {
-                    rightSph.focus();
-                }
+                rightSph.focus();
             });
             e.querySelector(' [data-kt-element="add-item"]').addEventListener("click", function (n) {
 
@@ -456,9 +450,7 @@ var KTAppInvoicesCreateGranty = (function () {
                     storeEdit.value = "";
                 }
 
-                $('[data-kt-element="brand"]').val('').trigger('select2:select');
-                $('[data-kt-element="brand"]').select2('val', '');
-                $('[data-kt-element="brand"]').select2();
+                $('[data-kt-element="brand"]').val('').trigger('change');
                 $('[data-kt-element="axis0"]').val('');
                 $('[data-kt-element="axis1"]').val('');
                 e.querySelector('[data-kt-element="items"] tbody').appendChild(l), a(), b()

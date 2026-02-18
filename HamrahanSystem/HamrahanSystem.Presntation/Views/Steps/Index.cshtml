@@ -27,51 +27,45 @@
 <script type="text/javascript">
 
     function LoadDialog(nodeId, typeId) {
-        //$("#modal-loader").html("");
-            url = ''
-            switch (typeId) {
-                case 1: url = '@Url.Action("Create", BasePage)';
-                    break;
-                case 2: url = '@Url.Action("Edit", BasePage)';
-                    break;
-                case 3: url = '@Url.Action("Delete", BasePage)';
-                    break;
-
-
-            }
-
-            if (typeId != 3) {
-                $.get(url, typeId >= 1 ? { id: nodeId } : {})
-                    .done(function (result) {
-
-                        $("#modal-loader").html(result);
-                        $("#modal-Tree").modal('show');
-                    }).fail(function () { toastr.error('@ResourceAlert.AddError', '') });
-            }
-            else {
-
-                if (typeId == 3) {
-                    $.post(url,{ id: nodeId })
-                     .done(function (result) {
-
-                         if (result.success) {
-                             toastr.success("",'@ResourceAlert.AddSucces' );
-                         } else {
-                             toastr.error('@ResourceAlert.AddError', result.message);
-                         }
-
-
-                     }).fail(function () { toastr.error('@ResourceAlert.AddError' , '') });
-                            if (result.success) {
-                                toastr.success("", '@ResourceAlert.AddSucces' );
-                                location.reload();
-                            } else {
-                                toastr.error('@ResourceAlert.AddError', result.message);
-                            }
-                           LoadItems();
-                            return;
-                        }
+        var url = '';
+        switch (typeId) {
+            case 1:
+                url = '@Url.Action("Create", BasePage)';
+                break;
+            case 2:
+                url = '@Url.Action("Edit", BasePage)';
+                break;
+            case 3:
+                url = '@Url.Action("Delete", BasePage)';
+                break;
         }
+
+        if (typeId !== 3) {
+            $.get(url, typeId >= 1 ? { id: nodeId } : {})
+                .done(function (result) {
+                    $("#modal-loader").html(result);
+                    $("#modal-Tree").modal('show');
+                })
+                .fail(function (xhr) {
+                    var msg = xhr && xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : '';
+                    toastr.error('@ResourceAlert.AddError', msg);
+                });
+        } else {
+            $.post(url, { id: nodeId })
+                .done(function (result) {
+                    if (result && result.success) {
+                        toastr.success("", '@ResourceAlert.AddSucces');
+                        LoadItems();
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result && result.message ? result.message : '');
+                    }
+                })
+                .fail(function (xhr) {
+                    var msg = xhr && xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : '';
+                    toastr.error('@ResourceAlert.AddError', msg);
+                });
+        }
+
         $(document).resize();
 
     }

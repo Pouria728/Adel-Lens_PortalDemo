@@ -105,6 +105,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-transition-result" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light-primary">
+                <h5 class="modal-title">انتخاب نتیجه انتقال</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 text-muted">
+                    برای ادامه انتقال این مرحله، یکی از گزینه‌های زیر را انتخاب کنید.
+                </div>
+                <div id="transitionResultOptionList" class="d-flex flex-column gap-2"></div>
+                <div id="transitionMaterialScanBox" class="mt-4 d-none">
+                    <label for="transitionMaterialBarcode" class="form-label fw-semibold">بارکد ماده مصرفی</label>
+                    <input type="text" id="transitionMaterialBarcode" class="form-control form-control-solid" placeholder="با گان اسکن کنید (فعلا تایپ هم مجاز است)" autocomplete="off" />
+                    <small class="text-muted d-block mt-2">هر اسکن معادل یک عدد مصرف است.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCancelTransitionResult" class="btn btn-light">انصراف</button>
+                <button type="button" id="btnConfirmTransitionResult" class="btn btn-primary">تایید و ادامه</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -133,6 +159,102 @@
             .toUpperCase();
     }
 
+    var pendingAdvanceOrderCode = '';
+    var pendingTransitionOptions = [];
+    var pendingRequiresMaterialScan = false;
+
+    function normalizeMaterialBarcode(value) {
+        return (value || '')
+            .toString()
+            .trim()
+            .replace(/\s+/g, '')
+            .replace(/[{}\[\]\(\)]/g, '')
+            .replace(/[۰-۹]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 1728); })
+            .replace(/[٠-٩]/g, function (d) { return String.fromCharCode(d.charCodeAt(0) - 1584); });
+    }
+
+    function sendAdvanceByCode(orderCode, selectedResultOption, selectedResultStepId, materialBarcode) {
+        return $.post('@Url.Action("OrderReqSendByCode", BasePage)', {
+            orderCode: orderCode,
+            selectedResultOption: selectedResultOption || '',
+            selectedResultStepId: selectedResultStepId || null,
+            materialBarcode: materialBarcode || ''
+        });
+    }
+
+    function openTransitionResultModal(orderCode, options, requiresMaterialScan, selectedResultStepId, selectedMaterialBarcode) {
+        pendingAdvanceOrderCode = orderCode;
+        pendingTransitionOptions = options || [];
+        pendingRequiresMaterialScan = requiresMaterialScan === true;
+        var $list = $('#transitionResultOptionList');
+        $list.empty();
+        var index = 0;
+        pendingTransitionOptions.forEach(function (option) {
+            var optionIdValue = 0;
+            var text = '';
+            if (typeof option === 'string') {
+                text = option.trim();
+            } else if (option) {
+                optionIdValue = parseInt(option.id || option.resultStepId || 0);
+                text = (option.text || option.name || '').toString().trim();
+            }
+            if (!text) {
+                return;
+            }
+            index++;
+            var optionId = 'transitionResultOption_' + index;
+            var $item = $('<label/>', {
+                'class': 'form-check form-check-custom form-check-solid align-items-start py-1'
+            });
+            var $input = $('<input/>', {
+                'class': 'form-check-input mt-1',
+                type: 'radio',
+                name: 'transitionResultOptionRadio',
+                id: optionId,
+                value: text,
+                'data-result-step-id': optionIdValue > 0 ? optionIdValue : ''
+            });
+            var $labelText = $('<span/>', {
+                'class': 'form-check-label text-gray-800 fw-semibold me-2',
+                text: text
+            });
+            $item.append($input).append($labelText);
+            $list.append($item);
+        });
+
+        if (index === 0) {
+            $list.append('<div class="text-muted">برای این مرحله گزینه‌ای تعریف نشده است.</div>');
+        }
+
+        if (selectedResultStepId && selectedResultStepId > 0) {
+            $list.find('input[type="radio"][data-result-step-id="' + selectedResultStepId + '"]').prop('checked', true);
+        }
+
+        $('#transitionMaterialBarcode').val(selectedMaterialBarcode || '');
+        if (pendingRequiresMaterialScan) {
+            $('#transitionMaterialScanBox').removeClass('d-none');
+        } else {
+            $('#transitionMaterialScanBox').addClass('d-none');
+        }
+
+        $('#modal-transition-result').modal('show');
+        if (pendingRequiresMaterialScan) {
+            $('#transitionMaterialBarcode').focus().select();
+        } else {
+            $list.find('input[type="radio"]').first().focus();
+        }
+    }
+
+    function closeTransitionResultModal() {
+        pendingAdvanceOrderCode = '';
+        pendingTransitionOptions = [];
+        pendingRequiresMaterialScan = false;
+        $('#transitionResultOptionList').empty();
+        $('#transitionMaterialBarcode').val('');
+        $('#transitionMaterialScanBox').addClass('d-none');
+        $('#modal-transition-result').modal('hide');
+    }
+
     function advanceOrderByCode() {
         var orderCode = normalizeOrderCode($('#advanceOrderCode').val());
         if (!orderCode) {
@@ -141,12 +263,15 @@
             return;
         }
 
-        $.post('@Url.Action("OrderReqSendByCode", BasePage)', { orderCode: orderCode })
+        sendAdvanceByCode(orderCode, '', null, '')
             .done(function (result) {
                 if (result.success) {
                     toastr.success('', '@ResourceAlert.SendSuccess');
                     $('#advanceOrderCode').val('').focus();
+                    closeTransitionResultModal();
                     LoadItems();
+                } else if (result.requiresResultChoice || result.requiresMaterialScan) {
+                    openTransitionResultModal(orderCode, result.options || [], result.requiresMaterialScan === true, null, '');
                 } else {
                     toastr.error('@ResourceAlert.AddError', result.message || '');
                     $('#advanceOrderCode').focus().select();
@@ -205,7 +330,7 @@
         html += '<table class="table table-sm table-bordered order-history-table">';
         html += '<thead><tr>';
         html += '<th>مرحله</th>';
-        html += '<th>کد مرحله</th>';
+        html += '<th>گزینه انتقال</th>';
         html += '<th>کاربر</th>';
         html += '<th>زمان ورود</th>';
         html += '<th>زمان خروج</th>';
@@ -216,7 +341,7 @@
             var row = steps[i] || {};
             html += '<tr>';
             html += '<td>' + (row.stepName || '-') + '</td>';
-            html += '<td>' + (row.stepCode || '-') + '</td>';
+            html += '<td>' + (row.transitionResult || '-') + '</td>';
             html += '<td>' + (row.userName || '-') + '</td>';
             html += '<td>' + (row.dateCreate || '-') + '</td>';
             html += '<td>' + (row.dateComplete || '-') + '</td>';
@@ -267,16 +392,13 @@
                 return JSON.stringify(data);
             },
           // ajaxGridOptions: { contentType: "application/json" },
-       colNames: ['@ResourcePages.Base_Id','@ResourcePages.Base_DefineCustomer','&#1705;&#1575;&#1585;&#1576;&#1585; &#1579;&#1576;&#1578; &#1705;&#1606;&#1606;&#1583;&#1607;','@ResourcePages.Base_Factore','@ResourcePages.IndexDocument','@ResourcePages.Base_Process','@ResourcePages.Base_Code','@ResourcePages.OrderStatus','@ResourcePages.OrderRequest','زمان ورود','زمان خروج', ''],
+       colNames: ['@ResourcePages.Base_Id','@ResourcePages.Base_DefineCustomer','&#1705;&#1575;&#1585;&#1576;&#1585; &#1579;&#1576;&#1578; &#1705;&#1606;&#1606;&#1583;&#1607;','@ResourcePages.Base_Factore','@ResourcePages.OrderStatus','@ResourcePages.OrderRequest','زمان ورود','زمان خروج', ''],
             colModel: [
                 
                 { name: 'id', index: 'id', align: "Center", hidden: true, key: true, search: false },
                 { name: 'customer', index: 'customer', align: "Center", sortable: true, search: true },
                 { name: 'createdByUser', index: 'createdByUser', align: "Center", sortable: true, search: false },
                 { name: 'factorNo', index: 'factorNo', align: "Center", sortable: true, search: true },
-                { name: 'indexDocuments', index: 'indexDocuments', align: "Center", sortable: true, search: true },
-                { name: 'stepName', index: 'stepName', align: "Center", sortable: true, search: false },
-                { name: 'stepCode', index: 'stepCode', align: "Center", sortable: true, search: false },
                 { name: 'statusOrder', index: 'statusOrder', align: "Center", sortable: true, search: false },
                 { name: 'statusRequest', index: 'statusRequest', align: "Center", sortable: true, search: false },
                 { name: 'dateCreate', index: 'dateCreate', align: "Center", sortable: true, search: false },
@@ -368,6 +490,61 @@
                 advanceOrderByCode();
             }
         }).focus();
+
+        $('#btnCancelTransitionResult').off('click').on('click', function () {
+            closeTransitionResultModal();
+            $('#advanceOrderCode').focus().select();
+        });
+
+        $('#btnConfirmTransitionResult').off('click').on('click', function () {
+            var hasOptions = $('#transitionResultOptionList input[type="radio"]').length > 0;
+            var $selected = $('input[name="transitionResultOptionRadio"]:checked');
+            var selectedResult = ($selected.val() || '').toString().trim();
+            var selectedResultStepId = parseInt($selected.data('result-step-id') || 0);
+            var selectedMaterialBarcode = normalizeMaterialBarcode($('#transitionMaterialBarcode').val());
+            if (!pendingAdvanceOrderCode) {
+                closeTransitionResultModal();
+                return;
+            }
+            if (hasOptions && !selectedResult) {
+                toastr.warning('انتخاب نتیجه انتقال الزامی است.');
+                $('#transitionResultOptionList input[type="radio"]').first().focus();
+                return;
+            }
+            if (pendingRequiresMaterialScan && !selectedMaterialBarcode) {
+                toastr.warning('اسکن بارکد ماده مصرفی الزامی است.');
+                $('#transitionMaterialBarcode').focus().select();
+                return;
+            }
+
+            sendAdvanceByCode(
+                pendingAdvanceOrderCode,
+                selectedResult,
+                selectedResultStepId > 0 ? selectedResultStepId : null,
+                selectedMaterialBarcode)
+                .done(function (result) {
+                    if (result.success) {
+                        toastr.success('', '@ResourceAlert.SendSuccess');
+                        $('#advanceOrderCode').val('').focus();
+                        closeTransitionResultModal();
+                        LoadItems();
+                    } else if (result.requiresResultChoice || result.requiresMaterialScan) {
+                        toastr.warning(result.message || 'اطلاعات انتقال را کامل کنید.');
+                        openTransitionResultModal(
+                            pendingAdvanceOrderCode,
+                            (result.options && result.options.length ? result.options : pendingTransitionOptions),
+                            result.requiresMaterialScan === true,
+                            selectedResultStepId > 0 ? selectedResultStepId : null,
+                            selectedMaterialBarcode);
+                    } else {
+                        toastr.error('@ResourceAlert.AddError', result.message || '');
+                        closeTransitionResultModal();
+                        $('#advanceOrderCode').focus().select();
+                    }
+                }).fail(function () {
+                    toastr.error('@ResourceAlert.AddError', '');
+                });
+        });
 
 
         $("#customer").select2({

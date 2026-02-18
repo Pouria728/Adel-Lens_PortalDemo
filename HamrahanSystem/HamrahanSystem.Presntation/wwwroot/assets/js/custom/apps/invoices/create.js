@@ -91,13 +91,52 @@ var KTAppInvoicesCreate = (function () {
         init: function (n) {
             document.querySelector("#kt_invoice_form").querySelector('[data-kt-element="quantity"]').value = 1;
             e = document.querySelector("#kt_invoice_form");
+            var isSelect2Enabled = function (el) {
+                return !!(window.jQuery && $.fn && $.fn.select2 && $(el).data('select2'));
+            };
+            var getPlaceholder = function (el) {
+                return (el && el.getAttribute('data-placeholder')) || '';
+            };
+            var bindNativeOptions = function (el, list) {
+                var currentValue = el.value;
+                el.innerHTML = '';
+                // Keep first option truly empty to allow clear/reset without showing placeholder text.
+                el.add(new Option('', '', false, false));
+                (Array.isArray(list) ? list : []).forEach(function (item) {
+                    var value = item && item.id != null ? item.id : '';
+                    var text = item && item.text != null ? item.text : '';
+                    el.add(new Option(text, value, false, false));
+                });
+                if (currentValue) {
+                    el.value = currentValue;
+                }
+            };
+            var resetSelect = function (selector) {
+                var el = e.querySelector(selector);
+                if (!el) {
+                    return;
+                }
+                var $el = $(el);
+                if (isSelect2Enabled(el)) {
+                    $el.val('').trigger('change');
+                } else {
+                    el.value = '';
+                    $el.trigger('change');
+                }
+            };
             var setSelectValue = function (selector, value, text, triggerSelect) {
                 var el = e.querySelector(selector);
                 if (!el) {
                     return;
                 }
+                var $el = $(el);
                 if (value === undefined || value === null || value === '') {
-                    $(el).val(null).trigger('change');
+                    if (isSelect2Enabled(el)) {
+                        $el.val(null).trigger('change');
+                    } else {
+                        el.value = '';
+                        $el.trigger('change');
+                    }
                     return;
                 }
                 if (text) {
@@ -110,11 +149,11 @@ var KTAppInvoicesCreate = (function () {
                         existing.text = text;
                     }
                 }
-                $(el).val(value);
-                if (triggerSelect) {
-                    $(el).trigger('select2:select');
+                $el.val(value);
+                if (triggerSelect && isSelect2Enabled(el)) {
+                    $el.trigger('select2:select');
                 }
-                $(el).trigger('change');
+                $el.trigger('change');
             };
             var findText = function (list, id) {
                 if (!Array.isArray(list)) {
@@ -128,11 +167,21 @@ var KTAppInvoicesCreate = (function () {
                 if (!el) {
                     return;
                 }
+                var $el = $(el);
                 var list = Array.isArray(data) ? data : [];
-                $(el).empty();
-                $(el).select2({ data: list });
+                if (isSelect2Enabled(el)) {
+                    $el.empty();
+                    $el.select2({ data: list });
+                } else {
+                    bindNativeOptions(el, list);
+                }
                 if (value === undefined || value === null || value === '') {
-                    $(el).val(null).trigger('change');
+                    if (isSelect2Enabled(el)) {
+                        $el.val(null).trigger('change');
+                    } else {
+                        el.value = '';
+                        $el.trigger('change');
+                    }
                     return;
                 }
                 var label = text || findText(list, value);
@@ -146,12 +195,105 @@ var KTAppInvoicesCreate = (function () {
                         existing.text = label;
                     }
                 }
-                $(el).val(value).trigger('change');
+                $el.val(value).trigger('change');
+            };
+            var showOrderModal = function () {
+                var modalEl = document.getElementById('modal-Order');
+                if (!modalEl) {
+                    return;
+                }
+                if (window.bootstrap && window.bootstrap.Modal) {
+                    window.bootstrap.Modal.getOrCreateInstance(modalEl).show();
+                    return;
+                }
+                if (window.jQuery && $('#modal-Order').modal) {
+                    $('#modal-Order').modal('show');
+                }
+            };
+            var hideOrderModal = function () {
+                var modalEl = document.getElementById('modal-Order');
+                if (!modalEl) {
+                    return;
+                }
+                if (window.bootstrap && window.bootstrap.Modal) {
+                    var instance = window.bootstrap.Modal.getInstance(modalEl);
+                    if (instance) {
+                        instance.hide();
+                    }
+                    return;
+                }
+                if (window.jQuery && $('#modal-Order').modal) {
+                    $('#modal-Order').modal('hide');
+                }
+            };
+            var resolveCustomerIdFromSearch = function () {
+                var normalizeText = function (value) {
+                    return String(value || '')
+                        .replace(/[\u200E\u200F]/g, '')
+                        .replace(/\s+/g, ' ')
+                        .trim()
+                        .toLowerCase();
+                };
+
+                var hidden = e.querySelector('[data-kt-element="definecustomer"]');
+                if (!hidden) {
+                    return '';
+                }
+
+                var hiddenValue = (hidden.value || '').trim();
+                if (hiddenValue) {
+                    return hiddenValue;
+                }
+
+                var searchInput = e.querySelector('#DefineCustomerSearch');
+                if (!searchInput) {
+                    return '';
+                }
+
+                var typed = (searchInput.value || '').trim();
+                if (!typed) {
+                    return '';
+                }
+                var typedNormalized = normalizeText(typed);
+
+                var datalist = document.getElementById('DefineCustomerSearchList');
+                if (!datalist) {
+                    return '';
+                }
+
+                var options = datalist.querySelectorAll('option');
+                var partialMatches = [];
+                for (var i = 0; i < options.length; i++) {
+                    var opt = options[i];
+                    var optionText = (opt.value || '').trim();
+                    var optionNormalized = normalizeText(optionText);
+                    var id = (opt.getAttribute('data-id') || '').trim();
+                    if (!id) {
+                        continue;
+                    }
+
+                    if (optionNormalized === typedNormalized) {
+                        hidden.value = id;
+                        return id;
+                    }
+
+                    if (typedNormalized && optionNormalized.indexOf(typedNormalized) >= 0) {
+                        partialMatches.push(id);
+                    }
+                }
+
+                if (partialMatches.length === 1) {
+                    hidden.value = partialMatches[0];
+                    return partialMatches[0];
+                }
+
+                return '';
             };
             e.querySelector(' [data-kt-element="add-item"]').addEventListener("click", function (n) {
 
                 var definecustomer = e.querySelector('[data-kt-element="definecustomer"]');
-                if (definecustomer.value == undefined || definecustomer.value == "") {
+                var customerId = resolveCustomerIdFromSearch();
+                if (customerId == undefined || customerId == "") {
                     toastr.error('مشتری را انتخاب نمایید ', '');
                     return;
                 }
@@ -220,7 +362,7 @@ var KTAppInvoicesCreate = (function () {
                 l.querySelector('[data-kt-element="needtoolsid"]').checked = item.checked;
 
                 item = e.querySelector('[data-kt-element="definecustomer"]')
-                e.querySelector('[data-kt-element="definecustomerid"]').value = item.value;
+                e.querySelector('[data-kt-element="definecustomerid"]').value = customerId || item.value;
 
                 item = e.querySelector('[data-kt-element="storename"]')
                 e.querySelector('[data-kt-element="storenametxt"]').value = item.textContent;
@@ -229,9 +371,12 @@ var KTAppInvoicesCreate = (function () {
                 //e.querySelector('[data-kt-element="consumertxt"]').value = item.textContent;
 
                 d = d + 1;
-                $('[data-kt-element="brand"]').val('').trigger('select2:select');
-                $('[data-kt-element="brand"]').select2('val', '');
-                $('[data-kt-element="brand"]').select2();
+                resetSelect('[data-kt-element="brand"]');
+                var quantityInput = e.querySelector('[data-kt-element="quantity"]');
+                if (quantityInput) {
+                    quantityInput.value = '';
+                    $(quantityInput).trigger('change');
+                }
                 e.querySelector('[data-kt-element="items"] tbody').appendChild(l), a(), b()
             }),
                 KTUtil.on(e, '[data-kt-element="items"] [data-kt-element="edit-item"]', "click", function (n) {
@@ -426,9 +571,7 @@ var KTAppInvoicesCreate = (function () {
 
 
                             d = d + 1;
-                            $('[data-kt-element="brand"]').val('').trigger('select2:select');
-                            $('[data-kt-element="brand"]').select2('val', '');
-                            $('[data-kt-element="brand"]').select2();
+                            resetSelect('[data-kt-element="brand"]');
                             e.querySelector('[data-kt-element="items"] tbody').appendChild(l), a(), b()
 
 
@@ -438,21 +581,16 @@ var KTAppInvoicesCreate = (function () {
                     }
                     );
 
-                    $("#modal-Order").modal('hide');
-                })
-                ,
-                KTUtil.on(e, ' [data-kt-element="add-itemcyl"]', "click", function (n) {
+                    hideOrderModal();
+                });
 
-                    // e.querySelector('[data-kt-element="cylitems"]').innerHTML = '';
-                    var definecustomer = e.querySelector('[data-kt-element="definecustomer"]');
-                    if (definecustomer.value == undefined || definecustomer.value == "") {
-                        toastr.error('مشتری را انتخاب نمایید ', '');
-                        return;
+                var openCylMatrixModal = function (n) {
+                    if (n && n.preventDefault) {
+                        n.preventDefault();
                     }
-                    
-                    var item = e.querySelector('[data-kt-element="lensindex"]')
 
-                    if (item.value == undefined || item.value == "") {
+                    var item = e.querySelector('[data-kt-element="lensindex"]');
+                    if (!item || item.value == undefined || item.value == "") {
                         toastr.error('lens index را انتخاب نکرده اید ', '');
                         return;
                     }
@@ -460,40 +598,34 @@ var KTAppInvoicesCreate = (function () {
                     const storedDataString = sessionStorage.getItem('list_sph_r');
                     let datasph = [];
                     let datasphid = [];
-                    id = item.value;
+                    var id = item.value;
                     if (storedDataString) {
                         datasph = JSON.parse(storedDataString);
                         datasph = datasph.filter(x => x.parentid == id);
-                        datasphid = datasph.map(x => { return x.id; });
+                        datasphid = datasph.map(x => x.id);
                     }
+
                     const storedDataString2 = sessionStorage.getItem('list_cyl_r');
                     let datacyl = [];
                     let datacyllist = [];
-                    
                     if (storedDataString2) {
                         datacyl = JSON.parse(storedDataString2);
-                        
-                        datacyl = datacyl.filter(x => datasphid.includes(x.parentid));
-                        datacyl.map(x => { return { value: x.cylid, text: x.text } }).forEach(item => {
-                            if (datacyllist.filter(x => x.value == item.value).length == 0) {
-                                datacyllist.push(item)
+                        datacyl = datacyl.filter(x => datasphid.some(sphId => String(sphId) === String(x.parentid)));
+                        datacyl.map(x => ({ value: x.cylid, text: x.text })).forEach(itemCyl => {
+                            if (datacyllist.filter(x => String(x.value) == String(itemCyl.value)).length == 0) {
+                                datacyllist.push(itemCyl);
                             }
                         });
                     }
+
                     e.querySelector('[data-kt-element="cylitems"] table thead tr').innerHTML = '';
                     var l = e.querySelector('[data-kt-element="item-headercyl"] table thead tr th').cloneNode(!0);
                     l.innerHTML = 'SPH/CYL';
                     e.querySelector('[data-kt-element="cylitems"] table thead tr').appendChild(l.cloneNode(true));
                     for (let item in datacyllist) {
-                        
                         l.innerHTML = datacyllist[item].text;
-                        
                         e.querySelector('[data-kt-element="cylitems"] table thead tr').appendChild(l.cloneNode(true));
                     }
-
-
-                    
-                   
 
                     e.querySelector('[data-kt-element="cylitems"] table tbody').innerHTML = '';
                     for (let item in datasph) {
@@ -503,17 +635,14 @@ var KTAppInvoicesCreate = (function () {
                         y.setAttribute('data-kt-element', 'cylitemtitle');
                         y.innerHTML = datasph[item].text;
                         var sphid = datasph[item].id;
-                        l.appendChild(y.cloneNode(true))
+                        l.appendChild(y.cloneNode(true));
                         for (let itemcyl in datacyllist) {
-                            var z = e.querySelector('[data-kt-element="item-headercyl"] table tbody td').cloneNode(!0);                            
+                            var z = e.querySelector('[data-kt-element="item-headercyl"] table tbody td').cloneNode(!0);
                             var cylid = datacyllist[itemcyl].value;
-                            //let data1 = datacyl.filter(x =>  x.parentid == sphid);
-                            let data = datacyl.filter(x => x.cylid == cylid && x.parentid == sphid);
-                            let datamaster = datacyl.filter(x => x.parentid == sphid);
+                            let data = datacyl.filter(x => String(x.cylid) == String(cylid) && String(x.parentid) == String(sphid));
+                            let datamaster = datacyl.filter(x => String(x.parentid) == String(sphid));
 
-                            
                             if (datamaster.length > 0) {
-                                
                                 if (data.length > 0) {
                                     z.querySelector('[data-kt-element="countlens"]').value = '';
                                     z.querySelector('[data-kt-element="sphidgrid"]').value = sphid;
@@ -524,7 +653,6 @@ var KTAppInvoicesCreate = (function () {
                                     z.querySelector('[data-kt-element="defineobjecttitlegrid"]').value = data[0].nameobject;
                                     z.querySelector('[data-kt-element="countlens"]').setAttribute('placeholder', '');
                                     z.querySelector('[data-kt-element="labelcountlens"]').textContent = '';
-                                    
                                     l.appendChild(z.cloneNode(true));
                                 }
                                 else {
@@ -537,20 +665,13 @@ var KTAppInvoicesCreate = (function () {
                         e.querySelector('[data-kt-element="cylitems"] table tbody').appendChild(l.cloneNode(true));
                     }
 
+                    showOrderModal();
+                };
 
-                    
-                    
-
-                   
-                    
-
-                   // item = e.querySelector('[data-kt-element="lensindex"]')
-                    //l.querySelector('[data-kt-element="lensindexid"]').value = item.value;
-
-
-                   // e.querySelector('[data-kt-element="cylitems"]').appendChild(l),
-                        $("#modal-Order").modal('show');
-                })
+                var addItemCylButton = e.querySelector('[data-kt-element="add-itemcyl"]');
+                if (addItemCylButton) {
+                    addItemCylButton.addEventListener("click", openCylMatrixModal);
+                }
 
         }
     };

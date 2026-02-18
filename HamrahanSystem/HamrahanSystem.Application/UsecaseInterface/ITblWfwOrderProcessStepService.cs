@@ -17,7 +17,7 @@ namespace HamrahanSystem.Application.UseCaseInterface
         Task Delete(List<TblWfwOrderProcessStepDto> dto);
 
         Task Update (TblWfwOrderProcessStepDto dto);
-		Task UpdateStatus(TblWfwOrderProcessStepDto dto);
+		Task UpdateStatus(TblWfwOrderProcessStepDto dto, int? relationStepId = null);
 		Task Update(List<TblWfwOrderProcessStepDto> dto);
         Task Add(TblWfwOrderProcessStepDto dto);
         Task Add(List<TblWfwOrderProcessStepDto> dto);

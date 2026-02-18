@@ -421,6 +421,11 @@ namespace HamrahanSystem.Infrastructure.Repository
 			get;
 			set;
 		}
+		public virtual DbSet<TblWfwOrderRawMaterial> TblWfwOrderRawMaterials
+		{
+			get;
+			set;
+		}
         public virtual DbSet<TblAccDefineCostCenter> TblAccDefineCostCenters
         {
             get;
@@ -532,10 +537,11 @@ namespace HamrahanSystem.Infrastructure.Repository
 			modelBuilder.ApplyConfiguration<UserActivityLog>(new UserActivityLogConfiguration());
 			modelBuilder.ApplyConfiguration<UserActivityLogDetail>(new UserActivityLogDetailConfiguration());
             modelBuilder.ApplyConfiguration<TblDefineService>(new TblDefineServiceConfiguration());
-            modelBuilder.ApplyConfiguration<TblInfoCustomer>(new TblInfoCustomerConfiguration());
+			modelBuilder.ApplyConfiguration<TblInfoCustomer>(new TblInfoCustomerConfiguration());
 			modelBuilder.ApplyConfiguration<ViewSalListCustomer>(new ViewSalListCustomerConfiguration());
 			modelBuilder.ApplyConfiguration<TblWfwOrderProcess>(new TblWfwOrderProcessConfiguration());
 			modelBuilder.ApplyConfiguration<TblWfwOrderProcessStep>(new TblWfwOrderProcessStepConfiguration());
+			modelBuilder.ApplyConfiguration<TblWfwOrderRawMaterial>(new TblWfwOrderRawMaterialConfiguration());
             modelBuilder.ApplyConfiguration<TblAccDefineCostCenter>(new TblAccDefineCostCenterConfiguration());
             modelBuilder.ApplyConfiguration<TblMainDefineUser>(new TblMainDefineUserConfiguration());
             modelBuilder.ApplyConfiguration<BaseRequeste>(new BaseRequesteConfiguration());

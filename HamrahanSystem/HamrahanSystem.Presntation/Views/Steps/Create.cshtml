@@ -94,6 +94,13 @@
                 @Html.ListBox("nextStep", new MultiSelectList(ViewBag.NextStepOptions, "Value", "Text", ViewBag.SelectedNextStepIds), new { multiple = "multiple", @class = "form-control" })
                 @Html.ValidationMessage("nextStep", new { @class = "text-danger" })
             </div>
+            @Html.Hidden("nextStepResultConfig", "", new { id = "nextStepResultConfig" })
+            <div class="form-group row mt-6">
+                @Html.Label("nextStepResultConfigView", "گزینه اجباری انتقال برای هر گام", htmlAttributes: new { @class = "col-lg-4 col-form-label fw-semibold fs-6" })
+                <div class="col-md-8">
+                    <div id="next-step-result-config" class="border border-2 rounded p-3"></div>
+                </div>
+            </div>
 
             
             
@@ -111,6 +118,10 @@
 
     $(function () {
             localStorage.clear();
+        var nextStepResultMap = @Html.Raw(ViewBag.NextStepResultMapJson ?? "{}");
+        if (!nextStepResultMap || typeof nextStepResultMap !== "object") {
+            nextStepResultMap = {};
+        }
 
         $("#role").bootstrapDualListbox({
             nonSelectedListLabel: 'نقش های قابل تخصیص',
@@ -122,9 +133,127 @@
             selectedListLabel: 'گام های بعدی این مرحله',
             moveOnSelect: false
         });
+        function getSelectedNextStepOptions() {
+            var result = {};
+            $("#nextStep option:selected").each(function () {
+                var stepId = ($(this).val() || "").toString();
+                if (!stepId) {
+                    return;
+                }
+                result[stepId] = ($(this).text() || "").trim();
+            });
+            return result;
+        }
+
+        function getDistinctValues(values) {
+            var seen = {};
+            var list = [];
+            (values || []).forEach(function (value) {
+                var normalized = (value || "").trim();
+                if (!normalized) {
+                    return;
+                }
+                var key = normalized.toLowerCase();
+                if (seen[key]) {
+                    return;
+                }
+                seen[key] = true;
+                list.push(normalized);
+            });
+            return list;
+        }
+
+        function appendOptionRow(stepId, value) {
+            var escapedValue = $("<div/>").text(value || "").html();
+            var rowHtml = '' +
+                '<div class="input-group input-group-sm mb-2 result-option-row">' +
+                '  <input type="text" maxlength="100" class="form-control result-option-input" value="' + escapedValue + '" placeholder="گزینه پاپ‌آپ">' +
+                '  <button type="button" class="btn btn-light-danger btn-remove-result-option" data-step-id="' + stepId + '">' +
+                '    <i class="fa fa-times"></i>' +
+                '  </button>' +
+                '</div>';
+            $("#result-options-" + stepId).append(rowHtml);
+        }
+
+        function renderNextStepResultConfig() {
+            var selectedMap = getSelectedNextStepOptions();
+            var selectedStepIds = Object.keys(selectedMap);
+            var container = $("#next-step-result-config");
+            container.empty();
+
+            if (!selectedStepIds.length) {
+                container.append('<div class="text-muted">ابتدا گام بعدی را انتخاب کنید.</div>');
+                return;
+            }
+
+            selectedStepIds.forEach(function (stepId) {
+                var title = $("<div/>").text(selectedMap[stepId]).html();
+                var cardHtml = '' +
+                    '<div class="border rounded p-3 mb-3">' +
+                    '  <div class="d-flex justify-content-between align-items-center mb-2">' +
+                    '    <strong>' + title + '</strong>' +
+                    '    <button type="button" class="btn btn-sm btn-light-primary btn-add-result-option" data-step-id="' + stepId + '">' +
+                    '      افزودن گزینه' +
+                    '    </button>' +
+                    '  </div>' +
+                    '  <div id="result-options-' + stepId + '"></div>' +
+                    '</div>';
+                container.append(cardHtml);
+
+                var options = getDistinctValues(nextStepResultMap[stepId]);
+                if (!options.length) {
+                    appendOptionRow(stepId, "");
+                } else {
+                    options.forEach(function (option) {
+                        appendOptionRow(stepId, option);
+                    });
+                }
+            });
+        }
+
+        function collectNextStepResultConfig() {
+            var selectedMap = getSelectedNextStepOptions();
+            var config = {};
+
+            Object.keys(selectedMap).forEach(function (stepId) {
+                var values = [];
+                $("#result-options-" + stepId + " .result-option-input").each(function () {
+                    values.push($(this).val());
+                });
+                var uniqueValues = getDistinctValues(values);
+                if (uniqueValues.length) {
+                    config[stepId] = uniqueValues;
+                }
+            });
+
+            return config;
+        }
+
+        $(document).off("change", "#nextStep").on("change", "#nextStep", function () {
+            renderNextStepResultConfig();
+        });
+
+        $(document).off("click", ".btn-add-result-option").on("click", ".btn-add-result-option", function () {
+            var stepId = $(this).data("step-id");
+            appendOptionRow(stepId, "");
+        });
+
+        $(document).off("click", ".btn-remove-result-option").on("click", ".btn-remove-result-option", function () {
+            var stepId = $(this).data("step-id");
+            var container = $("#result-options-" + stepId);
+            $(this).closest(".result-option-row").remove();
+            if (!container.find(".result-option-row").length) {
+                appendOptionRow(stepId, "");
+            }
+        });
+
+        renderNextStepResultConfig();
+
          $(document).off("click", "#create-btn")
              .on("click", "#create-btn", function () {
                  $form = $("#form-TaxPayerCustomers");
+                 var config = collectNextStepResultConfig();
+                 $("#nextStepResultConfig").val(JSON.stringify(config));
 
                  $.post('@Url.Action("Create", "Steps")',
                      $form.serialize()

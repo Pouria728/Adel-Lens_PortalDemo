@@ -1,6 +1,9 @@
 ﻿using HamrahanSystem.Application.DTOs;
 using HamrahanSystem.Application.UseCaseImplementation;
 using HamrahanSystem.Application.UseCaseInterface;
+using HamrahanSystem.Domain.Repository;
+using HamrahanSystem.Domain.Entity;
+using HamrahanSystem.Infrastructure.Repository;
 using HamrahanSystem.Presntation.Models;
 using HamrahanSystem.Presntation.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -23,14 +26,17 @@ namespace HamrahanSystem.Presntation.Controllers
 	public class OrdersController(ITblLnsOrderService tblLnsOrderService, ITblLnsOrderItemService tblLnsOrderItemService, ITblLnsBrandService tblLnsBrandService, ITblLnsBrandLensTypeRService tblLnsBrandLensTypeRService,
 		ITblLnsLensTypeRLensIndexRService tblLnsLensTypeRLensIndexRService, ITblLnsLensIndexRSphService tblLnsLensIndexRSphService,
 		ITblLnsSphCylService tblLnsSphCylService, ICacheService cacheService, IViewSalListCustomerService viewSalListCustomerService,
-		ITblWfwOrderProcessStepService tblWfwOrderProcessStepService, IUserService userService, IConfiguration configuration,
+		ITblWfwOrderProcessStepService tblWfwOrderProcessStepService, ITblWfwProcessStepService tblWfwProcessStepService, IUserService userService, IConfiguration configuration,
 		ITblLnsLensTypeService tblLnsLensTypeService, ITblLnsDesignTypeService tblLnsDesignTypeService,
 		ITblLnsCustomLensIndexService tblLnsCustomLensIndexService, ITblLnsCustomLensTypeMaterialService tblLnsCustomLensTypeMaterialService,
 		ITblLnsCustomLensTypeCoatingService tblLnsCustomLensTypeCoatingService, ITblClrDefineObjectService tblClrDefineObjectService,
 		ITblLnsCustomSphService tblLnsCustomSphService, ITblLnsCustomCylService tblLnsCustomCylService,
 		ITblLnsCustomDesignTypeAdditionService tblLnsCustomDesignTypeAdditionService,
+		ITblWfwRelationStepRepository tblWfwRelationStepRepository,
+		ITblWfwResultStepRepository tblWfwResultStepRepository,
 		ICustomLensAutoPrintService customLensAutoPrintService,
-		ICustomLensPrintSettingsService customLensPrintSettingsService
+		ICustomLensPrintSettingsService customLensPrintSettingsService,
+		AdelModel dbContext
 		) : Controller
 	{
 		private static readonly Regex CustomLensPrintPlaceholderRegex = new(@"\{(orderId|factorNo|printer)\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -70,12 +76,20 @@ namespace HamrahanSystem.Presntation.Controllers
             if (customerId.HasValue && isAdmin.HasValue && !isAdmin.Value)
             {
                 var itemgg = new List<ViewSalListCustomerDto>();
-                itemgg.Add(viewSalListCustomerService.GetById(customerId.Value).Result);
+                var selectedCustomer = viewSalListCustomerService.GetById(customerId.Value).Result;
+                itemgg.Add(selectedCustomer);
                 ViewBag.ListCustomer = itemgg;
+                ViewBag.DefaultDefineCustomerId = selectedCustomer?.DefineCustomerId;
+                ViewBag.DefaultDefineCustomerName = selectedCustomer?.NameFormal;
 				ViewBag.IsCutomer = true;
             }
 			else
+            {
+                ViewBag.ListCustomer = viewSalListCustomerService.GetAll().Result;
+                ViewBag.DefaultDefineCustomerId = null;
+                ViewBag.DefaultDefineCustomerName = "";
                 ViewBag.IsCutomer = false;
+            }
 
 
 
@@ -725,13 +739,13 @@ namespace HamrahanSystem.Presntation.Controllers
 			return Json(new
 			{
 				success = false,
-				message = "ثبت و ارسال دستی غیرفعال است. لطفا فقط از طریق اسکن گان اقدام کنید."
+				message = "ط«ط¨طھ ظˆ ط§ط±ط³ط§ظ„ ط¯ط³طھغŒ ط؛غŒط±ظپط¹ط§ظ„ ط§ط³طھ. ظ„ط·ظپط§ ظپظ‚ط· ط§ط² ط·ط±غŒظ‚ ط§ط³ع©ظ† ع¯ط§ظ† ط§ظ‚ط¯ط§ظ… ع©ظ†غŒط¯."
 			});
 		}
 
 		[Authorize(Roles = "admin,OrderReq_Index")]
 		[HttpPost]
-		public IActionResult OrderReqSendByCode(string orderCode)
+		public IActionResult OrderReqSendByCode(string orderCode, string? selectedResultOption, int? selectedResultStepId, string? materialBarcode)
 		{
 			var normalizedCode = NormalizeOrderCode(orderCode);
 			if (string.IsNullOrWhiteSpace(normalizedCode))
@@ -739,7 +753,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "شماره سفارش وارد نشده است."
+					message = "ط´ظ…ط§ط±ظ‡ ط³ظپط§ط±ط´ ظˆط§ط±ط¯ ظ†ط´ط¯ظ‡ ط§ط³طھ."
 				});
 			}
 
@@ -772,7 +786,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "سفارش در مراحل در جریانِ کارتابل شما پیدا نشد."
+					message = "ط³ظپط§ط±ط´ ط¯ط± ظ…ط±ط§ط­ظ„ ط¯ط± ط¬ط±غŒط§ظ†ظگ ع©ط§ط±طھط§ط¨ظ„ ط´ظ…ط§ ظ¾غŒط¯ط§ ظ†ط´ط¯."
 				});
 			}
 
@@ -781,18 +795,85 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "این مرحله قبلا خاتمه یافته و قابل تغییر نیست."
+					message = "ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ظ‚ط¨ظ„ط§ ط®ط§طھظ…ظ‡ غŒط§ظپطھظ‡ ظˆ ظ‚ط§ط¨ظ„ طھط؛غŒغŒط± ظ†غŒط³طھ."
 				});
+			}
+
+			var transitionRequirement = ResolveTransitionRequirement(currentStep);
+			var requiresMaterialScan = currentStep.TblWfwProcessStep?.IsBarcode == true;
+			int? selectedRelationStepId = null;
+			if (transitionRequirement.RequiresChoice)
+			{
+				var normalizedChoice = NormalizeTransitionChoice(selectedResultOption);
+				var matchedChoice = transitionRequirement.Options
+					.FirstOrDefault(x => selectedResultStepId.HasValue && selectedResultStepId.Value > 0
+						? x.ResultStepId == selectedResultStepId.Value
+						: string.Equals(x.Name, normalizedChoice, StringComparison.OrdinalIgnoreCase));
+
+				if (matchedChoice == null)
+				{
+					return Json(new
+					{
+						success = false,
+						requiresResultChoice = true,
+						requiresMaterialScan,
+						message = "ط¨ط±ط§غŒ ط§ظ†طھظ‚ط§ظ„ ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ط¨ط§غŒط¯ غŒع© ع¯ط²غŒظ†ظ‡ ط§ظ†طھط®ط§ط¨ ط´ظˆط¯.",
+						options = transitionRequirement.Options.Select(x => new
+						{
+							id = x.ResultStepId,
+							text = x.Name
+						}).ToList()
+					});
+				}
+
+				selectedRelationStepId = matchedChoice.RelationStepId;
+			}
+
+			if (requiresMaterialScan)
+			{
+				var normalizedMaterialBarcode = NormalizeMaterialBarcode(materialBarcode);
+				if (string.IsNullOrWhiteSpace(normalizedMaterialBarcode))
+				{
+					return Json(new
+					{
+						success = false,
+						requiresResultChoice = transitionRequirement.RequiresChoice,
+						requiresMaterialScan = true,
+						message = "اسکن بارکد ماده مصرفی الزامی است.",
+						options = transitionRequirement.Options.Select(x => new
+						{
+							id = x.ResultStepId,
+							text = x.Name
+						}).ToList()
+					});
+				}
+
+				if (!TryRegisterConsumedMaterial(currentStep, normalizedMaterialBarcode, out var registerError))
+				{
+					return Json(new
+					{
+						success = false,
+						requiresResultChoice = transitionRequirement.RequiresChoice,
+						requiresMaterialScan = true,
+						message = registerError,
+						options = transitionRequirement.Options.Select(x => new
+						{
+							id = x.ResultStepId,
+							text = x.Name
+						}).ToList()
+					});
+				}
 			}
 
 			currentStep.StatusId = (int)StatusRequest.Complete;
 			currentStep.DateComplete = DateTime.Now;
 			currentStep.UserId = HttpContext.Session.Get<int>("UserId");
-			tblWfwOrderProcessStepService.UpdateStatus(currentStep);
+			tblWfwOrderProcessStepService.UpdateStatus(currentStep, selectedRelationStepId);
 
 			return Json(new
 			{
 				success = true,
+				requiresResultChoice = false,
 				message = ""
 			});
 		}
@@ -807,7 +888,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "ورود دستی مجاز نیست. لطفا فقط با گان اسکن کنید."
+					message = "ظˆط±ظˆط¯ ط¯ط³طھغŒ ظ…ط¬ط§ط² ظ†غŒط³طھ. ظ„ط·ظپط§ ظپظ‚ط· ط¨ط§ ع¯ط§ظ† ط§ط³ع©ظ† ع©ظ†غŒط¯."
 				});
 			}
 
@@ -817,7 +898,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "رکورد مرحله سفارش یافت نشد."
+					message = "ط±ع©ظˆط±ط¯ ظ…ط±ط­ظ„ظ‡ ط³ظپط§ط±ط´ غŒط§ظپطھ ظ†ط´ط¯."
 				});
 			}
 
@@ -826,7 +907,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "شما دسترسی انجام این مرحله را ندارید."
+					message = "ط´ظ…ط§ ط¯ط³طھط±ط³غŒ ط§ظ†ط¬ط§ظ… ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ط±ط§ ظ†ط¯ط§ط±غŒط¯."
 				});
 			}
 
@@ -835,7 +916,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "این مرحله قبلا خاتمه یافته و قابل تغییر نیست."
+					message = "ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ظ‚ط¨ظ„ط§ ط®ط§طھظ…ظ‡ غŒط§ظپطھظ‡ ظˆ ظ‚ط§ط¨ظ„ طھط؛غŒغŒط± ظ†غŒط³طھ."
 				});
 			}
 
@@ -845,7 +926,7 @@ namespace HamrahanSystem.Presntation.Controllers
 				return Json(new
 				{
 					success = false,
-					message = "شماره سفارش اسکن‌شده معتبر نیست یا با این سفارش مطابقت ندارد."
+					message = "ط´ظ…ط§ط±ظ‡ ط³ظپط§ط±ط´ ط§ط³ع©ظ†â€Œط´ط¯ظ‡ ظ…ط¹طھط¨ط± ظ†غŒط³طھ غŒط§ ط¨ط§ ط§غŒظ† ط³ظپط§ط±ط´ ظ…ط·ط§ط¨ظ‚طھ ظ†ط¯ط§ط±ط¯."
 				});
 			}
 
@@ -879,6 +960,217 @@ namespace HamrahanSystem.Presntation.Controllers
 			bool hasRoleAccess = roleId.HasValue &&
 								 currentStep.TblWfwProcessStep?.TblWfwRoleStepes?.Any(x => x.RoleId == roleId.Value) == true;
 			return isAdmin || hasRoleAccess;
+		}
+
+		private sealed class TransitionResultOption
+		{
+			public int ResultStepId { get; init; }
+			public int RelationStepId { get; init; }
+			public int ToProcessStepId { get; init; }
+			public string Name { get; init; } = string.Empty;
+		}
+
+		private sealed class TransitionResultRequirement
+		{
+			public List<TransitionResultOption> Options { get; init; } = new();
+			public bool RequiresChoice => Options.Count > 0;
+		}
+
+		private TransitionResultRequirement ResolveTransitionRequirement(TblWfwOrderProcessStepDto currentStep)
+		{
+			if (currentStep?.TblWfwOrderProcess == null)
+			{
+				return new TransitionResultRequirement();
+			}
+
+			var relationRows = (tblWfwRelationStepRepository.GetByFromProcessStepId(currentStep.ProcessStepId) ?? new List<TblWfwRelationStep>())
+				.Where(x => x.ToProcessStepId.HasValue)
+				.ToList();
+
+			if (!relationRows.Any())
+			{
+				return new TransitionResultRequirement();
+			}
+
+			var processSteps = tblWfwProcessStepService
+				.GetAll(currentStep.TblWfwOrderProcess.ProcessId, null, null, null, null, null)
+				.Result
+				.Item1 ?? new List<TblWfwProcessStepDto>();
+
+			var activeProcessSteps = processSteps
+				.Where(x => x.IsActive)
+				.OrderBy(x => x.OrderId)
+				.ToList();
+
+			var activeStepIds = new HashSet<int>(activeProcessSteps.Select(x => x.ProcessStepId));
+			var relationRowsWithTarget = relationRows
+				.Where(x => x.ToProcessStepId.HasValue && activeStepIds.Contains(x.ToProcessStepId.Value))
+				.ToList();
+
+			if (!relationRowsWithTarget.Any())
+			{
+				return new TransitionResultRequirement();
+			}
+
+			var relationToStepMap = relationRowsWithTarget
+				.GroupBy(x => x.RelationStepId)
+				.ToDictionary(x => x.Key, x => x.First().ToProcessStepId!.Value);
+			var stepOrderMap = activeProcessSteps
+				.GroupBy(x => x.ProcessStepId)
+				.ToDictionary(x => x.Key, x => x.First().OrderId);
+
+			var options = tblWfwResultStepRepository
+				.GetByRelationStepIds(relationRowsWithTarget.Select(x => x.RelationStepId))
+				.Where(x => x.RelationStepId.HasValue && relationToStepMap.ContainsKey(x.RelationStepId.Value))
+				.Where(x => x.IsActive == null || x.IsActive == 1)
+				.Where(x => !string.IsNullOrWhiteSpace(x.Name))
+				.OrderBy(x => stepOrderMap[relationToStepMap[x.RelationStepId!.Value]])
+				.ThenBy(x => x.ResultStepId)
+				.Select(x => new TransitionResultOption
+				{
+					ResultStepId = x.ResultStepId,
+					RelationStepId = x.RelationStepId!.Value,
+					ToProcessStepId = relationToStepMap[x.RelationStepId!.Value],
+					Name = x.Name!.Trim()
+				})
+				.ToList();
+
+			return new TransitionResultRequirement
+			{
+				Options = options
+			};
+		}
+
+		private static string NormalizeTransitionChoice(string? value)
+		{
+			return (value ?? string.Empty).Trim();
+		}
+
+		private static string NormalizeMaterialBarcode(string? value)
+		{
+			return (value ?? string.Empty)
+				.Trim()
+				.Replace(" ", string.Empty)
+				.Replace("\u200C", string.Empty)
+				.Replace("\u200F", string.Empty)
+				.Replace("[", string.Empty)
+				.Replace("]", string.Empty)
+				.Replace("(", string.Empty)
+				.Replace(")", string.Empty)
+				.Replace("{", string.Empty)
+				.Replace("}", string.Empty)
+				.Replace("۰", "0")
+				.Replace("۱", "1")
+				.Replace("۲", "2")
+				.Replace("۳", "3")
+				.Replace("۴", "4")
+				.Replace("۵", "5")
+				.Replace("۶", "6")
+				.Replace("۷", "7")
+				.Replace("۸", "8")
+				.Replace("۹", "9")
+				.Replace("٠", "0")
+				.Replace("١", "1")
+				.Replace("٢", "2")
+				.Replace("٣", "3")
+				.Replace("٤", "4")
+				.Replace("٥", "5")
+				.Replace("٦", "6")
+				.Replace("٧", "7")
+				.Replace("٨", "8")
+				.Replace("٩", "9");
+		}
+
+		private bool TryRegisterConsumedMaterial(TblWfwOrderProcessStepDto currentStep, string normalizedMaterialBarcode, out string registerError)
+		{
+			registerError = string.Empty;
+
+			var order = currentStep?.TblWfwOrderProcess?.TblLnsOrder;
+			if (order == null)
+			{
+				registerError = "اطلاعات سفارش برای ثبت ماده مصرفی یافت نشد.";
+				return false;
+			}
+
+			var allowedDefineObjectIds = (tblLnsCustomLensTypeMaterialService.GetAll().Result ?? Enumerable.Empty<TblLnsCustomLensTypeMaterialDto>())
+				.Where(x => x.IsActive)
+				.Where(x => x.DefineObjectId.HasValue && x.DefineObjectId.Value > 0)
+				.Select(x => x.DefineObjectId!.Value)
+				.Distinct()
+				.ToHashSet();
+
+			if (!allowedDefineObjectIds.Any())
+			{
+				registerError = "لیست مواد خام تعریف نشده است.";
+				return false;
+			}
+
+			var barcodeRecNo = int.TryParse(normalizedMaterialBarcode, out var parsedRecNo) ? parsedRecNo : (int?)null;
+			var matchedDefineObjects = (tblClrDefineObjectService.Search(normalizedMaterialBarcode).Result ?? new List<TblClrDefineObjectDto>())
+				.Where(x => allowedDefineObjectIds.Contains(x.DefineObjectId))
+				.Where(x => x.IsActive == null || x.IsActive == 1)
+				.Where(x =>
+					string.Equals(NormalizeMaterialBarcode(x.TechnicalSpecs), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase) ||
+					string.Equals(NormalizeMaterialBarcode(x.CodeObject), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase) ||
+					(barcodeRecNo.HasValue && x.RecNo == barcodeRecNo.Value))
+				.GroupBy(x => x.DefineObjectId)
+				.Select(x => x.First())
+				.ToList();
+
+			if (!matchedDefineObjects.Any())
+			{
+				registerError = "بارکد ماده خام معتبر نیست یا در مواد تعریف‌شده موجود نیست.";
+				return false;
+			}
+
+			if (matchedDefineObjects.Count > 1)
+			{
+				registerError = "این بارکد بین چند ماده مشترک است. لطفا بارکد دقیق‌تری اسکن کنید.";
+				return false;
+			}
+
+			var defineObject = matchedDefineObjects[0];
+			var now = DateTime.Now;
+			var userId = HttpContext.Session.Get<int?>("UserId");
+
+			var existingRow = dbContext.TblWfwOrderRawMaterials.FirstOrDefault(x =>
+				x.OrderId == order.OrderId &&
+				x.ProcessStepId == currentStep.ProcessStepId &&
+				x.DefineObjectId == defineObject.DefineObjectId);
+
+			if (existingRow == null)
+			{
+				dbContext.TblWfwOrderRawMaterials.Add(new TblWfwOrderRawMaterial
+				{
+					OrderId = order.OrderId,
+					OrderProcessId = currentStep.OrderProcessId,
+					ProcessStepId = currentStep.ProcessStepId,
+					DefineObjectId = defineObject.DefineObjectId,
+					DefineObjectRecNo = defineObject.RecNo,
+					Barcode = normalizedMaterialBarcode,
+					MaterialName = defineObject.NameObject,
+					Quantity = 1,
+					DateCreate = now,
+					DateUpdate = now,
+					CreatedBy = userId,
+					ModifiedBy = userId
+				});
+			}
+			else
+			{
+				existingRow.Quantity += 1;
+				existingRow.DateUpdate = now;
+				existingRow.ModifiedBy = userId;
+				existingRow.Barcode = normalizedMaterialBarcode;
+				existingRow.DefineObjectRecNo ??= defineObject.RecNo;
+				if (string.IsNullOrWhiteSpace(existingRow.MaterialName))
+				{
+					existingRow.MaterialName = defineObject.NameObject;
+				}
+			}
+
+			dbContext.SaveChanges();
+			return true;
 		}
 
 		private static bool IsLikelyScannerInput(int? scanDurationMs, int? scanLength)
@@ -956,13 +1248,14 @@ namespace HamrahanSystem.Presntation.Controllers
 			var chars = normalized.ToCharArray();
 			for (var i = 0; i < chars.Length; i++)
 			{
-				if (chars[i] >= '۰' && chars[i] <= '۹')
+				// Convert Persian/Arabic digits to ASCII digits for stable order-code parsing.
+				if (chars[i] >= '\u06F0' && chars[i] <= '\u06F9')
 				{
-					chars[i] = (char)('0' + (chars[i] - '۰'));
+					chars[i] = (char)('0' + (chars[i] - '\u06F0'));
 				}
-				else if (chars[i] >= '٠' && chars[i] <= '٩')
+				else if (chars[i] >= '\u0660' && chars[i] <= '\u0669')
 				{
-					chars[i] = (char)('0' + (chars[i] - '٠'));
+					chars[i] = (char)('0' + (chars[i] - '\u0660'));
 				}
 			}
 
@@ -1285,6 +1578,66 @@ namespace HamrahanSystem.Presntation.Controllers
                 .Where(x => x.DefineCustomerId.HasValue)
                 .GroupBy(x => x.DefineCustomerId!.Value)
                 .ToDictionary(x => x.Key, x => x.First().NameFormal ?? string.Empty);
+			var relationStepByFromTo = (tblWfwRelationStepRepository.GetAll() ?? Array.Empty<TblWfwRelationStep>())
+				.Where(x => x.FromProcessStepId > 0 && x.ToProcessStepId.HasValue)
+				.GroupBy(x => (From: x.FromProcessStepId, To: x.ToProcessStepId!.Value))
+				.ToDictionary(
+					x => x.Key,
+					x => x.OrderBy(y => y.RelationStepId).First().RelationStepId);
+			var resultNamesByRelationId = (tblWfwResultStepRepository.GetAll() ?? Array.Empty<TblWfwResultStep>())
+				.Where(x => x.RelationStepId.HasValue && x.RelationStepId.Value > 0)
+				.Where(x => x.IsActive == null || x.IsActive == 1)
+				.Where(x => !string.IsNullOrWhiteSpace(x.Name))
+				.GroupBy(x => x.RelationStepId!.Value)
+				.ToDictionary(
+					x => x.Key,
+					x => x.Select(y => y.Name!.Trim())
+						.Where(y => !string.IsNullOrWhiteSpace(y))
+						.Distinct(StringComparer.OrdinalIgnoreCase)
+						.ToList());
+
+			string ResolveTransitionResult(int? fromProcessStepId, int? toProcessStepId)
+			{
+				if (!fromProcessStepId.HasValue || !toProcessStepId.HasValue)
+					return string.Empty;
+
+				if (!relationStepByFromTo.TryGetValue((fromProcessStepId.Value, toProcessStepId.Value), out var relationStepId))
+					return string.Empty;
+
+				if (!resultNamesByRelationId.TryGetValue(relationStepId, out var resultNames) || resultNames.Count == 0)
+					return string.Empty;
+
+				return resultNames.Count == 1 ? resultNames[0] : string.Join(" / ", resultNames);
+			}
+
+			List<OrderReqHistoryRow> BuildStepHistoryRows(List<TblWfwOrderProcessStepDto> orderedSteps)
+			{
+				var historyRows = new List<OrderReqHistoryRow>();
+				for (var index = 0; index < orderedSteps.Count; index++)
+				{
+					var step = orderedSteps[index];
+					statusRequestLookup.TryGetValue(step.StatusId, out var stepStatusName);
+
+					string transitionResult = string.Empty;
+					if (index < orderedSteps.Count - 1)
+					{
+						var nextStep = orderedSteps[index + 1];
+						transitionResult = ResolveTransitionResult(step.ProcessStepId, nextStep.ProcessStepId);
+					}
+
+					historyRows.Add(new OrderReqHistoryRow
+					{
+						StepName = step.TblWfwProcessStep?.Name ?? string.Empty,
+						TransitionResult = transitionResult,
+						UserName = ResolveUserName(step.UserId),
+						DateCreate = step.DateCreate.ToPersianDateTime(),
+						DateComplete = step.DateComplete.HasValue ? step.DateComplete.Value.ToPersianDateTime() : string.Empty,
+						StatusRequest = stepStatusName ?? string.Empty
+					});
+				}
+
+				return historyRows;
+			}
 
             var orderRows = allSteps
                 .Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
@@ -1327,19 +1680,7 @@ namespace HamrahanSystem.Presntation.Controllers
                         DateCreate = currentStep?.DateCreate.ToPersianDateTime() ?? string.Empty,
                         DateComplete = currentStep?.DateComplete.HasValue == true ? currentStep.DateComplete.Value.ToPersianDateTime() : string.Empty,
                         CurrentStatusId = currentStep?.StatusId ?? 0,
-                        StepHistory = orderedSteps.Select(step =>
-                        {
-                            statusRequestLookup.TryGetValue(step.StatusId, out var stepStatusName);
-                            return new OrderReqHistoryRow
-                            {
-                                StepName = step.TblWfwProcessStep?.Name ?? string.Empty,
-                                StepCode = step.TblWfwProcessStep?.Code ?? string.Empty,
-                                UserName = ResolveUserName(step.UserId),
-                                DateCreate = step.DateCreate.ToPersianDateTime(),
-                                DateComplete = step.DateComplete.HasValue ? step.DateComplete.Value.ToPersianDateTime() : string.Empty,
-                                StatusRequest = stepStatusName ?? string.Empty
-                            };
-                        }).ToList()
+                        StepHistory = BuildStepHistoryRows(orderedSteps)
                     };
                 })
                 .Where(x => !requestStatusId.HasValue || x.CurrentStatusId == requestStatusId.Value)
@@ -1426,7 +1767,7 @@ namespace HamrahanSystem.Presntation.Controllers
         private sealed class OrderReqHistoryRow
         {
             public string StepName { get; set; } = string.Empty;
-            public string StepCode { get; set; } = string.Empty;
+            public string TransitionResult { get; set; } = string.Empty;
             public string UserName { get; set; } = string.Empty;
             public string DateCreate { get; set; } = string.Empty;
             public string DateComplete { get; set; } = string.Empty;
@@ -1481,3 +1822,6 @@ namespace HamrahanSystem.Presntation.Controllers
 
     }
 }
+
+
+
