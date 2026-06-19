@@ -50,6 +50,30 @@
                     </div>
                 </div>
             </div>
+            @if (!string.IsNullOrWhiteSpace(ViewBag.StepPrintSettingsUrl as string) || !string.IsNullOrWhiteSpace(ViewBag.ProcessPrintSettingsUrl as string))
+            {
+                <div class="form-group row mb-6">
+                    <label class="col-lg-4 col-form-label fw-semibold fs-6">تنظیمات چاپ</label>
+                    <div class="col-md-4 d-flex gap-2 flex-wrap">
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.StepPrintSettingsUrl as string))
+                        {
+                            <a class="btn btn-light-primary"
+                               target="_blank"
+                               href="@ViewBag.StepPrintSettingsUrl">
+                                تنظیمات چاپ این گام
+                            </a>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.ProcessPrintSettingsUrl as string))
+                        {
+                            <a class="btn btn-light-info"
+                               target="_blank"
+                               href="@ViewBag.ProcessPrintSettingsUrl">
+                                پیش‌فرض چاپ فرآیند
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
             <div class="form-group row mb-6">
                 @Html.Label(ResourcePages.Base_IsBarcode, ResourcePages.Base_IsBarcode, htmlAttributes: new { @class = "col-lg-4 col-form-label required fw-semibold fs-6" })
                 <div class="col-md-4">

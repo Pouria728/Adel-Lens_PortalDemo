@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/25/2025 17:33:53" ReportInfo.Modified="11/20/2025 13:21:52" ReportInfo.CreatorVersion="2024.2.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="LnsOrder" ReferenceName="LnsOrder" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="Company" DataType="System.String"/>
+      <Column Name="CompanyId" DataType="System.String"/>
+      <Column Name="CreateDate" DataType="System.String"/>
+      <Column Name="OrderNo" DataType="System.String"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrderDetail" ReferenceName="LnsOrderDetail" DataType="System.Int32" Enabled="true">
+      <Column Name="CodeKala" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Axis" DataType="System.String"/>
+      <Column Name="SPH" DataType="System.String"/>
+      <Column Name="SYI" DataType="System.String"/>
+      <Column Name="NO" DataType="System.Int32"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="OrderDetailId" DataType="System.Int64"/>
+      <Column Name="LensSide" DataType="System.String"/>
+      <Column Name="RowNo" DataType="System.String" PropName="Column"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrdePrivate" ReferenceName="LnsOrdePrivate" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="Company" DataType="System.String"/>
+      <Column Name="CompanyId" DataType="System.String"/>
+      <Column Name="CreateDate" DataType="System.String"/>
+      <Column Name="OrderNo" DataType="System.String"/>
+      <Column Name="HBox" DataType="System.String"/>
+      <Column Name="VBox" DataType="System.String"/>
+      <Column Name="DBL" DataType="System.String"/>
+      <Column Name="ED" DataType="System.String"/>
+      <Column Name="PA" DataType="System.String"/>
+      <Column Name="FFA" DataType="System.String"/>
+      <Column Name="VD" DataType="System.String"/>
+      <Column Name="Base" DataType="System.String"/>
+      <Column Name="Frame" DataType="System.String"/>
+      <Column Name="Color" DataType="System.String"/>
+      <Column Name="Comment" DataType="System.String"/>
+      <Column Name="Mobile" DataType="System.String"/>
+      <Column Name="Tel" DataType="System.String"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="Corridor" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Services" DataType="System.String"/>
+      <Column Name="Coating" DataType="System.String"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrderDetailPrivate" ReferenceName="LnsOrderDetailPrivate" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="OrderDetailId" DataType="System.Int64"/>
+      <Column Name="CodeKala" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Axis" DataType="System.String"/>
+      <Column Name="SPH" DataType="System.String"/>
+      <Column Name="CYL" DataType="System.String"/>
+      <Column Name="ADD" DataType="System.String"/>
+      <Column Name="PRISM" DataType="System.String"/>
+      <Column Name="BPRISM" DataType="System.String"/>
+      <Column Name="Fitting" DataType="System.String"/>
+      <Column Name="DIA" DataType="System.String"/>
+      <Column Name="PD" DataType="System.String"/>
+      <Column Name="DC" DataType="System.String"/>
+      <Column Name="NO" DataType="System.String"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="SideType" DataType="System.String"/>
+      <Column Name="SideTypeId" DataType="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+    </BusinessObjectDataSource>
+    <Relation Name="Table_Table1" ParentDataSource="null" ChildDataSource="null" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Relation Name="LnsOrder_LnsOrderDetail" ParentDataSource="LnsOrder" ChildDataSource="LnsOrderDetail" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Relation Name="LnsOrderDetail_LnsOrderDetailPrivate" ParentDataSource="LnsOrdePrivate" ChildDataSource="LnsOrderDetailPrivate" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+    <Total Name="Total" Expression="[LnsOrderDetail.NO]" Evaluator="Data2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="1047.06" Height="66.15" Border.Color="Transparent" CanGrow="true" StartNewPage="true" DataSource="LnsOrder">
+      <TextObject Name="Text7" Left="926.1" Top="37.8" Width="122.85" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="نام مشتری " HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text8" Left="680.4" Top="37.8" Width="245.7" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrder.Company]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text9" Left="585.9" Top="37.8" Width="94.5" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="کد مشتری" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text10" Left="453.6" Top="37.8" Width="132.3" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrder.CompanyId]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text11" Left="122.85" Top="37.8" Width="122.85" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="شماره سفارش" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text12" Top="37.8" Width="122.85" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrder.OrderNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text13" Left="359.1" Top="37.8" Width="94.5" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="تاریخ" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text14" Left="245.7" Top="37.8" Width="113.4" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrder.CreateDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <ChildBand Name="Child1" Top="70.15" Width="1047.06" Height="18.9">
+        <SubreportObject Name="Subreport1" Width="94.5" Height="18.9" ReportPage="Page2"/>
+      </ChildBand>
+    </DataBand>
+  </ReportPage>
+  <ReportPage Name="Page2" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data2" Top="32.35" Width="1047.06" Height="47.25" Border.Lines="Bottom" CanGrow="true" DataSource="LnsOrderDetail">
+      <TextObject Name="Text15" Left="1001.7" Width="47.25" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Row#]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text26" Left="623.7" Width="179.55" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.NameKala]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text27" Left="557.55" Width="66.15" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.NO]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text28" Left="463.05" Width="94.5" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.SYI]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text29" Left="368.55" Width="94.5" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.SPH]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text30" Left="292.95" Width="75.6" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.Axis]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text31" Left="160.65" Width="132.3" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.Masrafkonande]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text32" Width="160.65" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[LnsOrderDetail.StoreName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <BarcodeObject Name="Barcode1" Left="803.25" Width="198.45" Height="47.25" Border.Lines="All" CanGrow="true" GrowToBottom="true" AutoSize="false" Text="[LnsOrderDetail.CodeKala]" Zoom="2" AllowExpressions="true"/>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="28.35">
+        <TextObject Name="Text16" Left="1001.7" Width="47.25" Height="28.35" Border.Lines="All" Text="ردیف&#13;&#10;" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text17" Width="160.65" Height="28.35" Border.Lines="All" Text="فروشگاه" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text18" Left="160.65" Width="132.3" Height="28.35" Border.Lines="All" Text="مصرف کننده " HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text19" Left="623.7" Width="179.55" Height="28.35" Border.Lines="All" Text="نام کالا " HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text20" Left="803.25" Width="198.45" Height="28.35" Border.Lines="All" Text="بار کد کالا" HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text21" Left="557.55" Width="66.15" Height="28.35" Border.Lines="All" Text="تعداد" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text22" Left="463.05" Width="94.5" Height="28.35" Border.Lines="All" Text="Cyl" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text23" Left="368.55" Width="94.5" Height="28.35" Border.Lines="All" Text="SPH" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text24" Left="292.95" Width="75.6" Height="28.35" Border.Lines="All" Text="Axis" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="83.6" Width="1047.06" Height="28.35">
+        <TextObject Name="Text98" Left="557.55" Width="66.15" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Total]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text99" Left="623.7" Width="179.55" Height="28.35" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="تعداد کل" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -65,7 +65,7 @@ namespace HamrahanSystem.Infrastructure.Repository
                 (!optionsBuilder.Options.Extensions.OfType<RelationalOptionsExtension>().Any(ext => !string.IsNullOrEmpty(ext.ConnectionString) || ext.Connection != null) &&
                  !optionsBuilder.Options.Extensions.Any(ext => !(ext is RelationalOptionsExtension) && !(ext is CoreOptionsExtension))))
             {
-                optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=Adel;Integrated Security=True;Persist Security Info=True");
+                throw new InvalidOperationException("AdelModel requires an explicit SQL Server connection string.");
             }
             CustomizeConfiguration(ref optionsBuilder);
             base.OnConfiguring(optionsBuilder);

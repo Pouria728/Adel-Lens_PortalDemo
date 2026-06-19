@@ -240,7 +240,7 @@
         border-bottom: 1px dashed #d7deeb;
     }
     .custom-lens-spec .spec-grid.bottom {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
     }
     .custom-lens-spec .spec-cell {
         display: flex;
@@ -499,8 +499,31 @@
         padding-bottom: 8px;
         border-bottom: 1px dashed #d7deeb;
     }
+    .custom-lens-eye .eye-panels-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .custom-lens-eye .eye-grid.main-wide {
+        --eye-sign-col: 46px;
+        grid-template-columns:
+            var(--eye-sign-col)
+            minmax(0, 1fr)
+            var(--eye-sign-col)
+            minmax(0, 1fr)
+            minmax(0, 1fr)
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+        align-items: start;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #d7deeb;
+    }
     .custom-lens-eye .eye-grid.triple {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .custom-lens-eye .eye-grid.quad {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 0;
     }
     .custom-lens-eye .eye-grid.middle {
         padding-bottom: 8px;
@@ -650,9 +673,222 @@
         background: #fff5f8;
         box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
     }
+    .custom-lens-order .custom-lens-eye .eyepair-invalid {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
+    .custom-lens-order .custom-lens-eye .eyepair-invalid + .select2-container .select2-selection--single {
+        border-color: #ff3b62 !important;
+        background: #fff5f8;
+        box-shadow: 0 0 0 3px rgba(255, 59, 98, 0.12);
+    }
     .custom-lens-order .custom-lens-eye .eye-copy-wrap {
         margin-top: 2px;
         text-align: center;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__dialog {
+        max-width: 1540px;
+        width: calc(100% - 48px);
+        margin: 1.75rem auto;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__content {
+        border: 0;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 28px 72px rgba(23, 54, 95, 0.18);
+        background: #ffffff;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__header {
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 28px;
+        border-bottom: 1px solid #e5edf9;
+        background: linear-gradient(180deg, #f6faff 0%, #eef5ff 100%);
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__header .modal-title {
+        color: #233a63;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__close {
+        margin: 0;
+        padding: 0;
+        font-size: 30px;
+        line-height: 1;
+        color: #6b7f9f;
+        opacity: 0.7;
+        text-shadow: none;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__close:hover {
+        opacity: 1;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__body {
+        padding: 26px 24px 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+        overflow-x: auto;
+    }
+    #customOrderPreviewModal .custom-order-preview-modal__footer {
+        border-top: 1px solid #e5edf9;
+        padding: 18px 24px 24px;
+        background: #ffffff;
+    }
+    #customOrderPreviewModal .custom-order-preview {
+        min-width: 1120px;
+        border: 1px solid #d5dff0;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 12px 36px rgba(28, 54, 102, 0.08);
+    }
+    #customOrderPreviewModal .custom-order-preview__head {
+        background: linear-gradient(90deg, #2f7fd0 0%, #3a86d6 100%);
+        color: #fff;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: 700;
+        direction: ltr;
+    }
+    #customOrderPreviewModal .custom-order-preview__head-main {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        direction: rtl;
+    }
+    #customOrderPreviewModal .custom-order-preview__title {
+        font-size: 17px;
+    }
+    #customOrderPreviewModal .custom-order-preview__factor {
+        font-size: 19px;
+        letter-spacing: 0.5px;
+    }
+    #customOrderPreviewModal .custom-order-preview__print {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.08);
+    }
+    #customOrderPreviewModal .custom-order-preview__meta {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px 14px;
+        background: #f4f8ff;
+        border-bottom: 1px solid #d5dff0;
+    }
+    #customOrderPreviewModal .custom-order-preview__meta .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        text-align: center;
+    }
+    #customOrderPreviewModal .custom-order-preview__meta .meta-item span {
+        font-size: 11px;
+        color: #5f6f8f;
+        font-weight: 600;
+    }
+    #customOrderPreviewModal .custom-order-preview__meta .meta-item strong {
+        font-size: 13px;
+        color: #1f2f4d;
+        font-weight: 700;
+        min-height: 20px;
+        display: block;
+        word-break: break-word;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        direction: ltr;
+        margin: 0;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table + .preview-table {
+        border-top: 1px solid #d5dff0;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table th,
+    #customOrderPreviewModal .custom-order-preview .preview-table td {
+        border: 1px solid #d5dff0;
+        text-align: center;
+        padding: 7px 5px;
+        font-size: 12px;
+        line-height: 1.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table th {
+        background: #e8f1ff;
+        color: #17365f;
+        font-weight: 700;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table td {
+        color: #1f2f4d;
+        background: #fff;
+    }
+    #customOrderPreviewModal .custom-order-preview .preview-table .eye-side {
+        font-weight: 700;
+        background: #f4f8ff;
+    }
+    #customOrderPreviewModal .custom-order-preview__note {
+        min-width: 1120px;
+        margin-top: 16px;
+        border: 1px solid #7550ff;
+        border-radius: 14px;
+        background: rgba(117, 80, 255, 0.05);
+        color: #5b4acf;
+        text-align: center;
+        padding: 14px 18px;
+    }
+    #customOrderPreviewModal .custom-order-preview__note strong,
+    #customOrderPreviewModal .custom-order-preview__note span {
+        display: block;
+    }
+    #customOrderPreviewModal .custom-order-preview__note strong {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+    #customOrderPreviewModal .custom-order-preview__note span {
+        color: #7a82a8;
+        font-size: 12px;
+    }
+    @@media (max-width: 1400px) {
+        #customOrderPreviewModal .custom-order-preview-modal__dialog {
+            width: calc(100% - 32px);
+        }
+        #customOrderPreviewModal .custom-order-preview__meta {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    @@media (max-width: 767.98px) {
+        #customOrderPreviewModal .custom-order-preview-modal__dialog {
+            width: calc(100% - 16px);
+            margin: 0.75rem auto;
+        }
+        #customOrderPreviewModal .custom-order-preview-modal__body {
+            padding: 18px 12px 14px;
+        }
+        #customOrderPreviewModal .custom-order-preview__meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        #customOrderPreviewModal .custom-order-preview__head {
+            padding: 12px;
+        }
+        #customOrderPreviewModal .custom-order-preview__title {
+            font-size: 15px;
+        }
+        #customOrderPreviewModal .custom-order-preview__factor {
+            font-size: 16px;
+        }
     }
 </style>
 
@@ -750,150 +986,140 @@
                 <input type="hidden" id="RCylSignedValue" name="RCylSignedValue" value="" />
                 <input type="hidden" id="LCylSignedValue" name="LCylSignedValue" value="" />
 
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="eye-panel">
-                            <div class="eye-title">RIGHT EYE</div>
-                            <div class="eye-grid main">
-                                <div class="eye-cell eye-cell-toggle">
-                                    <div class="eye-code">SPH</div>
-                                    <button type="button" class="eye-toggle" data-toggle="sph" data-eye="r">-</button>
-                                    <div class="eye-caption">علامت اسفریک</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R SPH</div>
-                                    @Html.DropDownList("RSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R SPH" })
-                                    <div class="eye-caption">توان اسفریک</div>
-                                </div>
-                                <div class="eye-cell eye-cell-toggle">
-                                    <div class="eye-code">CYL</div>
-                                    <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="r">-</button>
-                                    <div class="eye-caption">علامت آستیگمات</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R CYL</div>
-                                    @Html.DropDownList("RCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R CYL" })
-                                    <div class="eye-caption">توان آستیگمات</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R AXIS</div>
-                                    @Html.TextBox("RAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "R Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
-                                    <div class="eye-caption">محور آستیگمات</div>
-                                </div>
+                <div class="eye-panels-stack">
+                    <div class="eye-panel">
+                        <div class="eye-title">RIGHT EYE</div>
+                        <div class="eye-grid main-wide">
+                            <div class="eye-cell eye-cell-toggle">
+                                <div class="eye-code">SPH</div>
+                                <button type="button" class="eye-toggle" data-toggle="sph" data-eye="r">-</button>
+                                <div class="eye-caption">علامت اسفریک</div>
                             </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R SPH</div>
+                                @Html.DropDownList("RSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R SPH" })
+                                <div class="eye-caption">توان اسفریک</div>
+                            </div>
+                            <div class="eye-cell eye-cell-toggle">
+                                <div class="eye-code">CYL</div>
+                                <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="r">-</button>
+                                <div class="eye-caption">علامت آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R CYL</div>
+                                @Html.DropDownList("RCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R CYL" })
+                                <div class="eye-caption">توان آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R AXIS</div>
+                                @Html.TextBox("RAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "R Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
+                                <div class="eye-caption">محور آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R ADD</div>
+                                @Html.DropDownList("RAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R ADD" })
+                                <div class="eye-caption">ادیشن</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R DIA</div>
+                                @Html.DropDownList("RDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DIA" })
+                                <div class="eye-caption">قطر عدسی</div>
+                            </div>
+                        </div>
 
-                            <div class="eye-grid triple middle">
-                                <div class="eye-cell">
-                                    <div class="eye-code">R ADD</div>
-                                    @Html.DropDownList("RAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R ADD" })
-                                    <div class="eye-caption">ادیشن</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R DIA</div>
-                                    @Html.DropDownList("RDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DIA" })
-                                    <div class="eye-caption">قطر عدسی</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R DC</div>
-                                    @Html.DropDownList("RDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DC" })
-                                    <div class="eye-caption">مقدار دیسنتره</div>
-                                </div>
+                        <div class="eye-grid quad bottom">
+                            <div class="eye-cell">
+                                <div class="eye-code">R DC</div>
+                                @Html.DropDownList("RDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R DC" })
+                                <div class="eye-caption">مقدار دیسنتره</div>
                             </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R POSITION</div>
+                                @Html.DropDownList("RPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Position" })
+                                <div class="eye-caption">جهت دیسنتره</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R PRISM</div>
+                                @Html.DropDownList("RPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Prism" })
+                                <div class="eye-caption">توان پریزم</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">R BASE OF PRISM</div>
+                                @Html.DropDownList("RBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Base of Prism" })
+                                <div class="eye-caption">جهت بیس پریزم</div>
+                            </div>
+                        </div>
 
-                            <div class="eye-grid triple bottom">
-                                <div class="eye-cell">
-                                    <div class="eye-code">R POSITION</div>
-                                    @Html.DropDownList("RPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Position" })
-                                    <div class="eye-caption">جهت دیسنتره</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R PRISM</div>
-                                    @Html.DropDownList("RPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Prism" })
-                                    <div class="eye-caption">توان پریزم</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">R BASE OF PRISM</div>
-                                    @Html.DropDownList("RBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "R Base of Prism" })
-                                    <div class="eye-caption">جهت بیس پریزم</div>
-                                </div>
-                            </div>
-
-                            <div class="eye-copy-wrap">
-                                <button type="button" class="eye-copy" data-copy="r2l">کپی اطلاعات چشم چپ</button>
-                            </div>
+                        <div class="eye-copy-wrap">
+                            <button type="button" class="eye-copy" data-copy="r2l">کپی اطلاعات چشم چپ</button>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="eye-panel">
-                            <div class="eye-title">LEFT EYE</div>
-                            <div class="eye-grid main">
-                                <div class="eye-cell eye-cell-toggle">
-                                    <div class="eye-code">SPH</div>
-                                    <button type="button" class="eye-toggle" data-toggle="sph" data-eye="l">-</button>
-                                    <div class="eye-caption">علامت اسفریک</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L SPH</div>
-                                    @Html.DropDownList("LSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L SPH" })
-                                    <div class="eye-caption">توان اسفریک</div>
-                                </div>
-                                <div class="eye-cell eye-cell-toggle">
-                                    <div class="eye-code">CYL</div>
-                                    <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="l">-</button>
-                                    <div class="eye-caption">علامت آستیگمات</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L CYL</div>
-                                    @Html.DropDownList("LCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L CYL" })
-                                    <div class="eye-caption">توان آستیگمات</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L AXIS</div>
-                                    @Html.TextBox("LAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "L Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
-                                    <div class="eye-caption">محور آستیگمات</div>
-                                </div>
+                    <div class="eye-panel">
+                        <div class="eye-title">LEFT EYE</div>
+                        <div class="eye-grid main-wide">
+                            <div class="eye-cell eye-cell-toggle">
+                                <div class="eye-code">SPH</div>
+                                <button type="button" class="eye-toggle" data-toggle="sph" data-eye="l">-</button>
+                                <div class="eye-caption">علامت اسفریک</div>
                             </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L SPH</div>
+                                @Html.DropDownList("LSph", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L SPH" })
+                                <div class="eye-caption">توان اسفریک</div>
+                            </div>
+                            <div class="eye-cell eye-cell-toggle">
+                                <div class="eye-code">CYL</div>
+                                <button type="button" class="eye-toggle" data-toggle="cyl" data-eye="l">-</button>
+                                <div class="eye-caption">علامت آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L CYL</div>
+                                @Html.DropDownList("LCyl", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L CYL" })
+                                <div class="eye-caption">توان آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L AXIS</div>
+                                @Html.TextBox("LAxis", "", new { @class = "form-control form-control-solid form-control-sm", placeholder = "L Axis", type = "number", min = "1", max = "180", step = "1", inputmode = "numeric" })
+                                <div class="eye-caption">محور آستیگمات</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L ADD</div>
+                                @Html.DropDownList("LAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L ADD" })
+                                <div class="eye-caption">ادیشن</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L DIA</div>
+                                @Html.DropDownList("LDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DIA" })
+                                <div class="eye-caption">قطر عدسی</div>
+                            </div>
+                        </div>
 
-                            <div class="eye-grid triple middle">
-                                <div class="eye-cell">
-                                    <div class="eye-code">L ADD</div>
-                                    @Html.DropDownList("LAdd", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L ADD" })
-                                    <div class="eye-caption">ادیشن</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L DIA</div>
-                                    @Html.DropDownList("LDia", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DIA" })
-                                    <div class="eye-caption">قطر عدسی</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L DC</div>
-                                    @Html.DropDownList("LDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DC" })
-                                    <div class="eye-caption">مقدار دیسنتره</div>
-                                </div>
+                        <div class="eye-grid quad bottom">
+                            <div class="eye-cell">
+                                <div class="eye-code">L DC</div>
+                                @Html.DropDownList("LDC", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L DC" })
+                                <div class="eye-caption">مقدار دیسنتره</div>
                             </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L POSITION</div>
+                                @Html.DropDownList("LPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Position" })
+                                <div class="eye-caption">جهت دیسنتره</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L PRISM</div>
+                                @Html.DropDownList("LPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Prism" })
+                                <div class="eye-caption">توان پریزم</div>
+                            </div>
+                            <div class="eye-cell">
+                                <div class="eye-code">L BASE OF PRISM</div>
+                                @Html.DropDownList("LBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Base of Prism" })
+                                <div class="eye-caption">جهت بیس پریزم</div>
+                            </div>
+                        </div>
 
-                            <div class="eye-grid triple bottom">
-                                <div class="eye-cell">
-                                    <div class="eye-code">L POSITION</div>
-                                    @Html.DropDownList("LPosition", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Position" })
-                                    <div class="eye-caption">جهت دیسنتره</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L PRISM</div>
-                                    @Html.DropDownList("LPrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Prism" })
-                                    <div class="eye-caption">توان پریزم</div>
-                                </div>
-                                <div class="eye-cell">
-                                    <div class="eye-code">L BASE OF PRISM</div>
-                                    @Html.DropDownList("LBasePrism", new List<SelectListItem>(), "", new { @class = "form-select form-select-solid form-select-sm", data_placeholder = "L Base of Prism" })
-                                    <div class="eye-caption">جهت بیس پریزم</div>
-                                </div>
-                            </div>
-
-                            <div class="eye-copy-wrap">
-                                <button type="button" class="eye-copy" data-copy="l2r">کپی اطلاعات چشم راست</button>
-                            </div>
+                        <div class="eye-copy-wrap">
+                            <button type="button" class="eye-copy" data-copy="l2r">کپی اطلاعات چشم راست</button>
                         </div>
                     </div>
                 </div>
@@ -916,12 +1142,12 @@
                             <div class="frame-caption">ارتفاع حلقه</div>
                         </div>
                         <div class="frame-cell">
-                            <div class="frame-code">FITTING-R</div>
+                            <div class="frame-code">FITTING/SEG-R</div>
                             @Html.TextBox("FITTINGR", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric frame-min-one", type = "number", step = "0.1", min = "1", inputmode = "decimal" })
                             <div class="frame-caption">فیتینگ/سگمنت چشم راست</div>
                         </div>
                         <div class="frame-cell">
-                            <div class="frame-code">FITTING-L</div>
+                            <div class="frame-code">FITTING/SEG-L</div>
                             @Html.TextBox("FITTINGL", "", new { @class = "form-control form-control-solid form-control-sm frame-numeric frame-min-one", type = "number", step = "0.1", min = "1", inputmode = "decimal" })
                             <div class="frame-caption">فیتینگ/سگمنت چشم چپ</div>
                         </div>
@@ -1024,7 +1250,7 @@
                         </label>
                         <label class="before-lens-option">
                             @Html.RadioButtonFor(model => model.BeforeLensType, 2)
-                            <span>دوردید</span>
+                            <span>دو دید</span>
                         </label>
                         <label class="before-lens-option">
                             @Html.RadioButtonFor(model => model.BeforeLensType, 3)
@@ -1035,10 +1261,210 @@
             </div>
         </div>
             <div class="form-group text-center mb-4">
-                <button type="button" class="btn btn-primary" data-kt-element="save-custom-order">ثبت</button>
+                <button type="button" class="btn btn-primary" data-kt-element="save-custom-order">پیش نمایش</button>
                 <button type="button" class="btn btn-primary" data-kt-element="save-send-custom-order">ثبت و ارسال</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="customOrderPreviewModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable custom-order-preview-modal__dialog" role="document">
+        <div class="modal-content custom-order-preview-modal__content">
+            <div class="modal-header custom-order-preview-modal__header">
+                <h5 class="modal-title">جزئیات درخواست</h5>
+                <button type="button" class="close custom-order-preview-modal__close" data-bs-dismiss="modal" data-preview-close="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body custom-order-preview-modal__body text-right">
+                <div class="custom-order-preview">
+                    <div class="custom-order-preview__head">
+                        <span class="custom-order-preview__print" title="پیش نمایش قابل چاپ">
+                            <i class="fa fa-print" aria-hidden="true"></i>
+                        </span>
+                        <div class="custom-order-preview__head-main">
+                            <span class="custom-order-preview__title">پیش نمایش سفارش</span>
+                            <span class="custom-order-preview__factor" data-preview-field="factor">RX-PREVIEW</span>
+                        </div>
+                    </div>
+
+                    <div class="custom-order-preview__meta">
+                        <div class="meta-item"><span>مشتری</span><strong data-preview-field="customer">-</strong></div>
+                        <div class="meta-item"><span>فروشگاه</span><strong data-preview-field="store">-</strong></div>
+                        <div class="meta-item"><span>مصرف کننده</span><strong data-preview-field="consumer">-</strong></div>
+                        <div class="meta-item"><span>نحوه تحویل</span><strong data-preview-field="deliveryType">-</strong></div>
+                        <div class="meta-item"><span>شماره سفارش</span><strong data-preview-field="factor">RX-PREVIEW</strong></div>
+                    </div>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th style="min-width:120px">عنوان عدسی</th>
+                                <th colspan="10" data-preview-field="product">-</th>
+                            </tr>
+                            <tr>
+                                <th>چشم</th>
+                                <th>SPH</th>
+                                <th>CYL</th>
+                                <th>AXIS</th>
+                                <th>ADD</th>
+                                <th>DIA</th>
+                                <th>PD</th>
+                                <th>POSITION</th>
+                                <th>PRISM</th>
+                                <th>BP</th>
+                                <th>DC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="eye-side">RIGHT</td>
+                                <td data-preview-field="rightSph">-</td>
+                                <td data-preview-field="rightCyl">-</td>
+                                <td data-preview-field="rightAxis">-</td>
+                                <td data-preview-field="rightAdd">-</td>
+                                <td data-preview-field="rightDia">-</td>
+                                <td data-preview-field="rightPd">-</td>
+                                <td data-preview-field="rightPosition">-</td>
+                                <td data-preview-field="rightPrism">-</td>
+                                <td data-preview-field="rightBp">-</td>
+                                <td data-preview-field="rightDc">-</td>
+                            </tr>
+                            <tr>
+                                <td class="eye-side">LEFT</td>
+                                <td data-preview-field="leftSph">-</td>
+                                <td data-preview-field="leftCyl">-</td>
+                                <td data-preview-field="leftAxis">-</td>
+                                <td data-preview-field="leftAdd">-</td>
+                                <td data-preview-field="leftDia">-</td>
+                                <td data-preview-field="leftPd">-</td>
+                                <td data-preview-field="leftPosition">-</td>
+                                <td data-preview-field="leftPrism">-</td>
+                                <td data-preview-field="leftBp">-</td>
+                                <td data-preview-field="leftDc">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>HBOX</th>
+                                <th>VBOX</th>
+                                <th>FITTING-R</th>
+                                <th>FITTING-L</th>
+                                <th>DBL</th>
+                                <th>ED</th>
+                                <th>PA</th>
+                                <th>FFA</th>
+                                <th>BVD</th>
+                                <th>BASE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-preview-field="hbox">-</td>
+                                <td data-preview-field="vbox">-</td>
+                                <td data-preview-field="fittingR">-</td>
+                                <td data-preview-field="fittingL">-</td>
+                                <td data-preview-field="dbl">-</td>
+                                <td data-preview-field="ed">-</td>
+                                <td data-preview-field="panto">-</td>
+                                <td data-preview-field="ffa">-</td>
+                                <td data-preview-field="bvd">-</td>
+                                <td data-preview-field="base">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>Coating</th>
+                                <th>مشخصات عدسی قبلی</th>
+                                <th>Coloring</th>
+                                <th>نوع فریم</th>
+                                <th>Corridor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-preview-field="coating">-</td>
+                                <td data-preview-field="beforeLensType">-</td>
+                                <td data-preview-field="color">-</td>
+                                <td data-preview-field="frameType">-</td>
+                                <td data-preview-field="corridor">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>Coloring Type</th>
+                                <th>Color Ratio</th>
+                                <th>Top Ratio</th>
+                                <th>Bottom Ratio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-preview-field="coloringType">-</td>
+                                <td data-preview-field="colorRatio">-</td>
+                                <td data-preview-field="topRatio">-</td>
+                                <td data-preview-field="bottomRatio">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>توضیحات</th>
+                                <th>خدمات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-preview-field="description">-</td>
+                                <td data-preview-field="services">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>BRAND</th>
+                                <th>LENS TYPE</th>
+                                <th>DESIGN TYPE</th>
+                                <th>LENS INDEX</th>
+                                <th>MATERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-preview-field="brand">-</td>
+                                <td data-preview-field="lensType">-</td>
+                                <td data-preview-field="designType">-</td>
+                                <td data-preview-field="lensIndex">-</td>
+                                <td data-preview-field="material">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="custom-order-preview__note">
+                    <strong data-preview-field="factor">RX-PREVIEW</strong>
+                    <span>این فقط پیش نمایش سفارش قبل از ثبت است. برای ثبت نهایی از دکمه ثبت و ارسال استفاده کنید.</span>
+                </div>
+            </div>
+            <div class="modal-footer custom-order-preview-modal__footer">
+                <button type="button" class="btn btn-primary" data-kt-element="preview-send-custom-order">ثبت و ارسال</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" data-preview-close="modal">بستن</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1295,6 +1721,8 @@
             var $frameType = $("#FrameTypeId");
             var $hBox = $("#HBOX");
             var $vBox = $("#VBOX");
+            var $fittingR = $("#FITTINGR");
+            var $fittingL = $("#FITTINGL");
             var $dbl = $("#DBL");
             var $ed = $("#ED");
             var $ipdr = $("#IPDR");
@@ -1604,6 +2032,224 @@
                 $lAdd.prop("disabled", !enabled).trigger("change");
             }
 
+            function normalizeKeyboardDigits(value) {
+                if (value == null) {
+                    return "";
+                }
+                var fa = "۰۱۲۳۴۵۶۷۸۹";
+                var ar = "٠١٢٣٤٥٦٧٨٩";
+                var text = String(value);
+                return text.replace(/[۰-۹]/g, function (ch) { return String(fa.indexOf(ch)); })
+                    .replace(/[٠-٩]/g, function (ch) { return String(ar.indexOf(ch)); });
+            }
+
+            function normalizeAddTypingToken(value) {
+                var text = normalizeKeyboardDigits(value)
+                    .replace(/٫/g, ".")
+                    .replace(/,/g, ".")
+                    .replace(/[^0-9.]/g, "");
+
+                var firstDot = text.indexOf(".");
+                if (firstDot !== -1) {
+                    text = text.substring(0, firstDot + 1) + text.substring(firstDot + 1).replace(/\./g, "");
+                }
+                if (text.startsWith(".")) {
+                    text = "0" + text;
+                }
+                return text;
+            }
+
+            function toAddComparable(value) {
+                var normalized = normalizeAddTypingToken(value);
+                if (!normalized) {
+                    return "";
+                }
+                var parsed = Number(normalized);
+                if (Number.isFinite(parsed)) {
+                    return parsed.toFixed(2);
+                }
+                return normalized;
+            }
+
+            function findAddOptionValueByToken($select, token) {
+                var normalizedToken = normalizeAddTypingToken(token);
+                if (!normalizedToken) {
+                    return "";
+                }
+
+                var tokenComparable = toAddComparable(normalizedToken);
+                var exactValue = "";
+                var startsWithValue = "";
+                var fallbackExactValue = "";
+                var fallbackStartsWithValue = "";
+
+                $select.find("option").each(function () {
+                    var optionValue = String(this.value || "").trim();
+                    if (!optionValue) {
+                        return;
+                    }
+
+                    var optionText = String($(this).text() || "").trim();
+                    var textLoose = normalizeAddTypingToken(optionText);
+                    var textComparable = toAddComparable(optionText);
+                    var valueLoose = normalizeAddTypingToken(optionValue);
+                    var valueComparable = toAddComparable(optionValue);
+
+                    var textIsExact = textLoose === normalizedToken || textComparable === normalizedToken || textComparable === tokenComparable;
+                    if (!exactValue && textIsExact) {
+                        exactValue = optionValue;
+                    }
+
+                    if (!startsWithValue) {
+                        var textStarts = (textLoose && textLoose.indexOf(normalizedToken) === 0) || (textComparable && textComparable.indexOf(normalizedToken) === 0);
+                        if (textStarts) {
+                            startsWithValue = optionValue;
+                        }
+                    }
+
+                    // fallback: فقط اگر متن گزینه ADD قابل تشخیص نبود، از مقدار value کمک بگیر
+                    if (!textLoose && !textComparable) {
+                        var valueIsExact = valueLoose === normalizedToken || valueComparable === normalizedToken || valueComparable === tokenComparable;
+                        if (!fallbackExactValue && valueIsExact) {
+                            fallbackExactValue = optionValue;
+                        }
+
+                        if (!fallbackStartsWithValue) {
+                            var valueStarts = (valueLoose && valueLoose.indexOf(normalizedToken) === 0) || (valueComparable && valueComparable.indexOf(normalizedToken) === 0);
+                            if (valueStarts) {
+                                fallbackStartsWithValue = optionValue;
+                            }
+                        }
+                    }
+                });
+
+                return exactValue || startsWithValue || fallbackExactValue || fallbackStartsWithValue || "";
+            }
+
+            function bindAddDirectTyping($select) {
+                var bufferKey = "addTypingBuffer";
+                var timerKey = "addTypingTimer";
+
+                function clearBuffer() {
+                    var timer = $select.data(timerKey);
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    $select.removeData(timerKey);
+                    $select.removeData(bufferKey);
+                }
+
+                function scheduleClear() {
+                    var prev = $select.data(timerKey);
+                    if (prev) {
+                        clearTimeout(prev);
+                    }
+                    var next = setTimeout(clearBuffer, 1400);
+                    $select.data(timerKey, next);
+                }
+
+                function handleKeydown(e) {
+                    if ($select.prop("disabled")) {
+                        return;
+                    }
+
+                    var key = String(e.key || "");
+                    var code = String(e.code || "");
+                    var typedToken = key;
+                    var isLatinDigit = /^[0-9]$/.test(typedToken);
+                    var isPersianDigit = /^[۰-۹]$/.test(key);
+                    var isArabicDigit = /^[٠-٩]$/.test(key);
+                    if (!isLatinDigit && /^Digit[0-9]$/.test(code)) {
+                        typedToken = code.substring(code.length - 1);
+                        isLatinDigit = true;
+                    } else if (!isLatinDigit && /^Numpad[0-9]$/.test(code)) {
+                        typedToken = code.substring(code.length - 1);
+                        isLatinDigit = true;
+                    }
+
+                    var isDecimal = typedToken === "." || typedToken === "," || typedToken === "٫" || key === "Decimal" || code === "NumpadDecimal";
+                    if (isDecimal) {
+                        typedToken = ".";
+                    }
+                    var isBackspace = key === "Backspace";
+                    var isDelete = key === "Delete";
+                    var isEscape = key === "Escape";
+
+                    if (!(isLatinDigit || isPersianDigit || isArabicDigit || isDecimal || isBackspace || isDelete || isEscape)) {
+                        return;
+                    }
+
+                    e.preventDefault();
+
+                    if (isDelete || isEscape) {
+                        clearBuffer();
+                        return;
+                    }
+
+                    var buffer = String($select.data(bufferKey) || "");
+                    if (isBackspace) {
+                        buffer = buffer.substring(0, Math.max(buffer.length - 1, 0));
+                    } else {
+                        buffer += typedToken;
+                    }
+
+                    buffer = normalizeAddTypingToken(buffer);
+
+                    var matchedValue = findAddOptionValueByToken($select, buffer);
+                    if (!matchedValue && !isBackspace) {
+                        var singleToken = normalizeAddTypingToken(typedToken);
+                        matchedValue = findAddOptionValueByToken($select, singleToken);
+                        if (matchedValue) {
+                            buffer = singleToken;
+                        }
+                    }
+
+                    if (matchedValue) {
+                        $select.val(matchedValue).trigger("change");
+                    }
+
+                    if (buffer) {
+                        $select.data(bufferKey, buffer);
+                        scheduleClear();
+                    } else {
+                        clearBuffer();
+                    }
+                }
+
+                function bindSelectionSurface() {
+                    var $selection = $select.next(".select2").find(".select2-selection");
+                    $selection.off("keydown.addDirectTyping").on("keydown.addDirectTyping", handleKeydown);
+                }
+
+                function bindOpenedSearchSurface() {
+                    var select2 = $select.data("select2");
+                    if (!select2 || !select2.$dropdown || !select2.$dropdown.length) {
+                        return;
+                    }
+
+                    select2.$dropdown
+                        .find(".select2-search__field")
+                        .off("keydown.addDirectTyping")
+                        .on("keydown.addDirectTyping", handleKeydown);
+                }
+
+                $select.off("keydown.addDirectTyping").on("keydown.addDirectTyping", handleKeydown);
+                bindSelectionSurface();
+
+                $select.off("select2:open.addDirectTyping").on("select2:open.addDirectTyping", function () {
+                    window.setTimeout(bindOpenedSearchSurface, 0);
+                });
+
+                $select.off("select2:close.addDirectTyping").on("select2:close.addDirectTyping", function () {
+                    clearBuffer();
+                    bindSelectionSurface();
+                });
+
+                $select.off("blur.addDirectTyping").on("blur.addDirectTyping", function () {
+                    clearBuffer();
+                });
+            }
+
             function buildIntegerRangeData(min, max) {
                 var data = [];
                 for (var i = min; i <= max; i++) {
@@ -1688,6 +2334,8 @@
             bindHoverOpenSelect($rBasePrism, "rbaseprism");
             bindHoverOpenSelect($lBasePrism, "lbaseprism");
             bindFrameNumericInputs();
+            bindAddDirectTyping($rAdd);
+            bindAddDirectTyping($lAdd);
             setAddEnabled(false);
             setSphToggleByDesignType(null);
             syncSphSignedValue("r");
@@ -1752,6 +2400,67 @@
             function hasInputValue($input) {
                 var val = $input.val();
                 return val !== null && val !== undefined && String(val).trim() !== "";
+            }
+
+            function getEyeSelectionState(eye) {
+                var isRight = eye === "r";
+                var $sph = isRight ? $rSph : $lSph;
+                var $cyl = isRight ? $rCyl : $lCyl;
+                var hasSph = hasSelectedValue($sph);
+                var hasCyl = hasSelectedValue($cyl);
+
+                return {
+                    hasSph: hasSph,
+                    hasCyl: hasCyl,
+                    isActive: hasSph && hasCyl,
+                    isIncomplete: hasSph !== hasCyl
+                };
+            }
+
+            function getEyePresenceContext() {
+                var right = getEyeSelectionState("r");
+                var left = getEyeSelectionState("l");
+                return {
+                    right: right,
+                    left: left,
+                    hasAnyEye: right.isActive || left.isActive,
+                    isSingleEye: right.isActive !== left.isActive,
+                    isDualEye: right.isActive && left.isActive
+                };
+            }
+
+            function setEyeSelectionValidationState($sph, $cyl, isValid) {
+                if (isValid) {
+                    $sph.removeClass("eyepair-invalid is-invalid");
+                    $cyl.removeClass("eyepair-invalid is-invalid");
+                    return;
+                }
+                $sph.removeClass("is-invalid").addClass("eyepair-invalid");
+                $cyl.removeClass("is-invalid").addClass("eyepair-invalid");
+            }
+
+            function validateEyePairRules(showMessage) {
+                var withMessage = showMessage === true;
+                var eyeContext = getEyePresenceContext();
+
+                setEyeSelectionValidationState($rSph, $rCyl, !eyeContext.right.isIncomplete);
+                setEyeSelectionValidationState($lSph, $lCyl, !eyeContext.left.isIncomplete);
+
+                if (eyeContext.right.isIncomplete || eyeContext.left.isIncomplete) {
+                    if (withMessage) {
+                        toastr.error("برای هر چشم، SPH و CYL باید هر دو کامل شوند.", "");
+                    }
+                    return false;
+                }
+
+                if (!eyeContext.hasAnyEye) {
+                    if (withMessage) {
+                        toastr.error("حداقل اطلاعات یک چشم (SPH و CYL) را کامل کنید.", "");
+                    }
+                    return false;
+                }
+
+                return true;
             }
 
             function bindFrameNumericInputs() {
@@ -2005,9 +2714,12 @@
             }
 
             function syncFrameByDiaAvailability() {
+                var eyeContext = getEyePresenceContext();
+                var rightActive = eyeContext.right.isActive;
+                var leftActive = eyeContext.left.isActive;
                 var hasRightDia = hasSelectedValue($rDia);
                 var hasLeftDia = hasSelectedValue($lDia);
-                var disableCommon = hasRightDia && hasLeftDia;
+                var disableCommon = hasRightDia || hasLeftDia;
 
                 [$hBox, $vBox, $dbl, $ed].forEach(function ($field) {
                     $field.prop("disabled", disableCommon);
@@ -2016,25 +2728,55 @@
                     }
                 });
 
-                $ipdr.prop("disabled", hasRightDia);
-                if (hasRightDia) {
-                    setFrameValidationState($ipdr, true);
+                if (!rightActive) {
+                    $fittingR.val("");
+                    $ipdr.val("");
+                }
+                if (!leftActive) {
+                    $fittingL.val("");
+                    $ipdl.val("");
                 }
 
-                $ipdl.prop("disabled", hasLeftDia);
-                if (hasLeftDia) {
+                $fittingR.prop("disabled", !rightActive);
+                $fittingL.prop("disabled", !leftActive);
+                $ipdr.prop("disabled", !rightActive);
+                $ipdl.prop("disabled", !leftActive);
+
+                if (!rightActive) {
+                    setFrameValidationState($fittingR, true);
+                    setFrameValidationState($ipdr, true);
+                }
+                if (!leftActive) {
+                    setFrameValidationState($fittingL, true);
                     setFrameValidationState($ipdl, true);
                 }
             }
 
-            function validateFrameByDiaRules() {
+            function validateFrameByDiaRules(showMessage) {
+                var withMessage = showMessage === true;
                 syncFrameByDiaAvailability();
+
+                var eyeContext = getEyePresenceContext();
+                var rightActive = eyeContext.right.isActive;
+                var leftActive = eyeContext.left.isActive;
                 var hasRightDia = hasSelectedValue($rDia);
                 var hasLeftDia = hasSelectedValue($lDia);
 
-                var requireCommon = !hasRightDia || !hasLeftDia;
-                var requireIpdr = !hasRightDia;
-                var requireIpdl = !hasLeftDia;
+                var requireCommon = false;
+                if (eyeContext.hasAnyEye) {
+                    if (eyeContext.isDualEye) {
+                        requireCommon = !hasRightDia && !hasLeftDia;
+                    } else if (rightActive) {
+                        requireCommon = !hasRightDia;
+                    } else if (leftActive) {
+                        requireCommon = !hasLeftDia;
+                    }
+                }
+
+                var requireIpdr = rightActive && !hasRightDia;
+                var requireIpdl = leftActive && !hasLeftDia;
+                var requireRightDiaForDual = eyeContext.isDualEye && hasLeftDia && !hasRightDia;
+                var requireLeftDiaForDual = eyeContext.isDualEye && hasRightDia && !hasLeftDia;
 
                 var commonFields = [$hBox, $vBox, $dbl, $ed];
                 var commonValid = true;
@@ -2046,12 +2788,21 @@
                     }
                 });
 
-                var ipdrValid = $ipdr.prop("disabled") || !requireIpdr || hasInputValue($ipdr);
-                var ipdlValid = $ipdl.prop("disabled") || !requireIpdl || hasInputValue($ipdl);
+                var rightDiaValid = !requireRightDiaForDual || hasRightDia;
+                var leftDiaValid = !requireLeftDiaForDual || hasLeftDia;
+                setFrameValidationState($rDia, rightDiaValid);
+                setFrameValidationState($lDia, leftDiaValid);
+
+                if (withMessage && (requireRightDiaForDual || requireLeftDiaForDual)) {
+                    toastr.error("در سفارش دو لنگه، DIA باید برای هر دو چشم پر شود یا برای هیچ‌کدام.", "");
+                }
+
+                var ipdrValid = !requireIpdr || hasInputValue($ipdr);
+                var ipdlValid = !requireIpdl || hasInputValue($ipdl);
                 setFrameValidationState($ipdr, ipdrValid);
                 setFrameValidationState($ipdl, ipdlValid);
 
-                return commonValid && ipdrValid && ipdlValid;
+                return commonValid && ipdrValid && ipdlValid && rightDiaValid && leftDiaValid;
             }
 
             function enforceAxisDigits($axis) {
@@ -2278,6 +3029,18 @@
                 return (ListCustomCoating || []).filter(function (x) { return sameId(readItemParentId(x), designTypeId); });
             }
 
+            function getDefaultCoatingId(coatings) {
+                if (!Array.isArray(coatings) || coatings.length === 0) {
+                    return "";
+                }
+
+                var defaultItem = coatings.find(function (x) {
+                    return readItemBool(x, ["isDefault", "IsDefault"]);
+                });
+
+                return defaultItem ? normalizeComparable(readItemId(defaultItem)) : "";
+            }
+
             function hasCoatingPrerequisites() {
                 return hasSelectedValue($brand)
                     && hasSelectedValue($lensType)
@@ -2290,14 +3053,19 @@
                 var designTypeId = $designType.val();
                 var canEnable = hasCoatingPrerequisites();
                 var coatings = canEnable ? getCoatingsByDesignType(designTypeId) : [];
-                var currentValue = $coating.val();
+                var currentValue = normalizeComparable($coating.val());
                 initSelect($coating, coatings, "COATING");
 
                 var hasCurrent = coatings.some(function (x) { return sameId(readItemId(x), currentValue); });
                 if (hasCurrent) {
-                    $coating.val(normalizeComparable(currentValue));
+                    $coating.val(currentValue);
                 } else {
-                    $coating.val(null);
+                    var defaultCoatingId = getDefaultCoatingId(coatings);
+                    if (defaultCoatingId) {
+                        $coating.val(defaultCoatingId);
+                    } else {
+                        $coating.val(null);
+                    }
                 }
 
                 $coating.prop('disabled', !canEnable || coatings.length === 0).trigger('change');
@@ -2480,17 +3248,29 @@
 
             $rSph.on("change", function () { syncSphSignedValue("r"); });
             $lSph.on("change", function () { syncSphSignedValue("l"); });
+            $rSph.on("change", function () {
+                validateEyePairRules();
+                validateFrameByDiaRules();
+            });
+            $lSph.on("change", function () {
+                validateEyePairRules();
+                validateFrameByDiaRules();
+            });
             $rCyl.on("change", function () {
                 syncCylSignedValue("r");
                 validateAxisForEye("r");
                 syncPositionAvailability("r");
                 validatePositionForEye("r");
+                validateEyePairRules();
+                validateFrameByDiaRules();
             });
             $lCyl.on("change", function () {
                 syncCylSignedValue("l");
                 validateAxisForEye("l");
                 syncPositionAvailability("l");
                 validatePositionForEye("l");
+                validateEyePairRules();
+                validateFrameByDiaRules();
             });
             $rAxis.on("input change", function () {
                 enforceAxisDigits($rAxis);
@@ -2533,6 +3313,7 @@
             syncPositionAvailability("l");
             syncBasePrismAvailability("r");
             syncBasePrismAvailability("l");
+            validateEyePairRules();
             validateFrameByDiaRules();
             syncColoringTypeRules();
 
@@ -2753,12 +3534,27 @@
                 };
 
                 var needTools = String($extraService.val() || "").trim().toUpperCase() === "TOOLS";
-                var rightEyeItem = buildEyeItem(true, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
-                var leftEyeItem = buildEyeItem(false, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
-                appendEyeItemToPayload(payload, 0, rightEyeItem);
-                appendEyeItemToPayload(payload, 1, leftEyeItem);
+                var eyeContext = getEyePresenceContext();
+                var itemIndex = 0;
+                var eyeItems = [];
 
-                return payload;
+                if (eyeContext.right.isActive) {
+                    var rightEyeItem = buildEyeItem(true, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
+                    appendEyeItemToPayload(payload, itemIndex, rightEyeItem);
+                    eyeItems.push(rightEyeItem);
+                    itemIndex++;
+                }
+
+                if (eyeContext.left.isActive) {
+                    var leftEyeItem = buildEyeItem(false, payload.DefineObjectId, payload.Consumer, payload.StoreName, needTools);
+                    appendEyeItemToPayload(payload, itemIndex, leftEyeItem);
+                    eyeItems.push(leftEyeItem);
+                }
+
+                return {
+                    payload: payload,
+                    eyeItems: eyeItems
+                };
             }
 
             function validateCustomOrderPayload(payload) {
@@ -2773,14 +3569,155 @@
                 return true;
             }
 
-            function submitCustomLensOrder(isSend) {
-                syncCustomerFieldVisualState();
+            function setPreviewFieldText(fieldName, value) {
+                $('[data-preview-field="' + fieldName + '"]').text(formatPreviewValue(value));
+            }
 
-                if (!validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules() || !validateColoringTypeRules()) {
+            function setPreviewModalVisibility(show) {
+                var modalElement = document.getElementById("customOrderPreviewModal");
+                if (!modalElement) {
                     return;
                 }
 
-                var payload = buildCustomOrderPayload();
+                if (window.bootstrap && window.bootstrap.Modal) {
+                    var bootstrapModal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+                    if (show) {
+                        bootstrapModal.show();
+                    } else {
+                        bootstrapModal.hide();
+                    }
+                    return;
+                }
+
+                if (typeof $ !== "undefined" && $.fn && $.fn.modal) {
+                    $(modalElement).modal(show ? "show" : "hide");
+                }
+            }
+
+            function formatPreviewValue(value) {
+                var text = String(value == null ? "" : value).trim();
+                return text || "-";
+            }
+
+            function getPreviewInputValue($input) {
+                return String($input.val() || "").trim().replace(",", ".");
+            }
+
+            function getBeforeLensTypeText() {
+                var value = parseNullableInt($("input[name='BeforeLensType']:checked").val());
+                if (value === 1) {
+                    return "تک دید";
+                }
+                if (value === 2) {
+                    return "دو دید";
+                }
+                if (value === 3) {
+                    return "تدریجی";
+                }
+                return "";
+            }
+
+            function renderCustomOrderPreview(orderData) {
+                var payload = (orderData && orderData.payload) ? orderData.payload : {};
+                var eyeContext = getEyePresenceContext();
+                var previewFactor = "RX-PREVIEW";
+                var customerText = String($defineCustomerSearch.val() || "").trim();
+                var storeText = String($("#StoreName").val() || "").trim();
+                var consumerText = String($("#Consumer").val() || "").trim();
+                var deliveryTypeText = hasValue($("#DeliveryType").val()) ? getSelectedText($("#DeliveryType")) : "";
+                var noteText = String($("#BeforeLensSpec").val() || "").trim();
+                var rightEyeActive = eyeContext.right.isActive;
+                var leftEyeActive = eyeContext.left.isActive;
+
+                function eyeValue(isActive, getter) {
+                    return isActive ? getter() : "";
+                }
+
+                setPreviewFieldText("factor", previewFactor);
+                setPreviewFieldText("customer", customerText);
+                setPreviewFieldText("store", storeText);
+                setPreviewFieldText("consumer", consumerText);
+                setPreviewFieldText("deliveryType", deliveryTypeText);
+                setPreviewFieldText("product", getSelectedText($product));
+                setPreviewFieldText("brand", getSelectedText($brand));
+                setPreviewFieldText("lensType", getSelectedText($lensType));
+                setPreviewFieldText("designType", getSelectedText($designType));
+                setPreviewFieldText("lensIndex", getSelectedText($lensIndex));
+                setPreviewFieldText("material", getSelectedText($materialType));
+
+                setPreviewFieldText("rightSph", eyeValue(rightEyeActive, function () { return $rSphSignedValue.val(); }));
+                setPreviewFieldText("rightCyl", eyeValue(rightEyeActive, function () { return $rCylSignedValue.val(); }));
+                setPreviewFieldText("rightAxis", eyeValue(rightEyeActive, function () { return getPreviewInputValue($rAxis); }));
+                setPreviewFieldText("rightAdd", eyeValue(rightEyeActive, function () { return getSelectedText($rAdd); }));
+                setPreviewFieldText("rightDia", eyeValue(rightEyeActive, function () { return getPreviewInputValue($rDia); }));
+                setPreviewFieldText("rightPd", eyeValue(rightEyeActive, function () { return getPreviewInputValue($ipdr); }));
+                setPreviewFieldText("rightPosition", eyeValue(rightEyeActive, function () { return getSelectedText($rPosition); }));
+                setPreviewFieldText("rightPrism", eyeValue(rightEyeActive, function () { return getPreviewInputValue($rPrism); }));
+                setPreviewFieldText("rightBp", eyeValue(rightEyeActive, function () { return getSelectedText($rBasePrism); }));
+                setPreviewFieldText("rightDc", eyeValue(rightEyeActive, function () { return getPreviewInputValue($rDc); }));
+
+                setPreviewFieldText("leftSph", eyeValue(leftEyeActive, function () { return $lSphSignedValue.val(); }));
+                setPreviewFieldText("leftCyl", eyeValue(leftEyeActive, function () { return $lCylSignedValue.val(); }));
+                setPreviewFieldText("leftAxis", eyeValue(leftEyeActive, function () { return getPreviewInputValue($lAxis); }));
+                setPreviewFieldText("leftAdd", eyeValue(leftEyeActive, function () { return getSelectedText($lAdd); }));
+                setPreviewFieldText("leftDia", eyeValue(leftEyeActive, function () { return getPreviewInputValue($lDia); }));
+                setPreviewFieldText("leftPd", eyeValue(leftEyeActive, function () { return getPreviewInputValue($ipdl); }));
+                setPreviewFieldText("leftPosition", eyeValue(leftEyeActive, function () { return getSelectedText($lPosition); }));
+                setPreviewFieldText("leftPrism", eyeValue(leftEyeActive, function () { return getPreviewInputValue($lPrism); }));
+                setPreviewFieldText("leftBp", eyeValue(leftEyeActive, function () { return getSelectedText($lBasePrism); }));
+                setPreviewFieldText("leftDc", eyeValue(leftEyeActive, function () { return getPreviewInputValue($lDc); }));
+
+                setPreviewFieldText("hbox", getPreviewInputValue($hBox));
+                setPreviewFieldText("vbox", getPreviewInputValue($vBox));
+                setPreviewFieldText("fittingR", getPreviewInputValue($fittingR));
+                setPreviewFieldText("fittingL", getPreviewInputValue($fittingL));
+                setPreviewFieldText("dbl", getPreviewInputValue($dbl));
+                setPreviewFieldText("ed", getPreviewInputValue($ed));
+                setPreviewFieldText("panto", getPreviewInputValue($("#PANTO")));
+                setPreviewFieldText("ffa", getPreviewInputValue($("#FFA")));
+                setPreviewFieldText("bvd", getPreviewInputValue($("#BVD")));
+                setPreviewFieldText("base", getSelectedText($baseCurve));
+
+                setPreviewFieldText("coating", getSelectedText($coating));
+                setPreviewFieldText("beforeLensType", getBeforeLensTypeText());
+                setPreviewFieldText("color", String($color.val() || "").trim());
+                setPreviewFieldText("frameType", getSelectedText($frameType));
+                setPreviewFieldText("corridor", hasValue($corridor.val()) ? getSelectedText($corridor) : payload.Corridor);
+
+                setPreviewFieldText("coloringType", getSelectedText($coloringType));
+                setPreviewFieldText("colorRatio", getPreviewInputValue($colorRatio));
+                setPreviewFieldText("topRatio", getPreviewInputValue($topRatio));
+                setPreviewFieldText("bottomRatio", getPreviewInputValue($bottomRatio));
+
+                setPreviewFieldText("description", noteText || payload.Description);
+                setPreviewFieldText("services", getSelectedText($extraService));
+            }
+
+            function showCustomOrderPreview() {
+                syncCustomerFieldVisualState();
+
+                if (!validateEyePairRules(true) || !validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules(true) || !validateColoringTypeRules()) {
+                    return;
+                }
+
+                var orderData = buildCustomOrderPayload();
+                if (!validateCustomOrderPayload(orderData.payload)) {
+                    return;
+                }
+
+                renderCustomOrderPreview(orderData);
+                setPreviewModalVisibility(true);
+            }
+
+            function submitCustomLensOrder(isSend) {
+                syncCustomerFieldVisualState();
+
+                if (!validateEyePairRules(true) || !validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules(true) || !validateColoringTypeRules()) {
+                    return;
+                }
+
+                var orderData = buildCustomOrderPayload();
+                var payload = orderData.payload;
                 if (!validateCustomOrderPayload(payload)) {
                     return;
                 }
@@ -2789,7 +3726,7 @@
                     ? '@Url.Action("CustomLensOrderSend", "Orders")'
                     : '@Url.Action("CustomLensOrder", "Orders")';
 
-                var $buttons = $('[data-kt-element="save-custom-order"], [data-kt-element="save-send-custom-order"]');
+                var $buttons = $('[data-kt-element="save-custom-order"], [data-kt-element="save-send-custom-order"], [data-kt-element="preview-send-custom-order"]');
                 $buttons.prop("disabled", true);
 
                 $.post(url, payload)
@@ -2809,12 +3746,21 @@
                     });
             }
 
-            $('[data-kt-element="save-custom-order"]').off("click.customlenssave").on("click.customlenssave", function () {
-                submitCustomLensOrder(false);
+            $('[data-kt-element="save-custom-order"]').off("click.customlenspreview").on("click.customlenspreview", function () {
+                showCustomOrderPreview();
             });
 
             $('[data-kt-element="save-send-custom-order"]').off("click.customlenssave").on("click.customlenssave", function () {
                 submitCustomLensOrder(true);
+            });
+
+            $('[data-kt-element="preview-send-custom-order"]').off("click.customlenssave").on("click.customlenssave", function () {
+                submitCustomLensOrder(true);
+            });
+
+            $('[data-preview-close="modal"]').off("click.customlensclose").on("click.customlensclose", function (e) {
+                e.preventDefault();
+                setPreviewModalVisibility(false);
             });
 
             $(document).on("click", "[data-toggle='sph'], [data-toggle='cyl']", function () {
@@ -2845,7 +3791,7 @@
             window.ValidateCustomLensAxis = validateAxisRules;
 
             $("#customLensOrderForm").on("submit.customLensAxisValidation", function (e) {
-                if (!validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules() || !validateColoringTypeRules()) {
+                if (!validateEyePairRules() || !validateAxisRules() || !validatePositionRules() || !validateBasePrismRules() || !validateFrameByDiaRules() || !validateColoringTypeRules()) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     return false;

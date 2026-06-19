@@ -1,0 +1,56 @@
+@font-face {
+    font-family: "AppEnglishDigits";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb.woff2") format("woff2");
+    unicode-range: U+0025, U+002B-003A;
+}
+
+@font-face {
+    font-family: "AppEnglishDigits";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb_Medium.woff2") format("woff2");
+    unicode-range: U+0025, U+002B-003A;
+}
+
+@font-face {
+    font-family: "AppEnglishDigits";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb_Bold.woff2") format("woff2");
+    unicode-range: U+0025, U+002B-003A;
+}
+
+:root,
+[data-bs-theme="light"],
+[data-bs-theme="dark"] {
+    --app-english-digit-font: "AppEnglishDigits", IRANSans, Tahoma, Helvetica, sans-serif;
+    --bs-font-sans-serif: var(--app-english-digit-font);
+    --bs-body-font-family: var(--bs-font-sans-serif);
+}
+
+body,
+button,
+input,
+optgroup,
+select,
+textarea,
+.form-control,
+.form-select,
+.select2-container,
+.select2-dropdown,
+.ui-jqgrid,
+.dataTables_wrapper,
+.table,
+.modal,
+.dropdown-menu,
+.toast,
+.toastr,
+.swal2-container {
+    font-family: var(--app-english-digit-font) !important;
+    font-variant-numeric: lining-nums tabular-nums;
+}

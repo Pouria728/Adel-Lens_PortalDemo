@@ -12,12 +12,13 @@ namespace HamrahanSystem.Application.DTOs
         {
         }
 
-        public TblLnsCustomLensTypeCoatingDto(int customLensTypeCoatingId, int? designTypeId, string lensTypeName, string coatingName, int orderId, bool isActive)
+        public TblLnsCustomLensTypeCoatingDto(int customLensTypeCoatingId, int? designTypeId, string lensTypeName, string coatingName, bool isDefault, int orderId, bool isActive)
         {
             this.CustomLensTypeCoatingId = customLensTypeCoatingId;
             this.DesignTypeId = designTypeId;
             this.LensTypeName = lensTypeName;
             this.CoatingName = coatingName;
+            this.IsDefault = isDefault;
             this.OrderId = orderId;
             this.IsActive = isActive;
         }
@@ -33,6 +34,8 @@ namespace HamrahanSystem.Application.DTOs
         public string LensTypeName { get; set; }
 
         public string CoatingName { get; set; }
+
+        public bool IsDefault { get; set; }
 
         public int OrderId { get; set; }
 

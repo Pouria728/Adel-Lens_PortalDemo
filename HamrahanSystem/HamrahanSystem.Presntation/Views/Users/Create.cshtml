@@ -3,6 +3,24 @@
 @{
     ViewBag.Title = "";
     Layout = null;
+    var selectedRoleId = 0;
+    var selectedRoleName = "";
+    if (Model.UserRoles != null && Model.UserRoles.Count > 0)
+    {
+        selectedRoleId = Model.UserRoles[0].RoleId;
+    }
+    if (ViewBag.ListRole != null)
+    {
+        foreach (var role in ViewBag.ListRole)
+        {
+            if (selectedRoleId == 0 || role.RoleId == selectedRoleId)
+            {
+                selectedRoleId = role.RoleId;
+                selectedRoleName = role.RoleName ?? "";
+                break;
+            }
+        }
+    }
 }
 
 
@@ -36,16 +54,20 @@
                 </div>
                 @Html.Label(ResourcePages.CustomerId, ResourcePages.CustomerId, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.InfoCustomerId, new List<SelectListItem>(), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree",data_allow_clear = "true" })
+                    @Html.HiddenFor(model => model.InfoCustomerId, new { id = "InfoCustomerId" })
+                    <input type="text" id="InfoCustomerSearch" class="form-control form-control-solid form-control-lg" placeholder="@ResourcePages.CustomerId" autocomplete="off" list="InfoCustomerSearchList" />
+                    <datalist id="InfoCustomerSearchList"></datalist>
                     @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
                 </div>
             </div>
             
          
             <div class="form-group row mb-6">
-                @Html.Label(ResourcePages.Role, ResourcePages.Role, htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
+                @Html.Label("نقش کاربر", "نقش کاربر", htmlAttributes: new { @class = "col-lg-2 col-form-label fw-semibold fs-6" })
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model=>model.UserRoles[0].RoleId, new MultiSelectList(ViewBag.ListRole, "RoleId", "RoleName"), new { @class = "form-select form-select-solid form-select-lg ", aria_label = "", data_control = "select2", data_placeholder = "", data_dropdown_parent = "#modal-Tree" })
+                    <input type="hidden" id="UserRoles_0__RoleId" name="UserRoles[0].RoleId" value="@(selectedRoleId > 0 ? selectedRoleId.ToString() : "")" />
+                    <input type="text" id="UserRoleSearch" class="form-control form-control-solid form-control-lg" placeholder="نقش کاربر" autocomplete="off" list="UserRoleSearchList" value="@selectedRoleName" />
+                    <datalist id="UserRoleSearchList"></datalist>
                     @* @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" }) *@
                 </div>
                 @Html.Label(ResourcePages.UserName, ResourcePages.UserName, htmlAttributes: new { @class = "col-lg-2 col-form-label required fw-semibold fs-6" })
@@ -98,34 +120,184 @@
 
     $(function () {
         KTComponents.init();
-         $("#InfoCustomerId").select2({
-            //theme: "bootstrap4",
-            dropdownParent: $("#modal-Tree"),
-            language: 'fa',
-            minimumInputLength: 2,
-            dir:"rtl",
-            ajax: {
-                url:  '@Url.Action("ListDefineCustomerSearch", "Orders")',
-                type: 'POST',
-                dataType: 'JSON',
-                // contentType: "application/json; charset=utf-8",
-                delay: 250,
-                data:
-                    function (params) {
-                        var test={search:params.term}
-                        return test // search term
+        var userCustomerList = @Html.Raw(Json.Serialize(ViewBag.ListCustomer ?? new List<object>()));
+        var userRoleList = @Html.Raw(Json.Serialize(ViewBag.ListRole ?? new List<object>()));
 
-                    }
-                    ,
-                processResults: function (data) {
-
-                    return {
-                        results: data.results
-                    };
-                },
-                cache: true
+        function readLookupValue(item, keys) {
+            if (!item || typeof item !== "object") {
+                return "";
             }
+            for (var i = 0; i < keys.length; i++) {
+                var value = item[keys[i]];
+                if (value !== undefined && value !== null) {
+                    return String(value).trim();
+                }
+            }
+            return "";
+        }
+
+        function initDatalistLookup(options) {
+            var $hidden = $(options.hiddenSelector);
+            var $input = $(options.inputSelector);
+            var $list = $(options.listSelector);
+            var sourceList = options.sourceList || [];
+            var timer = null;
+            var request = null;
+            var token = 0;
+
+            function readId(item) {
+                return readLookupValue(item, options.idKeys);
+            }
+
+            function readText(item) {
+                return readLookupValue(item, options.textKeys);
+            }
+
+            function render(items) {
+                $list.empty();
+                (items || []).forEach(function (item) {
+                    var id = readId(item);
+                    var text = readText(item);
+                    if (!id || !text) {
+                        return;
+                    }
+                    var option = document.createElement("option");
+                    option.value = text;
+                    option.setAttribute("data-id", id);
+                    $list.append(option);
+                });
+            }
+
+            function applySelectedId() {
+                var typedText = String($input.val() || "").trim();
+                if (!typedText) {
+                    $hidden.val("");
+                    return;
+                }
+
+                var selectedId = "";
+                $list.find("option").each(function () {
+                    if (String($(this).val() || "").trim() === typedText) {
+                        selectedId = String($(this).attr("data-id") || "").trim();
+                        return false;
+                    }
+                });
+
+                if (!selectedId) {
+                    var match = sourceList.find(function (item) {
+                        var text = readText(item);
+                        return text && text.toLowerCase() === typedText.toLowerCase();
+                    });
+                    if (match) {
+                        selectedId = readId(match);
+                    }
+                }
+
+                $hidden.val(selectedId);
+            }
+
+            function syncTextFromId() {
+                var selectedId = String($hidden.val() || "").trim();
+                if (!selectedId) {
+                    return;
+                }
+
+                var match = sourceList.find(function (item) {
+                    return readId(item) === selectedId;
+                });
+                if (match) {
+                    $input.val(readText(match));
+                }
+            }
+
+            function filterLocal(term) {
+                var text = String(term || "").trim().toLowerCase();
+                if (!text) {
+                    return sourceList;
+                }
+                return sourceList.filter(function (item) {
+                    return readText(item).toLowerCase().indexOf(text) !== -1;
+                });
+            }
+
+            function fetchRemote(term) {
+                if (!options.ajaxUrl) {
+                    render(filterLocal(term));
+                    applySelectedId();
+                    return;
+                }
+
+                if (request && request.readyState !== 4) {
+                    request.abort();
+                }
+
+                var currentToken = ++token;
+                request = $.ajax({
+                    url: options.ajaxUrl,
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { search: term }
+                }).done(function (data) {
+                    if (currentToken !== token) {
+                        return;
+                    }
+                    render(data && data.results ? data.results : []);
+                    applySelectedId();
+                }).fail(function (_xhr, status) {
+                    if (status === "abort") {
+                        return;
+                    }
+                    render(filterLocal(term));
+                    applySelectedId();
+                });
+            }
+
+            render(sourceList);
+            syncTextFromId();
+            applySelectedId();
+
+            $input
+                .off("input.userDatalistLookup")
+                .on("input.userDatalistLookup", function () {
+                    var term = String($input.val() || "").trim();
+                    applySelectedId();
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    if (!options.ajaxUrl || term.length < 2) {
+                        render(filterLocal(term));
+                        applySelectedId();
+                        return;
+                    }
+                    timer = setTimeout(function () {
+                        fetchRemote(term);
+                    }, 250);
+                })
+                .off("change.userDatalistLookup blur.userDatalistLookup")
+                .on("change.userDatalistLookup blur.userDatalistLookup", function () {
+                    applySelectedId();
+                });
+        }
+
+        initDatalistLookup({
+            hiddenSelector: "#InfoCustomerId",
+            inputSelector: "#InfoCustomerSearch",
+            listSelector: "#InfoCustomerSearchList",
+            sourceList: userCustomerList,
+            idKeys: ["defineCustomerId", "DefineCustomerId", "id"],
+            textKeys: ["nameFormal", "NameFormal", "text"],
+            ajaxUrl: '@Url.Action("ListDefineCustomerSearch", "Orders")'
         });
+
+        initDatalistLookup({
+            hiddenSelector: "#UserRoles_0__RoleId",
+            inputSelector: "#UserRoleSearch",
+            listSelector: "#UserRoleSearchList",
+            sourceList: userRoleList,
+            idKeys: ["roleId", "RoleId", "id"],
+            textKeys: ["roleName", "RoleName", "text"]
+        });
+
          $(document).off("click", "#create-btn")
              .on("click", "#create-btn", function () {
                  $form = $("#form-TaxPayerCustomers");

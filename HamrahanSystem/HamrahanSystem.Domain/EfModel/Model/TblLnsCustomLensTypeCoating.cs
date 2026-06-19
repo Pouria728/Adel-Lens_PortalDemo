@@ -25,6 +25,8 @@ namespace HamrahanSystem.Domain.Entity
 
         public string? CoatingName { get; set; }
 
+        public bool? IsDefault { get; set; }
+
         public int OrderId { get; set; }
 
         public short? IsActive { get; set; }

@@ -93,6 +93,15 @@
         $.jgrid.defaults.responsive = true;
         $.jgrid.defaults.styleUI = 'Bootstrap';
 
+        function applyContinuousRowNumbers() {
+            $('#jqGrid tr.jqgrow').each(function (index) {
+                var $rowNumberCell = $(this).find('td.jqgrid-rownum');
+                if ($rowNumberCell.length) {
+                    $rowNumberCell.text(index + 1);
+                }
+            });
+        }
+
         $('#jqGrid').jqGrid({
             url: '@Url.Action("Detail", BasePage, new { designTypeId = designTypeId })',
             datatype: 'json',
@@ -139,7 +148,7 @@
             subgroup: true,
             rowNum: 20,
             toppager: false,
-            height: 300,
+            height: 520,
             direction: 'rtl',
             rowList: [10, 20, 30, 40],
             viewrecords: true,
@@ -158,6 +167,12 @@
                 root: function (obj) { return obj.rows; },
                 repeatitems: false,
                 id: "0"
+            },
+            loadComplete: function () {
+                applyContinuousRowNumbers();
+            },
+            gridComplete: function () {
+                applyContinuousRowNumbers();
             },
             pager: "#jqGridPager"
         });

@@ -3,7 +3,42 @@
     string BasePage = "Sphs";
 }
 
-<div class="card">
+<style>
+    @@font-face {
+        font-family: "SphLatinDigits";
+        font-style: normal;
+        font-weight: 400;
+        src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb.woff2") format("woff2");
+        unicode-range: U+002B, U+002C, U+002D, U+002E, U+0030-0039;
+    }
+
+    @@font-face {
+        font-family: "SphLatinDigits";
+        font-style: normal;
+        font-weight: 500;
+        src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb_Medium.woff2") format("woff2");
+        unicode-range: U+002B, U+002C, U+002D, U+002E, U+0030-0039;
+    }
+
+    @@font-face {
+        font-family: "SphLatinDigits";
+        font-style: normal;
+        font-weight: 700;
+        src: url("/assets/plugins/global/fonts/IRANSans/woff2/IRANSansWeb_Bold.woff2") format("woff2");
+        unicode-range: U+002B, U+002C, U+002D, U+002E, U+0030-0039;
+    }
+
+    .sph-latin-digits,
+    .sph-latin-digits .ui-jqgrid,
+    .sph-latin-digits .ui-jqgrid input,
+    .sph-latin-digits .ui-jqgrid select,
+    .sph-latin-digits .ui-jqgrid textarea,
+    .sph-latin-digits .ui-jqgrid button {
+        font-family: "SphLatinDigits", IRANSans, Tahoma, Helvetica, sans-serif;
+    }
+</style>
+
+<div class="card sph-latin-digits">
     <div class="card-header bg-primary"><h3 class="card-title align-items-start flex-column">@ResourcePages.Sphs </h3> </div>
     <div class="card-body">
         @*   <div class="col-md-8">

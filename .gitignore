@@ -1,3 +1,14 @@
 .vs/
 **/bin/
 **/obj/
+*.log
+*.out.log
+*.err.log
+*.user
+*.suo
+.vscode/
+.idea/
+**/appsettings.Local.json
+**/appsettings.*.local.json
+HamrahanSystem/odoo_offline_packages/
+HamrahanSystem/start_7181.cmd

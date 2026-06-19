@@ -26,6 +26,7 @@ namespace HamrahanSystem.Domain.Entity
             builder.Property(x => x.DesignTypeId).HasColumnName(@"DesignTypeId").HasColumnType(@"int").ValueGeneratedNever().HasPrecision(10, 0);
             builder.Property(x => x.LensTypeName).HasColumnName(@"LensTypeName").HasColumnType(@"nvarchar(254)").ValueGeneratedNever().HasMaxLength(254);
             builder.Property(x => x.CoatingName).HasColumnName(@"CoatingName").HasColumnType(@"nvarchar(254)").ValueGeneratedNever().HasMaxLength(254);
+            builder.Property(x => x.IsDefault).HasColumnName(@"IsDefault").HasColumnType(@"bit").ValueGeneratedNever().HasDefaultValueSql(@"0");
             builder.Property(x => x.OrderId).HasColumnName(@"OrderId").HasColumnType(@"int").IsRequired().ValueGeneratedNever().HasPrecision(10, 0).HasDefaultValueSql(@"1");
             builder.Property(x => x.IsActive).HasColumnName(@"IsActive").HasColumnType(@"smallint").ValueGeneratedNever().HasPrecision(5, 0).HasDefaultValueSql(@"1");
 

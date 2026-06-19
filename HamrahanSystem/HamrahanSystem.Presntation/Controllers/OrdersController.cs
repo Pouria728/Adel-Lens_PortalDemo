@@ -6,6 +6,8 @@ using HamrahanSystem.Domain.Entity;
 using HamrahanSystem.Infrastructure.Repository;
 using HamrahanSystem.Presntation.Models;
 using HamrahanSystem.Presntation.Services;
+using FastReport.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,8 +16,11 @@ using Microsoft.AspNetCore.SignalR;
 using NetTopologySuite.Index.HPRtree;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using static FastReport.Fonts.FastGraphicsPath;
@@ -36,10 +41,24 @@ namespace HamrahanSystem.Presntation.Controllers
 		ITblWfwResultStepRepository tblWfwResultStepRepository,
 		ICustomLensAutoPrintService customLensAutoPrintService,
 		ICustomLensPrintSettingsService customLensPrintSettingsService,
-		AdelModel dbContext
+		AdelModel dbContext,
+		IWebHostEnvironment webHostEnvironment
 		) : Controller
 	{
 		private static readonly Regex CustomLensPrintPlaceholderRegex = new(@"\{(orderId|factorNo|printer)\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+		private const string OrderPrintEncryptionKey = "0z0Grtq837hsadfjhadf7bgf";
+		private const int ReadyOrderIndexDocument = 5002;
+		private const int ReadyOrderGrantyIndexDocument = 5003;
+		private const int PreInvoiceCompany = 3;
+		private const int PreInvoiceUserId = 3;
+		private const int PreInvoiceRefForm = 6;
+		private const int PreInvoiceRefProcess = 3;
+		private const int PreInvoiceRefSaleCenter = 1;
+		private const int PreInvoiceRefSaleMethod = 1;
+		private const int PreInvoiceRnProject = 217;
+		private const int PreInvoiceRnCellarDefault = 26;
+		private const int PreInvoiceIndexBelong = 5;
+		private const int PreInvoiceIndexSell = 1;
 
 		[Authorize(Roles = "admin,OrderStock_Index")]
 		public IActionResult OrderStock()
@@ -267,18 +286,9 @@ namespace HamrahanSystem.Presntation.Controllers
 				.OrderBy(x => x.TblLnsSph.OrderId)
 				.ThenBy(x => x.LensIndexRSphId)
 				.Select(x => new { id = x.LensIndexRSphId, parentid = x.LensTypeRLensIndexRId, text = "\u200E" + (x.TblLnsSph?.Name ?? "") }).ToList();
-			ViewBag.ListCyl = tblLnsSphCylService.GetAll().Result
-				.OrderBy(x => x.LensIndexRSphId)
-				.ThenBy(x => x.TblLnsCyl != null ? x.TblLnsCyl.OrderId : int.MaxValue)
-				.ThenBy(x => x.SphCylId)
-				.Select(x => new
-				{
-					id = x.SphCylId,
-					parentid = x.LensIndexRSphId,
-					text = "\u200E" + (x.TblLnsCyl?.Name ?? ""),
-					defineobjectid = x.DefineObjectId,
-					nameobject = "\u200E" + (x.TblClrDefineObject?.NameObject ?? "")
-				}).ToList();
+			// This page only stores the list in sessionStorage and does not need the full lookup
+			// during initial render. Loading the entire table causes timeouts on real data.
+			ViewBag.ListCyl = Array.Empty<object>();
 
 			List<SelectListItem> indexDocuments = Enum.GetValues(typeof(IndexDocument)).Cast<IndexDocument>().Select(o => new SelectListItem() { Text = ((DescriptionAttribute[])(o.GetType().GetField(o.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false)))[0].Description, Value = ((int)o).ToString() }).ToList();
 			ViewBag.ListDocument = indexDocuments;
@@ -304,18 +314,9 @@ namespace HamrahanSystem.Presntation.Controllers
 				.OrderBy(x => x.TblLnsSph.OrderId)
 				.ThenBy(x => x.LensIndexRSphId)
 				.Select(x => new { id = x.LensIndexRSphId, parentid = x.LensTypeRLensIndexRId, text = "\u200E" + (x.TblLnsSph?.Name ?? "") }).ToList();
-			ViewBag.ListCyl = tblLnsSphCylService.GetAll().Result
-				.OrderBy(x => x.LensIndexRSphId)
-				.ThenBy(x => x.TblLnsCyl != null ? x.TblLnsCyl.OrderId : int.MaxValue)
-				.ThenBy(x => x.SphCylId)
-				.Select(x => new
-				{
-					id = x.SphCylId,
-					parentid = x.LensIndexRSphId,
-					text = "\u200E" + (x.TblLnsCyl?.Name ?? ""),
-					defineobjectid = x.DefineObjectId,
-					nameobject = "\u200E" + (x.TblClrDefineObject?.NameObject ?? "")
-				}).ToList();
+			// This page only stores the list in sessionStorage and does not need the full lookup
+			// during initial render. Loading the entire table causes timeouts on real data.
+			ViewBag.ListCyl = Array.Empty<object>();
 			
 			List<SelectListItem> indexDocuments = Enum.GetValues(typeof(IndexDocument)).Cast<IndexDocument>().Select(o => new SelectListItem() { Text = ((DescriptionAttribute[])(o.GetType().GetField(o.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false)))[0].Description, Value = ((int)o).ToString() }).ToList();
 			ViewBag.ListDocument = indexDocuments;
@@ -391,7 +392,13 @@ namespace HamrahanSystem.Presntation.Controllers
             var customCoatings = (tblLnsCustomLensTypeCoatingService.GetAll().Result ?? Enumerable.Empty<TblLnsCustomLensTypeCoatingDto>())
                 .Where(x => x.IsActive == true && x.DesignTypeId.HasValue && activeCustomDesignTypeIds.Contains(x.DesignTypeId.Value))
                 .OrderBy(x => x.OrderId)
-                .Select(x => new { id = x.CustomLensTypeCoatingId, parentid = x.DesignTypeId ?? 0, text = x.CoatingName ?? string.Empty })
+                .Select(x => new
+                {
+                    id = x.CustomLensTypeCoatingId,
+                    parentid = x.DesignTypeId ?? 0,
+                    text = x.CoatingName ?? string.Empty,
+                    isDefault = x.IsDefault
+                })
                 .ToList();
 
             string FormatCustomNumber(string? value)
@@ -450,20 +457,7 @@ namespace HamrahanSystem.Presntation.Controllers
 
             string BuildDefineObjectText(TblClrDefineObjectDto item)
             {
-                var parts = new List<string>();
-                if (!string.IsNullOrWhiteSpace(item?.CodeObject))
-                {
-                    parts.Add(item.CodeObject.Trim());
-                }
-                if (!string.IsNullOrWhiteSpace(item?.NameObject))
-                {
-                    parts.Add(item.NameObject.Trim());
-                }
-                if (!string.IsNullOrWhiteSpace(item?.TechnicalSpecs))
-                {
-                    parts.Add(item.TechnicalSpecs.Trim());
-                }
-                return string.Join(" - ", parts);
+                return item?.NameObject?.Trim() ?? string.Empty;
             }
 
             var customProducts = customMaterials
@@ -542,7 +536,34 @@ namespace HamrahanSystem.Presntation.Controllers
                 await tblLnsOrderService.Add(item, true);
                 if (item.StatusId == (int)StatusOrder.Inprogress && item.OrderId > 0)
                 {
-                    await customLensAutoPrintService.DispatchAsync(item.OrderId, item.FactorNo);
+                    if (!TryRegisterFinalProduct(currentOrderId: item.OrderId, out var finalProductError))
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = finalProductError
+                        });
+                    }
+
+                    var printScope = ResolveInProgressPrintScope(item.OrderId);
+                    await customLensAutoPrintService.DispatchAsync(
+                        item.OrderId,
+                        ResolveOrderFactorNo(item),
+                        printScope?.ProcessId,
+                        printScope?.ProcessStepId);
+                }
+
+                try
+                {
+                    await ExecuteCustomLensPreInvoiceAsync(item.OrderId, item.FactorNo);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "خطای پیش فاکتور: " + GetExceptionDetails(ex)
+                    });
                 }
 
                 return Json(new
@@ -560,6 +581,80 @@ namespace HamrahanSystem.Presntation.Controllers
                 });
             }
         }
+
+		private async Task ExecuteCustomLensPreInvoiceAsync(long orderId, string? factorNo)
+		{
+			if (orderId <= 0)
+			{
+				throw new InvalidOperationException("OrderId نامعتبر است.");
+			}
+
+			var connection = dbContext.Database.GetDbConnection();
+			var shouldCloseConnection = connection.State != ConnectionState.Open;
+			if (shouldCloseConnection)
+			{
+				await connection.OpenAsync();
+			}
+
+			try
+			{
+				await using var command = connection.CreateCommand();
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandTimeout = 120;
+				command.CommandText = "dbo.SP_Lns_SaveCustomPreInvoice5001";
+
+				AddCommandParameter(command, "@Company", DbType.Byte, PreInvoiceCompany);
+				AddCommandParameter(command, "@UserID", DbType.Int32, PreInvoiceUserId);
+				AddCommandParameter(command, "@DocumentId", DbType.Int64, orderId);
+				AddCommandParameter(command, "@InputFactorNo", DbType.String, factorNo);
+				AddCommandParameter(command, "@RefForm", DbType.Int32, PreInvoiceRefForm);
+				AddCommandParameter(command, "@RefProcess", DbType.Int32, PreInvoiceRefProcess);
+				AddCommandParameter(command, "@RefSaleCenter", DbType.Int32, PreInvoiceRefSaleCenter);
+				AddCommandParameter(command, "@RefSaleMethod", DbType.Int32, PreInvoiceRefSaleMethod);
+				AddCommandParameter(command, "@RefSeller", DbType.Int32, DBNull.Value);
+				AddCommandParameter(command, "@RNProject", DbType.Int32, PreInvoiceRnProject);
+				AddCommandParameter(command, "@RNCellar_Default", DbType.Int32, PreInvoiceRnCellarDefault);
+				AddCommandParameter(command, "@IndexBelong", DbType.Int32, PreInvoiceIndexBelong);
+				AddCommandParameter(command, "@IndexSell", DbType.Int32, PreInvoiceIndexSell);
+
+				await command.ExecuteNonQueryAsync();
+			}
+			finally
+			{
+				if (shouldCloseConnection && connection.State == ConnectionState.Open)
+				{
+					await connection.CloseAsync();
+				}
+			}
+		}
+
+		private static void AddCommandParameter(DbCommand command, string name, DbType dbType, object? value)
+		{
+			var parameter = command.CreateParameter();
+			parameter.ParameterName = name;
+			parameter.DbType = dbType;
+			parameter.Value = value ?? DBNull.Value;
+			command.Parameters.Add(parameter);
+		}
+
+		private static string GetExceptionDetails(Exception ex)
+		{
+			var messages = new List<string>();
+			var current = ex;
+
+			while (current != null)
+			{
+				var message = (current.Message ?? string.Empty).Trim();
+				if (!string.IsNullOrWhiteSpace(message) && !messages.Contains(message))
+				{
+					messages.Add(message);
+				}
+
+				current = current.InnerException;
+			}
+
+			return messages.Count > 0 ? string.Join(" | ", messages) : "Unknown error";
+		}
 
         private static void NormalizeCustomOrderForDatabase(TblLnsOrderDto item)
         {
@@ -670,15 +765,14 @@ namespace HamrahanSystem.Presntation.Controllers
 				var order = item.Result?.TblWfwOrderProcess?.TblLnsOrder;
 				if (order != null && order.IndexDocument == (int)IndexDocument.LnsOrder)
 				{
-					var printSettings = customLensPrintSettingsService.GetAsync().Result;
-					var firstPrinter = printSettings.Printers?.FirstOrDefault() ?? string.Empty;
-					var factorNo = !string.IsNullOrWhiteSpace(order.FactorNo)
-						? order.FactorNo.Trim()
-						: "RX" + order.OrderId.ToString().PadLeft(8, '0');
+					var scopedPrintSettings = customLensPrintSettingsService.ResolveAsync(
+						item.Result?.TblWfwOrderProcess?.ProcessId,
+						item.Result?.ProcessStepId).Result;
+					var firstPrinter = scopedPrintSettings.Printers?.FirstOrDefault() ?? string.Empty;
 					ViewBag.CustomLensPrintPreviewUrl = BuildCustomLensPrintUrl(
-						printSettings.ReportUrlTemplate,
+						scopedPrintSettings.ReportUrlTemplate,
 						order.OrderId,
-						factorNo,
+						ResolveOrderFactorNo(order),
 						firstPrinter);
 
 					if (order.DefineObjectId.HasValue)
@@ -734,154 +828,284 @@ namespace HamrahanSystem.Presntation.Controllers
 
 		[Authorize(Roles = "admin,OrderReq_Index")]
 		[HttpPost]
-		public IActionResult OrderReqSend(TblWfwOrderProcessStepDto item)
+		public async Task<IActionResult> OrderReqSend(TblWfwOrderProcessStepDto item)
 		{
-			return Json(new
-			{
-				success = false,
-				message = "ط«ط¨طھ ظˆ ط§ط±ط³ط§ظ„ ط¯ط³طھغŒ ط؛غŒط±ظپط¹ط§ظ„ ط§ط³طھ. ظ„ط·ظپط§ ظپظ‚ط· ط§ط² ط·ط±غŒظ‚ ط§ط³ع©ظ† ع¯ط§ظ† ط§ظ‚ط¯ط§ظ… ع©ظ†غŒط¯."
-			});
-		}
-
-		[Authorize(Roles = "admin,OrderReq_Index")]
-		[HttpPost]
-		public IActionResult OrderReqSendByCode(string orderCode, string? selectedResultOption, int? selectedResultStepId, string? materialBarcode)
-		{
-			var normalizedCode = NormalizeOrderCode(orderCode);
-			if (string.IsNullOrWhiteSpace(normalizedCode))
+			var currentStep = tblWfwOrderProcessStepService.GetById(item.OrderProcessStepId).Result;
+			var order = currentStep?.TblWfwOrderProcess?.TblLnsOrder;
+			if (order == null)
 			{
 				return Json(new
 				{
 					success = false,
-					message = "ط´ظ…ط§ط±ظ‡ ط³ظپط§ط±ط´ ظˆط§ط±ط¯ ظ†ط´ط¯ظ‡ ط§ط³طھ."
+					message = "اطلاعات سفارش یافت نشد."
 				});
 			}
 
-			bool isAdmin = HttpContext.Session.Get<bool>("IsAdmin");
-			int? roleId = isAdmin ? null : HttpContext.Session.Get<int?>("RoleId");
-			int? customerId = HttpContext.Session.Get<int?>("CustomerId");
-
-			List<TblWfwOrderProcessStepDto> inprogressSteps = LoadInprogressSteps(roleId, customerId, normalizedCode);
-
-			var currentStep = inprogressSteps
-				.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
-				.Where(HasStepAccess)
-				.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
-				.OrderByDescending(x => x.DateCreate)
-				.FirstOrDefault();
-
-			if (currentStep == null)
-			{
-				inprogressSteps = LoadInprogressSteps(roleId, customerId, null);
-				currentStep = inprogressSteps
-					.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
-					.Where(HasStepAccess)
-					.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
-					.OrderByDescending(x => x.DateCreate)
-					.FirstOrDefault();
-			}
-
-			if (currentStep == null)
+			// Manual send is only allowed for ready/warranty lens flows.
+			if (order.IndexDocument == (int)IndexDocument.LnsOrder)
 			{
 				return Json(new
 				{
 					success = false,
-					message = "ط³ظپط§ط±ط´ ط¯ط± ظ…ط±ط§ط­ظ„ ط¯ط± ط¬ط±غŒط§ظ†ظگ ع©ط§ط±طھط§ط¨ظ„ ط´ظ…ط§ ظ¾غŒط¯ط§ ظ†ط´ط¯."
+					message = "ثبت و ارسال دستی برای عدسی سفارشی غیرفعال است. لطفا از مسیر اسکن/شماره سفارش استفاده کنید."
 				});
 			}
 
-			if (currentStep.StatusId != (int)StatusRequest.Inprogress)
+			if (currentStep.TblWfwProcessStep?.IsBarcode == true)
+			{
+				List<TblLnsOrderItemDto> tblLnsOrderItemDto =
+					item?.TblWfwOrderProcess?.TblLnsOrder?.TblLnsOrderItems ?? new List<TblLnsOrderItemDto>();
+
+				if (tblLnsOrderItemDto.Any())
+				{
+					tblLnsOrderItemService.UpdateProvidedQuantity(tblLnsOrderItemDto);
+				}
+			}
+
+			var dailyReportError = await ExecuteDailyProductionReportIfNeededAsync(currentStep);
+			var convertToInvoiceError = await ExecutePreInvoiceToInvoiceIfNeededAsync(currentStep);
+			if (!string.IsNullOrWhiteSpace(dailyReportError))
 			{
 				return Json(new
 				{
 					success = false,
-					message = "ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ظ‚ط¨ظ„ط§ ط®ط§طھظ…ظ‡ غŒط§ظپطھظ‡ ظˆ ظ‚ط§ط¨ظ„ طھط؛غŒغŒط± ظ†غŒط³طھ."
+					message = dailyReportError
 				});
 			}
 
-			var transitionRequirement = ResolveTransitionRequirement(currentStep);
-			var requiresMaterialScan = currentStep.TblWfwProcessStep?.IsBarcode == true;
-			int? selectedRelationStepId = null;
-			if (transitionRequirement.RequiresChoice)
+			if (!string.IsNullOrWhiteSpace(convertToInvoiceError))
 			{
-				var normalizedChoice = NormalizeTransitionChoice(selectedResultOption);
-				var matchedChoice = transitionRequirement.Options
-					.FirstOrDefault(x => selectedResultStepId.HasValue && selectedResultStepId.Value > 0
-						? x.ResultStepId == selectedResultStepId.Value
-						: string.Equals(x.Name, normalizedChoice, StringComparison.OrdinalIgnoreCase));
-
-				if (matchedChoice == null)
+				return Json(new
 				{
-					return Json(new
-					{
-						success = false,
-						requiresResultChoice = true,
-						requiresMaterialScan,
-						message = "ط¨ط±ط§غŒ ط§ظ†طھظ‚ط§ظ„ ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ط¨ط§غŒط¯ غŒع© ع¯ط²غŒظ†ظ‡ ط§ظ†طھط®ط§ط¨ ط´ظˆط¯.",
-						options = transitionRequirement.Options.Select(x => new
-						{
-							id = x.ResultStepId,
-							text = x.Name
-						}).ToList()
-					});
-				}
-
-				selectedRelationStepId = matchedChoice.RelationStepId;
-			}
-
-			if (requiresMaterialScan)
-			{
-				var normalizedMaterialBarcode = NormalizeMaterialBarcode(materialBarcode);
-				if (string.IsNullOrWhiteSpace(normalizedMaterialBarcode))
-				{
-					return Json(new
-					{
-						success = false,
-						requiresResultChoice = transitionRequirement.RequiresChoice,
-						requiresMaterialScan = true,
-						message = "اسکن بارکد ماده مصرفی الزامی است.",
-						options = transitionRequirement.Options.Select(x => new
-						{
-							id = x.ResultStepId,
-							text = x.Name
-						}).ToList()
-					});
-				}
-
-				if (!TryRegisterConsumedMaterial(currentStep, normalizedMaterialBarcode, out var registerError))
-				{
-					return Json(new
-					{
-						success = false,
-						requiresResultChoice = transitionRequirement.RequiresChoice,
-						requiresMaterialScan = true,
-						message = registerError,
-						options = transitionRequirement.Options.Select(x => new
-						{
-							id = x.ResultStepId,
-							text = x.Name
-						}).ToList()
-					});
-				}
+					success = false,
+					message = convertToInvoiceError
+				});
 			}
 
 			currentStep.StatusId = (int)StatusRequest.Complete;
 			currentStep.DateComplete = DateTime.Now;
 			currentStep.UserId = HttpContext.Session.Get<int>("UserId");
-			tblWfwOrderProcessStepService.UpdateStatus(currentStep, selectedRelationStepId);
+			tblWfwOrderProcessStepService.UpdateStatus(currentStep);
+			if (order.IndexDocument == (int)IndexDocument.LnsOrder &&
+				currentStep.TblWfwProcessStep?.IsPrint == true)
+			{
+				await customLensAutoPrintService.DispatchAsync(
+					order.OrderId,
+					ResolveOrderFactorNo(order),
+					currentStep.TblWfwOrderProcess?.ProcessId,
+					currentStep.ProcessStepId);
+			}
 
 			return Json(new
 			{
 				success = true,
-				requiresResultChoice = false,
 				message = ""
 			});
 		}
 
 		[Authorize(Roles = "admin,OrderReq_Index")]
 		[HttpPost]
+		public async Task<IActionResult> OrderReqSendByCode(string orderCode, string? selectedResultOption, int? selectedResultStepId, string? materialBarcode)
+		{
+			try
+			{
+				var normalizedCode = NormalizeOrderCode(orderCode);
+				if (string.IsNullOrWhiteSpace(normalizedCode))
+				{
+					return Json(new
+					{
+						success = false,
+						message = "ط´ظ…ط§ط±ظ‡ ط³ظپط§ط±ط´ ظˆط§ط±ط¯ ظ†ط´ط¯ظ‡ ط§ط³طھ."
+					});
+				}
+
+				bool isAdmin = HttpContext.Session.Get<bool>("IsAdmin");
+				int? roleId = isAdmin ? null : HttpContext.Session.Get<int?>("RoleId");
+				int? customerId = HttpContext.Session.Get<int?>("CustomerId");
+
+				List<TblWfwOrderProcessStepDto> inprogressSteps = LoadInprogressSteps(roleId, customerId, normalizedCode);
+
+				var currentStep = inprogressSteps
+					.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
+					.Where(HasStepAccess)
+					.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
+					.OrderByDescending(x => x.DateCreate)
+					.FirstOrDefault();
+
+				if (currentStep == null)
+				{
+					inprogressSteps = LoadInprogressSteps(roleId, customerId, null);
+					currentStep = inprogressSteps
+						.Where(x => x?.TblWfwOrderProcess?.TblLnsOrder != null)
+						.Where(HasStepAccess)
+						.Where(x => IsOrderCodeMatch(normalizedCode, x.TblWfwOrderProcess.TblLnsOrder))
+						.OrderByDescending(x => x.DateCreate)
+						.FirstOrDefault();
+				}
+
+				if (currentStep == null)
+				{
+					return Json(new
+					{
+						success = false,
+						message = "ط³ظپط§ط±ط´ ط¯ط± ظ…ط±ط§ط­ظ„ ط¯ط± ط¬ط±غŒط§ظ†ظگ ع©ط§ط±طھط§ط¨ظ„ ط´ظ…ط§ ظ¾غŒط¯ط§ ظ†ط´ط¯."
+					});
+				}
+
+				var currentOrder = currentStep.TblWfwOrderProcess?.TblLnsOrder;
+				if (currentOrder?.IndexDocument != (int)IndexDocument.LnsOrder)
+				{
+					return Json(new
+					{
+						success = false,
+						message = "برای عدسی آماده و عدسی آماده با گارانتی از فرم بررسی سفارش و دکمه ثبت و ارسال استفاده کنید."
+					});
+				}
+
+				if (currentStep.StatusId != (int)StatusRequest.Inprogress)
+				{
+					return Json(new
+					{
+						success = false,
+						message = "ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ظ‚ط¨ظ„ط§ ط®ط§طھظ…ظ‡ غŒط§ظپطھظ‡ ظˆ ظ‚ط§ط¨ظ„ طھط؛غŒغŒط± ظ†غŒط³طھ."
+					});
+				}
+
+				var transitionRequirement = ResolveTransitionRequirement(currentStep);
+				var requiresMaterialScan = currentStep.TblWfwProcessStep?.IsBarcode == true;
+				int? selectedRelationStepId = null;
+				if (transitionRequirement.RequiresChoice)
+				{
+					var normalizedChoice = NormalizeTransitionChoice(selectedResultOption);
+					var matchedChoice = transitionRequirement.Options
+						.FirstOrDefault(x => selectedResultStepId.HasValue && selectedResultStepId.Value > 0
+							? x.ResultStepId == selectedResultStepId.Value
+							: string.Equals(x.Name, normalizedChoice, StringComparison.OrdinalIgnoreCase));
+
+					if (matchedChoice == null)
+					{
+						return Json(new
+						{
+							success = false,
+							requiresResultChoice = true,
+							requiresMaterialScan,
+							message = "ط¨ط±ط§غŒ ط§ظ†طھظ‚ط§ظ„ ط§غŒظ† ظ…ط±ط­ظ„ظ‡ ط¨ط§غŒط¯ غŒع© ع¯ط²غŒظ†ظ‡ ط§ظ†طھط®ط§ط¨ ط´ظˆط¯.",
+							options = transitionRequirement.Options.Select(x => new
+							{
+								id = x.ResultStepId,
+								text = x.Name
+							}).ToList()
+						});
+					}
+
+					selectedRelationStepId = matchedChoice.RelationStepId;
+				}
+
+				if (requiresMaterialScan)
+				{
+					var normalizedMaterialBarcode = NormalizeMaterialBarcode(materialBarcode);
+					if (string.IsNullOrWhiteSpace(normalizedMaterialBarcode))
+					{
+						return Json(new
+						{
+							success = false,
+							requiresResultChoice = transitionRequirement.RequiresChoice,
+							requiresMaterialScan = true,
+							message = "اسکن بارکد ماده مصرفی الزامی است.",
+							options = transitionRequirement.Options.Select(x => new
+							{
+								id = x.ResultStepId,
+								text = x.Name
+							}).ToList()
+						});
+					}
+
+					if (!TryRegisterConsumedMaterial(currentStep, normalizedMaterialBarcode, out var registerError))
+					{
+						return Json(new
+						{
+							success = false,
+							requiresResultChoice = transitionRequirement.RequiresChoice,
+							requiresMaterialScan = true,
+							message = registerError,
+							options = transitionRequirement.Options.Select(x => new
+							{
+								id = x.ResultStepId,
+								text = x.Name
+							}).ToList()
+						});
+					}
+				}
+
+				var dailyReportError = await ExecuteDailyProductionReportIfNeededAsync(currentStep);
+			var convertToInvoiceError = await ExecutePreInvoiceToInvoiceIfNeededAsync(currentStep);
+				if (!string.IsNullOrWhiteSpace(dailyReportError))
+				{
+					return Json(new
+					{
+						success = false,
+						requiresResultChoice = transitionRequirement.RequiresChoice,
+						requiresMaterialScan,
+						message = dailyReportError,
+						options = transitionRequirement.Options.Select(x => new
+						{
+							id = x.ResultStepId,
+							text = x.Name
+						}).ToList()
+					});
+				}
+
+				if (!string.IsNullOrWhiteSpace(convertToInvoiceError))
+				{
+					return Json(new
+					{
+						success = false,
+						requiresResultChoice = transitionRequirement.RequiresChoice,
+						requiresMaterialScan,
+						message = convertToInvoiceError,
+						options = transitionRequirement.Options.Select(x => new
+						{
+							id = x.ResultStepId,
+							text = x.Name
+						}).ToList()
+					});
+				}
+
+				currentStep.StatusId = (int)StatusRequest.Complete;
+				currentStep.DateComplete = DateTime.Now;
+				currentStep.UserId = HttpContext.Session.Get<int>("UserId");
+				tblWfwOrderProcessStepService.UpdateStatus(currentStep, selectedRelationStepId);
+				if (currentOrder.IndexDocument == (int)IndexDocument.LnsOrder &&
+					currentStep.TblWfwProcessStep?.IsPrint == true)
+				{
+					await customLensAutoPrintService.DispatchAsync(
+						currentOrder.OrderId,
+						ResolveOrderFactorNo(currentOrder),
+						currentStep.TblWfwOrderProcess?.ProcessId,
+						currentStep.ProcessStepId);
+				}
+
+				return Json(new
+				{
+					success = true,
+					requiresResultChoice = false,
+					message = ""
+				});
+			}
+			catch (Exception ex)
+			{
+				return Json(new
+				{
+					success = false,
+					message = "خطا در ثبت مواد مصرفی/انتقال مرحله: " + ex.Message
+				});
+			}
+		}
+
+		[Authorize(Roles = "admin,OrderReq_Index")]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult OrderReqSendByScan(TblWfwOrderProcessStepDto item, string scannedCode, int? scanDurationMs, int? scanLength)
+		public async Task<IActionResult> OrderReqSendByScan(TblWfwOrderProcessStepDto item, string scannedCode, int? scanDurationMs, int? scanLength)
 		{
 			if (!IsLikelyScannerInput(scanDurationMs, scanLength))
 			{
@@ -921,6 +1145,15 @@ namespace HamrahanSystem.Presntation.Controllers
 			}
 
 			var order = currentStep.TblWfwOrderProcess?.TblLnsOrder;
+			if (order?.IndexDocument != (int)IndexDocument.LnsOrder)
+			{
+				return Json(new
+				{
+					success = false,
+					message = "برای عدسی آماده و عدسی آماده با گارانتی از فرم بررسی سفارش و دکمه ثبت و ارسال استفاده کنید."
+				});
+			}
+
 			if (!IsOrderCodeMatch(scannedCode, order))
 			{
 				return Json(new
@@ -939,6 +1172,26 @@ namespace HamrahanSystem.Presntation.Controllers
 				{
 					tblLnsOrderItemService.UpdateProvidedQuantity(tblLnsOrderItemDto);
 				}
+			}
+
+			var dailyReportError = await ExecuteDailyProductionReportIfNeededAsync(currentStep);
+			var convertToInvoiceError = await ExecutePreInvoiceToInvoiceIfNeededAsync(currentStep);
+			if (!string.IsNullOrWhiteSpace(dailyReportError))
+			{
+				return Json(new
+				{
+					success = false,
+					message = dailyReportError
+				});
+			}
+
+			if (!string.IsNullOrWhiteSpace(convertToInvoiceError))
+			{
+				return Json(new
+				{
+					success = false,
+					message = convertToInvoiceError
+				});
 			}
 
 			currentStep.StatusId = (int)StatusRequest.Complete;
@@ -1048,11 +1301,24 @@ namespace HamrahanSystem.Presntation.Controllers
 
 		private static string NormalizeMaterialBarcode(string? value)
 		{
-			return (value ?? string.Empty)
+			var normalized = (value ?? string.Empty)
 				.Trim()
 				.Replace(" ", string.Empty)
 				.Replace("\u200C", string.Empty)
 				.Replace("\u200F", string.Empty)
+				.Replace("\u202A", string.Empty)
+				.Replace("\u202B", string.Empty)
+				.Replace("\u202C", string.Empty)
+				.Replace("-", string.Empty)
+				.Replace("ـ", string.Empty)
+				.Replace("_", string.Empty)
+				.Replace("/", string.Empty)
+				.Replace("\\", string.Empty)
+				.Replace(".", string.Empty)
+				.Replace(",", string.Empty)
+				.Replace("،", string.Empty)
+				.Replace(";", string.Empty)
+				.Replace(":", string.Empty)
 				.Replace("[", string.Empty)
 				.Replace("]", string.Empty)
 				.Replace("(", string.Empty)
@@ -1079,6 +1345,307 @@ namespace HamrahanSystem.Presntation.Controllers
 				.Replace("٧", "7")
 				.Replace("٨", "8")
 				.Replace("٩", "9");
+
+			normalized = new string(normalized.Where(char.IsLetterOrDigit).ToArray());
+			return normalized.ToUpperInvariant();
+		}
+
+		private List<ResolvedMaterialBarcodeRow> ResolveMaterialByBarcode(string normalizedMaterialBarcode, int? company)
+		{
+			normalizedMaterialBarcode = NormalizeMaterialBarcode(normalizedMaterialBarcode);
+			if (string.IsNullOrWhiteSpace(normalizedMaterialBarcode))
+			{
+				return new List<ResolvedMaterialBarcodeRow>();
+			}
+
+			List<BarcodeLookupRow> LoadBarcodeRows(bool includeCompanyFilter)
+			{
+				var rows = new List<BarcodeLookupRow>();
+				var connection = dbContext.Database.GetDbConnection();
+				var shouldCloseConnection = connection.State != ConnectionState.Open;
+				if (shouldCloseConnection)
+				{
+					connection.Open();
+				}
+
+				try
+				{
+					using var command = connection.CreateCommand();
+					command.CommandType = CommandType.Text;
+					command.CommandText = @"
+SELECT b.RNObject, b.BarCode, b.Company
+FROM dbo.Tbl_Clr_ObjectBarCode b
+WHERE b.RNObject IS NOT NULL";
+
+					if (includeCompanyFilter && company.HasValue)
+					{
+						command.CommandText += " AND b.Company = @company";
+						var companyParam = command.CreateParameter();
+						companyParam.ParameterName = "@company";
+						companyParam.Value = company.Value;
+						command.Parameters.Add(companyParam);
+					}
+
+					using var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						rows.Add(new BarcodeLookupRow
+						{
+							RecNo = reader["RNObject"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["RNObject"]),
+							Barcode = reader["BarCode"]?.ToString(),
+							Company = reader["Company"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["Company"])
+						});
+					}
+				}
+				finally
+				{
+					if (shouldCloseConnection && connection.State == ConnectionState.Open)
+					{
+						connection.Close();
+					}
+				}
+
+				return rows;
+			}
+
+			List<ResolvedMaterialBarcodeRow> ResolveFromBarcodeTable(bool includeCompanyFilter)
+			{
+				var recNos = LoadBarcodeRows(includeCompanyFilter)
+					.Where(x => x.RecNo.HasValue)
+					.Where(x =>
+					{
+						var dbBarcode = NormalizeMaterialBarcode(x.Barcode);
+						if (string.IsNullOrWhiteSpace(dbBarcode))
+						{
+							return false;
+						}
+
+						return string.Equals(dbBarcode, normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase)
+							|| dbBarcode.EndsWith(normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase)
+							|| normalizedMaterialBarcode.EndsWith(dbBarcode, StringComparison.OrdinalIgnoreCase);
+					})
+					.Select(x => x.RecNo!.Value)
+					.Distinct()
+					.ToList();
+
+				if (!recNos.Any())
+				{
+					return new List<ResolvedMaterialBarcodeRow>();
+				}
+
+				var recNoSet = recNos.ToHashSet();
+				var defineObjects = dbContext.TblClrDefineObjects
+					.AsNoTracking()
+					.Where(x => x.IsActive == null || x.IsActive == 1)
+					.Where(x => !includeCompanyFilter || !company.HasValue || x.Company == company.Value)
+					.Select(x => new { x.RecNo, x.DefineObjectId, x.NameObject })
+					.ToList()
+					.Where(x => recNoSet.Contains(x.RecNo))
+					.GroupBy(x => x.RecNo)
+					.ToDictionary(x => x.Key, x => x.First());
+
+				return recNos
+					.Select(recNo => new ResolvedMaterialBarcodeRow
+					{
+						DefineObjectId = defineObjects.ContainsKey(recNo) ? defineObjects[recNo].DefineObjectId : recNo,
+						RecNo = recNo,
+						NameObject = defineObjects.ContainsKey(recNo) ? defineObjects[recNo].NameObject : string.Empty
+					})
+					.ToList();
+			}
+
+			List<ResolvedMaterialBarcodeRow> ResolveFromDefineObject(bool includeCompanyFilter)
+			{
+				return dbContext.TblClrDefineObjects
+					.AsNoTracking()
+					.Where(x => x.IsActive == null || x.IsActive == 1)
+					.Where(x => !includeCompanyFilter || !company.HasValue || x.Company == company.Value)
+					.Select(x => new { x.DefineObjectId, x.RecNo, x.NameObject, x.TechnicalSpecs, x.CodeObject })
+					.ToList()
+					.Where(x =>
+						string.Equals(NormalizeMaterialBarcode(x.TechnicalSpecs), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase) ||
+						string.Equals(NormalizeMaterialBarcode(x.CodeObject), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase))
+					.GroupBy(x => x.DefineObjectId)
+					.Select(x => new ResolvedMaterialBarcodeRow
+					{
+						DefineObjectId = x.First().DefineObjectId,
+						RecNo = x.First().RecNo,
+						NameObject = x.First().NameObject
+					})
+					.ToList();
+			}
+
+			var resolved = ResolveFromBarcodeTable(company.HasValue);
+			if (!resolved.Any() && company.HasValue)
+			{
+				resolved = ResolveFromBarcodeTable(false);
+			}
+
+			if (!resolved.Any())
+			{
+				resolved = ResolveFromDefineObject(company.HasValue);
+			}
+
+			if (!resolved.Any() && company.HasValue)
+			{
+				resolved = ResolveFromDefineObject(false);
+			}
+
+			return resolved;
+		}
+
+		private bool TryRegisterFinalProduct(long currentOrderId, out string registerError)
+		{
+			registerError = string.Empty;
+
+			try
+			{
+				var order = dbContext.TblLnsOrders
+					.AsNoTracking()
+					.FirstOrDefault(x => x.OrderId == currentOrderId);
+
+				if (order == null)
+				{
+					registerError = "اطلاعات سفارش برای ثبت محصول نهایی یافت نشد.";
+					return false;
+				}
+
+				if (order.IndexDocument != (int)IndexDocument.LnsOrder)
+				{
+					return true;
+				}
+
+				if (!order.DefineObjectId.HasValue || order.DefineObjectId.Value <= 0)
+				{
+					registerError = "کالای نهایی سفارش مشخص نیست.";
+					return false;
+				}
+
+				var orderProcess = dbContext.TblWfwOrderProcesses
+					.AsNoTracking()
+					.Where(x => x.OrderId == currentOrderId)
+					.OrderByDescending(x => x.OrderProcessId)
+					.Select(x => new { x.OrderProcessId })
+					.FirstOrDefault();
+
+				if (orderProcess == null)
+				{
+					registerError = "فرآیند سفارش برای ثبت محصول نهایی یافت نشد.";
+					return false;
+				}
+
+				var firstStep = dbContext.TblWfwOrderProcessSteps
+					.AsNoTracking()
+					.Where(x => x.OrderProcessId == orderProcess.OrderProcessId)
+					.OrderBy(x => x.OrderProcessStepId)
+					.Select(x => new { x.ProcessStepId })
+					.FirstOrDefault();
+
+				if (firstStep == null)
+				{
+					registerError = "مرحله فرآیند سفارش برای ثبت محصول نهایی یافت نشد.";
+					return false;
+				}
+
+				var finalDefineObject = dbContext.TblClrDefineObjects
+					.AsNoTracking()
+					.Where(x => x.DefineObjectId == order.DefineObjectId.Value)
+					.Select(x => new
+					{
+						x.DefineObjectId,
+						x.RecNo,
+						x.NameObject,
+						x.CodeObject
+					})
+					.FirstOrDefault();
+
+				var prodRNObject = finalDefineObject?.RecNo ?? order.DefineObjectId.Value;
+				var finalQuantity = ResolveFinalProductQuantity(currentOrderId);
+				var now = DateTime.Now;
+				var userId = HttpContext.Session.Get<int?>("UserId");
+
+				var existingFinalProduct = dbContext.TblWfwOrderRawMaterials.FirstOrDefault(x =>
+					x.OrderId == currentOrderId &&
+					x.ProdRNObject.HasValue &&
+					x.ProdRNObject.Value == prodRNObject);
+
+				if (existingFinalProduct == null)
+				{
+					dbContext.TblWfwOrderRawMaterials.Add(new TblWfwOrderRawMaterial
+					{
+						OrderId = currentOrderId,
+						OrderProcessId = orderProcess.OrderProcessId,
+						ProcessStepId = firstStep.ProcessStepId,
+						DefineObjectId = order.DefineObjectId.Value,
+						DefineObjectRecNo = finalDefineObject?.RecNo,
+						WasterRNObject = null,
+						ProdRNObject = prodRNObject,
+						Barcode = finalDefineObject?.CodeObject,
+						MaterialName = finalDefineObject?.NameObject,
+						Quantity = finalQuantity,
+						DateCreate = now,
+						DateUpdate = now,
+						CreatedBy = userId,
+						ModifiedBy = userId
+					});
+				}
+				else
+				{
+					existingFinalProduct.Quantity = finalQuantity;
+					existingFinalProduct.DateUpdate = now;
+					existingFinalProduct.ModifiedBy = userId;
+					existingFinalProduct.DefineObjectId = order.DefineObjectId.Value;
+					existingFinalProduct.DefineObjectRecNo = finalDefineObject?.RecNo;
+					existingFinalProduct.WasterRNObject = null;
+					existingFinalProduct.ProdRNObject = prodRNObject;
+					if (string.IsNullOrWhiteSpace(existingFinalProduct.Barcode))
+					{
+						existingFinalProduct.Barcode = finalDefineObject?.CodeObject;
+					}
+					if (string.IsNullOrWhiteSpace(existingFinalProduct.MaterialName))
+					{
+						existingFinalProduct.MaterialName = finalDefineObject?.NameObject;
+					}
+				}
+
+				dbContext.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				registerError = "خطا در ثبت محصول نهایی: " + ex.Message;
+				return false;
+			}
+		}
+
+		private int ResolveFinalProductQuantity(long orderId)
+		{
+			var orderItems = dbContext.TblLnsOrderItems
+				.AsNoTracking()
+				.Where(x => x.OrderId == orderId)
+				.Select(x => new
+				{
+					x.Quantity,
+					x.IsRight
+				})
+				.ToList();
+
+			if (!orderItems.Any())
+			{
+				return 1;
+			}
+
+			var quantitySum = orderItems
+				.Where(x => x.Quantity.HasValue && x.Quantity.Value > 0)
+				.Sum(x => x.Quantity!.Value);
+
+			if (quantitySum > 0)
+			{
+				return quantitySum;
+			}
+
+			var eyeCount = orderItems.Count(x => x.IsRight == 0 || x.IsRight == 1);
+			return eyeCount > 0 ? eyeCount : orderItems.Count;
 		}
 
 		private bool TryRegisterConsumedMaterial(TblWfwOrderProcessStepDto currentStep, string normalizedMaterialBarcode, out string registerError)
@@ -1092,34 +1659,14 @@ namespace HamrahanSystem.Presntation.Controllers
 				return false;
 			}
 
-			var allowedDefineObjectIds = (tblLnsCustomLensTypeMaterialService.GetAll().Result ?? Enumerable.Empty<TblLnsCustomLensTypeMaterialDto>())
-				.Where(x => x.IsActive)
-				.Where(x => x.DefineObjectId.HasValue && x.DefineObjectId.Value > 0)
-				.Select(x => x.DefineObjectId!.Value)
-				.Distinct()
-				.ToHashSet();
-
-			if (!allowedDefineObjectIds.Any())
-			{
-				registerError = "لیست مواد خام تعریف نشده است.";
-				return false;
-			}
-
-			var barcodeRecNo = int.TryParse(normalizedMaterialBarcode, out var parsedRecNo) ? parsedRecNo : (int?)null;
-			var matchedDefineObjects = (tblClrDefineObjectService.Search(normalizedMaterialBarcode).Result ?? new List<TblClrDefineObjectDto>())
-				.Where(x => allowedDefineObjectIds.Contains(x.DefineObjectId))
-				.Where(x => x.IsActive == null || x.IsActive == 1)
-				.Where(x =>
-					string.Equals(NormalizeMaterialBarcode(x.TechnicalSpecs), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase) ||
-					string.Equals(NormalizeMaterialBarcode(x.CodeObject), normalizedMaterialBarcode, StringComparison.OrdinalIgnoreCase) ||
-					(barcodeRecNo.HasValue && x.RecNo == barcodeRecNo.Value))
+			var matchedDefineObjects = ResolveMaterialByBarcode(normalizedMaterialBarcode, order.Company)
 				.GroupBy(x => x.DefineObjectId)
 				.Select(x => x.First())
 				.ToList();
 
 			if (!matchedDefineObjects.Any())
 			{
-				registerError = "بارکد ماده خام معتبر نیست یا در مواد تعریف‌شده موجود نیست.";
+				registerError = "بارکد ماده خام معتبر نیست.";
 				return false;
 			}
 
@@ -1133,44 +1680,127 @@ namespace HamrahanSystem.Presntation.Controllers
 			var now = DateTime.Now;
 			var userId = HttpContext.Session.Get<int?>("UserId");
 
-			var existingRow = dbContext.TblWfwOrderRawMaterials.FirstOrDefault(x =>
-				x.OrderId == order.OrderId &&
-				x.ProcessStepId == currentStep.ProcessStepId &&
-				x.DefineObjectId == defineObject.DefineObjectId);
+			try
+			{
+				var existingRow = dbContext.TblWfwOrderRawMaterials.FirstOrDefault(x =>
+					x.OrderId == order.OrderId &&
+					x.ProcessStepId == currentStep.ProcessStepId &&
+					x.DefineObjectId == defineObject.DefineObjectId &&
+					x.ProdRNObject == null);
 
-			if (existingRow == null)
-			{
-				dbContext.TblWfwOrderRawMaterials.Add(new TblWfwOrderRawMaterial
+				if (existingRow == null)
 				{
-					OrderId = order.OrderId,
-					OrderProcessId = currentStep.OrderProcessId,
-					ProcessStepId = currentStep.ProcessStepId,
-					DefineObjectId = defineObject.DefineObjectId,
-					DefineObjectRecNo = defineObject.RecNo,
-					Barcode = normalizedMaterialBarcode,
-					MaterialName = defineObject.NameObject,
-					Quantity = 1,
-					DateCreate = now,
-					DateUpdate = now,
-					CreatedBy = userId,
-					ModifiedBy = userId
-				});
-			}
-			else
-			{
-				existingRow.Quantity += 1;
-				existingRow.DateUpdate = now;
-				existingRow.ModifiedBy = userId;
-				existingRow.Barcode = normalizedMaterialBarcode;
-				existingRow.DefineObjectRecNo ??= defineObject.RecNo;
-				if (string.IsNullOrWhiteSpace(existingRow.MaterialName))
-				{
-					existingRow.MaterialName = defineObject.NameObject;
+					dbContext.TblWfwOrderRawMaterials.Add(new TblWfwOrderRawMaterial
+					{
+						OrderId = order.OrderId,
+						OrderProcessId = currentStep.OrderProcessId,
+						ProcessStepId = currentStep.ProcessStepId,
+						DefineObjectId = defineObject.DefineObjectId,
+						DefineObjectRecNo = defineObject.RecNo,
+						WasterRNObject = defineObject.RecNo,
+						ProdRNObject = null,
+						Barcode = normalizedMaterialBarcode,
+						MaterialName = defineObject.NameObject,
+						Quantity = 1,
+						DateCreate = now,
+						DateUpdate = now,
+						CreatedBy = userId,
+						ModifiedBy = userId
+					});
 				}
+				else
+				{
+					existingRow.Quantity += 1;
+					existingRow.DateUpdate = now;
+					existingRow.ModifiedBy = userId;
+					existingRow.Barcode = normalizedMaterialBarcode;
+					existingRow.DefineObjectRecNo ??= defineObject.RecNo;
+					existingRow.WasterRNObject ??= defineObject.RecNo;
+					existingRow.ProdRNObject = null;
+					if (string.IsNullOrWhiteSpace(existingRow.MaterialName))
+					{
+						existingRow.MaterialName = defineObject.NameObject;
+					}
+				}
+
+				dbContext.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				registerError = "خطا در ذخیره ماده مصرفی: " + ex.Message;
+				return false;
+			}
+		}
+
+		private sealed class ResolvedMaterialBarcodeRow
+		{
+			public int DefineObjectId { get; set; }
+			public int RecNo { get; set; }
+			public string? NameObject { get; set; }
+		}
+
+		private sealed class BarcodeLookupRow
+		{
+			public int? RecNo { get; set; }
+			public string? Barcode { get; set; }
+			public int? Company { get; set; }
+		}
+
+		private sealed class PrintScopeInfo
+		{
+			public int? ProcessId { get; set; }
+			public int? ProcessStepId { get; set; }
+		}
+
+		private PrintScopeInfo? ResolveInProgressPrintScope(long orderId)
+		{
+			if (orderId <= 0)
+			{
+				return null;
 			}
 
-			dbContext.SaveChanges();
-			return true;
+			var scope = (from step in dbContext.TblWfwOrderProcessSteps.AsNoTracking()
+						 join process in dbContext.TblWfwOrderProcesses.AsNoTracking()
+							 on step.OrderProcessId equals process.OrderProcessId
+						 where process.OrderId == orderId
+						 orderby step.OrderProcessStepId descending
+						 select new
+						 {
+							 process.ProcessId,
+							 step.ProcessStepId,
+							 step.StatusId
+						 })
+						.ToList();
+
+			var inprogress = scope.FirstOrDefault(x => x.StatusId == (int)StatusRequest.Inprogress);
+			var current = inprogress ?? scope.FirstOrDefault();
+			if (current == null)
+			{
+				return null;
+			}
+
+			return new PrintScopeInfo
+			{
+				ProcessId = current.ProcessId,
+				ProcessStepId = current.ProcessStepId
+			};
+		}
+
+		private static string ResolveOrderFactorNo(TblLnsOrderDto? order)
+		{
+			if (order == null)
+			{
+				return string.Empty;
+			}
+
+			if (!string.IsNullOrWhiteSpace(order.FactorNo))
+			{
+				return order.FactorNo.Trim();
+			}
+
+			var prefix = order.IndexDocument == (int)IndexDocument.LnsOrder ? "RX" : "ST";
+			return prefix + order.OrderId.ToString().PadLeft(8, '0');
 		}
 
 		private static bool IsLikelyScannerInput(int? scanDurationMs, int? scanLength)
@@ -1192,6 +1822,247 @@ namespace HamrahanSystem.Presntation.Controllers
 
 			var avgGap = (double)scanDurationMs.Value / (scanLength.Value - 1);
 			return avgGap <= 120;
+		}
+
+		
+		private async Task<string?> ExecutePreInvoiceToInvoiceIfNeededAsync(TblWfwOrderProcessStepDto? currentStep)
+		{
+			var order = currentStep?.TblWfwOrderProcess?.TblLnsOrder;
+			if (order == null)
+			{
+				return null;
+			}
+
+			if (order.IndexDocument != (int)IndexDocument.LnsOrder)
+			{
+				return null;
+			}
+
+			if (currentStep?.TblWfwProcessStep?.ProcedureId != (int)Procedure.ConvertPreInvoiceToInvoice)
+			{
+				return null;
+			}
+
+			var priorForm = await ResolvePriorFormRecNoAsync(order.OrderId, order.FactorNo);
+			if (!priorForm.HasValue || priorForm.Value <= 0)
+			{
+				return "خطا در تبدیل پیش فاکتور به فاکتور: شماره سند مبنای پیش فاکتور یافت نشد.";
+			}
+
+			var documentDate = ResolvePersianDocumentDate(order.CreateDate);
+			if (string.IsNullOrWhiteSpace(documentDate))
+			{
+				return "خطا در تبدیل پیش فاکتور به فاکتور: تاریخ سند نامعتبر است.";
+			}
+
+			var connection = dbContext.Database.GetDbConnection();
+			var shouldCloseConnection = connection.State != ConnectionState.Open;
+			if (shouldCloseConnection)
+			{
+				await connection.OpenAsync();
+			}
+
+			try
+			{
+				await using var command = connection.CreateCommand();
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandTimeout = 120;
+				command.CommandText = "dbo.SP_SaveSalRxDocument";
+
+				AddCommandParameter(command, "@DocumentDate", DbType.String, documentDate);
+				AddCommandParameter(command, "@PriorForm", DbType.Int32, priorForm.Value);
+
+				var refRecnoParameter = command.CreateParameter();
+				refRecnoParameter.ParameterName = "@RefRecno";
+				refRecnoParameter.DbType = DbType.Int32;
+				refRecnoParameter.Direction = ParameterDirection.Output;
+				command.Parameters.Add(refRecnoParameter);
+
+				await command.ExecuteNonQueryAsync();
+
+				if (refRecnoParameter.Value == null || refRecnoParameter.Value == DBNull.Value)
+				{
+					return "خطا در تبدیل پیش فاکتور به فاکتور: شناسه خروجی فاکتور نامعتبر است.";
+				}
+
+				var newDocumentRecno = Convert.ToInt32(refRecnoParameter.Value);
+				if (newDocumentRecno <= 0)
+				{
+					return "خطا در تبدیل پیش فاکتور به فاکتور: فاکتور مالی ایجاد نشد.";
+				}
+
+				return null;
+			}
+			catch (Exception ex)
+			{
+				return "خطا در تبدیل پیش فاکتور به فاکتور: " + GetExceptionDetails(ex);
+			}
+			finally
+			{
+				if (shouldCloseConnection && connection.State == ConnectionState.Open)
+				{
+					await connection.CloseAsync();
+				}
+			}
+		}
+
+		private async Task<int?> ResolvePriorFormRecNoAsync(long orderId, string? factorNo)
+		{
+			if (orderId <= 0)
+			{
+				return null;
+			}
+
+			var connection = dbContext.Database.GetDbConnection();
+			var shouldCloseConnection = connection.State != ConnectionState.Open;
+			if (shouldCloseConnection)
+			{
+				await connection.OpenAsync();
+			}
+
+			try
+			{
+				await using var command = connection.CreateCommand();
+				command.CommandType = CommandType.Text;
+				command.CommandTimeout = 120;
+				command.CommandText = @"SELECT TOP (1) CAST(h.RecNo AS INT)
+FROM Sal.Tbl_HeadDocument h
+WHERE h.Company = @Company
+  AND (
+       h.NoDetection = @FactorNo
+       OR h.FinalNo = @FactorNo
+       OR h.NoDetection = @OrderIdText
+       OR h.FinalNo = @OrderIdText
+  )
+ORDER BY h.RecNo DESC;";
+
+				AddCommandParameter(command, "@Company", DbType.Int32, PreInvoiceCompany);
+				AddCommandParameter(command, "@FactorNo", DbType.String, string.IsNullOrWhiteSpace(factorNo) ? DBNull.Value : factorNo.Trim());
+				AddCommandParameter(command, "@OrderIdText", DbType.String, orderId.ToString());
+
+				var value = await command.ExecuteScalarAsync();
+				if (value == null || value == DBNull.Value)
+				{
+					return null;
+				}
+
+				return Convert.ToInt32(value);
+			}
+			finally
+			{
+				if (shouldCloseConnection && connection.State == ConnectionState.Open)
+				{
+					await connection.CloseAsync();
+				}
+			}
+		}
+
+		private static string ResolvePersianDocumentDate(string? createDate)
+		{
+			DateTime dateTimeValue;
+			if (!string.IsNullOrWhiteSpace(createDate)
+				&& DateTime.TryParse(createDate, out var parsed))
+			{
+				dateTimeValue = parsed;
+			}
+			else
+			{
+				dateTimeValue = DateTime.Now;
+			}
+
+			var calendar = new PersianCalendar();
+			return string.Format(
+				CultureInfo.InvariantCulture,
+				"{0:0000}/{1:00}/{2:00}",
+				calendar.GetYear(dateTimeValue),
+				calendar.GetMonth(dateTimeValue),
+				calendar.GetDayOfMonth(dateTimeValue));
+		}
+
+		private async Task<string?> ExecuteDailyProductionReportIfNeededAsync(TblWfwOrderProcessStepDto? currentStep)
+		{
+			var order = currentStep?.TblWfwOrderProcess?.TblLnsOrder;
+			if (order == null)
+			{
+				return null;
+			}
+
+			if (order.IndexDocument != (int)IndexDocument.LnsOrder)
+			{
+				return null;
+			}
+
+			if (currentStep?.TblWfwProcessStep?.ProcedureId != (int)Procedure.DailyProductionReport)
+			{
+				return null;
+			}
+
+			if (order.OrderId <= 0)
+			{
+				return "OrderId نامعتبر است.";
+			}
+
+			var connection = dbContext.Database.GetDbConnection();
+			var shouldCloseConnection = connection.State != ConnectionState.Open;
+			if (shouldCloseConnection)
+			{
+				await connection.OpenAsync();
+			}
+
+			try
+			{
+				await using var command = connection.CreateCommand();
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandTimeout = 120;
+				command.CommandText = "dbo.SP_Por_SaveDailyReportManual";
+
+				AddCommandParameter(command, "@DocumentId", DbType.Int64, order.OrderId);
+				var recNoOutParameter = command.CreateParameter();
+				recNoOutParameter.ParameterName = "@RecNoOut";
+				recNoOutParameter.DbType = DbType.Int32;
+				recNoOutParameter.Direction = ParameterDirection.Output;
+				command.Parameters.Add(recNoOutParameter);
+
+				var errorMessageParameter = command.CreateParameter();
+				errorMessageParameter.ParameterName = "@ErrorMessage";
+				errorMessageParameter.DbType = DbType.String;
+				errorMessageParameter.Size = 4000;
+				errorMessageParameter.Direction = ParameterDirection.Output;
+				command.Parameters.Add(errorMessageParameter);
+
+				await command.ExecuteNonQueryAsync();
+
+				var errorMessage = errorMessageParameter.Value?.ToString()?.Trim();
+				var recNoOut = 0;
+				if (recNoOutParameter.Value != null && recNoOutParameter.Value != DBNull.Value)
+				{
+					recNoOut = Convert.ToInt32(recNoOutParameter.Value);
+				}
+
+				var isSuccessMessage = string.IsNullOrWhiteSpace(errorMessage) || errorMessage == "0";
+				if (!isSuccessMessage)
+				{
+					return "خطا در گزارش کار روزانه تولید: " + errorMessage;
+				}
+
+				if (recNoOut <= 0)
+				{
+					return "خطا در گزارش کار روزانه تولید: شناسه خروجی نامعتبر است.";
+				}
+
+				return null;
+			}
+			catch (Exception ex)
+			{
+				return "خطا در گزارش کار روزانه تولید: " + GetExceptionDetails(ex);
+			}
+			finally
+			{
+				if (shouldCloseConnection && connection.State == ConnectionState.Open)
+				{
+					await connection.CloseAsync();
+				}
+			}
 		}
 
 		private List<TblWfwOrderProcessStepDto> LoadInprogressSteps(int? roleId, int? customerId, string? factorNo)
@@ -1810,7 +2681,136 @@ namespace HamrahanSystem.Presntation.Controllers
         [Authorize]
         public IActionResult Print(string orderId,int printType)
         {
+            return printType switch
+            {
+                2 => RedirectToAction(nameof(PrintOrderStock), new { orderId }),
+                3 => RedirectToAction(nameof(PrintOrderStockGranty), new { orderId }),
+                4 => RedirectToAction(nameof(PrintOrderStockWarranty), new { orderId }),
+                _ => RenderLegacyExternalPrint(orderId, printType)
+            };
+        }
 
+		[Authorize]
+		public IActionResult PrintOrderStock(string orderId)
+		{
+			return RenderInternalOrderPrint(orderId, ReadyOrderIndexDocument, "OrderStock.frx", includeLensSide: false, useProvidedQuantity: false, normalizeDate: false);
+		}
+
+		[Authorize]
+		public IActionResult PrintOrderStockGranty(string orderId)
+		{
+			return RenderInternalOrderPrint(orderId, ReadyOrderGrantyIndexDocument, "OrderStockGranty.frx", includeLensSide: true, useProvidedQuantity: false, normalizeDate: true);
+		}
+
+		[Authorize]
+		public IActionResult PrintOrderStockWarranty(string orderId)
+		{
+			return RenderInternalOrderPrint(orderId, ReadyOrderGrantyIndexDocument, "OrderStockWarranty.frx", includeLensSide: true, useProvidedQuantity: true, normalizeDate: true);
+		}
+
+		private IActionResult RenderInternalOrderPrint(
+			string encryptedOrderId,
+			int indexDocument,
+			string reportFileName,
+			bool includeLensSide,
+			bool useProvidedQuantity,
+			bool normalizeDate)
+		{
+			if (!TryDecryptOrderId(encryptedOrderId, out var orderId))
+			{
+				return BadRequest("Invalid order id.");
+			}
+
+			var reportPath = Path.Combine(webHostEnvironment.ContentRootPath, "Reports", reportFileName);
+			if (!System.IO.File.Exists(reportPath))
+			{
+				return NotFound($"Report template '{reportFileName}' not found.");
+			}
+
+			var order = dbContext.TblLnsOrders
+				.AsNoTracking()
+				.FirstOrDefault(x => x.OrderId == orderId && x.IndexDocument == indexDocument);
+
+			var webReport = new WebReport();
+			webReport.Report.Load(reportPath);
+
+			if (order != null)
+			{
+				var company = (byte)(order.Company ?? 0);
+				var customer = dbContext.ViewSalListCustomers
+					.AsNoTracking()
+					.FirstOrDefault(x => x.DefineCustomerId == order.DefineCustomerId && x.Company == company)
+					?? dbContext.ViewSalListCustomers
+						.AsNoTracking()
+						.FirstOrDefault(x => x.DefineCustomerId == order.DefineCustomerId);
+
+				var headerRows = new List<OrderPrintHeaderRow>
+				{
+					new()
+					{
+						OrderId = order.OrderId,
+						OrderNo = "ST" + order.OrderId.ToString().PadLeft(8, '0'),
+						Company = customer?.NameFormal ?? string.Empty,
+						CompanyId = customer?.CodeCompany ?? string.Empty,
+						CreateDate = normalizeDate ? NormalizeCreateDate(order.CreateDate) : (order.CreateDate ?? string.Empty)
+					}
+				};
+
+				IQueryable<TblLnsOrderItem> itemsQuery = dbContext.TblLnsOrderItems
+					.AsNoTracking()
+					.Where(x => x.OrderId == order.OrderId)
+					.Include(x => x.TblLnsLensIndexRSph)
+						.ThenInclude(x => x.TblLnsSph)
+					.Include(x => x.TblLnsSphCyl)
+						.ThenInclude(x => x.TblLnsCyl)
+					.Include(x => x.TblClrDefineObject);
+
+				if (useProvidedQuantity)
+				{
+					itemsQuery = itemsQuery.Where(x => (x.ProvidedQuantity ?? 0) > 0);
+				}
+
+				var detailRows = itemsQuery
+					.ToList()
+					.Select(item =>
+					{
+						var sph = item.TblLnsLensIndexRSph?.TblLnsSph?.Name ?? string.Empty;
+						var cyl = item.TblLnsSphCyl?.TblLnsCyl?.Name ?? string.Empty;
+
+						return new OrderPrintDetailRow
+						{
+							OrderId = order.OrderId,
+							OrderDetailId = item.OrderItemId,
+							NO = item.Quantity ?? 1,
+							Axis = item.Axis?.ToString() ?? string.Empty,
+							SPH = sph,
+							SYI = cyl,
+							CodeKala = item.TblClrDefineObject?.TechnicalSpecs ?? string.Empty,
+							NameKala = NormalizeNameKala(item.TblClrDefineObject?.NameObject, sph, cyl),
+							Masrafkonande = item.ConsumerTitle ?? order.Consumer ?? string.Empty,
+							StoreName = !string.IsNullOrWhiteSpace(item.Optician) ? item.Optician! : (order.StoreName ?? string.Empty),
+							LensSide = includeLensSide
+								? item.IsRight == 1
+									? "Right"
+									: item.IsRight == 0
+										? "Left"
+										: string.Empty
+								: string.Empty,
+							RowNo = item.RowNumber ?? string.Empty
+						};
+					})
+					.ToList();
+
+				webReport.Report.RegisterData(headerRows, "LnsOrder");
+				webReport.Report.RegisterData(detailRows, "LnsOrderDetail");
+			}
+
+			webReport.Report.Prepare();
+			return View("PrintReport", webReport);
+		}
+
+		private IActionResult RenderLegacyExternalPrint(string orderId, int printType)
+		{
             ViewBag.PrintType=printType;
             ViewBag.PrintUrl= configuration.GetConnectionString("PrintUrl");
             ViewBag.Id = orderId;
@@ -1818,10 +2818,190 @@ namespace HamrahanSystem.Presntation.Controllers
             return View();
         }
 
+		private static bool TryDecryptOrderId(string encryptedOrderId, out long orderId)
+		{
+			orderId = 0;
+
+			if (string.IsNullOrWhiteSpace(encryptedOrderId))
+			{
+				return false;
+			}
+
+			if (long.TryParse(encryptedOrderId, out orderId))
+			{
+				return true;
+			}
+
+			try
+			{
+				var token = Uri.UnescapeDataString(encryptedOrderId).Replace(" ", "+");
+				var decrypted = Helper.DecryptPassword(token, OrderPrintEncryptionKey);
+
+				if (long.TryParse(decrypted, out orderId))
+				{
+					return true;
+				}
+
+				var trimmed = decrypted?.TrimStart('0');
+				return long.TryParse(string.IsNullOrEmpty(trimmed) ? "0" : trimmed, out orderId);
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		private static string NormalizeCreateDate(string? value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+			{
+				return string.Empty;
+			}
+
+			var normalized = ConvertToLatinDigits(value.Trim());
+
+			if (DateTime.TryParse(normalized, CultureInfo.GetCultureInfo("fa-IR"), DateTimeStyles.AllowWhiteSpaces, out var parsed) ||
+				DateTime.TryParse(normalized, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces, out parsed) ||
+				DateTime.TryParse(normalized, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out parsed) ||
+				DateTime.TryParse(normalized, out parsed))
+			{
+				return parsed.ToPersianDateTime();
+			}
+
+			return normalized;
+		}
+
+		private static string ConvertToLatinDigits(string value)
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				return string.Empty;
+			}
+
+			return value
+				.Replace('۰', '0')
+				.Replace('۱', '1')
+				.Replace('۲', '2')
+				.Replace('۳', '3')
+				.Replace('۴', '4')
+				.Replace('۵', '5')
+				.Replace('۶', '6')
+				.Replace('۷', '7')
+				.Replace('۸', '8')
+				.Replace('۹', '9')
+				.Replace('٠', '0')
+				.Replace('١', '1')
+				.Replace('٢', '2')
+				.Replace('٣', '3')
+				.Replace('٤', '4')
+				.Replace('٥', '5')
+				.Replace('٦', '6')
+				.Replace('٧', '7')
+				.Replace('٨', '8')
+				.Replace('٩', '9');
+		}
+
+		private static string NormalizeNameKala(string? name, string sph, string cyl)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				return string.Empty;
+			}
+
+			static string TrimToken(string? value)
+			{
+				return string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim();
+			}
+
+			static bool TryParseToken(string? value, out double number)
+			{
+				number = 0;
+				if (string.IsNullOrWhiteSpace(value))
+				{
+					return false;
+				}
+
+				var text = value.Trim();
+				if (text.StartsWith("+", StringComparison.Ordinal))
+				{
+					text = text[1..];
+				}
+
+				return double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out number) ||
+					   double.TryParse(text, NumberStyles.Float, CultureInfo.GetCultureInfo("fa-IR"), out number) ||
+					   double.TryParse(text, out number);
+			}
+
+			static bool ValuesEqual(string left, string right)
+			{
+				if (string.IsNullOrWhiteSpace(left) || string.IsNullOrWhiteSpace(right))
+				{
+					return false;
+				}
+
+				if (TryParseToken(left, out var leftNum) && TryParseToken(right, out var rightNum))
+				{
+					return Math.Abs(leftNum - rightNum) < 0.001;
+				}
+
+				return string.Equals(left.Trim(), right.Trim(), StringComparison.Ordinal);
+			}
+
+			var result = name.Trim();
+			var parts = result.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			var sphText = TrimToken(sph);
+			var cylText = TrimToken(cyl);
+
+			if (parts.Length >= 2 &&
+				!string.IsNullOrEmpty(sphText) &&
+				!string.IsNullOrEmpty(cylText) &&
+				ValuesEqual(parts[^2], sphText) &&
+				ValuesEqual(parts[^1], cylText))
+			{
+				return string.Join(" ", parts.Take(parts.Length - 2));
+			}
+
+			if (parts.Length >= 1 &&
+				((!string.IsNullOrEmpty(sphText) && ValuesEqual(parts[^1], sphText)) ||
+				 (!string.IsNullOrEmpty(cylText) && ValuesEqual(parts[^1], cylText))))
+			{
+				return string.Join(" ", parts.Take(parts.Length - 1));
+			}
+
+			return result;
+		}
+
+		private sealed class OrderPrintHeaderRow
+		{
+			public long OrderId { get; set; }
+			public string Company { get; set; } = string.Empty;
+			public string CompanyId { get; set; } = string.Empty;
+			public string CreateDate { get; set; } = string.Empty;
+			public string OrderNo { get; set; } = string.Empty;
+		}
+
+		private sealed class OrderPrintDetailRow
+		{
+			public long OrderId { get; set; }
+			public long OrderDetailId { get; set; }
+			public string CodeKala { get; set; } = string.Empty;
+			public string NameKala { get; set; } = string.Empty;
+			public string Axis { get; set; } = string.Empty;
+			public string SPH { get; set; } = string.Empty;
+			public string SYI { get; set; } = string.Empty;
+			public int NO { get; set; }
+			public string Masrafkonande { get; set; } = string.Empty;
+			public string StoreName { get; set; } = string.Empty;
+			public string LensSide { get; set; } = string.Empty;
+			public string RowNo { get; set; } = string.Empty;
+		}
+
 
 
     }
 }
+
+
 
 
 

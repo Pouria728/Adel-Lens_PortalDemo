@@ -4,6 +4,7 @@ using HamrahanSystem.Application.UseCaseImplementation;
 using HamrahanSystem.Application.UseCaseInterface;
 using HamrahanSystem.Domain.Entity;
 using HamrahanSystem.Domain.Repository;
+using HamrahanSystem.Presntation.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace HamrahanSystem.Presntation.Controllers
 		ITblWfwRelationStepRepository tblWfwRelationStepRepository,
 		ITblWfwResultStepRepository tblWfwResultStepRepository,
 		IRoleService roleService,
+		ICustomLensPrintSettingsService customLensPrintSettingsService,
 		ICacheService cacheService) : Controller
 	{
 		[Authorize(Roles = "admin,Step_Index")]
@@ -36,10 +38,15 @@ namespace HamrahanSystem.Presntation.Controllers
 		public IActionResult Create(int Id)
 		{
 			ViewBag.ListRole = roleService.GetAll().Result;
-			ViewBag.Process = tblWfwProcessService.GetById(Id).Result;
+			var process = tblWfwProcessService.GetById(Id).Result;
+			ViewBag.Process = process;
 			ViewBag.NextStepOptions = BuildNextStepOptions(Id, null);
 			ViewBag.SelectedNextStepIds = Array.Empty<int>();
 			ViewBag.NextStepResultMapJson = "{}";
+			ViewBag.ProcessPrintSettingsUrl = IsCustomLensProcess(process)
+				? BuildProcessPrintSettingsUrl(process.ProcessId)
+				: string.Empty;
+			ViewBag.StepPrintSettingsUrl = string.Empty;
 			List<SelectListItem> procedures = Enum.GetValues(typeof(Procedure)).Cast<Procedure>().Select(o => new SelectListItem() { Text = ((DescriptionAttribute[])(o.GetType().GetField(o.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false)))[0].Description, Value = ((int)o).ToString() }).ToList();
 			ViewBag.ListProcedure = procedures;
 
@@ -55,6 +62,16 @@ namespace HamrahanSystem.Presntation.Controllers
 				role ??= Array.Empty<int>();
 				nextStep ??= Array.Empty<int>();
 				tblWfwProcessStepDto.TblWfwRoleStepes = (from p in role select new TblWfwRoleStepDto { RoleId = p }).ToList();
+				var printValidationError = ValidateCustomLensAutoPrintSettings(tblWfwProcessStepDto, null);
+				if (!string.IsNullOrWhiteSpace(printValidationError))
+				{
+					return Json(new
+					{
+						success = false,
+						message = printValidationError
+					});
+				}
+
 				var processStepId = tblWfwProcessStepService.Add(tblWfwProcessStepDto).Result;
 				var normalizedNextSteps = NormalizeNextStepIds(tblWfwProcessStepDto.ProcessId ?? 0, null, nextStep);
 				var relationMap = tblWfwRelationStepRepository.SyncForFromStep(processStepId, normalizedNextSteps).Result;
@@ -100,6 +117,12 @@ namespace HamrahanSystem.Presntation.Controllers
 				}
 
 				ViewBag.ProcessName = item.TblWfwProcess?.Name ?? string.Empty;
+				ViewBag.ProcessPrintSettingsUrl = IsCustomLensProcess(item.TblWfwProcess)
+					? BuildProcessPrintSettingsUrl(processId)
+					: string.Empty;
+				ViewBag.StepPrintSettingsUrl = IsCustomLensProcess(item.TblWfwProcess)
+					? BuildStepPrintSettingsUrl(processId, item.ProcessStepId)
+					: string.Empty;
 				ViewBag.NextStepOptions = BuildNextStepOptions(processId, item.ProcessStepId);
 				ViewBag.SelectedNextStepIds = Array.Empty<int>();
 				ViewBag.NextStepResultMapJson = "{}";
@@ -143,6 +166,16 @@ namespace HamrahanSystem.Presntation.Controllers
 			{
 				role ??= Array.Empty<int>();
 				nextStep ??= Array.Empty<int>();
+				var printValidationError = ValidateCustomLensAutoPrintSettings(tblWfwProcessStepDto, tblWfwProcessStepDto.ProcessStepId);
+				if (!string.IsNullOrWhiteSpace(printValidationError))
+				{
+					return Json(new
+					{
+						success = false,
+						message = printValidationError
+					});
+				}
+
 				var relationIdsBefore = tblWfwRelationStepRepository
 					.GetByFromProcessStepId(tblWfwProcessStepDto.ProcessStepId)
 					.Select(x => x.RelationStepId)
@@ -371,6 +404,60 @@ namespace HamrahanSystem.Presntation.Controllers
 
 			var userId = HttpContext.Session.Get<int?>("UserId");
 			tblWfwResultStepRepository.ReplaceForRelations(relationIdsToClear, optionsByRelationId, userId).Wait();
+		}
+
+		private string? ValidateCustomLensAutoPrintSettings(TblWfwProcessStepDto stepDto, int? processStepId)
+		{
+			if (stepDto == null || !stepDto.IsPrint)
+			{
+				return null;
+			}
+
+			var processId = stepDto.ProcessId ?? 0;
+			if (processId <= 0)
+			{
+				return "فرآیند گام نامعتبر است.";
+			}
+
+			var process = tblWfwProcessService.GetById(processId).Result;
+			if (process == null || !IsCustomLensProcess(process))
+			{
+				return null;
+			}
+
+			var resolvedSettings = customLensPrintSettingsService.ResolveAsync(processId, processStepId).Result;
+			if (!customLensPrintSettingsService.HasValidReportTemplate(resolvedSettings))
+			{
+				return "برای گام‌های چاپ خودکار عدسی سفارشی، تنظیمات چاپ گام یا تنظیمات پیش‌فرض فرآیند باید تکمیل و فعال باشد.";
+			}
+
+			return null;
+		}
+
+		private static bool IsCustomLensProcess(TblWfwProcessDto? process)
+		{
+			return process != null &&
+				process.IndexDocument.HasValue &&
+				process.IndexDocument.Value == (short)IndexDocument.LnsOrder;
+		}
+
+		private string BuildProcessPrintSettingsUrl(int processId)
+		{
+			return Url.Action("PrintSettings", "Process", new
+			{
+				processId,
+				returnUrl = Url.Action("Index", "Steps", new { id = processId })
+			}) ?? string.Empty;
+		}
+
+		private string BuildStepPrintSettingsUrl(int processId, int processStepId)
+		{
+			return Url.Action("PrintSettings", "Process", new
+			{
+				processId,
+				processStepId,
+				returnUrl = Url.Action("Index", "Steps", new { id = processId })
+			}) ?? string.Empty;
 		}
 
 	}

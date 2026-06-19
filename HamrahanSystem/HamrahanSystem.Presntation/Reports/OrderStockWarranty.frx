@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/19/2025 12:29:46" ReportInfo.Modified="12/02/2025 01:31:58" ReportInfo.CreatorVersion="2024.2.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="LnsOrder" ReferenceName="LnsOrder" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="Company" DataType="System.String"/>
+      <Column Name="CompanyId" DataType="System.String"/>
+      <Column Name="CreateDate" DataType="System.String"/>
+      <Column Name="OrderNo" DataType="System.String"/>
+    </BusinessObjectDataSource>
+    <BusinessObjectDataSource Name="LnsOrderDetail" ReferenceName="LnsOrderDetail" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderId" DataType="System.Int64"/>
+      <Column Name="OrderDetailId" DataType="System.Int64"/>
+      <Column Name="CodeKala" DataType="System.String"/>
+      <Column Name="NameKala" DataType="System.String"/>
+      <Column Name="Axis" DataType="System.String"/>
+      <Column Name="SPH" DataType="System.String"/>
+      <Column Name="SYI" DataType="System.String"/>
+      <Column Name="NO" DataType="System.Int32"/>
+      <Column Name="Masrafkonande" DataType="System.String"/>
+      <Column Name="StoreName" DataType="System.String"/>
+      <Column Name="LensSide" DataType="System.String"/>
+      <Column Name="RowNo" DataType="System.Int32" PropName="Column"/>
+    </BusinessObjectDataSource>
+    <Relation Name="LnsOrder_LnsOrderDetail" ParentDataSource="LnsOrder" ChildDataSource="LnsOrderDetail" ParentColumns="OrderId" ChildColumns="OrderId" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="85" PaperHeight="54" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15">
+    <GroupHeaderBand Name="GroupHeader1" Width="245.7" Height="9.45" RepeatOnEveryPage="true" Condition="[LnsOrderDetail.RowNo]" ResetPageNumber="true">
+      <DataBand Name="Data1" Top="55.25" Width="245.7" Height="18.9" DataSource="LnsOrderDetail">
+        <TextObject Name="Text1" Width="47.25" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.LensSide]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text2" Left="47.25" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.SPH]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text3" Left="113.4" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.SYI]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text4" Left="179.55" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.Axis]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <DataHeaderBand Name="DataHeader1" Top="13.45" Width="245.7" Height="37.8" RepeatOnEveryPage="true">
+          <TextObject Name="Text5" Top="18.9" Width="47.25" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TextObject Name="Text6" Left="47.25" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="SPH" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text7" Left="113.4" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="CYL" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text8" Left="179.55" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="AXIS" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text17" Width="47.25" Height="18.9" Border.Lines="All" Text="Type" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TextObject Name="Text18" Left="47.25" Width="198.45" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.NameKala]" VertAlign="Center" WordWrap="false" Font="Arial, 8pt"/>
+        </DataHeaderBand>
+        <DataFooterBand Name="DataFooter1" Top="78.15" Width="245.7" Height="37.8" RepeatOnEveryPage="true">
+          <TextObject Name="Text9" Width="47.25" Height="18.9" Border.Lines="All" Text="CLIENT" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text10" Left="47.25" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.StoreName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text11" Left="113.4" Width="66.15" Height="18.9" Border.Lines="All" Text="CONSUMER" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt, style=Bold"/>
+          <TextObject Name="Text12" Left="179.55" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.Masrafkonande]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text13" Top="18.9" Width="47.25" Height="18.9" Border.Lines="All" Text="DATE" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TextObject Name="Text14" Left="47.25" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="[LnsOrderDetail.LnsOrder.CreateDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text15" Left="113.4" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="REF." HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TextObject Name="Text16" Left="179.55" Top="18.9" Width="66.15" Height="18.9" Border.Lines="All" Text="ST[LnsOrderDetail.LnsOrder.OrderId]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        </DataFooterBand>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="119.95" Width="245.7"/>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

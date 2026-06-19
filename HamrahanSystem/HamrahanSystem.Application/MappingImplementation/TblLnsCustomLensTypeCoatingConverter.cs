@@ -27,6 +27,7 @@ namespace HamrahanSystem.Application.MappingImplementation
             target.DesignTypeId = source.DesignTypeId;
             target.LensTypeName = source.LensTypeName;
             target.CoatingName = source.CoatingName;
+            target.IsDefault = source.IsDefault == true;
             target.OrderId = source.OrderId;
             target.IsActive = System.Convert.ToBoolean(source.IsActive);
 
@@ -48,6 +49,7 @@ namespace HamrahanSystem.Application.MappingImplementation
             target.DesignTypeId = source.DesignTypeId;
             target.LensTypeName = source.LensTypeName;
             target.CoatingName = source.CoatingName;
+            target.IsDefault = source.IsDefault;
             target.OrderId = source.OrderId;
             target.IsActive = System.Convert.ToInt16(source.IsActive);
 

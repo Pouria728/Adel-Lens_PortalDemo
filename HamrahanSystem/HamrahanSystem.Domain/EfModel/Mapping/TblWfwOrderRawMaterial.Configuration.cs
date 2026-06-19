@@ -50,6 +50,18 @@ namespace HamrahanSystem.Domain.Entity
                 .ValueGeneratedNever()
                 .HasPrecision(10, 0);
 
+            builder.Property(x => x.WasterRNObject)
+                .HasColumnName(@"WasterRNObject")
+                .HasColumnType(@"int")
+                .ValueGeneratedNever()
+                .HasPrecision(10, 0);
+
+            builder.Property(x => x.ProdRNObject)
+                .HasColumnName(@"ProdRNObject")
+                .HasColumnType(@"int")
+                .ValueGeneratedNever()
+                .HasPrecision(10, 0);
+
             builder.Property(x => x.Barcode)
                 .HasColumnName(@"Barcode")
                 .HasColumnType(@"nvarchar(100)")
@@ -98,7 +110,7 @@ namespace HamrahanSystem.Domain.Entity
 
             builder.HasKey(x => x.OrderRawMaterialId);
 
-            builder.HasIndex(x => new { x.OrderId, x.ProcessStepId, x.DefineObjectId })
+            builder.HasIndex(x => new { x.OrderId, x.ProcessStepId, x.DefineObjectId, x.WasterRNObject, x.ProdRNObject })
                 .HasDatabaseName(@"UX_Tbl_Wfw_OrderRawMaterial_OrderStepMaterial")
                 .IsUnique();
 

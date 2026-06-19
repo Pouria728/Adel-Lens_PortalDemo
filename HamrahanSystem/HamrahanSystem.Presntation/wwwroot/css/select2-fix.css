@@ -53,3 +53,13 @@
     left: 0.75rem !important;
     right: auto !important;
 }
+
+/* Display-order inputs (OrderId): compact visual width only */
+input[name='OrderId']:not([type='hidden']),
+input[id='OrderId']:not([type='hidden']),
+input[name$='.OrderId']:not([type='hidden']),
+input[id$='_OrderId']:not([type='hidden']) {
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+}

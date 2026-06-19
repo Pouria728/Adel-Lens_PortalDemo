@@ -54,6 +54,14 @@
 
 
             <div class="form-group text-center mb-4">
+                @if (Model.IndexDocument.HasValue && Model.IndexDocument.Value == (short)HamrahanSystem.Presntation.IndexDocument.LnsOrder)
+                {
+                    <a class="btn btn-light-primary me-2"
+                       target="_blank"
+                       href="@Url.Action("PrintSettings", "Process", new { processId = Model.ProcessId, returnUrl = Url.Action("Index", "Process") })">
+                        تنظیمات چاپ پیش‌فرض فرآیند
+                    </a>
+                }
                 <input type="button" id="create-btn" value="@($"{ResourcePages.Save} {ResourcePages.Process}")" class="btn btn-success" />
 
             </div>

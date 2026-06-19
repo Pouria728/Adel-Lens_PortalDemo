@@ -24,6 +24,10 @@ namespace HamrahanSystem.Domain.Entity
 
         public int? DefineObjectRecNo { get; set; }
 
+        public int? WasterRNObject { get; set; }
+
+        public int? ProdRNObject { get; set; }
+
         public string? Barcode { get; set; }
 
         public string? MaterialName { get; set; }

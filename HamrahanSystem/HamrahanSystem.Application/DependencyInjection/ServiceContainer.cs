@@ -18,7 +18,19 @@ namespace HamrahanSystem.Application.DependencyInjection
 	{
 		public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
 		{
-			services.AddSingleton<ICacheService, CacheService>(options => new CacheService(config.GetConnectionString("ServerRedis"), TimeSpan.FromMinutes(int.Parse(config.GetConnectionString("CacheRedisMinute")))));
+			var useRedis = !string.Equals(config["Infrastructure:UseRedis"], "false", StringComparison.OrdinalIgnoreCase);
+			var cacheMinutes = int.Parse(config.GetConnectionString("CacheRedisMinute") ?? "60");
+			if (useRedis)
+			{
+				services.AddSingleton<ICacheService, CacheService>(options => new CacheService(config.GetConnectionString("ServerRedis"), TimeSpan.FromMinutes(cacheMinutes)));
+			}
+			else
+			{
+				services.AddMemoryCache();
+				services.AddSingleton<ICacheService>(options => new InMemoryCacheService(
+					options.GetRequiredService<Microsoft.Extensions.Caching.Memory.IMemoryCache>(),
+					TimeSpan.FromMinutes(cacheMinutes)));
+			}
             //services.AddScoped<IMigratorService, MigratorService>();
             services.AddScoped<IBaseRequesteService, BaseRequesteService>();
             services.AddScoped<IBaseRequestFieldService, BaseRequestFieldService>();

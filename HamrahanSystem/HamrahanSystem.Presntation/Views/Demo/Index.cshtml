@@ -1,0 +1,89 @@
+@model HamrahanSystem.Presntation.Models.Demo.PublicDemoLandingViewModel
+@{
+    Layout = "_Layout_PublicDemo";
+    ViewData["Title"] = Model.Title;
+}
+
+<section class="container py-10 py-lg-15">
+    <div class="row g-5 align-items-stretch">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden" style="background: linear-gradient(145deg, #18344d 0%, #285f88 52%, #d66b2d 100%); border-radius: 28px;">
+                <div class="card-body p-7 p-lg-10 text-white position-relative">
+                    <div class="d-inline-flex align-items-center rounded-pill px-4 py-2 mb-6" style="background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);">
+                        @Model.Highlight
+                    </div>
+                    <h1 class="display-5 fw-bolder text-white lh-sm mb-5">@Model.Subtitle</h1>
+                    <p class="fs-4 lh-lg text-white text-opacity-75 mb-8">@Model.Summary</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a class="btn btn-light btn-lg fw-bold" href="@Url.Action("Workspace", "Demo")">Open Demo Workspace</a>
+                        <span class="btn btn-color-white btn-active-light border border-white border-opacity-25 btn-lg disabled">No real customer data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="row g-4 h-100">
+                @foreach (var stat in Model.Stats)
+                {
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm h-100" style="border-radius: 24px; background: rgba(255,253,250,.9);">
+                            <div class="card-body p-6">
+                                <div class="fs-1 fw-bolder text-gray-900 mb-2">@stat.Value</div>
+                                <div class="fs-4 fw-bold text-gray-800 mb-2">@stat.Label</div>
+                                <div class="text-gray-600 fs-6 lh-lg">@stat.Caption</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container pb-10 pb-lg-15">
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm h-100" style="border-radius: 28px;">
+                <div class="card-body p-7 p-lg-9">
+                    <div class="d-flex align-items-center gap-3 mb-7">
+                        <span class="badge badge-light-warning px-4 py-2 fs-8">What this demo shows</span>
+                        <span class="text-gray-500">UI and flow without internal dependencies</span>
+                    </div>
+                    <div class="row g-4">
+                        @foreach (var feature in Model.Features)
+                        {
+                            <div class="col-md-6">
+                                <div class="border rounded-4 p-5 h-100" style="border-color: rgba(24, 36, 50, .08) !important;">
+                                    <div class="fs-4 fw-bolder text-gray-900 mb-3">@feature.Title</div>
+                                    <div class="text-gray-600 fs-6 lh-lg">@feature.Description</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100" style="border-radius: 28px; background: #fff9f3;">
+                <div class="card-body p-7 p-lg-9">
+                    <div class="fs-3 fw-bolder text-gray-900 mb-6">Use Cases</div>
+                    <div class="d-flex flex-column gap-4">
+                        @for (var i = 0; i < Model.Stories.Count; i++)
+                        {
+                            var story = Model.Stories[i];
+                            <div class="d-flex gap-4 align-items-start">
+                                <div class="rounded-circle d-inline-flex align-items-center justify-content-center fw-bolder text-white" style="width: 42px; height: 42px; background: @(i % 2 == 0 ? "#d66b2d" : "#153a5b");">
+                                    @(i + 1)
+                                </div>
+                                <div>
+                                    <div class="fs-5 fw-bold text-gray-900 mb-2">@story.Title</div>
+                                    <div class="text-gray-600 fs-6 lh-lg">@story.Description</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

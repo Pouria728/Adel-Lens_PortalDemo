@@ -1,0 +1,114 @@
+@model HamrahanSystem.Presntation.Models.Demo.PublicDemoWorkspaceViewModel
+@{
+    Layout = "_Layout_PublicDemo";
+    ViewData["Title"] = Model.Title;
+}
+
+<section class="container py-10 py-lg-12">
+    <div class="d-flex flex-wrap align-items-end justify-content-between gap-4 mb-8">
+        <div>
+            <div class="badge badge-light-primary px-4 py-2 fs-8 mb-4">Interactive portfolio snapshot</div>
+            <h1 class="fs-1 fw-bolder text-gray-900 mb-3">@Model.Title</h1>
+            <p class="fs-5 text-gray-600 mw-750px lh-lg mb-0">@Model.Overview</p>
+        </div>
+        <a class="btn btn-dark btn-lg fw-bold" href="@Url.Action("Index", "Demo")">Back to Overview</a>
+    </div>
+
+    <div class="row g-4 mb-8">
+        @foreach (var card in Model.SummaryCards)
+        {
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm h-100" style="border-radius: 24px;">
+                    <div class="card-body p-6">
+                        <div class="text-gray-500 fs-7 fw-semibold mb-2">@card.Title</div>
+                        <div class="fs-1 fw-bolder @card.AccentClass mb-3">@card.Value</div>
+                        <div class="text-gray-600 fs-7 lh-lg">@card.Caption</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row g-5">
+        <div class="col-xl-8">
+            <div class="card border-0 shadow-sm mb-5" style="border-radius: 28px;">
+                <div class="card-body p-7">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-6">
+                        <div class="fs-3 fw-bolder text-gray-900">Sample Orders</div>
+                        <span class="badge badge-light-warning px-4 py-2">Mock workflow data</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle gs-0 gy-4">
+                            <thead>
+                                <tr class="fw-bold text-muted bg-light">
+                                    <th class="ps-4 min-w-110px rounded-start">Order</th>
+                                    <th class="min-w-175px">Customer</th>
+                                    <th class="min-w-220px">Product</th>
+                                    <th class="min-w-120px">Status</th>
+                                    <th class="min-w-90px rounded-end">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model.Orders)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-bolder text-gray-900">@order.Code</td>
+                                        <td>@order.Customer</td>
+                                        <td>@order.Product</td>
+                                        <td>
+                                            <span class="badge badge-light-primary px-4 py-2">@order.Status</span>
+                                        </td>
+                                        <td class="text-gray-600">@order.UpdatedAt</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm" style="border-radius: 28px; background: linear-gradient(180deg, #fffdfa 0%, #fff4ea 100%);">
+                <div class="card-body p-7">
+                    <div class="fs-3 fw-bolder text-gray-900 mb-6">Catalog Snapshot</div>
+                    <div class="row g-4">
+                        @foreach (var item in Model.Catalog)
+                        {
+                            <div class="col-md-4">
+                                <div class="rounded-4 p-5 h-100 border" style="border-color: rgba(214, 107, 45, .15) !important;">
+                                    <div class="fs-5 fw-bolder text-gray-900 mb-3">@item.Brand</div>
+                                    <div class="text-gray-700 fw-semibold mb-2">@item.Design</div>
+                                    <div class="text-gray-600 fs-7 mb-2">Indexes: @item.Indexes</div>
+                                    <div class="text-gray-600 fs-7 lh-lg">@item.Extras</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="card border-0 shadow-sm h-100" style="border-radius: 28px;">
+                <div class="card-body p-7">
+                    <div class="fs-3 fw-bolder text-gray-900 mb-6">Workflow Story</div>
+                    <div class="timeline-label">
+                        @for (var i = 0; i < Model.Workflow.Count; i++)
+                        {
+                            var step = Model.Workflow[i];
+                            <div class="timeline-item">
+                                <div class="timeline-label fw-bold text-gray-800 fs-7">Step @(i + 1)</div>
+                                <div class="timeline-badge">
+                                    <i class="fa fa-genderless text-warning fs-1"></i>
+                                </div>
+                                <div class="timeline-content ps-3">
+                                    <div class="fw-bolder text-gray-900">@step.Title</div>
+                                    <div class="text-gray-600 fs-7 lh-lg">@step.Description</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

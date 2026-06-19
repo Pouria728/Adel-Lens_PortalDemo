@@ -19,6 +19,7 @@ namespace HamrahanSystem.Domain.Entity
         public void Configure(EntityTypeBuilder<TblWfwOrderProcess> builder)
         {
             builder.ToTable(@"Tbl_wfw_OrderProcesses", @"dbo");
+            builder.ToTable(tb => tb.UseSqlOutputClause(false));
             builder.Property(x => x.DateComplete).HasColumnName(@"DateComplete").HasColumnType(@"datetime").ValueGeneratedNever();
             builder.Property(x => x.DateCreate).HasColumnName(@"DateCreate").HasColumnType(@"datetime").IsRequired().ValueGeneratedNever();
             builder.Property(x => x.OrderId).HasColumnName(@"OrderId").HasColumnType(@"bigint").IsRequired().ValueGeneratedNever().HasPrecision(19, 0);

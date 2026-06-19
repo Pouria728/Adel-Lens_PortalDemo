@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" style="direction: rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - AdelLens Demo</title>
+    <meta name="description" content="Public demo build for AdelLens web application" />
+    <link rel="shortcut icon" href="~/assets/media/adellens/favicon.ico" />
+    <link href="~/assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/english-digits.css" rel="stylesheet" type="text/css" asp-append-version="true" />
+    <style>
+        :root {
+            --demo-bg: #f3efe7;
+            --demo-paper: #fffdfa;
+            --demo-ink: #182432;
+            --demo-muted: #5f6b79;
+            --demo-line: rgba(24, 36, 50, 0.10);
+            --demo-accent: #d66b2d;
+            --demo-accent-deep: #153a5b;
+        }
+
+        body.demo-shell {
+            margin: 0;
+            color: var(--demo-ink);
+            background:
+                radial-gradient(circle at top right, rgba(214, 107, 45, 0.18), transparent 28%),
+                radial-gradient(circle at left 20%, rgba(21, 58, 91, 0.12), transparent 25%),
+                linear-gradient(180deg, #fbf8f3 0%, var(--demo-bg) 100%);
+            min-height: 100vh;
+        }
+
+        .demo-nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(16px);
+            background: rgba(251, 248, 243, 0.82);
+            border-bottom: 1px solid var(--demo-line);
+        }
+
+        .demo-nav .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--demo-accent-deep), #215780);
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: .06em;
+        }
+
+        .demo-nav .nav-link {
+            color: var(--demo-muted);
+            font-weight: 700;
+        }
+
+        .demo-nav .nav-link:hover,
+        .demo-nav .nav-link:focus {
+            color: var(--demo-accent-deep);
+        }
+
+        .demo-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            border-radius: 999px;
+            padding: .55rem .95rem;
+            font-size: .82rem;
+            background: rgba(214, 107, 45, 0.10);
+            color: var(--demo-accent-deep);
+            border: 1px solid rgba(214, 107, 45, 0.18);
+        }
+
+        .demo-footer {
+            border-top: 1px solid var(--demo-line);
+            color: var(--demo-muted);
+            background: rgba(255, 253, 250, 0.8);
+        }
+    </style>
+</head>
+<body class="demo-shell">
+    <header class="demo-nav">
+        <div class="container py-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <a class="d-inline-flex align-items-center gap-3 text-decoration-none" href="@Url.Action("Index", "Demo")">
+                <span class="brand-mark">AL</span>
+                <span>
+                    <span class="d-block fs-5 fw-bold text-gray-900">AdelLens Demo</span>
+                    <span class="d-block fs-8 text-gray-600">Public showcase build</span>
+                </span>
+            </a>
+
+            <nav class="d-flex align-items-center gap-4">
+                <a class="nav-link p-0" href="@Url.Action("Index", "Demo")">Overview</a>
+                <a class="nav-link p-0" href="@Url.Action("Workspace", "Demo")">Workspace</a>
+                <span class="demo-chip">Sample data only</span>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="demo-footer mt-5">
+        <div class="container py-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>AdelLens public demo for portfolio and GitHub publication.</div>
+            <div>ASP.NET Core 8 • Mock data • No private infrastructure</div>
+        </div>
+    </footer>
+
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

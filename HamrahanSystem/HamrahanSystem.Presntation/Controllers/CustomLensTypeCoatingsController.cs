@@ -106,6 +106,7 @@ namespace HamrahanSystem.Presntation.Controllers
                                ? designTypeLookup[p.DesignTypeId.Value]
                                : string.Empty,
                            coatingName = p.CoatingName,
+                           isDefault = p.IsDefault == true ? "پیش‌فرض" : "-",
                            orderId = p.OrderId,
                            isActive = p.IsActive == true ? "فعال" : "غير فعال"
                        }
@@ -131,6 +132,7 @@ namespace HamrahanSystem.Presntation.Controllers
             {
                 DesignTypeId = designTypeId.Value,
                 LensTypeName = designType.Name ?? string.Empty,
+                IsDefault = false,
                 OrderId = 1,
                 IsActive = true
             };
@@ -165,6 +167,12 @@ namespace HamrahanSystem.Presntation.Controllers
                 if (dto.OrderId <= 0)
                 {
                     return Json(new { success = false, message = "ترتيب نمايش بايد عدد مثبت باشد." });
+                }
+
+                if (dto.IsDefault)
+                {
+                    dto.IsActive = true;
+                    ClearDefaultCoating(dto.DesignTypeId.Value);
                 }
 
                 var siblings = (tblLnsCustomLensTypeCoatingService.GetAll().Result ?? Enumerable.Empty<TblLnsCustomLensTypeCoatingDto>())
@@ -222,11 +230,21 @@ namespace HamrahanSystem.Presntation.Controllers
 
                 existing.LensTypeName = Normalize(dto.LensTypeName);
                 existing.CoatingName = Normalize(dto.CoatingName);
+                existing.IsDefault = dto.IsDefault;
                 existing.OrderId = dto.OrderId;
                 existing.IsActive = dto.IsActive;
                 if (dto.DesignTypeId.HasValue && dto.DesignTypeId.Value > 0)
                 {
                     existing.DesignTypeId = dto.DesignTypeId;
+                }
+
+                if (existing.IsDefault)
+                {
+                    existing.IsActive = true;
+                    if (existing.DesignTypeId.HasValue && existing.DesignTypeId.Value > 0)
+                    {
+                        ClearDefaultCoating(existing.DesignTypeId.Value, existing.CustomLensTypeCoatingId);
+                    }
                 }
 
                 tblLnsCustomLensTypeCoatingService.Update(existing);
@@ -560,6 +578,20 @@ namespace HamrahanSystem.Presntation.Controllers
         private static string Normalize(string? value)
         {
             return value?.Trim() ?? string.Empty;
+        }
+
+        private void ClearDefaultCoating(int designTypeId, int? excludeId = null)
+        {
+            var defaultItems = (tblLnsCustomLensTypeCoatingService.GetAll().Result ?? Enumerable.Empty<TblLnsCustomLensTypeCoatingDto>())
+                .Where(x => x.DesignTypeId == designTypeId && x.IsDefault)
+                .Where(x => !excludeId.HasValue || x.CustomLensTypeCoatingId != excludeId.Value)
+                .ToList();
+
+            foreach (var item in defaultItems)
+            {
+                item.IsDefault = false;
+                tblLnsCustomLensTypeCoatingService.Update(item);
+            }
         }
 
         private string GetRequestPayload()

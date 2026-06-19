@@ -11,10 +11,10 @@ namespace HamrahanSystem.Presntation.Services
     {
         private static readonly Regex PlaceholderRegex = new(@"\{(orderId|factorNo|printer)\}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public async Task<CustomLensAutoPrintResult> DispatchAsync(long orderId, string? factorNo, CancellationToken cancellationToken = default)
+        public async Task<CustomLensAutoPrintResult> DispatchAsync(long orderId, string? factorNo, int? processId = null, int? processStepId = null, CancellationToken cancellationToken = default)
         {
             var result = new CustomLensAutoPrintResult();
-            var settings = await settingsService.GetAsync();
+            var settings = await settingsService.ResolveAsync(processId, processStepId);
             if (!settings.IsEnabled || string.IsNullOrWhiteSpace(settings.ReportUrlTemplate))
             {
                 return result;

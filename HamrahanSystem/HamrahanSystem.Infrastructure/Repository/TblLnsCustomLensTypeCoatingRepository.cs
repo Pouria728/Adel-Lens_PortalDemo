@@ -71,6 +71,7 @@ namespace HamrahanSystem.Infrastructure.Repository
             item.DesignTypeId = tblLnsCustomLensTypeCoating.DesignTypeId;
             item.LensTypeName = tblLnsCustomLensTypeCoating.LensTypeName;
             item.CoatingName = tblLnsCustomLensTypeCoating.CoatingName;
+            item.IsDefault = tblLnsCustomLensTypeCoating.IsDefault;
             item.OrderId = tblLnsCustomLensTypeCoating.OrderId;
             item.IsActive = tblLnsCustomLensTypeCoating.IsActive;
             Save();

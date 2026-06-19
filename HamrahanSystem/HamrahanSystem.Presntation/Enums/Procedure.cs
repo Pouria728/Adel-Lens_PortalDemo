@@ -2,15 +2,17 @@
 
 namespace HamrahanSystem.Presntation
 {
-    public enum Procedure
-    {
+	public enum Procedure
+	{
 		[Description("ندارد")]
 		LnsOrder = 0,
 		[Description("خروج از انبار کالا")]
 		StockOut = 1,
 		[Description("تامین جهت ساخت")]
 		CreateLens = 2,
-		
-
+		[Description("گزارش کار روزانه تولید")]
+		DailyProductionReport = 3,
+		[Description("تبدیل پیش فاکتور به فاکتور")]
+		ConvertPreInvoiceToInvoice = 4,
 	}
 }
