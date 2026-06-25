@@ -36,3 +36,23 @@ Run from the `Project/AdelLens web/AdelWeb` directory:
 
 ```powershell
 dotnet run --project "HamrahanSystem/HamrahanSystem.Presntation/HamrahanSystem.Presntation.csproj" --launch-profile public-demo
+
+## Screenshots
+
+### Login Page
+![Login Page](docs/screenshots/login-page.png)
+
+### Dashboard and Main Navigation
+![Dashboard and Main Navigation](docs/screenshots/dashboard-main-menu.png)
+
+### Custom Lens Order
+![Custom Lens Order](docs/screenshots/custom-lens-order.png)
+
+### Order Review
+![Order Review](docs/screenshots/order-review.png)
+
+### Ready Lens with Warranty
+![Ready Lens with Warranty](docs/screenshots/ready-lens-warranty.png)
+
+### Design Type Settings
+![Design Type Settings](docs/screenshots/design-type-settings.png)
