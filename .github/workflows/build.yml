@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - portfolio-demo
+      - main
+  pull_request:
+    branches:
+      - portfolio-demo
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore solution
+        shell: pwsh
+        run: dotnet restore "HamrahanSystem/HamrahanSystem.sln"
+
+      - name: Build solution
+        shell: pwsh
+        run: dotnet build "HamrahanSystem/HamrahanSystem.sln" -c Release --no-restore
