@@ -1,23 +1,23 @@
 # AdelLens Ordering Portal
 
-A portfolio-ready ASP.NET Core MVC web application for optical lens ordering, workflow tracking, and custom lens request management.
+A portfolio-ready ASP.NET Core MVC application for optical lens ordering, workflow tracking, and custom lens request management.
 
 ## Overview
 
-AdelLens Ordering Portal is a business-oriented web application built to support operational workflows around optical lens ordering and internal process management.
+AdelLens Ordering Portal is a business-oriented web application built for operational workflows around optical lens orders, custom requests, status tracking, and back-office configuration.
 
-The system includes order tracking, custom lens request flows, workflow-driven progression, and back-office administration for related operational data. This public repository is a sanitized portfolio version of the project, prepared for technical presentation without exposing private infrastructure or operational data.
+This repository is prepared as a public portfolio mirror of the same application shown in the screenshots. It includes a local sample database backup and PowerShell setup scripts so reviewers can run the full application on their own machine without any paid infrastructure.
 
 ## Key Features
 
 - Custom lens ordering workflow
-- Order listing and review
-- Workflow-driven process tracking
+- Order listing, review, and request tracking
 - Ready lens and warranty-related order handling
-- Design type and configuration management
+- Workflow-driven process progression
+- Design type and operational master-data management
 - Role-aware back-office structure
-- Public demo mode for portfolio presentation
-- Full application mode for local technical evaluation
+- Full local demo flow backed by SQL Server
+- Optional lightweight review mode without a database
 
 ## Tech Stack
 
@@ -25,8 +25,79 @@ The system includes order tracking, custom lens request flows, workflow-driven p
 - ASP.NET Core MVC
 - Entity Framework Core
 - SQL Server
-- Optional Redis-backed caching
+- FluentMigrator
 - Razor Views / Server-rendered UI
+- Optional Redis-backed caching with in-memory fallback
+
+## Quick Start
+
+This project is easiest to run on Windows 10/11.
+
+### 1. Install prerequisites
+
+- .NET 8 SDK
+- SQL Server Developer or SQL Server Express
+- SQL Server Management Studio is optional
+
+### 2. Restore the included sample database
+
+From the repository root:
+
+```powershell
+.\scripts\Restore-AdelLensDemoDatabase.ps1
+```
+
+This restores [`database/HS_Adel_demo.BAK`](database/HS_Adel_demo.BAK) into a local database named `HS_Adel`.
+
+If you already have a database with the same name and want to overwrite it:
+
+```powershell
+.\scripts\Restore-AdelLensDemoDatabase.ps1 -Force
+```
+
+### 3. Start the full application
+
+```powershell
+.\scripts\Start-AdelLensPortal.ps1
+```
+
+Default local URL:
+
+- `https://localhost:7181/Account/Login`
+
+### 4. Sign in with the sample local account
+
+- Username: `admin`
+- Password: `Admin123!`
+
+## Manual Run
+
+If you prefer running it without the helper scripts:
+
+```powershell
+$env:ConnectionStrings__Default="Data Source=localhost;Initial Catalog=HS_Adel;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;Connect Timeout=60"
+dotnet run --project "HamrahanSystem/HamrahanSystem.Presntation/HamrahanSystem.Presntation.csproj" --launch-profile https
+```
+
+Use [`HamrahanSystem/HamrahanSystem.Presntation/appsettings.Example.json`](HamrahanSystem/HamrahanSystem.Presntation/appsettings.Example.json) as the local configuration reference.
+
+## Optional Lightweight Review Mode
+
+For a fast UI-only walkthrough without SQL Server:
+
+```powershell
+.\scripts\Start-AdelLensReviewMode.ps1
+```
+
+Review URL:
+
+- `http://localhost:5299`
+
+## Local Setup Notes
+
+- Redis is optional. The portfolio setup uses in-memory caching when `Infrastructure:UseRedis` is `false`.
+- The full application path is the primary portfolio target. The lightweight review mode exists only as a convenience fallback.
+- Detailed local setup notes are available in [`docs/setup/local-setup.md`](docs/setup/local-setup.md).
 
 ## Screenshots
 
@@ -60,55 +131,24 @@ Administrative configuration screen for managing design type definitions and rel
 
 ![Design Type Settings](docs/screenshots/Design-Type-Settings.png)
 
-## Public Demo
-
-A public demo mode is included for quick portfolio review and does not require a database connection.
-
-Run from the `Project/AdelLens web/AdelWeb` directory:
-
-```powershell
-dotnet run --project "HamrahanSystem/HamrahanSystem.Presntation/HamrahanSystem.Presntation.csproj" --launch-profile public-demo
-```
-
-Demo URL:
-
-- `http://localhost:5299`
-
-## Full Application Setup
-
-To run the full application locally, set a valid SQL Server connection string first:
-
-```powershell
-$env:ConnectionStrings__Default="Data Source=.;Initial Catalog=HS_Adel;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;Connect Timeout=60"
-```
-
-Use [`appsettings.Example.json`](HamrahanSystem/HamrahanSystem.Presntation/appsettings.Example.json) as a reference for local configuration.
-
-Then run:
-
-```powershell
-dotnet run --project "HamrahanSystem/HamrahanSystem.Presntation/HamrahanSystem.Presntation.csproj" --launch-profile https
-```
-
-If Redis is not available locally, the application can use in-memory caching by keeping `Infrastructure:UseRedis` set to `false`.
-
 ## Repository Notes
 
 - This repository is published as a portfolio-safe public mirror
-- Real infrastructure values and internal connection strings have been removed
-- Production data, credentials, and internal-only environment details are not included
-- The original business UI targets Persian-speaking users, while the portfolio-facing documentation is provided in English
+- The included database backup is a local demo dataset for portfolio review
+- Real infrastructure values and internal deployment details have been removed
+- The UI remains primarily Persian because it reflects the original production-facing business workflow
+- Portfolio-facing documentation and setup instructions are written in English
 
 ## Contribution Highlights
 
 This portfolio version showcases work around:
 
 - Running and validating the application locally
+- Packaging a local SQL-backed demo for external reviewers
 - Preparing a public GitHub-safe version of the project
-- Improving demo readiness and local setup clarity
+- Improving setup clarity and demo readiness
 - Fixing runtime issues discovered during testing
-- Presenting a real-world business application in a cleaner external format
 
 ## CV / LinkedIn Summary
 
-> Developed and prepared a portfolio-ready ASP.NET Core MVC portal for optical lens ordering, workflow tracking, and custom product request management.
+> Developed and prepared a portfolio-ready ASP.NET Core MVC portal for optical lens ordering, workflow tracking, and custom product request management, including a reproducible local demo setup backed by SQL Server.
