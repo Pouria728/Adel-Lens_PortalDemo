@@ -1,5 +1,7 @@
 # AdelLens Ordering Portal
 
+[![Build Status](https://github.com/Pouria728/Adel-Lens_PortalDemo/actions/workflows/build.yml/badge.svg?branch=portfolio-demo)](https://github.com/Pouria728/Adel-Lens_PortalDemo/actions/workflows/build.yml)
+
 A portfolio-ready ASP.NET Core MVC application for optical lens ordering, workflow tracking, and custom lens request management.
 
 ## Overview
@@ -7,6 +9,25 @@ A portfolio-ready ASP.NET Core MVC application for optical lens ordering, workfl
 AdelLens Ordering Portal is a business-oriented web application built for operational workflows around optical lens orders, custom requests, status tracking, and back-office configuration.
 
 This repository is prepared as a public portfolio mirror of the same application shown in the screenshots. It includes a local sample database backup and PowerShell setup scripts so reviewers can run the full application on their own machine without any paid infrastructure.
+
+## For Reviewers
+
+Choose the fastest review path depending on how deeply you want to inspect the project:
+
+- `30 seconds`: review the screenshots and repository structure
+- `2 minutes`: run the lightweight UI review mode without SQL Server
+- `10 minutes`: restore the included sample database and run the full application locally
+
+The fastest paths are:
+
+```powershell
+.\scripts\Start-AdelLensReviewMode.ps1
+```
+
+```powershell
+.\scripts\Restore-AdelLensDemoDatabase.ps1
+.\scripts\Start-AdelLensPortal.ps1
+```
 
 ## Key Features
 
@@ -27,6 +48,18 @@ This repository is prepared as a public portfolio mirror of the same application
 - SQL Server
 - FluentMigrator
 - Razor Views / Server-rendered UI
+
+## Repository Structure
+
+- `HamrahanSystem/HamrahanSystem.Presntation`: ASP.NET Core MVC presentation layer and controllers
+- `HamrahanSystem/HamrahanSystem.Application`: application services, use cases, and DTO mapping
+- `HamrahanSystem/HamrahanSystem.Domain`: domain entities and repository contracts
+- `HamrahanSystem/HamrahanSystem.Infrastructure`: EF Core access, repository implementations, and infrastructure wiring
+- `scripts`: local database restore and application launch helpers
+- `docs`: setup notes, architecture notes, and portfolio documentation
+- `database`: sample SQL Server backup used for the local demo setup
+
+For a short architectural walkthrough, see [`docs/architecture.md`](docs/architecture.md).
 - Optional Redis-backed caching with in-memory fallback
 
 ## Quick Start
@@ -98,6 +131,7 @@ Review URL:
 - Redis is optional. The portfolio setup uses in-memory caching when `Infrastructure:UseRedis` is `false`.
 - The full application path is the primary portfolio target. The lightweight review mode exists only as a convenience fallback.
 - Detailed local setup notes are available in [`docs/setup/local-setup.md`](docs/setup/local-setup.md).
+- A GitHub Actions workflow builds the project automatically on push and pull request.
 
 ## Screenshots
 
