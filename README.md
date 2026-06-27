@@ -33,32 +33,32 @@ The system includes order tracking, custom lens request flows, workflow-driven p
 ### Login Page
 Internal operator login screen for accessing the portal.
 
-![Login Page](docs/screenshots/login-page.png)
+![Login Page](docs/screenshots/Login-Page.png)
 
 ### Dashboard and Main Navigation
 Main dashboard and navigation layout for accessing the core operational modules.
 
-![Dashboard and Main Navigation](docs/screenshots/dashboard-main-menu.png)
+![Dashboard and Main Navigation](docs/screenshots/Dashboard-Main-Menu.png)
 
 ### Custom Lens Order
 Custom lens ordering workflow with business-specific inputs and request handling.
 
-![Custom Lens Order](docs/screenshots/custom-lens-order.png)
+![Custom Lens Order](docs/screenshots/Custom-Lens-Order.png)
 
 ### Order Review
 Order tracking and review screen for monitoring submitted requests and their current status.
 
-![Order Review](docs/screenshots/order-review.png)
+![Order Review](docs/screenshots/Orders-Review.png)
 
 ### Ready Lens with Warranty
 Operational page for managing ready lens orders with warranty-related workflow support.
 
-![Ready Lens with Warranty](docs/screenshots/ready-lens-warranty.png)
+![Ready Lens with Warranty](docs/screenshots/Ready-Lens-Warranty.png)
 
 ### Design Type Settings
 Administrative configuration screen for managing design type definitions and related setup data.
 
-![Design Type Settings](docs/screenshots/design-type-settings.png)
+![Design Type Settings](docs/screenshots/Design-Type-Settings.png)
 
 ## Public Demo
 
